@@ -1,0 +1,17 @@
+/* modal.css */
+.modal-content {
+    background-color: white;
+    margin: auto;
+    padding: 20px;
+    border: 2px black solid ;
+    width: 40vw;
+    height: 40vh;
+    text-align: center;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    display: none;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
