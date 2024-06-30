@@ -4,14 +4,16 @@
 
 /* 글꼴 */
 @font-face {
-    font-family: 'pretendard-semibold';
+    font-family: "pretendard-semibold";
     src: url("/static/webfonts/woff/Pretendard-SemiBold.woff");
     font-weight: normal;
     font-style: normal;
 }
-
-body {
-    font-family: 'pretendard-semibold';
+ body{
+     font-family: "pretendard-semibold";
+ }
+.sidebar-body {
+    font-family: "pretendard-semibold";
     margin: 0;
     padding: 0;
 }
@@ -78,7 +80,7 @@ body {
 }
 
 /* a태그 스타일 */
-a {
+.sidebar-name{
     text-decoration: none;
     color: #131313;
 }
