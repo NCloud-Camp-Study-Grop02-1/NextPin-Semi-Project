@@ -35,6 +35,9 @@
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
 
+p{
+    display: inline-block;
+}
 .side-navbar {
     width: 37.5rem;
     height: 100%;
@@ -45,11 +48,11 @@
     border-top: 1px solid #E1E1E1;
     margin: 30px 0px;
 }
-/*네브바 안에 있는 콘텐츠들에 margin주기*/
-.content {
+/*네브바 안에 있는 각 box에 margin주기*/
+.box {
     margin: 1.5rem;
 }
-.navbar-search{
+.nav-search{
     margin-bottom: 3rem;
     text-align: center;
 }
@@ -59,9 +62,9 @@
     border-color: #4098FF;
     border-radius: 0.6rem;
 }
-/*mypin이랑 관심있는코스 폰트크게 조금 키움여*/
+/*사이드 네브바 안에 있는 각 타이틀 크기 조금 키우기*/
 .content-title{
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     margin-left: 0.5rem;
     padding-bottom: 1rem;
 }
@@ -70,17 +73,52 @@
     height: 1.5rem;
     display: inline-block;
 }
-/*mypin목록 속성*/
-.mypin-content ul li button{
+
+/*mypin,관심있는코스 목록 공통 속성*/
+.content ul li button{
     width: 20rem;
     height: 5rem;
     text-align: center;
-    margin: 2rem;
-    background-color: #eccccf;
+    margin: 1rem;
     height: 3rem;
     border: none;
     border-radius: 1rem;
 }
-p{
-    display: inline-block;
+
+/*mypin목록 속성*/
+.mypin-content ul li button{
+    background-color: #eccccf;
 }
+/*관심있는코스 목록 속성*/
+.like-content ul li button{
+    background-color: #badce3;
+}
+
+/*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
+.collapse {
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+}
+.collapsing{
+    height: 0;
+    transition: height 0.3s ease-in-out;
+}
+
+/*각 일차별 내용이 담긴 card에 대한 속성*/
+.card ul{
+    background-color: #FFC061; /*카드 색상 지정*/
+    border-radius: 1rem; /*카드 모서리 둥글게*/
+    color: white;
+    padding: 1.5rem;
+    margin: 1rem 0; /*각 카드의 위아래 여백 주기*/
+}
+.card ul li{
+    border-bottom: 1px solid white; /* 하단에 경계선 추가 */
+    padding: 0.8rem 1rem 0.4rem; /* 위아래 여백 추가, 텍스트의 왼쪽 여백 추가 */
+}
+/* 마지막 li 태그에는 경계선 제거 */
+.card ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
