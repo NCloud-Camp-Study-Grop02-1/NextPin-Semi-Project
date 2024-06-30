@@ -10,7 +10,7 @@
     font-style: normal;
 }
 
-.sidebar-body {
+body {
     font-family: 'pretendard-semibold';
     margin: 0;
     padding: 0;
@@ -78,7 +78,7 @@
 }
 
 /* a태그 스타일 */
-.sidebar-name{
+a {
     text-decoration: none;
     color: #131313;
 }
