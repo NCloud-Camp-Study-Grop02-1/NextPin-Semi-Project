@@ -15,6 +15,13 @@ body {
     align-items: center;
     height: 100vh;
 }
+/* 좌측 상단 x 이미지 */
+a img {
+    position: fixed;
+    width: 1vw;
+    left: 2%;
+    top: 3%;
+}
 /* 회원가입 전체 영역 */
 .signup-container {
     text-align: center;
