@@ -35,14 +35,15 @@
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
 @font-face {
-    font-family: "pretendard-semibold",pretendard-semibold;
-    src: url("static/webfonts/woff/Pretendard-SemiBold.woff");
+    font-family: "pretendard-semibold";
+    src: url("../../webfonts/woff/Pretendard-SemiBold.woff");
     font-weight: normal;
     font-style: normal;
 }
 body{
     font-family: "pretendard-semibold";
 }
+
 p{
     display: inline-block;
 }
@@ -76,7 +77,7 @@ p{
 }
 /*사이드 네브바 안에 있는 각 타이틀 크기 조금 키우기*/
 .content-title{
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-left: 0.5rem;
     padding-bottom: 1rem;
 }
@@ -88,10 +89,11 @@ p{
 .mypin-num{
     color: #4098FF;
     margin-left: 0.5rem;
+    font-size: 1.2rem;
 }
 
 /*mypin,관심있는코스 목록 공통 속성*/
-.content ul li button{
+.content ul li .container{
     width: 24rem;
     height: 5rem;
     text-align: center;
@@ -99,17 +101,55 @@ p{
     height: 3rem;
     border: none;
     border-radius: 1rem;
+    position: relative;
+    display: flex;
+}
+.content ul li .container input{
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+}
+.content ul li .container button{
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    right: 5px;
+}
+
+/*각 코스 목록 안에 미트볼(...세로로 된 거) 버튼 속성*/
+.meatball-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+/*각 미트볼에 대한 속성*/
+.meatball-btn .dot {
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: white;
+    border-radius: 50%;
+    margin: 0.15rem 1rem;
+    transition: background-color 0.3s ease;
+    display: block;
+}
+.meatball-btn:hover .dot {
+    background-color: #666;
+}
+
+/*미트볼 버튼을 누르면 나오는 popover창 속성*/
+#popover-content ul li{
+    border-bottom: 1px solid #666;
 }
 
 /*mypin목록 속성*/
-.mypin-content ul li button{
+.mypin-content ul li .container{
     background-color: #eccccf;
-    color: white;
 }
 /*관심있는코스 목록 속성*/
-.like-content ul li button{
+.like-content ul li .container{
     background-color: #badce3;
-    color: white;
 }
 
 /*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/

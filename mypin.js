@@ -78,7 +78,6 @@ function placesSearchCB(data, status, pagination) {
 }
 let i = 0;
 function printResult(data) {
-
     console.log(++i + "번째 실행");
     console.log(data);
     console.log("print placeData : " + placeData);
@@ -303,3 +302,29 @@ cards.forEach(card => {
         ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     });
 });
+
+
+// 미트볼 버튼에 팝업창 속성 추가하기
+
+//모든 곳에서 팝오버 활성화
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+})
+
+// 미트볼 버튼 선택
+const myPinBtn = document.getElementById('mypin-btn1');
+
+// 팝오버 내용 요소 선택
+const popoverContent = document.getElementById('popover-content');
+
+// 미트볼 버튼 클릭 이벤트 리스너 등록
+myPinBtn.addEventListener('click', () => {
+    // 팝오버 내용 요소의 display 속성을 변경하여 보이기/숨기기
+    if (popoverContent.style.display === 'none') {
+        popoverContent.style.display = 'block';
+    } else {
+        popoverContent.style.display = 'none';
+    }
+});
+
