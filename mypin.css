@@ -51,6 +51,21 @@ p{
     width: 50rem;
     height: 100%;
     background-color: white;
+    overflow-y: auto;
+}
+/*사이드 네브바에 스크롤바 만들기*/
+.side-navbar::-webkit-scrollbar {
+    width: 10px;
+}
+/* 스크롤바 바영역 색상 */
+.side-navbar::-webkit-scrollbar-thumb {
+    background-color: #40a0ff;
+    border-radius: 5px;
+}
+/* 스크롤바 스크롤영역 색상 */
+.side-navbar::-webkit-scrollbar-track {
+    background-color: #E1E1E1;
+    border-radius: 5px;
 }
 
 /*구분선*/
@@ -74,12 +89,17 @@ p{
     height: 3rem;
     border-radius: 0.8rem;
     padding: 1rem; /*placeholder 텍스트 부분과 border사이에 여백주기*/
+    -webkit-appearance: none;
 }
 /*사이드 네브바 안에 있는 각 타이틀 크기 조금 키우기*/
 .content-title{
     font-size: 1.05rem;
     margin-left: 0.5rem;
     padding-bottom: 1rem;
+}
+/*my pin에서 'p'부분 색상 변경*/
+.yellow{
+    color: #FFC061;
 }
 .content-title-icon{
     width: 1.5rem;
@@ -95,7 +115,6 @@ p{
 /*mypin,관심있는코스 목록 공통 속성*/
 .content ul li .container{
     width: 24rem;
-    height: 5rem;
     text-align: center;
     margin: 1rem;
     height: 3rem;
@@ -109,6 +128,7 @@ p{
     border: none;
     color: white;
     width: 100%;
+    text-align: center;
 }
 .content ul li .container button{
     position: absolute;
@@ -117,31 +137,50 @@ p{
     right: 5px;
 }
 
-/*각 코스 목록 안에 미트볼(...세로로 된 거) 버튼 속성*/
-.meatball-btn {
+
+/*각 코스 목록 이름 수정 기능*/
+.profile {
+    display: flex;
+    text-align: left;
+    margin-top: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.profile h2 {
+    margin: 10px;
+    font-size: 25px;
+}
+.profile p {
+    margin: 10px;
+    color: #666;
+    font-size: 21px;
+}
+.profile textarea {
+    margin: 0;
+    color: #666;
+    font-size: 21px;
+    width: 100%;
+    border: 1px solid #ccc;
+    resize: none;
+    display: none;
+}
+.edit-icon {
+    cursor: pointer;
+    margin-top: 0.8rem;
+    width: 20px;
+    height: 20px;
+}
+textarea{
     background-color: transparent;
     border: none;
-    cursor: pointer;
-    padding: 0;
-}
-/*각 미트볼에 대한 속성*/
-.meatball-btn .dot {
-    width: 0.25rem;
-    height: 0.25rem;
-    background-color: white;
-    border-radius: 50%;
-    margin: 0.15rem 1rem;
-    transition: background-color 0.3s ease;
-    display: block;
-}
-.meatball-btn:hover .dot {
-    background-color: #666;
+    margin: auto;
+    height: 3rem;
 }
 
-/*미트볼 버튼을 누르면 나오는 popover창 속성*/
-#popover-content ul li{
-    border-bottom: 1px solid #666;
-}
+
+
 
 /*mypin목록 속성*/
 .mypin-content ul li .container{
@@ -190,3 +229,34 @@ p{
     height: 1.1rem;
 }
 
+/* 사이드바 토글 버튼*/
+.sidebar-toggle {
+    position: absolute;
+    top: 50%;
+    left: 32%;
+    width: 50px;
+    height: 80px;
+    border-left: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-image: url('../../images/icon_toggleButton.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+.sidebar-container.open {
+    width: 200px;
+}
+.sidebar-arrow-container {
+    position: relative;
+    top: 0;
+    left: 0.7%;
+    height: 100%;
+    width: 30px;
+    text-align: center;
+    background-color: transparent;
+    transition: width 0.3s ease;
+    z-index: 2;
+}

@@ -291,7 +291,7 @@ window.onload = function(){
 
 //각 목록에 지정한 10가지 색상 중 랜덤한 값이 들어가게 만들기.
 // 1. 10가지 색상 배열 만들기
-const colors=['#4098FF','#69EDED','#7BD0FF','#8FE679','#AFA18E','#C8C8C8','#F6AEEF','#FFC061','#F9A7A7','#D4ADFB'];
+const colors=['#FFC061','#D4ADFB','#97E285','#F9A7A7','#1A70D6','#7BD0FF','#C8C8C8','#BADCE3','#AFA18E','#ECCCCF'];
 // 2. 모든 .card 클래스 요소 선택하기
 const cards = document.querySelectorAll('.card');
 // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
@@ -303,28 +303,133 @@ cards.forEach(card => {
     });
 });
 
+//각 코스 이름 수정하는 기능
+function editNameClick(){
+    const editName = document.getElementsByClassName('edit-name')
+    document.getElementById("edit-name2").value = '수정된 내용';
+}
+
+function editDescription() {
+    var p = document.getElementById('profile-description');
+    var textarea = document.getElementById('profile-textarea');
+    var editIcon = document.querySelector('.edit-icon');
+
+    if (textarea.style.display === 'none' || textarea.style.display === '') {
+        textarea.value = p.textContent;
+        p.style.display = 'none';
+        textarea.style.display = 'block';
+        textarea.focus();
+        editIcon.src = '../images/save-icon.png'; // Save icon when editing
+    } else {
+        p.textContent = textarea.value;
+        p.style.display = 'block';
+        textarea.style.display = 'none';
+        editIcon.src = '../images/edit-icon.png'; // Edit icon when not editing
+    }
+}
+
+const link = document.querySelector('.link');
+const subMenu = document.querySelector('.sub-menu');
+
+link.addEventListener('click', () => {
+    subMenu.classList.toggle('hidden');
+});
+
+//사이드 네브바 열고 닫는 기능 구현
+window.onload = function(){
+    $('#searchBtn').on("click", function(){
+        searchPlaces();
+    });
+
+    const sidebar = $('.side-navbar');
+    const sidebarToggle = $('.sidebar-toggle');
+    let isExpand = false;
+
+    sidebarToggle.on('click', () => {
+        isExpand = !isExpand;
+        sidebar.toggle('open');
+
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 미트볼 버튼에 팝업창 속성 추가하기
 
-//모든 곳에서 팝오버 활성화
+// 모든 곳에서 팝오버 활성화(부트스트랩 제공 코드)
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
 })
+// 팝오버창에 있는 내용을 html으로 작성해서 적용시키는 코드
+// 팝오버창 내용을 html으로 따로 작성한다음 data-bs-name을 통해 접근하여 팝오버 바디에 적용
+$(() => {
+    var options = {
+        html: true,
+        //html element는 아래와 같이 작성
+        //content: $("#popover-content").html()
+        content: $('[data-bs-name="popover-content"]').html(),
+        placement: 'top'
+    };
+    // 모든 .meatball-btn 요소에 대해 팝오버 초기화
+    var popoverBtns = document.querySelectorAll('.meatball-btn');
+    popoverBtns.forEach(btn => {
+        var popover = new bootstrap.Popover(btn, options);
+    });
 
-// 미트볼 버튼 선택
-const myPinBtn = document.getElementById('mypin-btn1');
-
-// 팝오버 내용 요소 선택
-const popoverContent = document.getElementById('popover-content');
-
-// 미트볼 버튼 클릭 이벤트 리스너 등록
-myPinBtn.addEventListener('click', () => {
-    // 팝오버 내용 요소의 display 속성을 변경하여 보이기/숨기기
-    if (popoverContent.style.display === 'none') {
-        popoverContent.style.display = 'block';
-    } else {
-        popoverContent.style.display = 'none';
-    }
+    // 팝오버 내부 콘텐츠 스타일 조정
+    // $('[data-bs-name="popover-content"]').css({
+    //     'backgroundColor': 'red',
+    //     'width': '300px' // 팝오버 최대 너비 설정
+    // });
+    const popoverContent = document.querySelector("#popover-content ul li");
+    popoverContent.style.color = 'red';
 });
+
+// // 팝오버 버튼 선택
+// const popoverBtn = document.querySelector('.meatball-btn');
+//
+// // 팝오버 버튼 클릭 시 이벤트 핸들러
+// popoverBtn.addEventListener('shown.bs.popover', function () {
+//     // 팝오버 내용 설정
+//     this.setAttribute('data-bs-content', document.getElementById('popover-content').innerHTML);
+// });
+
+//
+// // 미트볼 버튼 선택
+// const myPinBtn = document.getElementById('mypin-btn1');
+//
+// // 팝오버 내용 요소 선택
+// const popoverContent = document.getElementById('popover-content');
+//
+// // 미트볼 버튼 클릭 이벤트 리스너 등록
+// myPinBtn.addEventListener('click', () => {
+//     // 팝오버 내용 요소의 display 속성을 변경하여 보이기/숨기기
+//     if (popoverContent.style.display === 'none') {
+//         popoverContent.style.display = 'block';
+//     } else {
+//         popoverContent.style.display = 'none';
+//     }
+// });
 
