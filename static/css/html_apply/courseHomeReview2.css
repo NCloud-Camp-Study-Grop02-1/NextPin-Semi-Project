@@ -463,3 +463,55 @@ a[aria-selected='false'] {
     height: 35px;
     color: white;
 }
+
+.generatedCourse {
+    border: none;
+    border-radius: 10px;
+    color: black;
+    margin: 20px;
+}
+
+.coursebox {
+    border: 2px solid #ffc061;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.coursebox h3 {
+    margin: 10px 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.coursebox p {
+    margin: 10px 20px;
+    font-size: large;
+}
+
+
+.generated-item {
+    flex-grow: 1;
+    color: white;
+    margin: 10px 20px 20px 20px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: left;
+}
+
+.generated-item h4 {
+    padding: 10px;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.generated-item h5 {
+    padding: 10px;
+    padding-left: 40px;
+    margin: 0;
+}
+
+.generated-item p {
+    padding: 10px;
+    padding-left: 40px;
+    margin: 0;
+}

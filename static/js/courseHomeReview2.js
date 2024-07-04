@@ -33,8 +33,6 @@ function toggleContent() {
     content.classList.toggle('hidden'); // 'hidden' 클래스를 toggle
 }
 
-
-
 // 색상 버튼 클릭 시 테두리 추가
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
@@ -59,48 +57,43 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 확인 버튼 클릭 시 코스 생성
-document.addEventListener('DOMContentLoaded', () => {
-    const datepicker = document.getElementById('testDatepicker');
-    const memoCheckbox = document.getElementById('memo-active');
-    const memoText = document.getElementById('memo-text');
-    const colorButtons = document.querySelectorAll('.color-button');
-    const finishButton = document.querySelector('.finish-button');
+$(document).ready(function() {
+    // 확인 버튼 클릭 시 동작
+    $('.finish-button').click(function() {
+        var selectedDate = $('#testDatepicker').val();
+        var selectedColor = $('.color-button.selected').css('background-color');
 
-    let selectedColor = '';
-    let selectedDate = '';
+        if (selectedDate && selectedColor) {
+            var memoText = '';
+            if ($('#memo-active').is(':checked')) {
+                memoText = $('#memo-text').val();
+            }
 
-    memoCheckbox.addEventListener('change', () => {
-        memoText.disabled = !memoCheckbox.checked;
-    });
+            var generatedHTML = `
+                <div class="generatedCourse">
+                    <div class="coursebox">
+                    <h3>코스 1</h3>
+                    <p>${selectedDate}</p>
+                        <div class="generated-item" style="background-color: ${selectedColor};">
+                            <h4>1일차</h4>
+                            <h5>① 니뽕내뽕 강남역점</h5>
+                            <p><img src="../images/edit-icon.png"> ${memoText}</p>
+                        </div>
+                     </div>
+                </div>
+            `;
 
-    colorButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            selectedColor = button.getAttribute('data-color');
-            colorButtons.forEach(btn => btn.style.border = 'none');
-            button.style.border = '2px solid black';
-        });
-    });
-
-    finishButton.addEventListener('click', () => {
-        selectedDate = datepicker.value;
-        const memo = memoText.value;
-
-        if (!selectedDate || !selectedColor) {
-            alert('날짜와 색상을 선택하세요.');
-            return;
+            $('#generatedContent').html(generatedHTML);
+            $('#generatedContent').show(); // #generatedContent 보이기
+            $('#content').hide(); // #content 숨기기
+        } else {
+            alert('날짜와 색상은 필수 선택 항목입니다.');
         }
-
-        const contentDiv = document.getElementById('content');
-        contentDiv.innerHTML = `
-            <div class="new-content" style="background-color: ${selectedColor}; padding: 20px; border-radius: 8px;">
-                <h3>1일차</h3>
-                <p>날짜: ${selectedDate}</p>
-                ${memo ? `<p>메모: ${memo}</p>` : ''}
-                <p>니뽕내뽕</p>
-            </div>
-        `;
     });
+
+
 });
+
 
 
 
