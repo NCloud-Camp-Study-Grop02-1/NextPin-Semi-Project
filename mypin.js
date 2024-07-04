@@ -456,6 +456,35 @@ $('#close-modal-button, #modal-overlay').click(function() {
 
 
 
+// 검색 입력 값에 따라 항목을 필터링하는 함수
+function filterItems() {
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+    // .mypin-content 내의 항목을 필터링
+    const myPinItems = document.querySelectorAll('.mypin-content .container');
+    myPinItems.forEach(item => {
+        const value = item.querySelector('input').value.toLowerCase();
+        if (value.includes(searchValue)) {
+            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+        } else {
+            item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
+        }
+    });
+
+    // .like-content 내의 항목을 필터링
+    const likeItems = document.querySelectorAll('.like-content .container');
+    likeItems.forEach(item => {
+        const value = item.querySelector('input').value.toLowerCase();
+        if (value.includes(searchValue)) {
+            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+        } else {
+            item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
+        }
+    });
+}
+
+// 검색 입력 창에 이벤트 리스너 추가
+document.getElementById('searchInput').addEventListener('input', filterItems);
 
 
 
