@@ -50,9 +50,9 @@ function toggleSave(button) {
     const isSaved = saveImage.src.includes('after');
 
     if (isSaved) {
-        saveImage.src = 'images/icon_save_before.png';
+        saveImage.src = 'images/save-before-icon.png';
     } else {
-        saveImage.src = 'images/icon_save_after.png';
+        saveImage.src = 'images/save-after-icon.png';
     }
 }
 
