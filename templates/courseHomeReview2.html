@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>NextPin</title>
     <link href="css/reset.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- 파비콘 설정 -->
@@ -101,7 +101,9 @@
             <h3 class="location_title">니뽕내뽕 강남역점
                 <span class="food_type">퓨전요리</span>
             </h3>
-            <img class="icon_location" src="../images/icon_location.png" alt="위치 찍기">
+            <button class="chosenPin" onclick="toggleImage(this); toggleContent();">
+                <img class="icon_pin" src="../images/icon_location.png" alt="위치 찍기">
+            </button>
         </div>
         <div id="reviewStatics">
             <span id="reviewScore">★ 4.68</span>
@@ -225,7 +227,7 @@
             <img class="arrow-icon" src="../images/icon_toggleButton_arrow.png" alt="toggle icon">
         </div>
     </div>
-    <div class="content">
+    <div class="content" id="content">
         <!--캘린더 날짜 선택-->
         <div class="calendar">
             <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
@@ -258,7 +260,7 @@
         </div>
         <!--확인 버튼 (코스 생성)-->
         <div class="finishButton">
-            <button>확인</button>
+            <button class="finish-button" style="background-color: #4098FF;">확인</button>
         </div>
     </div>
     <div class="map_wrap">

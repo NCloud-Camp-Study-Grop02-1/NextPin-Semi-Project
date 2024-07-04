@@ -14,6 +14,27 @@ $(function() {
     });
 });
 
+// 핀 선택 시 색상 채우기
+function toggleImage(button) {
+    var img = button.querySelector('.icon_pin');
+    var originalSrc = "../images/icon_location.png";
+    var newSrc = "../images/icon_location-pin.png";
+
+    if (img.src.includes("icon_location-pin.png")) {
+        img.src = originalSrc;
+    } else {
+        img.src = newSrc;
+    }
+}
+
+// 핀 선택시 코스 생성 창 나오기
+function toggleContent() {
+    var content = document.querySelector('.content');
+    content.classList.toggle('hidden'); // 'hidden' 클래스를 toggle
+}
+
+
+
 // 색상 버튼 클릭 시 테두리 추가
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
@@ -37,7 +58,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// 확인 버튼 클릭 시 코스 생성
+document.addEventListener('DOMContentLoaded', () => {
+    const datepicker = document.getElementById('testDatepicker');
+    const memoCheckbox = document.getElementById('memo-active');
+    const memoText = document.getElementById('memo-text');
+    const colorButtons = document.querySelectorAll('.color-button');
+    const finishButton = document.querySelector('.finish-button');
 
+    let selectedColor = '';
+    let selectedDate = '';
+
+    memoCheckbox.addEventListener('change', () => {
+        memoText.disabled = !memoCheckbox.checked;
+    });
+
+    colorButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedColor = button.getAttribute('data-color');
+            colorButtons.forEach(btn => btn.style.border = 'none');
+            button.style.border = '2px solid black';
+        });
+    });
+
+    finishButton.addEventListener('click', () => {
+        selectedDate = datepicker.value;
+        const memo = memoText.value;
+
+        if (!selectedDate || !selectedColor) {
+            alert('날짜와 색상을 선택하세요.');
+            return;
+        }
+
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = `
+            <div class="new-content" style="background-color: ${selectedColor}; padding: 20px; border-radius: 8px;">
+                <h3>1일차</h3>
+                <p>날짜: ${selectedDate}</p>
+                ${memo ? `<p>메모: ${memo}</p>` : ''}
+                <p>니뽕내뽕</p>
+            </div>
+        `;
+    });
+});
+
+
+
+// 카카오맵
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
