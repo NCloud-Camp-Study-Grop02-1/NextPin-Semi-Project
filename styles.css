@@ -249,10 +249,9 @@ body {
     transition: color 0.3s; /* 색상 변경 시 애니메이션 */
 }
 
-.day ol {
+.day ul {
     padding: 0;
     margin-top: 12px;
-    list-style-type: decimal;
 }
 .day li {
     text-align: left;
@@ -260,7 +259,7 @@ body {
     margin-bottom: 15px; /* 각 li 요소 사이의 간격 */
     padding-bottom: 5px; /* 선분이 li 요소 바로 아래에 위치하도록 하기 위해 padding 추가 */
 }
-.day ol li::after {
+.day ul li::after {
     content: "";
     display: block;
     width: 100%; /* 원하는 선의 길이 */
