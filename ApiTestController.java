@@ -67,6 +67,14 @@ public class ApiTestController {
         return mav;
     }
 
+    @GetMapping("/courseHomeReview2")
+    public ModelAndView courseHomeReview2() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("courseHomeReview2");
+
+        return mav;
+    }
+
     @GetMapping("/userPage")
     public ModelAndView userPage() {
         ModelAndView mav = new ModelAndView();
@@ -79,22 +87,6 @@ public class ApiTestController {
     public ModelAndView randomPin() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("randomPin");
-
-        return mav;
-    }
-
-    @GetMapping("/sidebar")
-    public ModelAndView sidebar() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("side-bar");
-
-        return mav;
-    }
-
-    @GetMapping("/sidebar_none")
-    public ModelAndView sidebar_none() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("side-bar(long_none)");
 
         return mav;
     }
@@ -147,10 +139,10 @@ public class ApiTestController {
         return mav;
     }
 
-    @GetMapping("/test")
-    public ModelAndView test() {
+    @GetMapping("/myCourse2")
+    public ModelAndView myCourse2() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("test");
+        mav.setViewName("myCourse2");
 
         return mav;
     }

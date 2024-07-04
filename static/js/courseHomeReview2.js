@@ -1,103 +1,4 @@
-window.onload = function(){
-    searchPlaces();
-    // printResult();
-    $("#dataChk").on("click", function(){
-        $.ajax({
-            method : "POST",
-            headers : {
-                'content-type':'application/json'
-            },
-            url : "/kakaoData",
-            async : true,
-            dataType: "json",
-            data : JSON.stringify(placeData),
-            success : function(result){
-                console.log("ajax : result : " + result);
-            },
-            error : function(request, status, error){
-                console.log(error);
-            }
-        });
-    });
-
-    $("input[name=courseType][value=course_food]").prop("checked", true);
-    $('#course_food_label').css('background', '#FFC061');
-    $("input[name=courseType]").on("click",function(){
-        // 맛집 선택시
-        if($(this).attr('id') === 'course_food'){
-            if($(this).is(':checked')) {
-                $('#course_food_label').css('background', '#FFC061');
-                $('#course_caffe_label').css('background', '#fff');
-                $('#course_tour_label').css('background', '#fff');
-                $('#course_rest_label').css('background', '#fff');
-            }
-        }
-        // 카페 선택시
-        else if($(this).attr('id') === 'course_caffe'){
-            if($(this).is(':checked')) {
-                $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#FAB7B7');
-                $('#course_tour_label').css('background', '#fff');
-                $('#course_rest_label').css('background', '#fff');
-            }
-        }
-        // 관광지 선택시
-        else if($(this).attr('id') === 'course_tour'){
-            if($(this).is(':checked')) {
-                $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#fff');
-                $('#course_tour_label').css('background', '#96E781');
-                $('#course_rest_label').css('background', '#fff');
-            }
-        }
-        // 숙소 선택시
-        else if($(this).attr('id') === 'course_rest'){
-            if($(this).is(':checked')) {
-                $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#fff');
-                $('#course_tour_label').css('background', '#fff');
-                $('#course_rest_label').css('background', '#D7AFFF');
-            }
-        }
-        // console.log(this);
-    });
-
-    $('#searchBtn').on("click", function(){
-        searchPlaces();
-    });
-
-    const sidebar = $('.course_detail');
-    const sidebarToggle = $('.sidebar-toggle');
-    let isExpand = false;
-
-    sidebarToggle.on('click', () => {
-        isExpand = !isExpand;
-        sidebar.toggle('open');
-
-        if(isExpand) {
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
-        }
-
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
-    });
-
-    $('#homeTab').on('click', function(){
-        $('#homeTab').attr('aria-selected', true);
-        $('#reviewTab').attr('aria-selected', false);
-        $('#homeContents').css('display', 'flex');
-        $('#reviewContents').css('display', 'none');
-    });
-
-    $('#reviewTab').on('click', function(){
-        $('#reviewTab').attr('aria-selected', true);
-        $('#homeTab').attr('aria-selected', false);
-        $('#homeContents').css('display', 'none');
-        $('#reviewContents').css('display', 'block');
-    });
-
+$(function() {
     $("#testDatepicker").datepicker({
         changeMonth: true,
         changeYear: true,
@@ -111,38 +12,99 @@ window.onload = function(){
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
         }
     });
+});
 
-    $('#memo-active').on('change', function(){
-        $('memo-text').attr('disabled', !this.checked);
+// 핀 선택 시 색상 채우기
+function toggleImage(button) {
+    var img = button.querySelector('.icon_pin');
+    var originalSrc = "../images/icon_location.png";
+    var newSrc = "../images/icon_location-pin.png";
+
+    if (img.src.includes("icon_location-pin.png")) {
+        img.src = originalSrc;
+    } else {
+        img.src = newSrc;
+    }
+}
+
+// 핀 선택시 코스 생성 창 나오기
+function toggleContent() {
+    var content = document.querySelector('.content');
+    content.classList.toggle('hidden'); // 'hidden' 클래스를 toggle
+}
+
+
+
+// 색상 버튼 클릭 시 테두리 추가
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.color-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (button.classList.contains('selected')) {
+                button.classList.remove('selected');
+            } else {
+                buttons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+            }
+        });
     });
+});
+
+// 메모 입력 함수
+document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('memo-active').addEventListener('change', function() {
         document.getElementById('memo-text').disabled = !this.checked;
     });
+});
 
-    $('#iconReservation').on('click', function(){
-        $('.content').css('display', '')
+// 확인 버튼 클릭 시 코스 생성
+document.addEventListener('DOMContentLoaded', () => {
+    const datepicker = document.getElementById('testDatepicker');
+    const memoCheckbox = document.getElementById('memo-active');
+    const memoText = document.getElementById('memo-text');
+    const colorButtons = document.querySelectorAll('.color-button');
+    const finishButton = document.querySelector('.finish-button');
+
+    let selectedColor = '';
+    let selectedDate = '';
+
+    memoCheckbox.addEventListener('change', () => {
+        memoText.disabled = !memoCheckbox.checked;
     });
 
-    const sidebar2 = $('.content');
-    const sidebarToggle2 = $('#iconReservation');
-    let isExpand2 = false;
+    colorButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedColor = button.getAttribute('data-color');
+            colorButtons.forEach(btn => btn.style.border = 'none');
+            button.style.border = '2px solid black';
+        });
+    });
 
-    sidebarToggle.on('click', () => {
-        isExpand2 = !isExpand2;
-        sidebar.toggle('open');
+    finishButton.addEventListener('click', () => {
+        selectedDate = datepicker.value;
+        const memo = memoText.value;
 
-        if(isExpand2) {
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+        if (!selectedDate || !selectedColor) {
+            alert('날짜와 색상을 선택하세요.');
             return;
         }
 
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = `
+            <div class="new-content" style="background-color: ${selectedColor}; padding: 20px; border-radius: 8px;">
+                <h3>1일차</h3>
+                <p>날짜: ${selectedDate}</p>
+                ${memo ? `<p>메모: ${memo}</p>` : ''}
+                <p>니뽕내뽕</p>
+            </div>
+        `;
     });
-};
+});
 
 
+
+// 카카오맵
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
@@ -395,3 +357,104 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
+
+window.onload = function(){
+    searchPlaces();
+    // printResult();
+    $("#dataChk").on("click", function(){
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/kakaoData",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(placeData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
+    });
+
+    $("input[name=courseType][value=course_food]").prop("checked", true);
+    $('#course_food_label').css('background', '#FFC061');
+    $("input[name=courseType]").on("click",function(){
+        // 맛집 선택시
+        if($(this).attr('id') === 'course_food'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#FFC061');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 카페 선택시
+        else if($(this).attr('id') === 'course_caffe'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#FAB7B7');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 관광지 선택시
+        else if($(this).attr('id') === 'course_tour'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#96E781');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 숙소 선택시
+        else if($(this).attr('id') === 'course_rest'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#D7AFFF');
+            }
+        }
+        // console.log(this);
+    });
+
+    $('#searchBtn').on("click", function(){
+        searchPlaces();
+    });
+
+    const sidebar = $('.course_detail');
+    const sidebarToggle = $('.sidebar-toggle');
+    let isExpand = false;
+
+    sidebarToggle.on('click', () => {
+        isExpand = !isExpand;
+        sidebar.toggle('open');
+
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
+    });
+
+    $('#homeTab').on('click', function(){
+        $('#homeTab').attr('aria-selected', true);
+        $('#reviewTab').attr('aria-selected', false);
+        $('#homeContents').css('display', 'flex');
+        $('#reviewContents').css('display', 'none');
+    });
+
+    $('#reviewTab').on('click', function(){
+        $('#reviewTab').attr('aria-selected', true);
+        $('#homeTab').attr('aria-selected', false);
+        $('#homeContents').css('display', 'none');
+        $('#reviewContents').css('display', 'block');
+    });
+};
