@@ -10,7 +10,7 @@
     <link href="../images/NP_pavicon.png" rel="icon" type="image/png">
     <!-- 사이드바 스타일 시트 적용 -->
     <link href="css/kakaoMap.css" rel="stylesheet"/>
-    <link href="css/html_apply/side-bar_style.css" rel="stylesheet" >
+    <link href="css/html_apply/sidebar_userPage.css" rel="stylesheet" >
     <link href="css/html_apply/userPage.css" rel="stylesheet" >
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -21,7 +21,7 @@
 <div id="side-bar">
     <li id="title">
         <!-- 메인화면으로 이동 -->
-        <a href="http://localhost:8080/main#">
+        <a href="main">
             <img src="../images/NP_icon.png" alt="NP아이콘">
         </a>
     </li>
@@ -29,29 +29,29 @@
     <div id="icons">
         <li class="icon">
             <!-- 코스로 이동 -->
-            <a href="#">
+            <a href="mainCourse">
                 <img src="../images/pin.png" alt="코스아이콘" id="couse-icon">
                 <span>코스</span>
             </a>
         </li>
         <li class="icon">
             <!-- 일정으로 이동 -->
-            <a href="calendar.html">
-                <img src="../images/calendar.png" alt="일정아이콘" id="calendar-icon">
+            <a href="calendar">
+                <img src="../images/icon_calendar.png" alt="일정아이콘" id="calendar-icon">
                 <span>일정</span>
             </a>
         </li>
         <li class="icon">
             <!-- 커뮤니티로 이동 -->
-            <a href="#">
-                <img src="../images/community.png" alt="커뮤니티아이콘" id="community-icon">
+            <a href="community">
+                <img src="../images/icon_community.png" alt="커뮤니티아이콘" id="community-icon">
                 <span id="community-span">커뮤니티</span>
             </a>
         </li>
         <li class="icon">
             <!-- 랜덤핀으로 이동 -->
-            <a href="http://localhost:8080/randomPin#">
-                <img src="../images/random.png" alt="랜덤아이콘" id="random-icon">
+            <a href="randomPin">
+                <img src="../images/icon_random.png" alt="랜덤아이콘" id="random-icon">
                 <span>랜덤핀</span>
             </a>
         </li>
@@ -75,7 +75,7 @@
             <textarea id="profile-textarea" rows="2"></textarea>
             <img src="../images/edit-icon.png" alt="Edit Icon" class="edit-icon" onclick="editDescription()">
         </div>
-</div>
+    </div>
     <div class="mycoursepin">
         <img class="content-title-icon" src="../images/pin_icon.png" alt="pin 아이콘">
         <p class="content-title">My <span class="highlight">P</span>in</p>
@@ -87,65 +87,115 @@
         <img src="images/icon_heart_before.png" alt="Heart">
         <span>0</span>
     </button>
-</div>
-<!--course-button 클릭하면 여행 일정 보이기-->
-<div class="course-details">
-    <div class="day user1day1">
-        <div class="card card-body">
-            <ul>1일차
-                <li>
-                    <div>
-                        00음식점
-                        <img class="pin-icon" src="../images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00카페
-                        <img class="pin-icon" src="../images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00전시회
-                        <img class="pin-icon" src="../images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00가게
-                        <img class="pin-icon" src="../images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-            </ul>
-            <ul>2일차
-                <li>
-                    <div>
-                        00음식점
-                        <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00카페
-                        <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00전시회
-                        <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        00가게
-                        <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
-                    </div>
-                </li>
-            </ul>
-        </div>
     </div>
+    <!--course-button 클릭하면 여행 일정 보이기-->
+    <div class="course-details">
+        <div class="day user1day1">
+            <div class="card card-body">
+                <ul>1일차
+                    <li>
+                        <div>
+                            당신의 안목 펜션
+                            <img class="pin-icon" src="images/icon_location-pin.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            송정 해수욕장
+                            <img class="pin-icon" src="images/icon_location-pin.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            번패티번 강릉
+                            <img class="pin-icon" src="images/icon_location-pin.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            엔드 투 앤드 카페
+                            <img class="pin-icon" src="images/icon_location-pin.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            순두부젤라또 1호점
+                            <img class="pin-icon" src="images/icon_location-pin.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            차현희 순두부 청국장
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                </ul>
+                <ul>2일차
+                    <li>
+                        <div>
+                            아르떼뮤지엄 강릉
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            카페덕덕
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            이모네생선찜
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            현대 장칼국수
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            스튜디오 킨조 소품샵
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                </ul>
+                <ul>3일차
+                    <li>
+                        <div>
+                            아르떼뮤지엄 강릉
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            카페덕덕
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            이모네생선찜
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            현대 장칼국수
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            스튜디오 킨조 소품샵
+                            <img class="pin-icon" src="images/pin_icon.png" alt="pin아이콘">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="settings">
         <a href="#" id="openModalLink">회원 탈퇴</a>
@@ -168,16 +218,18 @@
             <span class="close-btn">&times;</span>
             <p class="modal-title">꺼저</p>
             <p class="modal-subtitle">ㅗ</p>
-
-            </div>
         </div>
     </div>
-
 </div>
+<!-- 사이드바 감추기/보이기 버튼 -->
+<div class="sidebar-arrow-container">
+    <div class="sidebar-toggle">
+        <img class="arrow-icon" src="../images/icon_toggleButton_arrow.png" alt="toggle icon">
+    </div>
 </div>
 
 <div class="map_wrap">
-    <div id="map" style="width:100%;height:135%;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:200%;height:100vh;position:relative;overflow-x:hidden;"></div>
 </div>
 
 <script src="js/kktmap.js"></script>
