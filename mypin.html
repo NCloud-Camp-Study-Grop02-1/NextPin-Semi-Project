@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>my pin 페이지</title>
     <link href="css/html_apply/reset.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.1.min.js"></script>
     <!-- jQuery UI -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- jQuery -->
-    <script src="js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
     <!-- 파비콘 설정 -->
     <link rel="icon" type="images/png" href="../static/images/NP_pavicon.png">
@@ -372,7 +372,7 @@
                         </div>
                         <!-- 캘린더 팝업 -->
                         <div class="calendar-container" id="calendar-container">
-                            <div id="calendar"></div>
+                            <input type="date" id="calendar">
                             <button id="save-date-button">저장</button>
                         </div>
 

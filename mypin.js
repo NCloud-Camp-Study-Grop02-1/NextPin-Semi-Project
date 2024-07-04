@@ -413,7 +413,6 @@ function toggleSaveState(icon) {
     if (!isSaved) {
         // 캘린더 표시
         $('#calendar-container').fadeIn();
-        $('#calendar').datepicker();
     } else {
         // 이미지 변경 및 저장 상태 업데이트
         icon.src = 'images/save-before-icon.png';

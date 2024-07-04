@@ -239,7 +239,7 @@ textarea{
 .sidebar-toggle {
     position: absolute;
     top: 50%;
-    left: 32%;
+    left: 30%;
     width: 50px;
     height: 80px;
     border-left: #fff;
@@ -258,9 +258,9 @@ textarea{
 .sidebar-arrow-container {
     position: relative;
     top: 0;
-    left: 0.7%;
+    left: 0;
     height: 100%;
-    width: 30px;
+    width: 0;
     text-align: center;
     background-color: transparent;
     transition: width 0.3s ease;
@@ -292,6 +292,7 @@ textarea{
     transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
+    border-radius: 1.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     width: 300px; /* 모달의 가로 크기 */
