@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextPin courseMake</title>
+    <title>NextPin</title>
     <!--jQuery UI CSS 파일-->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
     <!--jQuery 기본 js파일-->
@@ -21,60 +21,62 @@
     <!-- 파비콘 설정 -->
     <link rel="icon" type="image/png" href="../images/NP_pavicon.png">
     <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/html_apply/side-bar_style.css">
+    <link rel="stylesheet" href="css/html_apply/side-bar_style_mingyo.css">
     <!--courseMake JavaScript 연동-->
     <script src="js/courseMake.js"></script>
 </head>
 <body>
 <div class="container">
     <!-- 사이드바 -->
-    <div id="side-bar">
-        <li id="title">
-            <!-- 메인화면으로 이동 -->
-            <a href="#">
-                <img src="../images/NP_icon.png" alt="NP아이콘">
-            </a>
-        </li>
-        <!-- 메뉴들 -->
-        <div id="icons">
-            <li class="icon">
-                <!-- 코스로 이동 -->
-                <a href="#">
-                    <img src="../images/pin-hover.png" alt="코스아이콘" id="couse-icon">
-                    <span>코스</span>
+    <nav id="side-bar">
+        <div class="wrapper">
+            <div id="title">
+                <!-- 메인화면으로 이동 -->
+                <a href="main" class="link">
+                    <img src="../images/NP_icon.png" alt="NP아이콘">
                 </a>
-            </li>
-            <li class="icon">
-                <!-- 일정으로 이동 -->
-                <a href="calendar.html">
-                    <img src="../images/calendar.png" alt="일정아이콘" id="calendar-icon">
-                    <span>일정</span>
-                </a>
-            </li>
-            <li class="icon">
-                <!-- 커뮤니티로 이동 -->
-                <a href="#">
-                    <img src="../images/community.png" alt="커뮤니티아이콘" id="community-icon">
-                    <span id="community-span">커뮤니티</span>
-                </a>
-            </li>
-            <li class="icon">
-                <!-- 랜덤핀으로 이동 -->
-                <a href="#">
-                    <img src="../images/random.png" alt="랜덤아이콘" id="random-icon">
-                    <span>랜덤핀</span>
-                </a>
-            </li>
+            </div>
+            <!-- 메뉴들 -->
+            <div id="icons">
+                <div class="icon menu">
+                    <!-- 코스로 이동 -->
+                    <a href="mainCourse" class="link">
+                        <img src="../images/pin-hover.png" alt="코스아이콘" id="course-icon">
+                        <span>코스</span>
+                    </a>
+                </div>
+                <div class="icon menu">
+                    <!-- 일정으로 이동 -->
+                    <a href="calendar" class="link">
+                        <img src="../images/icon_calendar.png" alt="일정아이콘" id="calendar-icon">
+                        <span>일정</span>
+                    </a>
+                </div>
+                <div class="icon menu">
+                    <!-- 커뮤니티로 이동 -->
+                    <a href="community" class="link">
+                        <img src="../images/icon_community.png" alt="커뮤니티아이콘" id="community-icon">
+                        <span id="community-span">커뮤니티</span>
+                    </a>
+                </div>
+                <div class="icon menu">
+                    <!-- 랜덤핀으로 이동 -->
+                    <a href="randomPin" class="link">
+                        <img src="../images/icon_random.png" alt="랜덤아이콘" id="random-icon">
+                        <span>랜덤핀</span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div id="profile">
-            <li>
+            <li class="menu">
                 <!-- 로그인으로 이동 -->
-                <a href="#">
+                <a href="login" class="link">
                     <img src="../images/profile.png" alt="기본 프로필 이미지">
                 </a>
             </li>
         </div>
-    </div>
+    </nav>
 
     <div class="content">
         <div class="content-inner">
