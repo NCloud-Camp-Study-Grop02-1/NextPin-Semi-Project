@@ -233,7 +233,7 @@ textarea{
 .sidebar-toggle {
     position: absolute;
     top: 50%;
-    left: 32%;
+    left: 30%;
     width: 50px;
     height: 80px;
     border-left: #fff;
@@ -252,9 +252,9 @@ textarea{
 .sidebar-arrow-container {
     position: relative;
     top: 0;
-    left: 0.7%;
+    left: 0;
     height: 100%;
-    width: 30px;
+    width: 0;
     text-align: center;
     background-color: transparent;
     transition: width 0.3s ease;

@@ -113,16 +113,17 @@
             </div>
         </div>
     </div>
-
-
-
-
-
+    <!-- 사이드바 감추기/보이기 버튼 -->
+    <div class="sidebar-arrow-container">
+        <div class="sidebar-toggle">
+            <img class="arrow-icon" src="../images/icon_toggleButton_arrow.png" alt="toggle icon">
+        </div>
+    </div>
     <!--지도-->
     <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+        <div id="map" style="width:200%;height:100vh;position:relative;overflow:hidden;"></div>
     </div>
-<!--카카오맵 불러오기-->
+    <!--카카오맵 불러오기-->
     <script>
         var placeData = [];
         // 마커를 담을 배열입니다
@@ -397,21 +398,23 @@
                     }
                 });
             });
+            <!-- 사이드바 감추기/보이기 버튼 기능 -->
+            const sidebar = $('.content');
+            const sidebarToggle = $('.sidebar-toggle');
+            let isExpand = false;
 
-            kakao.maps.event.addListener(map, 'center_changed', function() {
+            sidebarToggle.on('click', () => {
+                isExpand = !isExpand;
+                sidebar.toggle('open');
 
-                // 지도의  레벨을 얻어옵니다
-                var level = map.getLevel();
+                if(isExpand) {
+                    $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+                    return;
+                }
 
-                // 지도의 중심좌표를 얻어옵니다
-                var latlng = map.getCenter();
-
-                var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
-                message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
-
-                var resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = message;
-
+                $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+                // sidebarContainer.classList.toggle('open');
+                // sidebarArrowContainer.classList.toggle('open');
             });
         };
     </script>

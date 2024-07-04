@@ -1,4 +1,22 @@
+window.onload = function(){
+    const sidebar = $('.container');
+    const sidebarToggle = $('.sidebar-toggle');
+    let isExpand = false;
 
+    sidebarToggle.on('click', () => {
+        isExpand = !isExpand;
+        sidebar.toggle('open');
+
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
+    });
+};
 
 function editDescription() {
     var p = document.getElementById('profile-description');

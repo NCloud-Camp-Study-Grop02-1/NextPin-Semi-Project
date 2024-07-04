@@ -273,3 +273,35 @@ body {
     height: auto; /* 비율 유지 */
     cursor: pointer;
 }
+/* 사이드바 토글 버튼 */
+.sidebar-arrow-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    text-align: center;
+    background-color: transparent;
+    transition: width 0.3s ease;
+    z-index: 2;
+}
+
+.sidebar-arrow-container .sidebar-toggle {
+    position: absolute;
+    top: 50vh;
+    left: 30%;
+    width: 50px;
+    height: 80px;
+    border-left: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-image: url('../../images/icon_toggleButton.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+.sidebar-container.open {
+    width: 200px;
+}
