@@ -43,7 +43,7 @@
                     <a href="#" class="link" id="recommendPlace">
                         <li>장소추천</li>
                     </a>
-                    <a href="mypin" class="link" id="myPin">
+                    <a href="myPin" class="link" id="myPin">
                         <li>My Pin</li>
                     </a>
                 </div>
@@ -221,12 +221,7 @@
             </div>
         </div>
     </div>
-    <!-- 사이드바 감추기/보이기 버튼 -->
-    <div class="sidebar-arrow-container">
-        <div class="sidebar-toggle">
-            <img class="arrow-icon" src="../images/icon_toggleButton_arrow.png" alt="toggle icon">
-        </div>
-    </div>
+
     <div class="content" id="content">
         <!--캘린더 날짜 선택-->
         <div class="calendar">
@@ -263,6 +258,17 @@
             <button class="finish-button" style="background-color: #4098FF;">확인</button>
         </div>
     </div>
+
+    <!-- 생성된 날짜-장소이름-메모가 표시될 div -->
+    <div id="generatedContent" class="generated-content"  style="display: none;"></div>
+
+    <!-- 사이드바 감추기/보이기 버튼 -->
+    <div class="sidebar-arrow-container">
+        <div class="sidebar-toggle">
+            <img class="arrow-icon" src="../images/icon_toggleButton_arrow.png" alt="toggle icon">
+        </div>
+    </div>
+    <!--카카오맵-->
     <div class="map_wrap">
         <div id="map" style="width:200%;height:100vh;position:relative;overflow:hidden;"></div>
     </div>

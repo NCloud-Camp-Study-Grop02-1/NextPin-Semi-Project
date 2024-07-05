@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>my pin 페이지</title>
+    <title>NextPin</title>
     <link href="css/reset.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="js/jquery-3.7.1.min.js"></script>
@@ -41,11 +41,11 @@
                         <img src="../images/pin-hover.png" alt="코스아이콘">
                         <span>코스</span>
                     </a>
-                    <a href="#" class="link" id="recommendPlace">
-                        <li>장소추천</li>
+                    <a href="courseHomeReview2" class="link" id="recommendPlace">
+                        <li style="margin-left: 1.2rem; margin-bottom: 0.5rem">장소추천</li>
                     </a>
                     <a href="#" class="link" id="myPin">
-                        <li>My Pin</li>
+                        <li style="margin-left: 0.01rem">My Pin</li>
                     </a>
                 </div>
                 <li class="icon menu">
@@ -83,16 +83,17 @@
 
     <!--사이드 네브바-->
     <div class="side-navbar">
-        <!--검색창-->
+        <!-- 검색창 -->
         <div class="nav-search box">
-            <input class="search-bar" type="text" placeholder="코스 검색">
+            <input class="search-bar" type="text" placeholder="코스 검색" id="searchInput">
         </div>
+
 
         <!--my pin-->
         <div class="nav-mypin box">
             <img class="content-title-icon" src="images/icon_location-pin.png" alt="pin 아이콘">
             <p class="content-title">My <span class="yellow">P</span>in</p>
-            <p class="mypin-num">2</p>
+            <p class="mypin-num">3</p>
             <!--mypin내용-->
             <div class="mypin-content content">
                 <ul>
@@ -282,6 +283,7 @@
         <div class="nav-like box">
             <img class="content-title-icon" src="images/icon_heart_after.png" alt="하트 아이콘">
             <p class="content-title">관심있는 코스</p>
+            <p class="mypin-num">1</p>
             <!--관심있는 코스 내용-->
             <div class="like-content content">
                 <ul>
@@ -395,7 +397,7 @@
     </div>
     <!--지도-->
     <div class="map_wrap">
-        <div id="map" style="width:300%; height:100%; position:relative; overflow: hidden"></div>
+        <div id="map" style="width:300%; height:100vh; position:relative; overflow: hidden"></div>
     </div>
     <script src="js/mypin.js"></script>
 </body>

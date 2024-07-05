@@ -352,6 +352,19 @@ a[aria-selected='false'] {
 
 
 /*********************************************************/
+/*.content {*/
+/*    display: none;*/
+/*    flex-grow: 1;*/
+/*    padding: 20px; !* 사이드바와의 여백 설정 *!*/
+/*}*/
+
+/*.content.hidden {*/
+/*    display: block; !* hidden 클래스가 추가되면 content를 보여줌 *!*/
+/*}*/
+
+/*.blue {*/
+/*    color: #4098FF;*/
+/*}*/
 
 /*메모*/
 .memo-container {

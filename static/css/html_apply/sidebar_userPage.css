@@ -67,15 +67,15 @@ body {
 }
 
 .icon #calendar-icon:hover {
-    content: url("../../images/calendar-hover.png");
+    content: url("../../images/icon_calendar-hover.png");
 }
 
 .icon #community-icon:hover {
-    content: url("../../images/community-hover.png");
+    content: url("../../images/icon_community-hover.png");
 }
 
 .icon #random-icon:hover {
-    content: url("../../images/random-hover.png");
+    content: url("../../images/icon_random-hover.png");
 }
 
 /* a태그 스타일 */

@@ -119,17 +119,13 @@ window.onload = function(){
         document.getElementById('memo-text').disabled = !this.checked;
     });
 
-    $('#iconReservation').on('click', function(){
-        $('.content').css('display', '')
-    });
-
     const sidebar2 = $('.content');
     const sidebarToggle2 = $('#iconReservation');
     let isExpand2 = false;
 
-    sidebarToggle.on('click', () => {
+    sidebarToggle2.on('click', () => {
         isExpand2 = !isExpand2;
-        sidebar.toggle('open');
+        sidebar2.toggle('open');
 
         if(isExpand2) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
