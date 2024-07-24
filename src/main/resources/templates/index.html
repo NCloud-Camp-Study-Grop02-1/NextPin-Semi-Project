@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!--카카오맵 불러오기-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
+</head>
+<body>
+    <h1>Index page 테스트</h1>
+    <link href="../static/css/reset.css" rel="stylesheet">
+    <a href="mainCourse">kakaoMaps 페이지로</a>
+    <div style="border: 1px solid black;">
+        <h3>파일 업로드</h3>
+        <form id="excelForm" method="post" enctype="multipart/form-data">
+            <table>
+                <td><input type="file" class="ex_file" id="uploadFile" name="uploadFile"/></td>
+                <td><button id="subBtn" type="submit">저장</button>
+            </table>
+        </form>
+    </div>
+    <div>
+        <button id="conversionXY">좌표 변환 작업</button>
+    </div>
+    <script type="text/javascript">
+        $(() => {
+            $("#subBtn").on("click", e => {
+                let formData = new FormData($('#excelForm')[0]);
+                console.log("파일 확인 : " + formData);
+
+                e.preventDefault();
+                $.ajax({
+                    url : "/uploadExcel",
+                    method : "POST",
+                    enctype: "multipart/form-data",                     // 필수
+                    data : formData,            // 필수
+                    processData: false,                                 // 필수
+                    contentType: false,                                 // 필수
+                    success : function(result){
+                        console.log("ajax : result : " + result);
+                        $("#uploadFile").val('');
+                    },
+                    error : function(request, status, error){
+                        console.log(error);
+                    }
+                });
+            });
+
+            $("#conversionXY").on("click", e => {
+                $.ajax({
+                    method : "GET",
+                    headers : {
+                        'content-type':'application/json'
+                    },
+                    url : "/conversionProcessing",
+                    async : true,
+                    dataType: "json",
+                    success : function(result){
+                        console.log("ajax : result : " + result);
+                    },
+                    error : function(request, status, error){
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

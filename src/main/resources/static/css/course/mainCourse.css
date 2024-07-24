@@ -1,0 +1,141 @@
+/* 메인 */
+.course_detail {
+    display: block;
+    margin: 1%;
+    width : 450px;
+    text-align: center;
+    vertical-align: middle;
+}
+/*.course_detail .active {*/
+/*    display: none;*/
+/*}*/
+/* 메인 이미지 */
+.course_detail .logo img {
+    width: 30%;
+    height: 5%;
+    margin-bottom: 5%;
+}
+/* 메인 장소 입력칸 */
+.course_detail #inputPlace1, #inputPlace2 {
+    border-top: 2px solid #40a0ff;
+    border-left: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-right: #fff;
+}
+/* 메인 장소 입력칸 오른쪽 버튼 */
+.course_detail #searchBtn1, #searchBtn2 {
+    border-top: 2px solid #40a0ff;
+    border-right: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-left: #fff;
+}
+/* 검색창 추가/삭제 버튼(+, -) */
+.course_detail .search-button-area {
+    text-align: right;
+}
+
+/* 검색어 창 */
+/*.course_detail .course_rolling_msg {*/
+/*    background: #40a0ff;*/
+/*    margin: 0 40px;*/
+/*    border-radius: 15px;*/
+/*    color: #fff;*/
+/*}*/
+/* 코스 선택 타이틀 */
+.course_location_title {
+    text-align: left;
+    margin: 5% 0;
+    font-size: 20px;
+}
+/* 코스 분류 */
+.course_location_type {
+    text-align: left;
+    display: flex;
+}
+/* 아이콘 배치 */
+.course_location_type label {
+    margin-right: 3%;
+    width: 150px;
+    text-align: center;
+    padding-left: 0;
+    border-radius: 15px;
+}
+/* 라벨 위로 마우스 올렷을때 커서모양 변경 */
+.course_location_type label:hover {
+    cursor: pointer;
+}
+input[type='radio'] {
+    opacity: 0;
+}
+/* 코스 분류 > 맛집 */
+.course_location_type #course_food_label {
+    border: 2px solid #FFC061;
+}
+/* 코스 분류 > 카페 */
+.course_location_type #course_caffe_label {
+    border: 2px solid #FAB7B7;
+}
+/* 코스 분류 > 관광지 */
+.course_location_type #course_tour_label {
+    border: 2px solid #96E781;
+}
+/* 코스 분류 > 숙소 */
+.course_location_type #course_rest_label {
+    border: 2px solid #D7AFFF;
+}
+/* 전체 버튼 */
+.btn-primary {
+    background-color: #40a0ff !important;
+    padding: 15px;
+    border: 2px solid #40a0ff;
+    /*border-radius: 10px;*/
+}
+/* 장소 리스트 */
+#locationList {
+    margin-top: 4%;
+    height: 420px;
+    overflow-y: auto;
+}
+/* 스크롤바 가로길이 */
+#locationList::-webkit-scrollbar {
+    width: 10px;
+}
+/* 스크롤바 바영역 색상 */
+#locationList::-webkit-scrollbar-thumb {
+    background-color: #40a0ff;
+    border-radius: 5px;
+}
+/* 스크롤바 스크롤영역 색상 */
+#locationList::-webkit-scrollbar-track {
+    background-color: #E1E1E1;
+    border-radius: 5px;
+}
+
+/* 사이드바 토글 버튼 */
+.sidebar-arrow-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    text-align: center;
+    background-color: transparent;
+    transition: width 0.3s ease;
+    z-index: 2;
+}
+.sidebar-arrow-container .sidebar-toggle {
+    position: absolute;
+    top: 50vh;
+    left: 30%;
+    width: 50px;
+    height: 80px;
+    border-left: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-image: url('../../images/icons/toggleButton_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
