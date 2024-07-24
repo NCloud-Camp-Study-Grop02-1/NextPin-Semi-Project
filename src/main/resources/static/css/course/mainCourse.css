@@ -1,14 +1,10 @@
 /* 메인 */
 .course_detail {
-    display: block;
     margin: 1%;
     width : 450px;
     text-align: center;
     vertical-align: middle;
 }
-/*.course_detail .active {*/
-/*    display: none;*/
-/*}*/
 /* 메인 이미지 */
 .course_detail .logo img {
     width: 30%;
@@ -33,7 +29,6 @@
 .course_detail .search-button-area {
     text-align: right;
 }
-
 /* 검색어 창 */
 /*.course_detail .course_rolling_msg {*/
 /*    background: #40a0ff;*/
