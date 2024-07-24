@@ -355,6 +355,22 @@ window.onload = function(){
             togglePopover(this);
         });
     });
+    // 팝오버창 외부 클릭시 닫기
+    // 외부 클릭 시 팝오버와 컬러 팔레트 닫기
+    document.addEventListener('click', function(event) {
+        var popovers = document.querySelectorAll('.popover-content');
+        var colorPalette = document.getElementById('colorPalette');
+
+        popovers.forEach(popover => {
+            if (!popover.contains(event.target) && !event.target.closest('.meatball-btn')) {
+                popover.style.display = 'none';
+            }
+        });
+
+        if (colorPalette && !colorPalette.contains(event.target) && !event.target.closest('.popover-content')) {
+            colorPalette.style.display = 'none';
+        }
+    });
 
 
     // 회원탈퇴 모달 열기
@@ -389,6 +405,7 @@ window.onload = function(){
             });
         }
     };
+
 };
 
 
@@ -496,60 +513,55 @@ function closeVisibilityModal() {
 
 // 컬러 변경 기능
 function editColor(element) {
-    var colorPalette = document.querySelector('.color-palette');
+    var popover = element.closest('.popover-content');
+    var colorPalette = document.getElementById('colorPalette');
+    var colorButtonText = element.textContent;
     var selectedContainer = element.closest('.container');
-    var selectedColor = null;
 
-    // 컬러 팔레트의 위치와 표시 상태를 조정하는 부분
-    if (!colorPalette.classList.contains('show')) {
-        var containerRect = selectedContainer.getBoundingClientRect();
+    // 컬러 팔레트의 기존 위치 초기화
+    colorPalette.style.left = '';
+    colorPalette.style.top = '';
 
-        // 기존 위치를 지우고 새 위치로 설정
-        colorPalette.style.left = `${containerRect.left + containerRect.width + 10}px`;
-        colorPalette.style.top = `${containerRect.top}px`;
+    if (colorPalette.style.display === 'none' || colorPalette.style.display === '') {
+        colorPalette.style.display = 'flex';
 
-        colorPalette.classList.add('show');
-        colorPalette.style.display = 'flex'; // Flex로 표시 설정
+        // 팔레트를 팝오버 오른쪽에 위치시키기
+        var rect = popover.getBoundingClientRect();
+        colorPalette.style.position = 'absolute';
+        colorPalette.style.left = `${rect.right + 10}px`;
+        colorPalette.style.top = `${rect.top}px`;
+
+        // "컬러편집" 버튼 텍스트를 "컬러저장"으로 변경
         element.textContent = "컬러저장";
 
-        // 기존의 클릭 이벤트 리스너 제거
+        // 기존 이벤트 리스너 제거
         colorPalette.onclick = null;
 
         // 컬러 버튼 클릭 이벤트 설정
         colorPalette.onclick = function(event) {
             if (event.target.classList.contains('color-button')) {
-                // 기존 선택한 색상 테두리 제거
-                var previouslySelected = document.querySelector('.color-button.selected');
-                if (previouslySelected) {
-                    previouslySelected.classList.remove('selected');
-                }
+                var selectedColor = event.target.style.backgroundColor;
+                selectedContainer.style.backgroundColor = selectedColor;
 
-                // 새로운 선택한 색상에 테두리 추가 및 저장
-                selectedColor = event.target.style.backgroundColor;
-                event.target.classList.add('selected');
+                // 팔레트를 숨기고 모달 열기
+                colorPalette.style.display = 'none';
+                element.textContent = "컬러편집";
+
+                closePopover(); // 팝오버 창 닫기
+
+                openColorModal(); // 모달 열기
             }
         };
     } else {
-        colorPalette.classList.remove('show');
-        colorPalette.style.display = 'none'; // 팔레트 숨기기
+        // 팔레트를 숨기고 모달 열기
+        colorPalette.style.display = 'none';
         element.textContent = "컬러편집";
 
-        // 선택한 색상이 있을 때만 저장
-        if (selectedColor) {
-            selectedContainer.style.backgroundColor = selectedColor;
-            openColorModal(); // 컬러 변경 확인 모달 열기
-        }
-
         closePopover(); // 팝오버 창 닫기
+
+        openColorModal(); // 모달 열기
     }
 }
-
-
-
-
-
-
-
 
 // 컬러 편집 모달 열기 함수
 function openColorModal() {
@@ -565,12 +577,11 @@ function closeColorModal() {
     closePopover(); // 팝오버 창 닫기
 }
 
-// 팝오버 창 닫기 함수(컬러팔레트도 함께 닫음)
+// 팝오버 창 닫기 함수
 function closePopover() {
     document.querySelectorAll('.popover-content').forEach(p => {
         p.style.display = 'none';
     });
-    document.querySelector('.color-palette').classList.remove('show');
 }
 
 
