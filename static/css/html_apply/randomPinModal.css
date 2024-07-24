@@ -90,3 +90,31 @@
     }
 }
 
+/* 메인 */
+.course_detail {
+    margin: 1%;
+    width : 450px;
+    text-align: center;
+    vertical-align: middle;
+}
+/* 메인 이미지 */
+.course_detail .logo img {
+    width: 30%;
+    height: 5%;
+    margin-bottom: 5%;
+}
+/* 메인 장소 입력칸 */
+.course_detail #inputPlace {
+    border-top: 2px solid #40a0ff;
+    border-left: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-right: #fff;
+}
+/* 메인 장소 입력칸 오른쪽 버튼 */
+.course_detail #searchBtn {
+    border-top: 2px solid #40a0ff;
+    border-right: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-left: #fff;
+}
+

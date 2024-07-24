@@ -29,8 +29,12 @@
         }
     }
 
+
+
     function searchPlaces() {
         var keyword = document.querySelector('.modal-content input[type="text"]').value;
+        // console.log(document.querySelector("#menu_wrap"));
+
 
         if (!keyword.replace(/^\s+|\s+$/g, '')) {
             alert('키워드를 입력해주세요!');
@@ -41,10 +45,17 @@
         document.getElementById('loading-spinner').style.display = 'flex';
         document.getElementById('modal-cont').style.display = 'none';
 
+        setTimeout(function () {
+            document.querySelector("#courseDetail").style.display = "block";
+            document.querySelector("#inputPlace").value = keyword;
+        }, 3000); // Adjust the delay time as needed (in milliseconds)
+
         // Perform the search after a delay
         setTimeout(function () {
             ps.keywordSearch(keyword, placesSearchCB, { radius: 500 });
         }, 3000); // Adjust the delay time as needed (in milliseconds)
+
+
     }
 
     function placesSearchCB(data, status, pagination) {
@@ -58,6 +69,7 @@
 
             // Select the first 4 elements
             var selectedData = data.slice(0, 4);
+            console.log(selectedData);
             displayPlaces(selectedData);
             displayPagination(pagination);
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -77,14 +89,21 @@
     }
 
     function displayPlaces(places) {
-        var bounds = new kakao.maps.LatLngBounds();
+        var bounds = new kakao.maps.LatLngBounds(),
+            listEl = document.getElementById('placesList'),
+            menuEl = document.getElementById('courseDetail'),
+            fragment = document.createDocumentFragment();
+
+        // 검색 결과 목록에 추가된 항목들을 제거합니다
+        removeAllChildNods(listEl);
         var linePath = [];
         removeMarker();
         removePolyline();
 
         for (var i = 0; i < places.length; i++) {
             var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                marker = addMarker(placePosition, i);
+                marker = addMarker(placePosition, i),
+                itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
             bounds.extend(placePosition);
             linePath.push(placePosition);
 
@@ -97,8 +116,11 @@
                     infowindow.close();
                 });
             })(marker, places[i].place_name);
+
+            fragment.appendChild(itemEl);
         }
 
+        listEl.appendChild(fragment);
         // 지도에 표시할 선을 생성합니다
         var polyline = new kakao.maps.Polyline({
             path: linePath, // 선을 구성하는 좌표배열 입니다
@@ -113,6 +135,42 @@
         polylines.push(polyline);
 
         map.setBounds(bounds);
+    }
+
+    // 검색결과 항목을 Element로 반환하는 함수입니다
+    function getListItem(index, places) {
+
+        // for(key in places){
+        //     let rowData = {};
+        //     rowData.key = key;
+        //     rowData.value = places[key]
+        //     console.log("지도 데이터1 : " + JSON.stringify(placeData));
+        //     console.log("지도 데이터 개수: " + placeData.length);
+        //     placeData.push(rowData);
+        // }
+        // console.log("지도 데이터 : " + JSON.stringify(placeData));
+        var el = document.createElement('li'),
+            itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+                '<a href="courseHomeReview2">' +
+                '<div class="info">' +
+                '   <h5>' + places.place_name + '</h5>';
+
+        if (places.road_address_name) {
+            itemStr += '    <span>' + places.road_address_name + '</span>';
+            // +
+            // '   <span class="jibun gray">' +  places.address_name  + '</span>';
+        } else {
+            itemStr += '    <span>' +  places.address_name  + '</span>';
+        }
+
+        itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+            '</a>'  +
+            '</div>';
+
+        el.innerHTML = itemStr;
+        el.className = 'item';
+
+        return el;
     }
 
     function addMarker(position, idx, title) {
@@ -179,4 +237,11 @@
             fragment.appendChild(el);
         }
         paginationEl.appendChild(fragment);
+    }
+
+    // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+    function removeAllChildNods(el) {
+        while (el.hasChildNodes()) {
+            el.removeChild (el.lastChild);
+        }
     }
