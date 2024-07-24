@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ExcelManageRestService {
-    public void readCsv(MultipartFile file) throws IOException;
+    public List<String> readExcel(MultipartFile file) throws IOException;
 }

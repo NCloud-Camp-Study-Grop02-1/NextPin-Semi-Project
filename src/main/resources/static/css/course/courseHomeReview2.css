@@ -38,11 +38,6 @@ a {
     display: flex;
     justify-content: space-between;
 }
-/* 상세정보 핀 아이콘 */
-.location_address > .icon_location {
-    width: 4.5%;
-}
-
 /* 메인 > 장소이름 > 카테로고리명 */
 #homeTitle .food_type {
     color: #8D8D8D;

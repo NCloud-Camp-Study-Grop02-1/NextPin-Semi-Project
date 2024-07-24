@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>NextPin</title>
@@ -30,6 +30,12 @@
                     <a href="#" class="link">
                         <img src="../images/icons/course-hover_icon.png" alt="코스아이콘" id="course-icon">
                         <span>코스</span>
+                    </a>
+                    <a href="/courseMake2" class="link" id="recommendPlace">
+                        <li style="font-size: 0.8rem">장소추천</li>
+                    </a>
+                    <a href="/myPin" class="link" id="myPin">
+                        <li style="font-size: 0.8rem">My Pin</li>
                     </a>
                 </div>
                 <div class="icon menu">
@@ -73,22 +79,8 @@
         </div>
         <form onsubmit="searchPlaces(); return false;">
             <div class="input-group mb-3">
-                <input type="text" id="inputPlace1" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="">
-                <button class="btn" type="button" id="searchBtn1">
-                    <img src="../images/icons/Search-blue_icon.png" alt="돋보기">
-                </button>
-            </div>
-            <div class="search-button-area">
-                <button class="btn" type="button" id="addSearchBtn">
-                    <img src="../images/icons/plus_icon.png" alt="추가버튼">
-                </button>
-                <button class="btn" type="button" id="removeSearchBtn">
-                    <img src="../images/icons/minus_icon.png" alt="제거버튼">
-                </button>
-            </div>
-            <div class="input-group mb-3">
-                <input type="text" id="inputPlace2" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="" style="display: none;">
-                <button class="btn" type="button" id="searchBtn2" style="display: none;">
+                <input type="text" id="inputPlace" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="">
+                <button class="btn" type="button" id="searchBtn">
                     <img src="../images/icons/Search-blue_icon.png" alt="돋보기">
                 </button>
             </div>
