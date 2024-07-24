@@ -1,14 +1,10 @@
 /* 메인 */
 .course_detail {
-    display: block;
     margin: 1%;
     width : 450px;
     text-align: center;
     vertical-align: middle;
 }
-/*.course_detail .active {*/
-/*    display: none;*/
-/*}*/
 /* 메인 이미지 */
 .course_detail .logo img {
     width: 30%;
@@ -16,24 +12,19 @@
     margin-bottom: 5%;
 }
 /* 메인 장소 입력칸 */
-.course_detail #inputPlace1, #inputPlace2 {
+.course_detail #inputPlace {
     border-top: 2px solid #40a0ff;
     border-left: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-right: #fff;
 }
 /* 메인 장소 입력칸 오른쪽 버튼 */
-.course_detail #searchBtn1, #searchBtn2 {
+.course_detail #searchBtn {
     border-top: 2px solid #40a0ff;
     border-right: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-left: #fff;
 }
-/* 검색창 추가/삭제 버튼(+, -) */
-.course_detail .search-button-area {
-    text-align: right;
-}
-
 /* 검색어 창 */
 /*.course_detail .course_rolling_msg {*/
 /*    background: #40a0ff;*/
@@ -88,7 +79,7 @@ input[type='radio'] {
     background-color: #40a0ff !important;
     padding: 15px;
     border: 2px solid #40a0ff;
-    /*border-radius: 10px;*/
+    border-radius: 10px;
 }
 /* 장소 리스트 */
 #locationList {
@@ -138,4 +129,7 @@ input[type='radio'] {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 2;
+}
+.sidebar-container.open {
+    width: 200px;
 }

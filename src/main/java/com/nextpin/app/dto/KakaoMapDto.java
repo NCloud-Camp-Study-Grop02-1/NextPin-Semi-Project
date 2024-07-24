@@ -8,18 +8,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class KakaoMapDto {
+    String address_name;
+    String category_group;
+    String category_group_name;
+    String category_name;
+    double distance;
     long id;
-    String categoryGroupCode;
-    String categoryGroupName;
-    String categoryName;
-    String placeName;
-    double score;
-    String addressName;
-    String roadAddressName;
-    String businessHour;
     String phone;
-    String courseShare;
-    String placeUrl;
+    String place_name;
+    String place_url;
+    String road_address_name;
     double x;
     double y;
 }

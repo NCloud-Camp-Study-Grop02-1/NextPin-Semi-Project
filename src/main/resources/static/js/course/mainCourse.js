@@ -1,6 +1,7 @@
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -22,42 +23,22 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
-    var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
-    var keyword2 = $('#inputPlace2').val() === undefined ? "" : $('#inputPlace2').val();
+    var keyword = $('#inputPlace').val() === undefined ? "" : $('#inputPlace').val();
+
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         // alert('키워드를 입력해주세요!');
         return false;
     }
 
-    $("#inputPlace1").val(keyword);
-    $("#inputPlace2").val(keyword2);
-
-    var params = {"keyword" : keyword, "keyword2" : keyword2};
-    console.log(JSON.stringify(params));
-    $.ajax({
-        method : "POST",
-        headers : {
-            'content-type':'application/json'
-        },
-        url : "/searchPlaces",
-        async : true,
-        dataType: "json",
-        data : JSON.stringify(params),
-        success : function(result){
-            console.log("ajax : result : " + result);
-        },
-        error : function(request, status, error){
-            console.log(error);
-        }
-    });
+    $("#inputPlace").val(keyword);
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
-    // ps.keywordSearch(keyword, placesSearchCB
-    //     , {
-    //         radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
-    //         // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
-    //     }
-    // );
+    ps.keywordSearch(keyword, placesSearchCB
+        , {
+            radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
+            // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
+        }
+    );
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -94,12 +75,11 @@ function placesSearchCB(data, status, pagination) {
 
     }
 }
-
 let i = 0;
 function printResult(data) {
 
     console.log(++i + "번째 실행");
-    console.log(data);
+    // console.log(data);
     // console.log("print placeData : " + placeData);
 }
 
@@ -274,18 +254,25 @@ function removeAllChildNods(el) {
 }
 
 window.onload = function(){
-    // 검색 데이터 결과를 가져오려면 처음에 무조건 검색 한 번을 해야함
     searchPlaces();
     // printResult();
-
-    $('#addSearchBtn').on('click', e => {
-        $('#inputPlace2').show();
-        $('#searchBtn2').show();
-    });
-
-    $('#removeSearchBtn').on('click', e => {
-        $('#inputPlace2').hide();
-        $('#searchBtn2').hide();
+    $("#dataChk").on("click", function(){
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/kakaoData",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(placeData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
     });
 
     $("input[name=courseType][value=course_food]").prop("checked", true);
@@ -330,23 +317,7 @@ window.onload = function(){
         // console.log(this);
     });
 
-    $("#inputPlace1").on("keyup", function(key){
-        if(key.keyCode == 13){
-            searchPlaces();
-        }
-    });
-
-    $('#searchBtn1').on("click", function(){
-        searchPlaces();
-    });
-
-    $("#inputPlace2").on("keyup", function(key){
-        if(key.keyCode == 13){
-            searchPlaces();
-        }
-    });
-
-    $('#searchBtn2').on("click", function(){
+    $('#searchBtn').on("click", function(){
         searchPlaces();
     });
 
@@ -358,14 +329,11 @@ window.onload = function(){
         isExpand = !isExpand;
         sidebar.toggle('open');
 
-
         if(isExpand) {
-            // sidebar.addClass('active');
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
             return;
         }
 
-        // sidebar.removeClass('active');
         $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         // sidebarContainer.classList.toggle('open');
         // sidebarArrowContainer.classList.toggle('open');
