@@ -9,7 +9,7 @@
     <!--코스 메인페이지 스타일 시트 적용-->
     <link rel="stylesheet" href="css/course/mainCourse.css"/>
     <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/side-bar_style_mainCourse.css">
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css">
 
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -22,47 +22,31 @@
 <body>
     <!-- 사이드바 -->
     <nav id="side-bar">
-        <div class="wrapper">
-            <!-- 메뉴들 -->
-            <div id="icons">
-                <div class="icon menu">
-                    <!-- 코스로 이동 -->
-                    <a href="#" class="link">
-                        <img src="../images/icons/course-hover_icon.png" alt="코스아이콘" id="course-icon">
-                        <span>코스</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 일정으로 이동 -->
-                    <a href="/calendar" class="link">
-                        <img src="../images/icons/calendar_icon.png" alt="일정아이콘" id="calendar-icon">
-                        <span>일정</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 커뮤니티로 이동 -->
-                    <a href="/community" class="link">
-                        <img src="../images/icons/community_icon.png" alt="커뮤니티아이콘" id="community-icon">
-                        <span id="community-span">커뮤니티</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 랜덤핀으로 이동 -->
-                    <a href="/randomPin" class="link">
-                        <img src="../images/icons/randomPin_icon.png" alt="랜덤아이콘" id="random-icon">
-                        <span>랜덤핀</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div id="profile">
-            <li class="menu">
-                <!-- 로그인으로 이동 -->
-                <a href="login" class="link">
-                    <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
-                </a>
-            </li>
-        </div>
+        <!--로고-->
+        <a href="/main" class="logo">
+            <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+        </a>
+        <!--구분선-->
+        <div class="separator"></div>
+        <a href="/courseHomeReview2" class="menu-item menu-item-course">
+            <img src="../images/icons/course_icon.png" alt="코스">
+            <span>코스</span>
+        </a>
+        <a href="/calendar" class="menu-item">
+            <img src="../images/icons/calendar_icon.png" alt="일정">
+            <span>일정</span>
+        </a>
+        <a href="/community" class="menu-item">
+            <img src="../images/icons/community_icon.png" alt="커뮤니티">
+            <span>커뮤니티</span>
+        </a>
+        <a href="/randomPin" class="menu-item">
+            <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+            <span>랜덤핀</span>
+        </a>
+        <a href="/myPin" class="sidebar-profile">
+            <img src="../images/icons/mypage_icon.png" alt="Profile">
+        </a>
     </nav>
 
     <div id="courseDetail" class="course_detail">
@@ -73,22 +57,8 @@
         </div>
         <form onsubmit="searchPlaces(); return false;">
             <div class="input-group mb-3">
-                <input type="text" id="inputPlace1" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="">
-                <button class="btn" type="button" id="searchBtn1">
-                    <img src="../images/icons/Search-blue_icon.png" alt="돋보기">
-                </button>
-            </div>
-            <div class="search-button-area">
-                <button class="btn" type="button" id="addSearchBtn">
-                    <img src="../images/icons/plus_icon.png" alt="추가버튼">
-                </button>
-                <button class="btn" type="button" id="removeSearchBtn">
-                    <img src="../images/icons/minus_icon.png" alt="제거버튼">
-                </button>
-            </div>
-            <div class="input-group mb-3">
-                <input type="text" id="inputPlace2" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="" style="display: none;">
-                <button class="btn" type="button" id="searchBtn2" style="display: none;">
+                <input type="text" id="inputPlace" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="">
+                <button class="btn" type="button" id="searchBtn">
                     <img src="../images/icons/Search-blue_icon.png" alt="돋보기">
                 </button>
             </div>
