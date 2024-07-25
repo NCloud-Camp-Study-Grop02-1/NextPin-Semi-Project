@@ -136,11 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
             nextDateElement.textContent = i;
             calendar.appendChild(nextDateElement);
         }
-
-        // 현재 달로 돌아올 때 날씨 데이터를 다시 렌더링
-        if (month === todayMonth && year === todayYear) {
-            fetchWeatherData();
-        }
     }
 
     // 1일차
@@ -150,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const ul1 = document.createElement('ul');
         const items1 = ['당신의 안목 펜션', '송정해수욕장', '번패티번 강릉', '엔드 투 앤드 카페', '순두부젤라또 1호점', '차현희순두부청국장'];
-
         items1.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item;
@@ -158,16 +152,14 @@ document.addEventListener("DOMContentLoaded", function () {
             // 특정 li에만 memo를 추가함
             if (item === '당신의 안목 펜션') {
                 // memo 함수 호출
-                // '12시 체크인'은 임시 메모임.
-                memo(li, '12시 체크인', '1일차', item);
+                memo(li, '12시 체크인');
             }
             if (item == '차현희순두부청국장') {
-                memo(li, '20시 예약, 예약자명 오유빈', '1일차', item);
+                memo(li, '20시 예약, 예약자명 오유빈');
             }
 
             ul1.appendChild(li);
         });
-
         cardBody.appendChild(ul1);
         panelContent.style.display = 'block';
     }
@@ -186,10 +178,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // 특정 li에만 memo를 추가함
             if (item === '이모네생선찜') {
                 // memo 함수 호출
-                memo(li, '13시 예약', '2일차', item);
+                memo(li, '13시 예약');
             }
             if (item == '스튜디오 킨조 소품샵') {
-                memo(li, '18시 방문 예정', '2일차', item);
+                memo(li, '18시 방문 예정');
             }
 
             ul2.appendChild(li);
@@ -199,21 +191,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 특정 li에만 memo를 주는 함수
-    function memo(li, defaultText, day, item) {
+    function memo(li, text) {
         const memo = document.createElement('span');
         memo.classList.add('memo');
 
         const edit = document.createElement('img');
         edit.classList.add('edit');
-        edit.src = '../../static/images/icons/edit-white_icon.png';
-        edit.alt = "edit icon";
+        edit.src = 'images/icons/edit-white_icon.png';
         memo.appendChild(edit);
 
         const memoText = document.createElement('span');
-        // 로컬 스토리지에 저장된 메모 텍스트를 불러와 저장된 값이 있다면 그 값을, 없으면 기본 값 사용
-        // 해당 날짜와 해당 가게를 불러오기 => getItem(`${day}-${item}`);
-        const storedText = localStorage.getItem(`${day}-${item}`);
-        memoText.textContent = storedText ? storedText : defaultText;
+        memoText.textContent = text;
         memo.appendChild(memoText);
 
         li.appendChild(memo);
@@ -221,12 +209,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // edit 아이콘을 클릭하면 발생하는 이벤트
         edit.addEventListener("click", function () {
             // memo를 수정하는 함수 호출
-            editMemo(memoText, `${day}-${item}`);
+            editMemo(memoText);
         });
     }
 
     // memoText를 수정하는 함수
-    function editMemo(memoText, storageKey) {
+    function editMemo(memoText) {
         // 입력하는 input 생성
         const input = document.createElement('input');
         input.type = 'text';
@@ -235,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // saveButton 생성
         const saveButton = document.createElement('img');
-        saveButton.src = '../../static/images/icons/save-icon.png';
+        saveButton.src = 'images/icons/save-icon.png';
         saveButton.alt = "save icon";
         saveButton.classList.add('save-button');
 
@@ -245,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // 새로 생성된 input 요소에 포커스를 맞추어 사용자가 텍스트를 입력할 수 있게끔함
         input.focus();
 
-        // input 요소 내의 모든 텍스트를 선택해 사용자가 텍스트를 입력할 때
+        // input 요소 내의 모든 텍스트를 선택해 사용자가 텍스트를 입력할 때 
         // 기존 텍스트를 쉽게 대체할 수 있도록 함
         input.select();
 
@@ -255,9 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // saveButton 클릭 이벤트
         saveButton.addEventListener('click', function () {
             memoText.textContent = input.value;
-            // 로컬 스토리지에 저장
-            localStorage.setItem(storageKey, input.value);
-
+            
             // input -> span으로 변경
             input.replaceWith(memoText);
             saveButton.remove();
@@ -270,10 +256,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // input 요소에서 포커스를 잃었을 때의 이벤트
-        input.addEventListener('blur', function () {
-            saveButton.click();
-        });
     }
 
     // 날씨 api 이용하기
@@ -292,24 +274,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // OpenWeatherMap 아이콘 코드와 Meteocons 아이콘 파일명을 매핑
     const iconMap = {
-        '01d': '../../static/images/weather_icons/clear-day.svg',
-        '01n': '../../static/images/weather_icons/clear-night.svg',
-        '02d': '../../static/images/weather_icons/partly-cloudy-day.svg',
-        '02n': '../../static/images/weather_icons/partly-cloudy-night.svg',
-        '03d': '../../static/images/weather_icons/cloudy.svg',
-        '03n': '../../static/images/weather_icons/cloudy.svg',
-        '04d': '../../static/images/weather_icons/cloudy.svg',
-        '04n': '../../static/images/weather_icons/cloudy.svg',
-        '09d': '../../static/images/weather_icons/rain.svg',
-        '09n': '../../static/images/weather_icons/rain.svg',
-        '10d': '../../static/images/weather_icons/rain.svg',
-        '10n': '../../static/images/weather_icons/rain.svg',
-        '11d': '../../static/images/weather_icons/thunderstorm.svg',
-        '11n': '../../static/images/weather_icons/thunderstorm.svg',
-        '13d': '../../static/images/weather_icons/snow.svg',
-        '13n': '../../static/images/weather_icons/snow.svg',
-        '50d': '../../static/images/weather_icons/fog.svg',
-        '50n': '../../static/images/weather_icons/fog.svg'
+        '01d': '../images/weather_icons/clear-day.svg',
+        '01n': '../images/weather_icons/clear-night.svg',
+        '02d': '../images/weather_icons/partly-cloudy-day.svg',
+        '02n': '../images/weather_icons/partly-cloudy-night.svg',
+        '03d': '../images/weather_icons/cloudy.svg',
+        '03n': '../images/weather_icons/cloudy.svg',
+        '04d': '../images/weather_icons/cloudy.svg',
+        '04n': '../images/weather_icons/cloudy.svg',
+        '09d': '../images/weather_icons/rain.svg',
+        '09n': '../images/weather_icons/rain.svg',
+        '10d': '../images/weather_icons/rain.svg',
+        '10n': '../images/weather_icons/rain.svg',
+        '11d': '../images/weather_icons/thunderstorm.svg',
+        '11n': '../images/weather_icons/thunderstorm.svg',
+        '13d': '../images/weather_icons/snow.svg',
+        '13n': '../images/weather_icons/snow.svg',
+        '50d': '../images/weather_icons/fog.svg',
+        '50n': '../images/weather_icons/fog.svg'
     };
 
     // 날씨 정보를 render 해주는 function
@@ -328,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const dateElement = calendar.querySelectorAll('.day')[index + today.getDate() - 1];
             const weatherElement = document.createElement('div');
-            const iconFileName = iconMap[weatherIcon] || '../../static/images/weather_icons/default.svg'; // 매핑되지 않은 아이콘에 대한 기본값 설정
+            const iconFileName = iconMap[weatherIcon] || 'weather_icons/default.svg'; // 매핑되지 않은 아이콘에 대한 기본값 설정
             weatherElement.innerHTML = `
             <img src="${iconFileName}" alt="Weather Icon">
             <div>${tempMax}°C / ${tempMin}°C</div>
@@ -340,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ---------------- 버튼 클릭 이벤트들 ----------------
-
+    
     // 저번 달로 넘어가는 버튼 클릭 이벤트
     prevButton.addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);

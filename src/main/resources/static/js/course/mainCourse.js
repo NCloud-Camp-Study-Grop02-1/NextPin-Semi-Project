@@ -25,15 +25,12 @@ function searchPlaces() {
 
     var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
 
-
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         // alert('키워드를 입력해주세요!');
         return false;
     }
 
-
     $("#inputPlace1").val(keyword);
-
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
     ps.keywordSearch(keyword, placesSearchCB
@@ -334,21 +331,31 @@ window.onload = function(){
         searchPlaces();
     });
 
+    //사이드 네브바 열고 닫는 기능 구현
     const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
+    // 사이드바 고정으로 인해 사이드바 너비만큼 다른 요소 조정함(김션이 수정)
     sidebarToggle.on('click', () => {
         isExpand = !isExpand;
+        sidebar.toggleClass('collapsed');
+        $('.map_wrap').toggleClass('expanded');
         sidebar.toggle('open');
+
+        //고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드
+        //아래 코드를 추가해야 사이드바 너비만큼 사이드 토글바가 이동
+        if (sidebar.hasClass('collapsed')) {
+            sidebarToggle.css({'margin-left': '7.5rem'}); // 사이드 네브바가 닫힐 때 마진 추가
+        } else {
+            sidebarToggle.css({'margin-left': '0'}); // 사이드 네브바가 열릴 때 마진 제거
+        }
 
         if(isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
             return;
+        } else {
+            $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         }
-
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
     });
 };

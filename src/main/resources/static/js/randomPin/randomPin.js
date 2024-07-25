@@ -57,7 +57,7 @@
             shuffleArray(data);
 
             // Select the first 4 elements
-            var selectedData = data.slice(0, 4);
+            var selectedData = data.slice(0, 1000);
             displayPlaces(selectedData);
             displayPagination(pagination);
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
