@@ -23,14 +23,17 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
-    var keyword = $('#inputPlace').val() === undefined ? "" : $('#inputPlace').val();
+    var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
+
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         // alert('키워드를 입력해주세요!');
         return false;
     }
 
-    $("#inputPlace").val(keyword);
+
+    $("#inputPlace1").val(keyword);
+
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
     ps.keywordSearch(keyword, placesSearchCB
@@ -275,6 +278,16 @@ window.onload = function(){
         });
     });
 
+    $('#addSearchBtn').on('click', e => {
+        $('#inputPlace2').show();
+        $('#searchBtn2').show();
+    });
+
+    $('#removeSearchBtn').on('click', e => {
+        $('#inputPlace2').hide();
+        $('#searchBtn2').hide();
+    });
+
     $("input[name=courseType][value=course_food]").prop("checked", true);
     $('#course_food_label').css('background', '#FFC061');
     $("input[name=courseType]").on("click",function(){
@@ -317,7 +330,7 @@ window.onload = function(){
         // console.log(this);
     });
 
-    $('#searchBtn').on("click", function(){
+    $('#searchBtn1').on("click", function(){
         searchPlaces();
     });
 
