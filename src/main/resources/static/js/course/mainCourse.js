@@ -1,6 +1,7 @@
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -20,20 +21,25 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
+function searchPlaces(category) {
 
     var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
+
     var keyword2 = $('#inputPlace2').val() === undefined ? "" : $('#inputPlace2').val();
+
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         // alert('키워드를 입력해주세요!');
         return false;
     }
 
-    $("#inputPlace1").val(keyword);
     $("#inputPlace2").val(keyword2);
 
-    var params = {"keyword" : keyword, "keyword2" : keyword2};
-    console.log(JSON.stringify(params));
+
+
+    var searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
+
+    console.log(JSON.stringify(searchKeywords));
+
     $.ajax({
         method : "POST",
         headers : {
@@ -42,9 +48,12 @@ function searchPlaces() {
         url : "/searchPlaces",
         async : true,
         dataType: "json",
-        data : JSON.stringify(params),
+        data : JSON.stringify(searchKeywords),
         success : function(result){
-            console.log("ajax : result : " + result);
+            console.log(result["data"][0]);
+            // console.log("ajax : result : " + JSON.stringify(result));
+            displayPlaces(result["data"]);
+            displayPagination(result["pageNum"], result["amount"], result["cnt"]);
         },
         error : function(request, status, error){
             console.log(error);
@@ -80,7 +89,7 @@ function placesSearchCB(data, status, pagination) {
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+        // displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -94,12 +103,11 @@ function placesSearchCB(data, status, pagination) {
 
     }
 }
-
 let i = 0;
 function printResult(data) {
 
     console.log(++i + "번째 실행");
-    console.log(data);
+    // console.log(data);
     // console.log("print placeData : " + placeData);
 }
 
@@ -116,13 +124,13 @@ function displayPlaces(places) {
     removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
-    removeMarker();
+    // removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
+    for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            // marker = addMarker(placePosition, i),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -132,23 +140,23 @@ function displayPlaces(places) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                displayInfowindow(marker, title);
-            });
-
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
-            });
-
-            itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
-            };
-
-            itemEl.onmouseout =  function () {
-                infowindow.close();
-            };
-        })(marker, places[i].place_name);
+        // (function(marker, title) {
+        //     kakao.maps.event.addListener(marker, 'mouseover', function() {
+        //         displayInfowindow(marker, title);
+        //     });
+        //
+        //     kakao.maps.event.addListener(marker, 'mouseout', function() {
+        //         infowindow.close();
+        //     });
+        //
+        //     itemEl.onmouseover =  function () {
+        //         displayInfowindow(marker, title);
+        //     };
+        //
+        //     itemEl.onmouseout =  function () {
+        //         infowindow.close();
+        //     };
+        // })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
     }
@@ -174,17 +182,37 @@ function getListItem(index, places) {
     // }
     // console.log("지도 데이터 : " + JSON.stringify(placeData));
     var el = document.createElement('li'),
-        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-            '<a href="courseHomeReview2">' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
+        itemStr = '<a href="courseHomeReview2" style="text-decoration-line: none; color:black; text-align: left">' +
+                         '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
+                         '   <h5 class="place_name">' + places.placeName + '</h5>' +
+                         '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + places.categoryName + '</span>' +
+                         '</div>';
 
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>';
-        // +
-        // '   <span class="jibun gray">' +  places.address_name  + '</span>';
+        itemStr += '<div class="review_score">' +
+                   '   <span className="reviewScore" style="color:red;"> ★  ' + places.score + '</span>' +
+                   '</div>'
+
+        itemStr += '<div class="info_item"><div class="addr">'
+
+    if (places.addressName) {
+        itemStr += '    <p class="addressName">' + places.addressName + '</p>';
     } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>';
+        itemStr += '    <p class="roadAdressName">' +  places.roadAddressName  + '</p>';
+    }
+
+    if(places.businessHour.split('·')[1] !== undefined){
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour.split('·')[0] + '</span>' +
+            '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour.split('·')[1] + '</span>' +
+            '</div>';
+    } else {
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour + '</span>' +
+            '</div>'
     }
 
     itemStr += '  <span class="tel">' + places.phone  + '</span>' +
@@ -227,9 +255,9 @@ function removeMarker() {
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
+function displayPagination(pageNum, amount, cnt) {
+    var paginationEl = document.getElementsByClassName('pagination')[0];
+        // fragment = document.createDocumentFragment(),
         i;
 
     // 기존에 추가된 페이지번호를 삭제합니다
@@ -237,24 +265,47 @@ function displayPagination(pagination) {
         paginationEl.removeChild (paginationEl.lastChild);
     }
 
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
+    /*
+    * pageNum : 현재 페이지
+    * amount : 페이지 당 데이터 개수
+    * cnt : 총 데이터 개수
+    * */
+    console.log("pageNum : " + pageNum + ", amount : " + amount + ", cnt : " + cnt);
+    var totalPage = cnt / amount;
 
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
+    var aEl = '<li class="page-item">' +
+              '<a class="page-link" href="#" aria-label="Previous">' +
+              '<span aria-hidden="true">&laquo;</span>' +
+              '</a>' +
+           '</li>'
+    for(i = 1; i <= totalPage; i++){
+        aEl += '<li class="page-item">' +
+                   '<a class="page-link" href="#">' + i + '</a>' +
+               '</li>'
     }
-    paginationEl.appendChild(fragment);
+    aEl += '<li class="page-item">' +
+               '<a class="page-link" href="#" aria-label="Next">' +
+               '<span aria-hidden="true">&raquo;</span>' +
+               '</a>' +
+           '</li>'
+    // for (i=1; i <= pagination.last; i++) {
+    //     var el = document.createElement('a');
+    //     el.href = "#";
+    //     el.innerHTML = i;
+    //
+    //     if (i===pagination.current) {
+    //         el.className = 'on';
+    //     } else {
+    //         el.onclick = (function(i) {
+    //             return function() {
+    //                 pagination.gotoPage(i);
+    //             }
+    //         })(i);
+    //     }
+    //
+    //     fragment.appendChild(el);
+    // }
+    paginationEl.innerHTML = aEl;
 }
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
@@ -274,9 +325,9 @@ function removeAllChildNods(el) {
 }
 
 window.onload = function(){
-    // 검색 데이터 결과를 가져오려면 처음에 무조건 검색 한 번을 해야함
     searchPlaces();
     // printResult();
+    var category = 'food';
 
     $('#addSearchBtn').on('click', e => {
         $('#inputPlace2').show();
@@ -298,6 +349,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'food';
             }
         }
         // 카페 선택시
@@ -307,6 +359,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#FAB7B7');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'caffe';
             }
         }
         // 관광지 선택시
@@ -316,6 +369,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#96E781');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'tour';
             }
         }
         // 숙소 선택시
@@ -325,6 +379,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#D7AFFF');
+                category = 'hotel';
             }
         }
         // console.log(this);
@@ -332,42 +387,49 @@ window.onload = function(){
 
     $("#inputPlace1").on("keyup", function(key){
         if(key.keyCode == 13){
-            searchPlaces();
+            searchPlaces(category);
         }
     });
 
     $('#searchBtn1').on("click", function(){
-        searchPlaces();
+        searchPlaces(category);
     });
 
     $("#inputPlace2").on("keyup", function(key){
         if(key.keyCode == 13){
-            searchPlaces();
+            searchPlaces(category);
         }
     });
 
     $('#searchBtn2').on("click", function(){
-        searchPlaces();
+        searchPlaces(category);
     });
 
+    //사이드 네브바 열고 닫는 기능 구현
     const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
+    // 사이드바 고정으로 인해 사이드바 너비만큼 다른 요소 조정함(김션이 수정)
     sidebarToggle.on('click', () => {
         isExpand = !isExpand;
+        sidebar.toggleClass('collapsed');
+        $('.map_wrap').toggleClass('expanded');
         sidebar.toggle('open');
 
-
-        if(isExpand) {
-            // sidebar.addClass('active');
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
+        //고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드
+        //아래 코드를 추가해야 사이드바 너비만큼 사이드 토글바가 이동
+        if (sidebar.hasClass('collapsed')) {
+            sidebarToggle.css({'margin-left': '7.5rem'}); // 사이드 네브바가 닫힐 때 마진 추가
+        } else {
+            sidebarToggle.css({'margin-left': '0'}); // 사이드 네브바가 열릴 때 마진 제거
         }
 
-        // sidebar.removeClass('active');
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        } else {
+            $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        }
     });
 };

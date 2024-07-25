@@ -1,8 +1,8 @@
 package com.nextpin.app.service.impl;
 
 import ch.qos.logback.classic.Logger;
-import com.nextpin.app.service.OctoparseData;
 import com.nextpin.app.service.ReadBzyXml;
+import com.nextpin.app.service.OctoparseData;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

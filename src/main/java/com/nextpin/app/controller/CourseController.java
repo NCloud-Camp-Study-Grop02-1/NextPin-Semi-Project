@@ -1,31 +1,20 @@
 package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.service.CourseService;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class CourseController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseController.class);
-    private final CourseService courseService;
+    private CourseService courseService;
 
     @Autowired
     public CourseController(CourseService courseService) {
@@ -79,8 +68,7 @@ public class CourseController {
 
     @PostMapping("/searchPlaces")
     @ResponseBody
-    public String searchPlaces(@RequestBody HashMap<String, String> params) {
-
-        return "";
+    public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
+        return courseService.searchPinDatas(searchKeywords, cri);
     }
 }
