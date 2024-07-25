@@ -201,9 +201,6 @@
                     </div>
                     <div class="sub_panel" id="makeCourse" role="dialog" aria-labelledby="chosenPinHeading" aria-modal="true" tabindex="-1">
 <!--                        <div class="courseMaker">-->
-<!--                                <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">-->
-<!--                                    <img class="icon_close" src="../images/icons/cancel_icon.png" alt="닫기버튼">-->
-<!--                                </button>-->
                             <!--캘린더 날짜 선택-->
                             <div class="calendar">
                                 <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
@@ -241,15 +238,25 @@
 <!--                        <button>창 접는 버튼</button>-->
                     </div>
                     <div id="newCoursePanel" class="new-panel hidden">
+                        <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">
+                            <img class="icon_close" src="../images/icons/cancel_icon.png" alt="닫기버튼">
+                        </button>
                         <div class="dayCourse">
                             <h3>코스</h3>
-                            <div class="courseList">
-                                <p><strong>날짜:</strong> <span id="selectedDate"></span></p>
-                                <p><strong>메모:</strong> <span id="selectedMemo"></span></p>
-                                <p><strong>선택한 색상:</strong> <span class="color-sample" id="selectedColor"></span></p>
+                            <p><span id="selectedDate"></span></p>
+                            <div class="courseList" id="selectedColor">
+                                <p><strong>1일차</strong></p>
+                                <p style="margin-left: 30px"><strong>니뽕내뽕 강남역점</strong> <span id="selectedStore"></span></p>
+                                <p style="margin-left: 30px"><span id="selectedMemo"></span></p>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <!--화면 접기-->
+            <div class="sidebar-arrow-container">
+                <div class="sidebar-toggle">
+                    <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
                 </div>
             </div>
             <!-- 카카오맵-->
@@ -274,7 +281,7 @@
             monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
             showButtonPanel: true,
             showMonthAfterYear:true,
-            dateFormat:"yy-mm-dd",
+            dateFormat: "MM/dd",
             beforeShow: function(input, inst) {
                 var sidebarWidth = $('#side-bar').outerWidth();
                 inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동

@@ -6,7 +6,7 @@ $(function() {
         monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
         showButtonPanel: true,
         showMonthAfterYear:true,
-        dateFormat:"yy-mm-dd",
+        dateFormat: "MM/dd",
         beforeShow: function(input, inst) {
             var sidebarWidth = $('#side-bar').outerWidth();
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
@@ -17,15 +17,23 @@ $(function() {
     $('.finishButton').click(function() {
         const selectedDate = $('#testDatepicker').val();
         const memoActive = $('#memo-active').is(':checked');
-        const selectedMemo = memoActive ? $('#memo-text').val() : '메모가 없습니다.';
+        const selectedMemo = memoActive ? $('#memo-text').val() : '';
         const selectedColor = $('.color-button.selected').css('background-color');
 
-        $('#selectedDate').text(selectedDate);
-        $('#selectedMemo').text(selectedMemo);
-        $('#selectedColor').css('background-color', selectedColor);
+        if (selectedDate && selectedColor) {
+            var memoText = '';
+            if ($('#memo-active').is(':checked')) {
+                memoText = $('#memo-text').val();
+            }
+                $('#selectedDate').text(selectedDate);
+                $('#selectedMemo').text(selectedMemo);
+                $('#selectedColor').css('background-color', selectedColor);
 
-        $('#makeCourse').removeClass('show');
-        $('#newCoursePanel').removeClass('hidden');
+                $('#makeCourse').removeClass('show');
+                $('#newCoursePanel').removeClass('hidden');
+        } else {
+            alert('날짜와 색상은 필수 선택 항목입니다.');
+        }
     });
 });
 
@@ -51,6 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
         chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
         makeCourse.classList.toggle('show', !isExpanded);
+        $('#newCoursePanel').addClass('hidden');
+    });
+});
+
+// 닫기 버튼 -> 코스 생성 창 닫기
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('close_icon');
+
+    closeBtn.addEventListener('click', () => {
+        const isExpanded = closeBtn.getAttribute('aria-expanded') === 'true';
+        closeBtn.setAttribute('aria-expanded', !isExpanded);
+        $('#makeCourse').removeClass('show');
         $('#newCoursePanel').addClass('hidden');
     });
 });

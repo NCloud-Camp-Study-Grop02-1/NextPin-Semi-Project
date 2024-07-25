@@ -353,8 +353,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
 
-    const sidebar = $('.content');
+window.onload = function(){
+    const sidebar = $('.community_section');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
@@ -371,4 +373,5 @@ document.addEventListener('DOMContentLoaded', function() {
         // sidebarContainer.classList.toggle('open');
         // sidebarArrowContainer.classList.toggle('open');
     });
-});
+};
+

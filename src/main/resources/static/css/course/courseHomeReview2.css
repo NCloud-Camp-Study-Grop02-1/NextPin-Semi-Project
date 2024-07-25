@@ -1,3 +1,56 @@
+/*reset css*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 문자깨짐 방지 */
+/* 안넣으면 스타일 시트 적용 안됌 */
+@charset "utf-8";
+
 /* 글꼴 */
 @font-face {
     font-family: 'pretendard-semibold';
@@ -150,10 +203,8 @@ body {
 /*니뽕내뽕 데이터*/
 /* 메인 > 장소이름 */
 #homeTitle {
-    /* margin-top: 1rem;
-    margin-left: 2rem; */
-    margin-left: 7%;
-    margin-top: 3%;
+    margin-top: 1rem;
+    margin-left: 2rem;
     width: 100%;
     display: flex;
     text-align: justify;
@@ -165,24 +216,8 @@ body {
 #homeTitle h1{
     /*font-size: 20px;*/
     font-weight: bold;
-    font-size: calc(1.3rem + .7vw);
+    font-size: calc(1.3rem + .6vw);
 }
-
-a {
-    text-decoration: none;
-}
-
-/* 메인 뒤로가기 버튼 */
-#backToMainCourse{
-    vertical-align: top;
-    margin-right: 3%;
-}
-
-/* 메인 > 이미지 영역 */
-#homeDetail {
-    text-align: left;
-}
-
 /* 메인 > 장소이름 > 카테로고리명 */
 #homeTitle .food_type {
     color: #8D8D8D;
@@ -327,18 +362,6 @@ a {
 /*니뽕내뽕 데이터 END*/
 
 /*코스 생성창*/
-.close_icon {
-    border: none;
-    background-color: #ffffff;
-    cursor: pointer;
-    margin-left: 250px;
-}
-
-.icon_close {
-    width: 25px;
-    height: 25px;
-}
-
 .sub_panel {
     display: none;
     position: relative;
@@ -471,19 +494,60 @@ a {
 
 /*설정한 코스창*/
 .hidden { display: none; }
+
 .selected { border: 2px solid black; }
-.new-panel h3 { margin-bottom: 10px; text-align: center;}
-.color-sample { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
+
+/*닫기 버튼*/
+.close_icon {
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-left: 230px;
+    margin-bottom: 15px;
+}
+
+.icon_close {
+    width: 20px;
+    height: 20px;
+}
+
+.new-panel h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: large;
+}
+
+.new-panel p {
+    text-align: left;
+    margin-left: 15px;
+    line-height: 2.5rem;
+}
+
+.color-sample {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
 
 .new-panel {
     width: 300px;
     height: 100%;
-    padding: 20px;
+    padding: 10px 20px;
     background-color: white;
+    border-left: 1px solid #e0e0e0;
 }
 
 .dayCourse {
-    border: 1px solid #4098FF;
+    border: 2px solid #4098FF;
     border-radius: 5px;
     background-color: white;
+}
+
+.courseList {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 0px 15px 15px 15px;
 }
