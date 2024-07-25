@@ -48,6 +48,7 @@ function printResult(data) {
 
 function displayPlaces(places) {
     var listEl = document.getElementById('placesList'),
+        menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds();
 
@@ -108,7 +109,7 @@ function getListItem(index, places) {
     return el;
 }
 
-function addMarker(position, idx) {
+function addMarker(position, idx, title) {
     var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
         imageSize = new kakao.maps.Size(36, 37),
         imgOptions =  {
@@ -118,6 +119,7 @@ function addMarker(position, idx) {
         },
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
         marker = new kakao.maps.Marker({
+
             position: position,
             image: markerImage
         });
@@ -199,13 +201,4 @@ window.onload = function(){
         });
     });
 
-    kakao.maps.event.addListener(map, 'center_changed', function() {
-        var level = map.getLevel();
-        var latlng = map.getCenter();
-        var message = '<p>지도 레벨은 ' + level + ' 이고</p>';
-        message += '<p>중심 좌표는 위도 ' + latlng.getLat() + ', 경도 ' + latlng.getLng() + '입니다</p>';
-
-        var resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = message;
-    });
 };

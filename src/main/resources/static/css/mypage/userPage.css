@@ -52,6 +52,7 @@
 }
 
 .pin .title {
+
     justify-content: space-between;
     align-items: center;
     font-size: 21px;
@@ -343,10 +344,6 @@ button, .modal-buttons button {
     background-color: #ffc107;
     color: white;
 }
-
-
-
-
 /* 사이드바 토글 버튼 */
 .sidebar-arrow-container {
     position: relative;

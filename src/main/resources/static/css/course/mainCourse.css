@@ -25,11 +25,6 @@
     border-bottom: 2px solid #40a0ff;
     border-left: #fff;
 }
-/* 검색창 추가/삭제 버튼(+, -) */
-.course_detail .search-button-area {
-    text-align: right;
-}
-
 /* 검색어 창 */
 /*.course_detail .course_rolling_msg {*/
 /*    background: #40a0ff;*/

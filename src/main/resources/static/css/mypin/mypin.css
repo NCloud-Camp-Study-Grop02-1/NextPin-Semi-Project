@@ -46,11 +46,9 @@ body{
 
 p{
     display: inline-block;
-    margin-bottom: 0; /*부트스트랩의 속성 초기화*/
 }
 
-
-/*스크롤바 속성(장호님 css)*/
+/*스크롤바 속성*/
 .side-navbar {
     width: 50rem;
     height: 100vh;
@@ -71,6 +69,184 @@ p{
     background-color: #E1E1E1;
     border-radius: 5px;
 }
+
+/*구분선*/
+.division-line {
+    border-top: 0.1rem solid #E1E1E1;
+    margin: 3rem 1.5rem;
+}
+
+/*네브바 안에 있는 각 box에 margin주기*/
+.box {
+    margin: 1.5rem;
+}
+.nav-search{
+    margin: 3rem 0;
+    text-align: center;
+}
+/*검색창 속성*/
+.search-bar{
+    border-color: #4098FF;
+    width: 27rem;
+    height: 3rem;
+    border-radius: 0.8rem;
+    padding: 1rem; /*placeholder 텍스트 부분과 border사이에 여백주기*/
+    -webkit-appearance: none;
+}
+/*.side-navbar #searchInput {*/
+/*    border-top: 2px solid #40a0ff;*/
+/*    border-left: 2px solid #40a0ff;*/
+/*    border-bottom: 2px solid #40a0ff;*/
+/*    border-right: #fff;*/
+/*}*/
+/*.side-navbar #searchBtn {*/
+/*    border-top: 2px solid #40a0ff;*/
+/*    border-right: 2px solid #40a0ff;*/
+/*    border-bottom: 2px solid #40a0ff;*/
+/*    border-left: #fff;*/
+/*}*/
+/*사이드 네브바 안에 있는 각 타이틀 크기 조금 키우기*/
+.content-title{
+    font-size: 1.05rem;
+    margin-left: 0.5rem;
+    padding-bottom: 1rem;
+}
+/*my pin에서 'p'부분 색상 변경*/
+.yellow{
+    color: #FFC061;
+}
+.content-title-icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-block;
+}
+.mypin-num{
+    color: #4098FF;
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/*mypin,관심있는코스 목록 공통 속성*/
+.content ul{
+    padding-left: 0.1rem;
+}
+.content ul li .container{
+    width: 24rem;
+    text-align: center;
+    margin: 1rem;
+    height: 3rem;
+    border: none;
+    border-radius: 1rem;
+    position: relative;
+    display: flex;
+}
+.content ul li .container input{
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.content ul li .container button{
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    right: 5px;
+}
+
+
+/*각 코스 목록 이름 수정 기능*/
+.profile {
+    display: flex;
+    text-align: left;
+    margin-top: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.profile h2 {
+    margin: 10px;
+    font-size: 25px;
+}
+.profile p {
+    margin: 10px;
+    color: #666;
+    font-size: 21px;
+}
+.profile textarea {
+    margin: 0;
+    color: #666;
+    font-size: 21px;
+    width: 100%;
+    border: 1px solid #ccc;
+    resize: none;
+    display: none;
+}
+.edit-icon {
+    cursor: pointer;
+    margin-top: 0.8rem;
+    width: 20px;
+    height: 20px;
+}
+textarea{
+    background-color: transparent;
+    border: none;
+    margin: auto;
+    height: 3rem;
+    width: 24rem;
+}
+
+
+
+
+/*mypin목록 속성*/
+.mypin-content ul li .container{
+    background-color: #eccccf;
+}
+/*관심있는코스 목록 속성*/
+.like-content ul li .container{
+    background-color: #badce3;
+}
+
+/*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
+.collapse {
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+}
+.collapsing{
+    height: 0;
+    transition: height 0.3s ease-in-out;
+}
+
+/*각 일차별 내용이 담긴 card에 대한 속성*/
+.card ul{
+    /*background-color: #FFC061; !*카드 색상 지정*!*/
+    border-radius: 1rem; /*카드 모서리 둥글게*/
+    color: white;
+    padding: 1.5rem;
+    margin: 1rem 0; /*각 카드의 위아래 여백 주기*/
+}
+.card ul li{
+    border-bottom: 1px solid white; /* 하단에 경계선 추가 */
+    padding: 0.8rem 1rem 0.4rem; /* 위아래 여백 추가, 텍스트의 왼쪽 여백 추가 */
+}
+/* 마지막 li 태그에는 경계선 제거 */
+.card ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+/*card(코스)를 펼쳤을 때, 아래에 있는 코스 목록과 card 사이에 여백주기*/
+.card-body{
+    margin-bottom: 3rem;
+}
+
+/*각 가게 옆에 붙는 pin아이콘 속성*/
+.pin-icon{
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
 /* 사이드바 토글 버튼*/
 .sidebar-toggle {
     position: absolute;
@@ -105,440 +281,9 @@ p{
 
 
 
-/*네브바 안에 있는 각 box에 margin주기*/
-.box {
-    margin: 1.5rem;
-}
-.nav-search{
-    margin: 3rem 0;
-    text-align: center;
-}
-/*사이드 네브바 안에 있는 각 타이틀 크기 조금 키우기*/
-.content-title{
-    font-size: 1.05rem;
-    margin-left: 0.5rem;
-    padding-bottom: 1rem;
-}
 
 
-
-
-
-
-/*검색창 속성*/
-.search-bar{
-    border-color: #4098FF;
-    width: 26rem;
-    height: 3rem;
-    border-radius: 0.8rem;
-    padding: 1rem; /*placeholder 텍스트 부분과 border사이에 여백주기*/
-    -webkit-appearance: none;
-}
-
-
-/*구분선*/
-.division-line {
-    border-top: 0.1rem solid #E1E1E1;
-    margin: 3rem 1.5rem;
-    margin-top: 1.5rem;
-}
-/* 마지막 구분선 */
-.division-line:last-child {
-    margin-bottom: 0.5rem;
-}
-.division-line:last-of-type {
-    margin-bottom: 0.5rem;
-}
-
-
-
-/*프로필 속성(지우님 css)*/
-.profile {
-    display: flex;
-    text-align: left;
-    margin-top: 1.5rem;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-#profile-img{
-    padding: 1rem;
-    width: 7rem;
-}
-.profile-name {
-    margin: 10px;
-    font-size: 1.25rem;
-}
-.profile-content{
-    display: flex;
-}
-#profile-description {
-    margin: 0 0.7rem;
-    color: #666;
-    font-size: 0.9rem;
-}
-.profile textarea {
-    margin: 0;
-    height: 1.8rem;
-    width: 15rem;
-    color: #666;
-    font-size: 0.9rem;
-    border: 1px solid #ccc;
-    resize: none;
-    display: none;
-    background-color: transparent;
-}
-.profile-edit-icon {
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-}
-
-
-
-
-
-
-
-/*mypin,관심있는코스 목록 공통 속성*/
-/*각 일차별 내용이 담긴 card에 대한 속성*/
-.card ul{
-    /*background-color: #FFC061; !*카드 색상 지정*!*/
-    border-radius: 1rem; /*카드 모서리 둥글게*/
-    color: white;
-    padding: 1.5rem;
-    margin: 1rem 0; /*각 카드의 위아래 여백 주기*/
-}
-.card ul li{
-    border-bottom: 1px solid white; /* 하단에 경계선 추가 */
-    padding: 0.8rem 1rem 0.4rem; /* 위아래 여백 추가, 텍스트의 왼쪽 여백 추가 */
-}
-/* 마지막 li 태그에는 경계선 제거 */
-.card ul li:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-/*card(코스)를 펼쳤을 때, 아래에 있는 코스 목록과 card 사이에 여백주기*/
-.card-body{
-    margin-bottom: 3rem;
-}
-/*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
-.collapse {
-    transition: height 0.3s ease-in-out;
-    overflow: hidden;
-}
-.collapsing{
-    height: 0;
-    transition: height 0.3s ease-in-out;
-}
-/*코스 박스에 대한 속성*/
-.content ul{
-    padding-left: 0.1rem;
-}
-.content ul li{
-    display: flex;
-    align-items: center;
-}
-.content ul li .container{
-    width: 24rem;
-    text-align: center;
-    margin: 1rem;
-    height: 3rem;
-    border: none;
-    border-radius: 1rem;
-    position: relative;
-    display: flex;
-    /*자물쇠,하트가 같은 라인에 위치하도록 함*/
-    flex-grow: 1;
-    flex: 1;
-    text-align: center;
-}
-.content ul li .container input{
-    background-color: transparent;
-    border: none;
-    color: white;
-    width: 100%;
-    text-align: center;
-}
-
-/*이 코드는 왜 해놨더라..*/
-/*.content ul li .container button{*/
-/*    position: absolute;*/
-/*    top: 5px;*/
-/*    bottom: 5px;*/
-/*    right: 5px;*/
-/*}*/
-
-
-
-/*mypin 관련 속성*/
-/*my pin에서 'p'부분 색상 변경*/
-.yellow{
-    color: #FFC061;
-}
-.content-title-icon{
-    width: 1.5rem;
-    height: 1.5rem;
-    display: inline-block;
-}
-.mypin-icon{
-    width: 1.2rem;
-}
-.mypin-num{
-    color: #4098FF;
-    margin-left: 0.5rem;
-    font-size: 1.2rem;
-}
-/*mypin 코스 목록 속성*/
-.mypin-content ul li .container{
-    background-color: #eccccf;
-}
-/*mypin 코스 이름 편집 시, 나타나는 텍스트 박스 속성*/
-.mypin-content textarea{
-    background-color: transparent;
-    border: 1px solid transparent;
-    margin: auto;
-    height: 2.7rem;
-    width: 19rem;
-
-    /*textarea 내부 요소 좌우, 위아래 모두 가운데 정렬*/
-    text-align: center; /* 텍스트 좌우 가운데 정렬 */
-    padding: 0; /* 기본 패딩 제거 */
-    line-height: 2.7rem; /* 높이와 동일하게 설정하여 수직 가운데 정렬 */
-    box-sizing: border-box; /* 패딩과 보더를 포함한 전체 크기 계산 */
-    overflow: hidden; /* 스크롤바를 숨김 */
-}
-.mypin-content textarea:active {
-    border-color: blue; /* 클릭하거나 포커스될 때 테두리 색상 */
-}
-.mypin-edit-icon {
-    cursor: pointer;
-    margin-top: 0.7rem;
-    width: 1.3rem;
-    height: 1.3rem;
-}
-/*각 코스 목록에 대한 자물쇠 아이콘 속성*/
-.rock-icon{
-    height: 1.2rem;
-}
-/*각 코스 목록에 대한 하트 개수 속성*/
-.pin-heart-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 0.5rem;
-}
-.pin-heart{
-    width: 1.1rem;
-}
-.pin-heart-cnt{
-    display: block;
-    font-size: 0.85rem;
-}
-/*각 가게 옆에 붙는 pin아이콘 속성*/
-.pin-icon{
-    width: 1rem;
-    margin-left: 1rem;
-}
-
-
-
-/*mypin 코스 목록에 대한 미트볼 버튼 속성*/
-.mypin-edit-icon {
-    cursor: pointer;
-    position: relative; /* 팝오버가 이 요소를 기준으로 배치되도록 설정 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 1.3rem;
-    height: 1.3rem;
-    z-index: 1; /* 버튼 자체가 다른 콘텐츠 위에 표시되도록 설정 */
-}
-.dot {
-    width: 0.25rem;
-    height: 0.3rem;
-    background-color: white;
-    border-radius: 50%;
-    margin: 0.1rem 0;
-    margin-top: 0.14rem;
-}
-/*미트볼 버튼누르면 나타나는 팝오버창 속성*/
-.popover-content {
-    position: absolute;
-    bottom: 100%; /* 미트볼 버튼 바로 위에 위치하도록 설정 */
-    left: 50%;
-    transform: translateX(217%);
-    z-index: 1000; /* 쌓임 순서 결정(z-index): 팝오버가 다른 요소에 덮히지 않도록 가장 위에 표시되도록 설정 */
-    display: flex;
-    flex-direction: column; /* 팝오버 창의 항목들을 세로로 배치 */
-    width: max-content; /* 팝오버 크기를 내용에 맞게 조정 */
-    right: 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white; /* 배경 색상 설정 */
-}
-
-.popover-item {
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    width: 100%; /* 각 항목이 전체 너비를 차지하도록 설정 */
-    box-sizing: border-box; /* 패딩을 포함한 너비를 계산하도록 설정 */
-    padding: 6px 5px; /* 각 항목의 여백 설정 */
-    font-size: 0.85rem;
-    background-color: white !important;
-}
-
-.popover-item:hover {
-    background: #f0f0f0;
-}
-.mypin-edit-icon.meatball-btn {
-    position: relative; /* 자식 요소를 기준으로 팝오버 위치 설정 */
-    cursor: pointer;
-}
-
-/* 팝오버의 말풍선 모양을 위한 삼각형 추가 */
-.popover-content::before {
-    content: "";
-    position: absolute;
-    bottom: -10px; /* 삼각형의 위치를 조정 */
-    left: 50%;
-    transform: translate(-50%,50%);
-    border-width: 10px;
-    border-style: solid;
-    border-color: white transparent transparent transparent; /* 삼각형 색상과 위치 설정 */
-}
-
-
-/* 모달 공통 스타일 */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 3;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 200px;
-}
-
-
-/* 미트볼버튼 팝오버창-공개여부 모달 스타일 */
-#visibilityModalContainer .modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 4rem;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative; /* 닫기 버튼 위치 조정을 위한 부모 요소 */
-}
-
-#visibilityModalContainer .close-visibility-modal-btn {
-    color: #4098FF;
-    position: absolute; /* 절대 위치 지정 */
-    top: 1rem;
-    right: 2rem;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.modal-title, .modal-subtitle{
-    padding: 1rem;
-}
-.modal-title {
-    font-size: 1.5rem;
-    padding-bottom: 2rem;
-}
-
-#visibilityModalContainer .close-visibility-modal-btn:hover,
-#visibilityModalContainer .close-visibility-modal-btn:focus {
-    color: #4098FF;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-
-
-/* 컬러 변경 모달 스타일 */
-#colorModalContainer .modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 40px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative; /* 닫기 버튼 위치 조정을 위한 부모 요소 */
-}
-
-#colorModalContainer .close-color-modal-btn {
-    color: #4098FF;
-    position: absolute; /* 절대 위치 지정 */
-    top: 1rem;
-    right: 2rem;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#colorModalContainer .close-color-modal-btn:hover,
-#colorModalContainer .close-color-modal-btn:focus {
-    color: #4098FF;
-    text-decoration: none;
-    cursor: pointer}
-
-
-
-
-/* 미트볼버튼 팝오버창-컬러편집 관련 스타일 */
-/* 컬러 팔레트 스타일*/
-#colorPalette {
-    background-color: white;
-    border: 1px solid #c3c3c3;
-    border-radius: 10px;
-    margin: 10px 0;
-    display: flex;
-    flex-wrap: wrap; /* 버튼이 넘치면 자동으로 다음 줄로 내리기 */
-    justify-content: center; /* 가운데 정렬 */
-    width: 260px;
-    z-index: 1000;
-    left: 32rem !important;
-    top: 18rem !important;
-}
-
-#colorPalette button {
-    width: 40px; /* 버튼의 크기 조절 */
-    height: 40px; /* 버튼의 크기 조절 */
-    border-radius: 50%; /* 원형 모양 */
-    margin: 10px 5px; /* 버튼 간격 조절 */
-    border: none; /* 테두리 없애기 */
-    cursor: pointer; /* 마우스 오버 시 포인터 모양 */
-    z-index: 1000;
-}
-
-
-
-/*관심있는코스 목록 속성*/
-.like-content ul li .container{
-    background-color: #badce3;
-}
-
-
-
-
-
-
-
-
-/* 관심있는코스 저장 기능- 캘린더와 모달 스타일 추가 */
+/* 캘린더와 모달 스타일 추가 */
 .calendar-container {
     display: none;
     position: fixed;
@@ -551,7 +296,7 @@ p{
     z-index: 1000;
 }
 
-#calendar-modal {
+#modal {
     display: none;
     position: fixed;
     top: 50%;
@@ -578,25 +323,21 @@ p{
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
-.cal-message{
-    text-align: center;
-    display: block;
-    margin: 2rem auto;
-}
+
 #modal-message,#close-modal-button{
     text-align: center;
     display: block;
     margin: auto;
     margin-top: 3rem;
 }
-#close-modal-button,#save-date-button{
-    border-radius: 1.6rem;
+#close-modal-button{
+    border-radius: 1rem;
     border: none;
     background-color: #4098FF;
     width: 5rem;
-    height: 3rem;
+    height: 2rem;
 }
-#close-modal-button:hover,#save-date-button:hover{
+#close-modal-button:hover{
     background-color: #FFC061;
 }
 
@@ -604,96 +345,3 @@ p{
 .modal button {
     margin-top: 10px;
 }
-
-
-
-
-
-
-
-/*설정, 회원탈퇴 모달창 속성(지우님 css)*/
-.settings {
-    text-align: left;
-    margin-bottom: 2rem;
-}
-button, .modal-buttons button {
-    font-size: 16px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-.settings a {
-    color: red;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: 2rem;
-    transform: translateY(-2rem);
-}
-
-/* 회원탈퇴 모달 스타일 */
-#settingModalContainer .modal-content,
-#settingFarewellModal .setting-modal-content1 {
-    background-color: white;
-    margin: 5% auto;
-    padding: 40px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative; /* 닫기 버튼 위치 조정을 위한 부모 요소 */
-}
-
-.setting-close-btn {
-    color: #4098FF;
-    position: absolute; /* 절대 위치 지정 */
-    top: 1rem;
-    right: 2rem;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.setting-close-btn:hover,
-.setting-close-btn:focus {
-    color: #4098FF;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.setting-modal-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 1rem;
-}
-
-.setting-modal-subtitle {
-    font-size: 1.2rem;
-    margin: 2rem;
-}
-
-.setting-modal-buttons {
-    font-size: 1.85rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.setting-yes-btn,
-.setting-no-btn {
-    margin: 0 1rem;
-}
-
-.setting-yes-btn {
-    background-color: #007bff;
-    color: white;
-}
-
-.setting-no-btn {
-    background-color: #ffc107;
-    color: white;
-}
-

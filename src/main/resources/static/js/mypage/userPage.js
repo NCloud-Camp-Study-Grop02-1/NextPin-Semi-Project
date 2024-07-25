@@ -21,7 +21,7 @@ window.onload = function(){
 function editDescription() {
     var p = document.getElementById('profile-description');
     var textarea = document.getElementById('profile-textarea');
-    var editIcon = document.querySelector('.profile-edit-icon');
+    var editIcon = document.querySelector('.edit-icon');
 
     if (textarea.style.display === 'none' || textarea.style.display === '') {
         textarea.value = p.textContent;
@@ -79,7 +79,7 @@ function toggleCourseDetails() {
     const courseDetails = document.querySelector('.course-details');
     courseDetails.classList.toggle('active');
 }
-// 유저가 코스 누르면 여행 코스가 보이게 하기
+// 유저들이 코스 누르면 여행 코스가 보이게 하기
 function toggleCourseDetails(button) {
     const courseDetails = document.querySelector('.course-details');
     const isVisible = courseDetails.style.display === 'block';
@@ -90,7 +90,6 @@ function toggleCourseDetails(button) {
     }
 }
 
-// 회원탈퇴 기능 구현
 document.getElementById('openModalLink').onclick = function(event) {
     event.preventDefault();
     document.getElementById('modal').style.display = 'block';
