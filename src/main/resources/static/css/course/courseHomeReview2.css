@@ -203,8 +203,10 @@ body {
 /*니뽕내뽕 데이터*/
 /* 메인 > 장소이름 */
 #homeTitle {
-    margin-top: 1rem;
-    margin-left: 2rem;
+    /* margin-top: 1rem;
+    margin-left: 2rem; */
+    margin-left: 7%;
+    margin-top: 3%;
     width: 100%;
     display: flex;
     text-align: justify;
@@ -218,6 +220,22 @@ body {
     font-weight: bold;
     font-size: calc(1.3rem + .7vw);
 }
+
+a {
+    text-decoration: none;
+}
+
+/* 메인 뒤로가기 버튼 */
+#backToMainCourse{
+    vertical-align: top;
+    margin-right: 3%;
+}
+
+/* 메인 > 이미지 영역 */
+#homeDetail {
+    text-align: left;
+}
+
 /* 메인 > 장소이름 > 카테로고리명 */
 #homeTitle .food_type {
     color: #8D8D8D;
