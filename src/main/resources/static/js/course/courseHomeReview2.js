@@ -6,10 +6,33 @@ $(function() {
         monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
         showButtonPanel: true,
         showMonthAfterYear:true,
-        dateFormat:"yy-mm-dd",
+        dateFormat: "MM/dd",
         beforeShow: function(input, inst) {
             var sidebarWidth = $('#side-bar').outerWidth();
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
+        }
+    });
+
+    // 확인 버튼 클릭 시 코스 생성
+    $('.finishButton').click(function() {
+        const selectedDate = $('#testDatepicker').val();
+        const memoActive = $('#memo-active').is(':checked');
+        const selectedMemo = memoActive ? $('#memo-text').val() : '';
+        const selectedColor = $('.color-button.selected').css('background-color');
+
+        if (selectedDate && selectedColor) {
+            var memoText = '';
+            if ($('#memo-active').is(':checked')) {
+                memoText = $('#memo-text').val();
+            }
+            $('#selectedDate').text(selectedDate);
+            $('#selectedMemo').text(selectedMemo);
+            $('#selectedColor').css('background-color', selectedColor);
+
+            $('#makeCourse').removeClass('show');
+            $('#newCoursePanel').removeClass('hidden');
+        } else {
+            alert('날짜와 색상은 필수 선택 항목입니다.');
         }
     });
 });
@@ -28,10 +51,29 @@ function toggleImage(button) {
 }
 
 // 핀 선택시 코스 생성 창 나오기
-function toggleContent() {
-    var content = document.querySelector('.content');
-    content.classList.toggle('hidden'); // 'hidden' 클래스를 toggle
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const chosenpinBtn = document.getElementById('chosenPin');
+    const makeCourse = document.getElementById('makeCourse');
+
+    chosenpinBtn.addEventListener('click', () => {
+        const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
+        chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
+        makeCourse.classList.toggle('show', !isExpanded);
+        $('#newCoursePanel').addClass('hidden');
+    });
+});
+
+// 닫기 버튼 -> 코스 생성 창 닫기
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('close_icon');
+
+    closeBtn.addEventListener('click', () => {
+        const isExpanded = closeBtn.getAttribute('aria-expanded') === 'true';
+        closeBtn.setAttribute('aria-expanded', !isExpanded);
+        $('#makeCourse').removeClass('show');
+        $('#newCoursePanel').addClass('hidden');
+    });
+});
 
 // 색상 버튼 클릭 시 테두리 추가
 document.addEventListener('DOMContentLoaded', function() {
@@ -55,47 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('memo-text').disabled = !this.checked;
     });
 });
-
-// 확인 버튼 클릭 시 코스 생성
-$(document).ready(function() {
-    // 확인 버튼 클릭 시 동작
-    $('.finish-button').click(function() {
-        var selectedDate = $('#testDatepicker').val();
-        var selectedColor = $('.color-button.selected').css('background-color');
-
-        if (selectedDate && selectedColor) {
-            var memoText = '';
-            if ($('#memo-active').is(':checked')) {
-                memoText = $('#memo-text').val();
-            }
-
-            var generatedHTML = `
-                <div class="generatedCourse">
-                    <div class="coursebox">
-                    <h3>코스 1</h3>
-                    <p>${selectedDate}</p>
-                        <div class="generated-item" style="background-color: ${selectedColor};">
-                            <h4>1일차</h4>
-                            <h5>① 니뽕내뽕 강남역점</h5>
-                            <p><img src="../../images/icons/edit-white_icon.png"> ${memoText}</p>
-                        </div>
-                     </div>
-                </div>
-            `;
-
-            $('#generatedContent').html(generatedHTML);
-            $('#generatedContent').show(); // #generatedContent 보이기
-            $('#content').hide(); // #content 숨기기
-        } else {
-            alert('날짜와 색상은 필수 선택 항목입니다.');
-        }
-    });
-
-
-});
-
-
-
 
 // 카카오맵
 var placeData = [];
@@ -451,3 +452,19 @@ window.onload = function(){
         $('#reviewContents').css('display', 'block');
     });
 };
+
+$(function() {
+    $("#testDatepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        showButtonPanel: true,
+        showMonthAfterYear:true,
+        dateFormat: "MM/dd",
+        beforeShow: function(input, inst) {
+            var sidebarWidth = $('#side-bar').outerWidth();
+            inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
+        }
+    });
+});

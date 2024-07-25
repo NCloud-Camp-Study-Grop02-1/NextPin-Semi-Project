@@ -1,52 +1,283 @@
-/* 메인 */
-.course_detail {
-    margin: 1%;
-    width : 60%;
-    text-align: center;
-    vertical-align: middle;
+/*reset css*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:700px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
-/* 메인 장소 입력칸 */
-.course_detail #inputPlace {
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 문자깨짐 방지 */
+/* 안넣으면 스타일 시트 적용 안됌 */
+@charset "utf-8";
+
+/* 글꼴 */
+@font-face {
+    font-family: 'pretendard-semibold';
+    src: url('../../webfonts/woff/Pretendard-SemiBold.woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'pretendard-semibold';
+    height: 100%;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    box-sizing: content-box;
+}
+
+#root {
+    -webkit-print-color-adjust: exact;
+}
+
+.root_wrap {
+    display: flex;
+    height: 100vh;
+    user-select: none;
+}
+
+/*사이드바 제외 전체화면*/
+#app_layout {
+    flex: 1 1 auto;
+    padding-left: 6.5rem;
+}
+
+/*가게 정보와 코스 만들기 창*/
+.storeDetail_courseMaker {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    z-index: 200;
+    height: 100%;
+    min-width: 390px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
+}
+
+/*가게 정보와 코스 만들기 창 w/ outline*/
+.storeDetail_courseMaker_outline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+/*뒤로가기 버튼*/
+#backToMainCourse {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+#backToMainCourse img {
+    height: 30px;
+}
+
+/*상단 검색창 부분*/
+.searching {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: block;
+    z-index: 100;
+    width: 390px;
+    padding: 15px 25px;
+}
+
+.search_wrap {
+    position: relative;
+}
+
+.search_box {
+    display: flex;
+}
+
+/*검색어 입력 부분*/
+.search_box #inputPlace {
     border-top: 2px solid #40a0ff;
     border-left: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-right: #fff;
+    position: relative;
+    z-index: 110;
+    height: 47.7px;
+    border-right: none; /* 오른쪽 경계선 제거 */
+    border-top-left-radius: 5px; /* 좌측 상단 모서리 둥글게 */
+    border-bottom-left-radius: 5px; /* 좌측 하단 모서리 둥글게 */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
-/* 메인 장소 입력칸 오른쪽 버튼 */
-.course_detail #searchBtn {
+
+/*검색창 돋보기 버튼*/
+.search_box #searchBtn {
     border-top: 2px solid #40a0ff;
     border-right: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-left: #fff;
+    height: 47.7px;
+    display: inline-block;
+    border-left: none; /* 왼쪽 경계선 제거 */
+    border-top-right-radius: 5px; /* 우측 상단 모서리 둥글게 */
+    border-bottom-right-radius: 5px; /* 우측 하단 모서리 둥글게 */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
-a {
-    text-decoration: none;
+
+/*검색장소 Detail*/
+.storeDetail_wrap {
+    position: relative;
+    width: 390px;
+    height: 100%;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    z-index: 20;
+    /*box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);*/
+
 }
-/* 메인 뒤로가기 버튼 */
-#backToMainCourse{
-    vertical-align: top;
-    margin-right: 3%;
+
+.panel_content {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    padding-top: 76px;
+    box-sizing: border-box;
 }
-/* 메인 > 이미지 영역 */
-#homeDetail {
-    text-align: left;
+
+.storeDetail {
+    width: 390px;
+    height: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+/*니뽕내뽕 데이터*/
 /* 메인 > 장소이름 */
 #homeTitle {
-    margin-left: 7%;
-    margin-top: 3%;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    width: 100%;
     display: flex;
+    text-align: justify;
     justify-content: space-between;
+    position: relative;
+    padding-right: 40px;
+}
+
+#homeTitle h1{
+    /*font-size: 20px;*/
+    font-weight: bold;
+    font-size: calc(1.3rem + .6vw);
 }
 /* 메인 > 장소이름 > 카테로고리명 */
 #homeTitle .food_type {
     color: #8D8D8D;
-    font-size: 15px;
+    font-size: 14px;
 }
+
+/*코스 생성 버튼*/
+.chosenPin {
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+.icon_pin {
+    width: 45px;
+    height: 45px;
+}
+
 /* 메인 > 리뷰점수 */
 #reviewStatics {
     display: flex;
-    margin-left: 7%;
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+    position: relative;
+    font-size: small;
 }
 #reviewStatics span {
     margin-right: 5%;
@@ -64,7 +295,7 @@ a {
     border-bottom: 1px solid #ddd;
 }
 #homeOrReview span {
-    margin: 5% auto 1%;
+    margin: 5% auto 3%;
 }
 a[aria-selected='true'] {
     color: #40a0ff;
@@ -91,6 +322,12 @@ a[aria-selected='false'] {
 #modifyLink {
     color: #8D8D8D;
 }
+
+.icon_address {
+    width: 18px;
+    height: 18px;
+}
+
 /* 메인 > 장소이름 > 홈 > 상세정보 > 지번 */
 #homeContents .street_number {
     margin-left: 5%;
@@ -99,26 +336,19 @@ a[aria-selected='false'] {
 }
 /* 메인 > 장소이름 > 홈 > 상세정보 span 태그 */
 #homeContents span {
-    margin: 1% 0;
+    margin: 0.4rem 0;
 }
-
-/*핀 선택하기 버튼*/
-.chosenPin {
-    background: #ffffff;
-    border: none;
-    cursor: pointer;
-}
-
-.icon_pin {
-    width: 50px;
-    height: 50px;
-}
-
 /* 메인 > 장소이름 > 홈 > 영업중 시간 */
 .location_time li {
-    margin-left: 5%;
+    margin-left: 1rem;
+    margin-top: 0.4rem;
     list-style: none;
 }
+
+a {
+    text-decoration: none;
+}
+
 /* 메인 > 장소이름 > 홈 > 상세정보 url */
 #locationUrl {
     text-decoration: underline;
@@ -133,47 +363,10 @@ a[aria-selected='false'] {
 #userAfterCourseDate1 {
     color: #7B7B7B;
 }
-/* 전체 버튼 */
-.btn-primary {
-    background-color: #40a0ff !important;
-    padding: 15px;
-    border: 2px solid #40a0ff;
-    border-radius: 10px;
-}
-/* 사이드바 토글 버튼 */
-.sidebar-arrow-container {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    text-align: center;
-    background-color: transparent;
-    transition: width 0.3s ease;
-    z-index: 2;
-}
-.sidebar-arrow-container .sidebar-toggle {
-    position: absolute;
-    top: 50vh;
-    left: 30%;
-    width: 50px;
-    height: 80px;
-    border-left: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background-image: url('../../images/icons/toggleButton_icon.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    z-index: 2;
-}
-.sidebar-container.open {
-    width: 200px;
-}
+
 /* 장소 리스트 */
 #reviewContents {
-    margin-top: 4%;
+    margin-top: 1rem;
     height: 420px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -194,22 +387,48 @@ a[aria-selected='false'] {
 }
 /* 리뷰 리스트 */
 #reviewDetailList {
-    margin-left: -6%;
+    margin-left: 1%;
 }
 #reviewDetailList li {
     padding-top: 3%;
     padding-bottom: 5%;
     border-bottom: 2px solid #E1E1E1;
 }
+/*니뽕내뽕 데이터 END*/
 
-.content {
+/*코스 생성창*/
+.sub_panel {
     display: none;
-    flex-grow: 1;
-    padding: 20px; /* 사이드바와의 여백 설정 */
+    position: relative;
+    width: 300px;
+    height: 100%;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
 }
 
-.content.hidden {
-    display: block; /* hidden 클래스가 추가되면 content를 보여줌 */
+.sub_panel.show {
+    display: block;
+    position: relative;
+    width: 300px;
+    height: 100%;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    border-left: 1px solid #e0e0e0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.courseMaker {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    padding-top: 0px;
+    box-sizing: border-box;
+    margin-left: 410px;
 }
 
 .blue {
@@ -308,54 +527,62 @@ a[aria-selected='false'] {
     color: white;
 }
 
-.generatedCourse {
+/*설정한 코스창*/
+.hidden { display: none; }
+
+.selected { border: 2px solid black; }
+
+/*닫기 버튼*/
+.close_icon {
     border: none;
-    border-radius: 10px;
-    color: black;
-    margin: 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-left: 230px;
+    margin-bottom: 15px;
 }
 
-.coursebox {
-    border: 2px solid #ffc061;
-    border-radius: 20px;
-    margin: 20px;
+.icon_close {
+    width: 20px;
+    height: 20px;
 }
 
-.coursebox h3 {
-    margin: 10px 20px;
-    padding-bottom: 20px;
+.new-panel h3 {
+    margin-bottom: 10px;
     text-align: center;
-}
-
-.coursebox p {
-    margin: 10px 20px;
+    margin-top: 10px;
     font-size: large;
 }
 
-
-.generated-item {
-    flex-grow: 1;
-    color: white;
-    margin: 10px 20px 20px 20px;
-    border-radius: 20px;
-    width: 300px;
+.new-panel p {
     text-align: left;
+    margin-left: 15px;
+    line-height: 2.5rem;
 }
 
-.generated-item h4 {
-    padding: 10px;
-    padding-left: 20px;
-    margin: 0;
+.color-sample {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.generated-item h5 {
-    padding: 10px;
-    padding-left: 40px;
-    margin: 0;
+.new-panel {
+    width: 300px;
+    height: 100%;
+    padding: 10px 20px;
+    background-color: white;
+    border-left: 1px solid #e0e0e0;
 }
 
-.generated-item p {
-    padding: 10px;
-    padding-left: 40px;
-    margin: 0;
+.dayCourse {
+    border: 2px solid #4098FF;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.courseList {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 0px 15px 15px 15px;
 }
