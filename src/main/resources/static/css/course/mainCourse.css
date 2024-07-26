@@ -10,12 +10,12 @@
     text-align: center;
     vertical-align: middle;
 }
-/* 메인 이미지 */
-.course_detail .logo img {
-    width: 30%;
-    height: 5%;
-    margin-bottom: 5%;
-}
+/*!* 메인 이미지 *!*/
+/*.course_detail .logo img {*/
+/*    width: 30%;*/
+/*    height: 5%;*/
+/*    margin-bottom: 5%;*/
+/*}*/
 /* 메인 장소 입력칸 */
 .course_detail #inputPlace1, #inputPlace2 {
     border-top: 2px solid #40a0ff;
@@ -48,6 +48,11 @@
 #placesList li {
     padding: 5% 0;
 }
+
+/* 검색 리스트 페이지 hover*/
+#locationList .pagination li:hover {
+    cursor: pointer;
+}
 /* 코스 분류 */
 .course_location_type {
     text-align: left;
@@ -73,7 +78,7 @@ input[type='radio'] {
     border: 2px solid #FFC061;
 }
 /* 코스 분류 > 카페 */
-.course_location_type #course_caffe_label {
+.course_location_type #course_cafe_label {
     border: 2px solid #FAB7B7;
 }
 /* 코스 분류 > 관광지 */

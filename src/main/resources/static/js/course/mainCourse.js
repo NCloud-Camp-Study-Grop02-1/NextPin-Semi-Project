@@ -36,9 +36,9 @@ function searchPlaces(category) {
 
 
 
-    var searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
+    let searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
 
-    console.log(JSON.stringify(searchKeywords));
+    // console.log(JSON.stringify(searchKeywords));
 
     $.ajax({
         method : "POST",
@@ -52,8 +52,9 @@ function searchPlaces(category) {
         success : function(result){
             console.log(result["data"][0]);
             // console.log("ajax : result : " + JSON.stringify(result));
-            displayPlaces(result["data"]);
-            displayPagination(result["pageNum"], result["amount"], result["cnt"]);
+            displayPlaces(result["data"], category);
+            // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
+            displayPagination(result, JSON.stringify(searchKeywords));
         },
         error : function(request, status, error){
             console.log(error);
@@ -85,7 +86,7 @@ function placesSearchCB(data, status, pagination) {
         // console.log(placeData);
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
+        displayPlaces(data, category);
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
@@ -112,25 +113,25 @@ function printResult(data) {
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
+function displayPlaces(places, category) {
 
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('courseDetail'),
+    var menuEl = document.getElementById('courseDetail'),
+        listEl = document.getElementById('placesList'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
-    // removeMarker();
+    removeMarker();
 
     for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            // marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -140,23 +141,23 @@ function displayPlaces(places) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        // (function(marker, title) {
-        //     kakao.maps.event.addListener(marker, 'mouseover', function() {
-        //         displayInfowindow(marker, title);
-        //     });
-        //
-        //     kakao.maps.event.addListener(marker, 'mouseout', function() {
-        //         infowindow.close();
-        //     });
-        //
-        //     itemEl.onmouseover =  function () {
-        //         displayInfowindow(marker, title);
-        //     };
-        //
-        //     itemEl.onmouseout =  function () {
-        //         infowindow.close();
-        //     };
-        // })(marker, places[i].place_name);
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, places[i].placeName);
 
         fragment.appendChild(itemEl);
     }
@@ -226,7 +227,8 @@ function getListItem(index, places) {
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
+function addMarker(position, idx, category) {
+
     var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
         imgOptions =  {
@@ -255,7 +257,7 @@ function removeMarker() {
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pageNum, amount, cnt) {
+function displayPagination(pageParams, searchKeywords) {
     var paginationEl = document.getElementsByClassName('pagination')[0];
         // fragment = document.createDocumentFragment(),
         i;
@@ -270,42 +272,138 @@ function displayPagination(pageNum, amount, cnt) {
     * amount : 페이지 당 데이터 개수
     * cnt : 총 데이터 개수
     * */
-    console.log("pageNum : " + pageNum + ", amount : " + amount + ", cnt : " + cnt);
-    var totalPage = cnt / amount;
+    // console.log("pageNum : " + pageParams["pageNum"] + ", amount : " + pageParams["amount"] + ", cnt : " + pageParams["cnt"]);
+    var totalPage = (pageParams["cnt"] / pageParams["amount"]) + 1;
 
-    var aEl = '<li class="page-item">' +
-              '<a class="page-link" href="#" aria-label="Previous">' +
-              '<span aria-hidden="true">&laquo;</span>' +
-              '</a>' +
-           '</li>'
-    for(i = 1; i <= totalPage; i++){
-        aEl += '<li class="page-item">' +
-                   '<a class="page-link" href="#">' + i + '</a>' +
-               '</li>'
+    var pageSet = Math.ceil( pageParams["pageNum"] / 5);
+    var startNum = (pageSet - 1) * 5 + 1;
+    var endNum = pageSet * 5;
+    searchKeywords["startNum"] = startNum;
+    searchKeywords["endNum"] = endNum;
+    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum);
+    var prevEl = document.createElement('li');
+
+    if(pageParams["pageNum"] != 1 && endNum > 5){
+        prevEl.classList.add('page-item');
+
+        let prevA = document.createElement('a');
+        prevA.classList.add('page-link');
+        prevA.setAttribute('aria-label', 'Previous');
+        prevA.innerText = '<';
+        prevEl.appendChild(prevA);
     }
-    aEl += '<li class="page-item">' +
-               '<a class="page-link" href="#" aria-label="Next">' +
-               '<span aria-hidden="true">&raquo;</span>' +
-               '</a>' +
-           '</li>'
-    // for (i=1; i <= pagination.last; i++) {
-    //     var el = document.createElement('a');
-    //     el.href = "#";
-    //     el.innerHTML = i;
-    //
-    //     if (i===pagination.current) {
-    //         el.className = 'on';
-    //     } else {
-    //         el.onclick = (function(i) {
-    //             return function() {
-    //                 pagination.gotoPage(i);
-    //             }
-    //         })(i);
-    //     }
-    //
-    //     fragment.appendChild(el);
-    // }
-    paginationEl.innerHTML = aEl;
+    paginationEl.appendChild(prevEl);
+
+    if(totalPage > endNum){
+        for(i = startNum; i <= endNum; i++){
+            if(i == pageParams["pageNum"]){
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+                pageEl.classList.add('active');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            } else {
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            }
+        }
+    } else {
+        for(i = startNum; i <= totalPage; i++){
+            if(i == pageParams["pageNum"]){
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+                pageEl.classList.add('active');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            } else {
+
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            }
+        }
+    }
+
+    var nextEl = document.createElement('li');
+    if(endNum % 5 == 0 && totalPage > 5){
+        nextEl.classList.add('page-item');
+
+        let nextA = document.createElement('a');
+        nextA.classList.add('page-link');
+        nextA.setAttribute('aria-label', 'Next');
+        nextA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+        nextA.innerText = '>';
+        nextEl.appendChild(nextA);
+    }
+    paginationEl.appendChild(nextEl);
+}
+
+function pageActiveFunc(pageInfo, searchKeywords){
+    $('.pagination li').removeClass('active');
+
+    let pageNum = pageInfo.getAttribute('id');
+    searchKeywords["pageNum"] = pageNum;
+
+    if(searchKeywords["pageNum"] === null){
+        searchKeywords["Next"] = true;
+    } else {
+        searchKeywords["Next"] = false;
+    }
+    console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
+    $.ajax({
+        method : "POST",
+        headers : {
+            'content-type':'application/json'
+        },
+        url : "/searchPlaces",
+        async : true,
+        dataType: "json",
+        data : JSON.stringify(searchKeywords),
+        success : function(result){
+            console.log(result["data"][0]);
+            // console.log("ajax : result : " + JSON.stringify(result));
+            displayPlaces(result["data"]);
+            // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
+            displayPagination(result, JSON.stringify(searchKeywords));
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
+
+    // console.log(pageInfo);
+    // $('.pagination ' + pageNum).addClass('active');
 }
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다

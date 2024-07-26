@@ -40,6 +40,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri) {
+        if(null != searchKeywords.get("pageNum") && !searchKeywords.get("pageNum").equals("")){
+            cri.setPageNum(Integer.parseInt(searchKeywords.get("pageNum")));
+        }
         cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount());
 
         Map<String, Object> paramMap = new HashMap<>();
