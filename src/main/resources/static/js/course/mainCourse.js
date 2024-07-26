@@ -52,11 +52,7 @@ function searchPlaces(category) {
         success : function(result){
             console.log(result["data"][0]);
             // console.log("ajax : result : " + JSON.stringify(result));
-<<<<<<< HEAD
-            displayPlaces(result["data"]);
-=======
             displayPlaces(result["data"], category);
->>>>>>> origin/backend/jangho
             // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
             displayPagination(result, JSON.stringify(searchKeywords));
         },
@@ -129,17 +125,13 @@ function displayPlaces(places, category) {
     // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
-    // removeMarker();
+    removeMarker();
 
     for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-<<<<<<< HEAD
-            // marker = addMarker(placePosition, i),
-=======
             marker = addMarker(placePosition, i, category),
->>>>>>> origin/backend/jangho
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -149,25 +141,6 @@ function displayPlaces(places, category) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-<<<<<<< HEAD
-        // (function(marker, title) {
-        //     kakao.maps.event.addListener(marker, 'mouseover', function() {
-        //         displayInfowindow(marker, title);
-        //     });
-        //
-        //     kakao.maps.event.addListener(marker, 'mouseout', function() {
-        //         infowindow.close();
-        //     });
-        //
-        //     itemEl.onmouseover =  function () {
-        //         displayInfowindow(marker, title);
-        //     };
-        //
-        //     itemEl.onmouseout =  function () {
-        //         infowindow.close();
-        //     };
-        // })(marker, places[i].place_name);
-=======
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
@@ -185,7 +158,6 @@ function displayPlaces(places, category) {
                 infowindow.close();
             };
         })(marker, places[i].placeName);
->>>>>>> origin/backend/jangho
 
         fragment.appendChild(itemEl);
     }
@@ -212,7 +184,6 @@ function getListItem(index, places) {
     // console.log("지도 데이터 : " + JSON.stringify(placeData));
     var el = document.createElement('li'),
         itemStr = '<a href="courseHomeReview2" style="text-decoration-line: none; color:black; text-align: left">' +
-<<<<<<< HEAD
             '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
             '   <h5 class="place_name">' + places.placeName + '</h5>' +
             '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + places.categoryName + '</span>' +
@@ -223,18 +194,6 @@ function getListItem(index, places) {
         '</div>'
 
     itemStr += '<div class="info_item"><div class="addr">'
-=======
-                         '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
-                         '   <h5 class="place_name">' + places.placeName + '</h5>' +
-                         '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + places.categoryName + '</span>' +
-                         '</div>';
-
-        itemStr += '<div class="review_score">' +
-                   '   <span className="reviewScore" style="color:red;"> ★  ' + places.score + '</span>' +
-                   '</div>'
-
-        itemStr += '<div class="info_item"><div class="addr">'
->>>>>>> origin/backend/jangho
 
     if (places.addressName) {
         itemStr += '    <p class="addressName">' + places.addressName + '</p>';
@@ -270,7 +229,8 @@ function getListItem(index, places) {
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, category) {
 
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    console.log("marker image 설정전 카테고리 확인 : " + category);
+    var imageSrc = '', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
         imgOptions =  {
             spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
@@ -300,13 +260,8 @@ function removeMarker() {
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pageParams, searchKeywords) {
     var paginationEl = document.getElementsByClassName('pagination')[0];
-<<<<<<< HEAD
     // fragment = document.createDocumentFragment(),
     i;
-=======
-        // fragment = document.createDocumentFragment(),
-        i;
->>>>>>> origin/backend/jangho
 
     // 기존에 추가된 페이지번호를 삭제합니다
     while (paginationEl.hasChildNodes()) {
@@ -318,22 +273,11 @@ function displayPagination(pageParams, searchKeywords) {
     * amount : 페이지 당 데이터 개수
     * cnt : 총 데이터 개수
     * */
-<<<<<<< HEAD
-    console.log("pageNum : " + pageParams["pageNum"] + ", amount : " + pageParams["amount"] + ", cnt : " + pageParams["cnt"]);
-=======
     // console.log("pageNum : " + pageParams["pageNum"] + ", amount : " + pageParams["amount"] + ", cnt : " + pageParams["cnt"]);
->>>>>>> origin/backend/jangho
     var totalPage = (pageParams["cnt"] / pageParams["amount"]) + 1;
 
     var pageSet = Math.ceil( pageParams["pageNum"] / 5);
     var startNum = (pageSet - 1) * 5 + 1;
-<<<<<<< HEAD
-    var endNum = (pageSet - 1) * 5 + 5;
-    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum);
-    var prevEl = document.createElement('li');
-
-    if(pageParams["pageNum"] != 1){
-=======
     var endNum = pageSet * 5;
     searchKeywords["startNum"] = startNum;
     searchKeywords["endNum"] = endNum;
@@ -341,7 +285,6 @@ function displayPagination(pageParams, searchKeywords) {
     var prevEl = document.createElement('li');
 
     if(pageParams["pageNum"] != 1 && endNum > 5){
->>>>>>> origin/backend/jangho
         prevEl.classList.add('page-item');
 
         let prevA = document.createElement('a');
@@ -397,10 +340,7 @@ function displayPagination(pageParams, searchKeywords) {
                 pageEl.appendChild(pageA);
                 paginationEl.appendChild(pageEl);
             } else {
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/backend/jangho
                 let pageEl = document.createElement('li');
                 pageEl.classList.add('page-item');
 
@@ -417,20 +357,13 @@ function displayPagination(pageParams, searchKeywords) {
     }
 
     var nextEl = document.createElement('li');
-<<<<<<< HEAD
-    if(pageParams["pageNum"] != totalPage && totalPage > 5){
-=======
     if(endNum % 5 == 0 && totalPage > 5){
->>>>>>> origin/backend/jangho
         nextEl.classList.add('page-item');
 
         let nextA = document.createElement('a');
         nextA.classList.add('page-link');
         nextA.setAttribute('aria-label', 'Next');
-<<<<<<< HEAD
-=======
         nextA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
->>>>>>> origin/backend/jangho
         nextA.innerText = '>';
         nextEl.appendChild(nextA);
     }
@@ -441,13 +374,6 @@ function pageActiveFunc(pageInfo, searchKeywords){
     $('.pagination li').removeClass('active');
 
     let pageNum = pageInfo.getAttribute('id');
-<<<<<<< HEAD
-
-    // $('.pagination ' + '#' + pageNum).addClass('active');
-
-    searchKeywords["pageNum"] = pageNum;
-
-=======
     searchKeywords["pageNum"] = pageNum;
 
     if(searchKeywords["pageNum"] === null){
@@ -456,7 +382,6 @@ function pageActiveFunc(pageInfo, searchKeywords){
         searchKeywords["Next"] = false;
     }
     console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
->>>>>>> origin/backend/jangho
     $.ajax({
         method : "POST",
         headers : {
@@ -477,11 +402,7 @@ function pageActiveFunc(pageInfo, searchKeywords){
             console.log(error);
         }
     });
-<<<<<<< HEAD
-    // console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
-=======
 
->>>>>>> origin/backend/jangho
     // console.log(pageInfo);
     // $('.pagination ' + pageNum).addClass('active');
 }

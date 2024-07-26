@@ -350,16 +350,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-<<<<<<< HEAD
 window.onload = function() {
     const communitySection = $('.community_section');
     const foldToggle = $('.slide-toggle');
     const mapContainer = $('#map'); // 지도 컨테이너 선택
-=======
-window.onload = function(){
-    const sidebar = $('.community_section');
-    const sidebarToggle = $('.sidebar-toggle');
->>>>>>> origin/backend/mingyo
     let isExpand = false;
 
     foldToggle.on('click', () => {
@@ -375,17 +369,3 @@ window.onload = function(){
         }
     });
 };
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> origin/backend/mingyo

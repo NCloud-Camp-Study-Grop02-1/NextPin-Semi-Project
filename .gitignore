@@ -19,13 +19,8 @@ bin/
 
 ### IntelliJ IDEA ###
 application.properties
-<<<<<<< HEAD
-src/main/resources/conf/BzyXmlConfig.xml
-log/
-=======
 logs/
 src/main/resources/conf/BzyXmlConfig.xml
->>>>>>> origin/backend/jangho
 .idea
 *.iws
 *.iml

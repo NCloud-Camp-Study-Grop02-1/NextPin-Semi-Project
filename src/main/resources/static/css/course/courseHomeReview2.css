@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 /*reset css*/
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
-<<<<<<< HEAD
-
-=======
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:700px;}
@@ -98,15 +94,6 @@ table {
     font-weight: normal;
     font-style: normal;
 }
-=======
-/* 글꼴 */
-@font-face {
-    font-family: 'pretendard-semibold';
-    src: url('../../webfonts/woff/Pretendard-SemiBold.woff');
-    font-weight: normal;
-    font-style: normal;
-}
->>>>>>> origin/backend/jangho
 
 body {
     font-family: 'pretendard-semibold';
@@ -129,11 +116,7 @@ body {
 /*사이드바 제외 전체화면*/
 #app_layout {
     flex: 1 1 auto;
-<<<<<<< HEAD
-    /*padding-left: 6.5rem;*/
-=======
     padding-left: 6.5rem;
->>>>>>> origin/backend/jangho
 }
 
 /*가게 정보와 코스 만들기 창*/
@@ -217,8 +200,6 @@ body {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-<<<<<<< HEAD
-=======
 
 /*검색장소 Detail*/
 .storeDetail_wrap {
@@ -290,8 +271,6 @@ a {
 #homeDetail {
     text-align: left;
 }
->>>>>>> origin/backend/jangho
-
 /*검색장소 Detail*/
 .storeDetail_wrap {
     position: relative;
@@ -358,7 +337,6 @@ a {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 /*!* chosenPin 버튼 툴팁 *!*/
 /*.chosenPin::after {*/
 /*    content: '재선택 시 핀 해제 주의';*/
@@ -382,9 +360,6 @@ a {
 /*    opacity: 1;*/
 /*    visibility: visible;*/
 /*}*/
-
-=======
->>>>>>> origin/backend/jangho
 .icon_pin {
     width: 45px;
     height: 45px;
@@ -486,11 +461,7 @@ a {
 /* 장소 리스트 */
 #reviewContents {
     margin-top: 1rem;
-<<<<<<< HEAD
-    height: 45vh;
-=======
     height: 420px;
->>>>>>> origin/backend/jangho
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -520,7 +491,6 @@ a {
 /*니뽕내뽕 데이터 END*/
 
 /*코스 생성창*/
-<<<<<<< HEAD
 .sub_panel {
     display: none;
     position: relative;
@@ -530,8 +500,6 @@ a {
     flex-direction: column;
     box-sizing: content-box;
 }
-
-=======
 .close_icon {
     border: none;
     background-color: #ffffff;
@@ -554,7 +522,6 @@ a {
     box-sizing: content-box;
 }
 
->>>>>>> origin/backend/jangho
 .sub_panel.show {
     display: block;
     position: relative;
@@ -673,13 +640,10 @@ a {
     width: 55px;
     height: 35px;
     color: white;
-<<<<<<< HEAD
-=======
 }
 
 /*설정한 코스창*/
 .hidden { display: none; }
-<<<<<<< HEAD
 
 .selected { border: 2px solid black; }
 
@@ -768,9 +732,7 @@ a {
 }
 .sidebar-container.open {
     width: 200px;
->>>>>>> origin/backend/mingyo
 }
-=======
 .selected { border: 2px solid black; }
 .new-panel h3 { margin-bottom: 10px; text-align: center;}
 .color-sample { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
@@ -787,4 +749,3 @@ a {
     border-radius: 5px;
     background-color: white;
 }
->>>>>>> origin/backend/jangho

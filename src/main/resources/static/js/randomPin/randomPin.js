@@ -173,31 +173,28 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
-<<<<<<< HEAD
-function shuffleArray(array) {
-=======
-    function placesSearchCB(data, status, pagination) {
-        // Hide the loading spinner after the search completes
-        document.getElementById('loading-spinner').style.display = 'none';
-        document.getElementById('modal-cont').style.display = 'none';
 
-        if (status === kakao.maps.services.Status.OK) {
-            // Shuffle the array
-            shuffleArray(data);
+function placesSearchCB(data, status, pagination) {
+    // Hide the loading spinner after the search completes
+    document.getElementById('loading-spinner').style.display = 'none';
+    document.getElementById('modal-cont').style.display = 'none';
 
-            // Select the first 4 elements
-            var selectedData = data.slice(0, 4);
-            displayPlaces(selectedData);
-            displayPagination(pagination);
-        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-            alert('검색 결과가 존재하지 않습니다.');
-        } else if (status === kakao.maps.services.Status.ERROR) {
-            alert('검색 결과 중 오류가 발생했습니다.');
-        }
+    if (status === kakao.maps.services.Status.OK) {
+        // Shuffle the array
+        shuffleArray(data);
+
+        // Select the first 4 elements
+        var selectedData = data.slice(0, 4);
+        displayPlaces(selectedData);
+        displayPagination(pagination);
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert('검색 결과가 존재하지 않습니다.');
+    } else if (status === kakao.maps.services.Status.ERROR) {
+        alert('검색 결과 중 오류가 발생했습니다.');
     }
+}
 
-    function shuffleArray(array) {
->>>>>>> origin/backend/jangho
+function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = array[i];
