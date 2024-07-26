@@ -1,4 +1,9 @@
 /* 메인 */
+/*고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드(김션이 수정)*/
+#courseDetail{
+    margin-left: 7.5rem;
+    padding-left: 2rem;
+}
 .course_detail {
     margin: 1%;
     width : 450px;
@@ -12,31 +17,41 @@
     margin-bottom: 5%;
 }
 /* 메인 장소 입력칸 */
-.course_detail #inputPlace {
+.course_detail #inputPlace1, #inputPlace2 {
     border-top: 2px solid #40a0ff;
     border-left: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-right: #fff;
 }
 /* 메인 장소 입력칸 오른쪽 버튼 */
-.course_detail #searchBtn {
+.course_detail #searchBtn1, #searchBtn2 {
     border-top: 2px solid #40a0ff;
     border-right: 2px solid #40a0ff;
     border-bottom: 2px solid #40a0ff;
     border-left: #fff;
 }
-/* 검색어 창 */
-/*.course_detail .course_rolling_msg {*/
-/*    background: #40a0ff;*/
-/*    margin: 0 40px;*/
-/*    border-radius: 15px;*/
-/*    color: #fff;*/
-/*}*/
+/* 검색창 추가/삭제 버튼(+, -) */
+.course_detail .search-btn-group {
+    text-align: right;
+}
+.course_detail #addSearchBtn, #removeSearchBtn {
+    border: none;
+    background-color: #fff;
+}
 /* 코스 선택 타이틀 */
 .course_location_title {
     text-align: left;
     margin: 5% 0;
     font-size: 20px;
+}
+/* 검색 리스트 */
+#placesList li {
+    padding: 5% 0;
+}
+
+/* 검색 리스트 페이지 hover*/
+#locationList .pagination li:hover {
+    cursor: pointer;
 }
 /* 코스 분류 */
 .course_location_type {
@@ -79,7 +94,7 @@ input[type='radio'] {
     background-color: #40a0ff !important;
     padding: 15px;
     border: 2px solid #40a0ff;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
 }
 /* 장소 리스트 */
 #locationList {
@@ -114,7 +129,7 @@ input[type='radio'] {
     transition: width 0.3s ease;
     z-index: 2;
 }
-.sidebar-arrow-container .sidebar-toggle {
+.sidebar-toggle {
     position: absolute;
     top: 50vh;
     left: 30%;
@@ -129,7 +144,4 @@ input[type='radio'] {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 2;
-}
-.sidebar-container.open {
-    width: 200px;
 }

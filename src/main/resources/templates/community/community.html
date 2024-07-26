@@ -20,62 +20,41 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
 </head>
 <body>
-<div class="container">
-    <!-- 사이드바 -->
-    <nav id="side-bar">
-        <div class="wrapper">
-            <div id="title">
-                <!-- 메인화면으로 이동 -->
-                <a href="/main" class="link">
-                    <img src="../images/icons/NP_icon.png" alt="NP아이콘">
-                </a>
-            </div>
-            <!-- 메뉴들 -->
-            <div id="icons">
-                <div class="icon menu">
-                    <!-- 코스로 이동 -->
-                    <a href="/mainCourse" class="link">
-                        <img src="../images/icons/course_icon.png" alt="코스아이콘" id="course-icon">
-                        <span>코스</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 일정으로 이동 -->
-                    <a href="/calendar" class="link">
-                        <img src="../images/icons/calendar_icon.png" alt="일정아이콘" id="calendar-icon">
-                        <span>일정</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 커뮤니티로 이동 -->
-                    <a href="#" class="link">
-                        <img src="../images/icons/community-hover_icon.png" alt="커뮤니티아이콘" id="community-icon">
-                        <span id="community-span">커뮤니티</span>
-                    </a>
-                </div>
-                <div class="icon menu">
-                    <!-- 랜덤핀으로 이동 -->
-                    <a href="/randomPin" class="link">
-                        <img src="../images/icons/randomPin_icon.png" alt="랜덤아이콘" id="random-icon">
-                        <span>랜덤핀</span>
-                    </a>
-                </div>
-            </div>
+<div class="root">
+    <div class="root_wrap">
+        <!--사이드바-->
+        <div class="sidebar">
+            <a href="/main" class="logo">
+                <img src="images/icons/NP_icon.png" alt="Logo">
+            </a>
+            <div class="separator"></div>
+            <a href="/mainCourse" class="menu-item menu-item-course">
+                <img src="images/icons/course_icon.png" alt="코스">
+                <span>코스</span>
+            </a>
+            <a href="/calendar" class="menu-item">
+                <img src="images/icons/calendar_icon.png" alt="일정">
+                <span>일정</span>
+            </a>
+            <a href="/community" class="menu-item">
+                <img src="images/icons/community-hover_icon.png" alt="커뮤니티">
+                <span>커뮤니티</span>
+            </a>
+            <a href="/randomPin" class="menu-item">
+                <img src="images/icons/randomPin_icon.png" alt="랜덤핀">
+                <span>랜덤핀</span>
+            </a>
+            <a href="/login" class="profile">
+                <img src="images/icons/mypage_icon.png" alt="Profile">
+            </a>
         </div>
-        <div id="profile">
-            <li class="menu">
-                <!-- 로그인으로 이동 -->
-                <a href="/login" class="link">
-                    <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
-                </a>
-            </li>
-        </div>
-    </nav>
-        <div class="content">
+        <!--사이드바 END-->
 
-            <!--검색창-->
-            <div class="content-inner">
-                <h1>코스별 랭킹 순위</h1>
+        <div id="app_layout">
+            <div class="community_section">
+                <!--검색창-->
+                <div class="searching">
+                    <h1>코스별 랭킹 순위</h1>
                     <div class="search-bar">
                         <div class="search-container">
                             <input type="text" placeholder="검색어를 입력하세요" class="search-input">
@@ -84,118 +63,121 @@
                                 <img src="../images/icons/Search-blue_icon.png" alt="검색">
                             </button>
                         </div>
+                    </div>
                 </div>
-            </div>
 
-            <!--유저들의 코스 랭킹-->
-            <div class="ranking">
-                <div class="ranking-item">
-                    <div class="ranking-number">1</div>
-                    <button class="profile" onclick="goToProfile(this)">
-                        <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">
-                        <span>푸린</span>
-                    </button>
-                    <button class="course-button" style="background-color: #FEF4AD" onclick="toggleCourseDetails(this)">서울 추천 코스</button>
-                    <button class="heart-button" onclick="toggleHeart(this)">
-                        <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                        <span>125</span>
-                    </button>
-                </div>
-                <!--course-button 클릭하면 여행 일정 보이기-->
-                <div class="course-details">
-                    <div class="day user1day1">
-                        <h2>1일차</h2>
-                        <ul>
-                            <li>① 비트캠</li>
-                            <li>② 쑤항계절</li>
-                            <li>③ 커피나인 </li>
-                            <li>④ 부엉이 산장</li>
-                        </ul>
-                    </div>
-                    <div class="day user1day2">
-                        <h2>2일차</h2>
-                        <ul>
-                            <li>① 도모카레</li>
-                            <li>② 천호 CGV</li>
-                            <li>③ 썸머러너 </li>
-                            <li>④ 갯벌의 조개 천호점</li>
-                        </ul>
-                    </div>
-                    <div class="button-container">
-                        <button class="save-button" onclick="toggleSave(this)">
-                            <img src="images/icons/save-before-icon.png" alt="Save">
+                <!--유저들의 코스 랭킹-->
+                <div class="ranking">
+                    <div class="ranking-item">
+                        <div class="ranking-number">1</div>
+                        <button class="profilePicture" onclick="goToProfile(this)">
+                            <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">
+                            <span>푸린</span>
                         </button>
-                        <button class="share-button">
-                            <img src="images/icons/share_icon.png" alt="Share">
+                        <button class="course-button" style="background-color: #FEF4AD" onclick="toggleCourseDetails(this)">서울 추천 코스</button>
+                        <button class="heart-button" onclick="toggleHeart(this)">
+                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                            <span>125</span>
                         </button>
                     </div>
-                </div>
+                    <!--course-button 클릭하면 여행 일정 보이기-->
+                    <div class="course-details">
+                        <div class="day user1day1">
+                            <h2>1일차</h2>
+                            <ul>
+                                <li>① 비트캠</li>
+                                <li>② 쑤항계절</li>
+                                <li>③ 커피나인 </li>
+                                <li>④ 부엉이 산장</li>
+                            </ul>
+                        </div>
+                        <div class="day user1day2">
+                            <h2>2일차</h2>
+                            <ul>
+                                <li>① 도모카레</li>
+                                <li>② 천호 CGV</li>
+                                <li>③ 썸머러너 </li>
+                                <li>④ 갯벌의 조개 천호점</li>
+                            </ul>
+                        </div>
+                        <div class="button-container">
+                            <button class="save-button" onclick="toggleSave(this)">
+                                <img src="images/icons/save-before-icon.png" alt="Save">
+                            </button>
+                            <button class="share-button">
+                                <img src="images/icons/share_icon.png" alt="Share">
+                            </button>
+                        </div>
+                    </div>
 
-                <div class="ranking-item">
-                    <div class="ranking-number">2</div>
-                    <button class="profile" onclick="goToProfile(this)">
-                        <img src="../images/icons/마멜-profile_icon.svg" alt="마멜">
-                        <span>마멜</span>
-                    </button>
-                    <button class="course-button" style="background-color: #ffcdd2;">서울 추천 코스</button>
-                    <button class="heart-button" onclick="toggleHeart(this)">
-                        <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                        <span>104</span>
-                    </button>
-                </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">2</div>
+                        <button class="profilePicture" onclick="goToProfile(this)">
+                            <img src="../images/icons/마멜-profile_icon.svg" alt="마멜">
+                            <span>마멜</span>
+                        </button>
+                        <button class="course-button" style="background-color: #ffcdd2;">서울 추천 코스</button>
+                        <button class="heart-button" onclick="toggleHeart(this)">
+                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                            <span>104</span>
+                        </button>
+                    </div>
 
-                <div class="ranking-item">
-                    <div class="ranking-number">3</div>
-                    <button class="profile" onclick="goToProfile(this)">
-                        <img src="../images/icons/햄톨-profile_icon.svg" alt="햄톨">
-                        <span>햄톨</span>
-                    </button>
-                    <button class="course-button" style="background-color: #ffe0b2;">강릉 내돈내산 코스</button>
-                    <button class="heart-button" onclick="toggleHeart(this)">
-                        <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                        <span>93</span>
-                    </button>
-                </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">3</div>
+                        <button class="profilePicture" onclick="goToProfile(this)">
+                            <img src="../images/icons/햄톨-profile_icon.svg" alt="햄톨">
+                            <span>햄톨</span>
+                        </button>
+                        <button class="course-button" style="background-color: #ffe0b2;">강릉 내돈내산 코스</button>
+                        <button class="heart-button" onclick="toggleHeart(this)">
+                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                            <span>93</span>
+                        </button>
+                    </div>
 
-                <div class="ranking-item">
-                    <div class="ranking-number">4</div>
-                    <button class="profile" onclick="goToProfile(this)">
-                        <img src="../images/icons/mypage_icon.png" alt="탈퇴한 회원">
-                        <span> - </span>
-                    </button>
-                    <button class="course-button" style="background-color: #8FE679;">제주도 추천 코스</button>
-                    <button class="heart-button" onclick="toggleHeart(this)">
-                        <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                        <span>77</span>
-                    </button>
-                </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">4</div>
+                        <button class="profilePicture" onclick="goToProfile(this)">
+                            <img src="../images/icons/mypage_icon.png" alt="탈퇴한 회원">
+                            <span> - </span>
+                        </button>
+                        <button class="course-button" style="background-color: #8FE679;">제주도 추천 코스</button>
+                        <button class="heart-button" onclick="toggleHeart(this)">
+                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                            <span>77</span>
+                        </button>
+                    </div>
 
-                <div class="ranking-item">
-                    <div class="ranking-number">5</div>
-                    <button class="profile" onclick="goToProfile(this)">
-                        <img src="../images/icons/태리-profile_icon.svg" alt="태리">
-                        <span>태리</span>
-                    </button>
-                    <button class="course-button" style="background-color: #e0e0e0;">부산 추천 코스</button>
-                    <button class="heart-button" onclick="toggleHeart(this)">
-                        <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                        <span>80</span>
-                    </button>
+                    <div class="ranking-item">
+                        <div class="ranking-number">5</div>
+                        <button class="profilePicture" onclick="goToProfile(this)">
+                            <img src="../images/icons/태리-profile_icon.svg" alt="태리">
+                            <span>태리</span>
+                        </button>
+                        <button class="course-button" style="background-color: #e0e0e0;">부산 추천 코스</button>
+                        <button class="heart-button" onclick="toggleHeart(this)">
+                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                            <span>80</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="sidebar-arrow-container">
-            <div class="sidebar-toggle">
-                <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
+            <div class="slide-arrow-container">
+                <div class="slide-toggle">
+                    <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
+                </div>
             </div>
-        </div>
-        <!--지도-->
-        <div class="map_wrap">
-            <div id="map" style="width:200%;height:100vh;position:relative;overflow:hidden;"></div>
+            <!-- 카카오맵-->
+            <div class="mapping">
+                <div class="map_wrap">
+                    <div id="map" style="width:100%;height:100vh;position:absolute;overflow:hidden;"></div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </body>
-<!--Community JavaScript 연동-->
 <script src="js/community/community.js"></script>
 </html>
 

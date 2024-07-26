@@ -353,22 +353,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
 
-    const sidebar = $('.content');
-    const sidebarToggle = $('.sidebar-toggle');
+window.onload = function() {
+    const communitySection = $('.community_section');
+    const foldToggle = $('.slide-toggle');
+    const mapContainer = $('#map'); // 지도 컨테이너 선택
     let isExpand = false;
 
-    sidebarToggle.on('click', () => {
+    foldToggle.on('click', () => {
         isExpand = !isExpand;
-        sidebar.toggle('open');
+        communitySection.toggle('open');
 
         if(isExpand) {
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
+            $('.slide-toggle').css({'transform': 'rotate(180deg)'});
+            mapContainer.css('width', 'calc(100% - 200px)'); // 사이드바가 열렸을 때 지도의 너비를 조정
+        } else {
+            $('.slide-toggle').css({'transform': 'rotate(0deg)'});
+            mapContainer.css('width', '100%'); // 사이드바가 닫혔을 때 지도의 너비를 원래대로
         }
-
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
     });
-});
+};
+
+
+
+
+
+
+
+
+
+
+
