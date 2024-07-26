@@ -27,6 +27,7 @@
 <body>
 <div id="root">
     <div class="root_wrap">
+<<<<<<< HEAD
         <!-- 사이드바 -->
         <nav id="side-bar">
             <!--로고-->
@@ -56,6 +57,34 @@
             </a>
         </nav>
 
+=======
+        <!--사이드바-->
+        <div class="sidebar">
+            <a href="/main" class="logo">
+                <img src="images/icons/NP_icon.png" alt="Logo">
+            </a>
+            <div class="separator"></div>
+            <a href="/mainCourse" class="menu-item menu-item-course">
+                <img src="images/icons/course-hover_icon.png" alt="코스">
+                <span>코스</span>
+            </a>
+            <a href="/calendar" class="menu-item">
+                <img src="images/icons/calendar_icon.png" alt="일정">
+                <span>일정</span>
+            </a>
+            <a href="/community" class="menu-item">
+                <img src="images/icons/community_icon.png" alt="커뮤니티">
+                <span>커뮤니티</span>
+            </a>
+            <a href="/randomPin" class="menu-item">
+                <img src="images/icons/randomPin_icon.png" alt="랜덤핀">
+                <span>랜덤핀</span>
+            </a>
+            <a href="/login" class="profile">
+                <img src="images/icons/mypage_icon.png" alt="Profile">
+            </a>
+        </div>
+>>>>>>> origin/backend/jangho
         <!--사이드바 END-->
         <div id="app_layout">
             <div class="storeDetail_courseMaker">
@@ -129,7 +158,11 @@
                                         <span class="review_counts">
                                             <h5>리뷰<a href="#"> 223</a></h5>
                                         </span>
+<<<<<<< HEAD
                                         <div id="reviewList">
+=======
+                                         <div id="reviewList">
+>>>>>>> origin/backend/jangho
                                             <ul id="reviewDetailList">
                                                 <li class="review_item" id="reviewItem1" style="border-bottom: 1px solid #DDD">
                                                     <div style="display: flex;">
@@ -171,12 +204,21 @@
                                                         </span>
                                                         </div>
                                                         <div id="userReviewContents2" style="margin-top:3%;">
+<<<<<<< HEAD
                                                             담곰
                                                             <span class="user_review" id="userAfterCourseDate2">
                                                         | 후기 8 코스 3 | 2024.05.08
                                                         </span>
                                                             <br>
                                                             <span class="user_score">
+=======
+                                                        담곰
+                                                        <span class="user_review" id="userAfterCourseDate2">
+                                                        | 후기 8 코스 3 | 2024.05.08
+                                                        </span>
+                                                        <br>
+                                                        <span class="user_score">
+>>>>>>> origin/backend/jangho
                                                         ★★★★☆
                                                         </span>
                                                         </div>
@@ -203,6 +245,7 @@
                         </div>
                     </div>
                     <div class="sub_panel" id="makeCourse" role="dialog" aria-labelledby="chosenPinHeading" aria-modal="true" tabindex="-1">
+<<<<<<< HEAD
                         <!--                        <div class="courseMaker">-->
 <<<<<<< HEAD
                         <!--                                <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">-->
@@ -276,12 +319,73 @@
                         </div>
                     </div>
                 </div>
+=======
+<!--                        <div class="courseMaker">-->
+<!--                                <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">-->
+<!--                                    <img class="icon_close" src="../images/icons/cancel_icon.png" alt="닫기버튼">-->
+<!--                                </button>-->
+                            <!--캘린더 날짜 선택-->
+                            <div class="calendar">
+                                <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
+                                <input type="text" class="input__item" id="testDatepicker" placeholder="날짜를 선택하세요." autocomplete="off" />
+                            </div>
+                            <!--메모 div-->
+                            <div class="memo-container">
+                                <div class="memo-title">
+                                    <h3><span class="blue"> • </span>메모를 입력하세요. (선택)</h3>
+                                    <input type="checkbox" id="memo-active">
+                                </div>
+                                <textarea class="memo-input" id="memo-text" maxlength="15" placeholder="내용 입력 (15자 이내)" disabled></textarea>
+                            </div>
+                            <!--색상 div-->
+                            <div class="color">
+                                <h3><span class="blue"> • </span>색을 선택하세요.</h3>
+                                <div class="colorPalette">
+                                    <button class="color-button" style="background-color: #FFC061;"></button>
+                                    <button class="color-button" style="background-color: #D4ADFB;"></button>
+                                    <button class="color-button" style="background-color: #97E285;"></button>
+                                    <button class="color-button" style="background-color: #F9A7A7;"></button>
+                                    <button class="color-button" style="background-color: #1A70D6;"></button>
+                                    <button class="color-button" style="background-color: #7BD0FF;"></button>
+                                    <button class="color-button" style="background-color: #C8C8C8;"></button>
+                                    <button class="color-button" style="background-color: #BADCE3;"></button>
+                                    <button class="color-button" style="background-color: #AFA18E;"></button>
+                                    <button class="color-button" style="background-color: #ECCCCF;"></button>
+                                </div>
+                            </div>
+                            <!--확인 버튼 (코스 생성)-->
+                            <div class="finishButton">
+                                <button class="finish-button" style="background-color: #4098FF;">확인</button>
+                            </div>
+<!--                        </div>-->
+<!--                        <button>창 접는 버튼</button>-->
+                    </div>
+                    <div id="newCoursePanel" class="new-panel hidden">
+                        <div class="dayCourse">
+                            <h3>코스</h3>
+                            <div class="courseList">
+                                <p><strong>날짜:</strong> <span id="selectedDate"></span></p>
+                                <p><strong>메모:</strong> <span id="selectedMemo"></span></p>
+                                <p><strong>선택한 색상:</strong> <span class="color-sample" id="selectedColor"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 카카오맵-->
+            <div class="mapping">
+                <div class="map_wrap">
+                    <div id="map" style="width:100%;height:100vh;position:absolute;overflow:hidden;"></div>
+                </div>
+                <script src="js/course/courseHomeReview2.js"></script>
+>>>>>>> origin/backend/jangho
             </div>
 
         </div>
     </div>
 </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <!-- 카카오맵-->
@@ -290,5 +394,8 @@
 </div>
 <script src="js/course/courseHomeReview2.js"></script>
 >>>>>>> origin/backend/mingyo
+=======
+
+>>>>>>> origin/backend/jangho
 </body>
 </html>

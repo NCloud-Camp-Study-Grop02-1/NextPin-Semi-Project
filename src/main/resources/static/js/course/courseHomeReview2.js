@@ -13,12 +13,16 @@ $(function() {
         }
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/backend/jangho
 
     // 확인 버튼 클릭 시 코스 생성
     $('.finishButton').click(function() {
         const selectedDate = $('#testDatepicker').val();
         const memoActive = $('#memo-active').is(':checked');
+<<<<<<< HEAD
         const selectedMemo = memoActive ? $('#memo-text').val() : '';
         const selectedColor = $('.color-button.selected').css('background-color');
 
@@ -38,6 +42,18 @@ $(function() {
         }
     });
 >>>>>>> origin/backend/mingyo
+=======
+        const selectedMemo = memoActive ? $('#memo-text').val() : '메모가 없습니다.';
+        const selectedColor = $('.color-button.selected').css('background-color');
+
+        $('#selectedDate').text(selectedDate);
+        $('#selectedMemo').text(selectedMemo);
+        $('#selectedColor').css('background-color', selectedColor);
+
+        $('#makeCourse').removeClass('show');
+        $('#newCoursePanel').removeClass('hidden');
+    });
+>>>>>>> origin/backend/jangho
 });
 
 // 핀 선택 시 색상 채우기
@@ -62,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
         chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
         makeCourse.classList.toggle('show', !isExpanded);
+<<<<<<< HEAD
     });
 });
 
@@ -73,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isExpanded = closeBtn.getAttribute('aria-expanded') === 'true';
         closeBtn.setAttribute('aria-expanded', !isExpanded);
         $('#makeCourse').removeClass('show');
+=======
+>>>>>>> origin/backend/jangho
         $('#newCoursePanel').addClass('hidden');
     });
 });
@@ -100,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+<<<<<<< HEAD
 // 확인 버튼 클릭 시 코스 생성
 $(document).ready(function() {
     // 확인 버튼 클릭 시 동작
@@ -142,6 +162,8 @@ $(document).ready(function() {
 
 });
 
+=======
+>>>>>>> origin/backend/jangho
 // 카카오맵
 var placeData = [];
 // 마커를 담을 배열입니다
