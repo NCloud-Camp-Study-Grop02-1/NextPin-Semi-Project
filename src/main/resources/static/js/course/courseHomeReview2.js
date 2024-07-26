@@ -420,7 +420,7 @@ window.onload = function(){
         searchPlaces();
     });
 
-    const sidebar = $('.course_detail');
+    const sidebar = $('.storeDetail_wrap');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 

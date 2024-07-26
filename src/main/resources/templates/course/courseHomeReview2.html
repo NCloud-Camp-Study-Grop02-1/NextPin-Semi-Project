@@ -9,7 +9,7 @@
     <!-- 코스 홈&리뷰2 스타일 시트 적용 -->
     <link rel="stylesheet" href="css/course/courseHomeReview2.css"/>
     <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/side-bar_style_courseHomeReview2.css">
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css">
 
     <!-- jQuery UI CSS 파일 -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
@@ -27,32 +27,35 @@
 <body>
 <div id="root">
     <div class="root_wrap">
-        <!--사이드바-->
-        <div class="sidebar">
+        <!-- 사이드바 -->
+        <nav id="side-bar">
+            <!--로고-->
             <a href="/main" class="logo">
-                <img src="images/icons/NP_icon.png" alt="Logo">
+                <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
             </a>
+            <!--구분선-->
             <div class="separator"></div>
-            <a href="/mainCourse" class="menu-item menu-item-course">
-                <img src="images/icons/course-hover_icon.png" alt="코스">
+            <a href="/courseHomeReview2" class="menu-item menu-item-course">
+                <img src="../images/icons/course-hover_icon.png" alt="코스">
                 <span>코스</span>
             </a>
             <a href="/calendar" class="menu-item">
-                <img src="images/icons/calendar_icon.png" alt="일정">
+                <img src="../images/icons/calendar_icon.png" alt="일정">
                 <span>일정</span>
             </a>
             <a href="/community" class="menu-item">
-                <img src="images/icons/community_icon.png" alt="커뮤니티">
+                <img src="../images/icons/community_icon.png" alt="커뮤니티">
                 <span>커뮤니티</span>
             </a>
             <a href="/randomPin" class="menu-item">
-                <img src="images/icons/randomPin_icon.png" alt="랜덤핀">
+                <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
                 <span>랜덤핀</span>
             </a>
-            <a href="/login" class="profile">
-                <img src="images/icons/mypage_icon.png" alt="Profile">
+            <a href="/myPin" class="sidebar-profile">
+                <img src="../images/icons/mypage_icon.png" alt="Profile">
             </a>
-        </div>
+        </nav>
+
         <!--사이드바 END-->
         <div id="app_layout">
             <div class="storeDetail_courseMaker">
@@ -126,7 +129,7 @@
                                         <span class="review_counts">
                                             <h5>리뷰<a href="#"> 223</a></h5>
                                         </span>
-                                         <div id="reviewList">
+                                        <div id="reviewList">
                                             <ul id="reviewDetailList">
                                                 <li class="review_item" id="reviewItem1" style="border-bottom: 1px solid #DDD">
                                                     <div style="display: flex;">
@@ -168,12 +171,12 @@
                                                         </span>
                                                         </div>
                                                         <div id="userReviewContents2" style="margin-top:3%;">
-                                                        담곰
-                                                        <span class="user_review" id="userAfterCourseDate2">
+                                                            담곰
+                                                            <span class="user_review" id="userAfterCourseDate2">
                                                         | 후기 8 코스 3 | 2024.05.08
                                                         </span>
-                                                        <br>
-                                                        <span class="user_score">
+                                                            <br>
+                                                            <span class="user_score">
                                                         ★★★★☆
                                                         </span>
                                                         </div>
@@ -200,42 +203,42 @@
                         </div>
                     </div>
                     <div class="sub_panel" id="makeCourse" role="dialog" aria-labelledby="chosenPinHeading" aria-modal="true" tabindex="-1">
-<!--                        <div class="courseMaker">-->
-                            <!--캘린더 날짜 선택-->
-                            <div class="calendar">
-                                <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
-                                <input type="text" class="input__item" id="testDatepicker" placeholder="날짜를 선택하세요." autocomplete="off" />
+                        <!--                        <div class="courseMaker">-->
+                        <!--캘린더 날짜 선택-->
+                        <div class="calendar">
+                            <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
+                            <input type="text" class="input__item" id="testDatepicker" placeholder="날짜를 선택하세요." autocomplete="off" />
+                        </div>
+                        <!--메모 div-->
+                        <div class="memo-container">
+                            <div class="memo-title">
+                                <h3><span class="blue"> • </span>메모를 입력하세요. (선택)</h3>
+                                <input type="checkbox" id="memo-active">
                             </div>
-                            <!--메모 div-->
-                            <div class="memo-container">
-                                <div class="memo-title">
-                                    <h3><span class="blue"> • </span>메모를 입력하세요. (선택)</h3>
-                                    <input type="checkbox" id="memo-active">
-                                </div>
-                                <textarea class="memo-input" id="memo-text" maxlength="15" placeholder="내용 입력 (15자 이내)" disabled></textarea>
+                            <textarea class="memo-input" id="memo-text" maxlength="15" placeholder="내용 입력 (15자 이내)" disabled></textarea>
+                        </div>
+                        <!--색상 div-->
+                        <div class="color">
+                            <h3><span class="blue"> • </span>색을 선택하세요.</h3>
+                            <div class="colorPalette">
+                                <button class="color-button" style="background-color: #FFC061;"></button>
+                                <button class="color-button" style="background-color: #D4ADFB;"></button>
+                                <button class="color-button" style="background-color: #97E285;"></button>
+                                <button class="color-button" style="background-color: #F9A7A7;"></button>
+                                <button class="color-button" style="background-color: #1A70D6;"></button>
+                                <button class="color-button" style="background-color: #7BD0FF;"></button>
+                                <button class="color-button" style="background-color: #C8C8C8;"></button>
+                                <button class="color-button" style="background-color: #BADCE3;"></button>
+                                <button class="color-button" style="background-color: #AFA18E;"></button>
+                                <button class="color-button" style="background-color: #ECCCCF;"></button>
                             </div>
-                            <!--색상 div-->
-                            <div class="color">
-                                <h3><span class="blue"> • </span>색을 선택하세요.</h3>
-                                <div class="colorPalette">
-                                    <button class="color-button" style="background-color: #FFC061;"></button>
-                                    <button class="color-button" style="background-color: #D4ADFB;"></button>
-                                    <button class="color-button" style="background-color: #97E285;"></button>
-                                    <button class="color-button" style="background-color: #F9A7A7;"></button>
-                                    <button class="color-button" style="background-color: #1A70D6;"></button>
-                                    <button class="color-button" style="background-color: #7BD0FF;"></button>
-                                    <button class="color-button" style="background-color: #C8C8C8;"></button>
-                                    <button class="color-button" style="background-color: #BADCE3;"></button>
-                                    <button class="color-button" style="background-color: #AFA18E;"></button>
-                                    <button class="color-button" style="background-color: #ECCCCF;"></button>
-                                </div>
-                            </div>
-                            <!--확인 버튼 (코스 생성)-->
-                            <div class="finishButton">
-                                <button class="finish-button" style="background-color: #4098FF;">확인</button>
-                            </div>
-<!--                        </div>-->
-<!--                        <button>창 접는 버튼</button>-->
+                        </div>
+                        <!--확인 버튼 (코스 생성)-->
+                        <div class="finishButton">
+                            <button class="finish-button" style="background-color: #4098FF;">확인</button>
+                        </div>
+                        <!--                        </div>-->
+                        <!--                        <button>창 접는 버튼</button>-->
                     </div>
                     <div id="newCoursePanel" class="new-panel hidden">
                         <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">
@@ -251,42 +254,23 @@
                             </div>
                         </div>
                     </div>
+                    <!--화면 접기-->
+                    <div class="sidebar-arrow-container">
+                        <div class="sidebar-toggle">
+                            <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!--화면 접기-->
-            <div class="sidebar-arrow-container">
-                <div class="sidebar-toggle">
-                    <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
-                </div>
-            </div>
-            <!-- 카카오맵-->
-            <div class="mapping">
-                <div class="map_wrap">
-                    <div id="map" style="width:100%;height:100vh;position:absolute;overflow:hidden;"></div>
-                </div>
-                <script src="js/course/courseHomeReview2.js"></script>
-            </div>
+
         </div>
     </div>
 </div>
 
-
+<!-- 카카오맵-->
+<div class="map_wrap">
+    <div id="map" style="width:100%;height:100vh;position:relative;overflow:hidden;"></div>
+</div>
+<script src="js/course/courseHomeReview2.js"></script>
 </body>
-<script>
-    $(function() {
-        $("#testDatepicker").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            showButtonPanel: true,
-            showMonthAfterYear:true,
-            dateFormat: "MM/dd",
-            beforeShow: function(input, inst) {
-                var sidebarWidth = $('#side-bar').outerWidth();
-                inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
-            }
-        });
-    });
-</script>
 </html>

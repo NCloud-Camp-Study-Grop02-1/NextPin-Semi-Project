@@ -303,21 +303,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 코스 버튼 클릭 시 course-details 토글
-function toggleCourseDetails() {
-    const courseDetails = document.querySelector('.course-details');
-    courseDetails.classList.toggle('active');
-}
-// 유저들이 코스 누르면 여행 코스가 보이게 하기
 function toggleCourseDetails(button) {
-    const courseDetails = document.querySelector('.course-details');
-    const isVisible = courseDetails.style.display === 'block';
-
-    if (isVisible) {
-        courseDetails.style.display = 'none';
-    } else {
+    const rankingItem = button.closest('.ranking-item');
+    const courseDetails = rankingItem.nextElementSibling;
+    if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
         courseDetails.style.display = 'block';
+    } else {
+        courseDetails.style.display = 'none';
     }
 }
+
 
 // 저장버튼 누르면 아이콘 색 채워지기
 function toggleSave(button) {
