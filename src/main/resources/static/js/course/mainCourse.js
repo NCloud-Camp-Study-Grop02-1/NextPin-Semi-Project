@@ -21,24 +21,53 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
+function searchPlaces(category) {
 
     var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
+
+    var keyword2 = $('#inputPlace2').val() === undefined ? "" : $('#inputPlace2').val();
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         // alert('키워드를 입력해주세요!');
         return false;
     }
 
-    $("#inputPlace1").val(keyword);
+    $("#inputPlace2").val(keyword2);
+
+
+
+    let searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
+
+    // console.log(JSON.stringify(searchKeywords));
+
+    $.ajax({
+        method : "POST",
+        headers : {
+            'content-type':'application/json'
+        },
+        url : "/searchPlaces",
+        async : true,
+        dataType: "json",
+        data : JSON.stringify(searchKeywords),
+        success : function(result){
+            console.log(result["data"][0]);
+            // console.log("ajax : result : " + JSON.stringify(result));
+            displayPlaces(result["data"], category);
+            // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
+            displayPagination(result, JSON.stringify(searchKeywords));
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
-    ps.keywordSearch(keyword, placesSearchCB
-        , {
-            radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
-            // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
-        }
-    );
+    // ps.keywordSearch(keyword, placesSearchCB
+    //     , {
+    //         radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
+    //         // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
+    //     }
+    // );
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -57,11 +86,11 @@ function placesSearchCB(data, status, pagination) {
         // console.log(placeData);
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
+        displayPlaces(data, category);
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+        // displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -84,25 +113,25 @@ function printResult(data) {
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
+function displayPlaces(places, category) {
 
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('courseDetail'),
+    var menuEl = document.getElementById('courseDetail'),
+        listEl = document.getElementById('placesList'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
+    for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -128,7 +157,7 @@ function displayPlaces(places) {
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
-        })(marker, places[i].place_name);
+        })(marker, places[i].placeName);
 
         fragment.appendChild(itemEl);
     }
@@ -154,17 +183,37 @@ function getListItem(index, places) {
     // }
     // console.log("지도 데이터 : " + JSON.stringify(placeData));
     var el = document.createElement('li'),
-        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-            '<a href="courseHomeReview2">' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
+        itemStr = '<a href="courseHomeReview2" style="text-decoration-line: none; color:black; text-align: left">' +
+            '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
+            '   <h5 class="place_name">' + places.placeName + '</h5>' +
+            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + places.categoryName + '</span>' +
+            '</div>';
 
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>';
-        // +
-        // '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    itemStr += '<div class="review_score">' +
+        '   <span className="reviewScore" style="color:red;"> ★  ' + places.score + '</span>' +
+        '</div>'
+
+    itemStr += '<div class="info_item"><div class="addr">'
+
+    if (places.addressName) {
+        itemStr += '    <p class="addressName">' + places.addressName + '</p>';
     } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>';
+        itemStr += '    <p class="roadAdressName">' +  places.roadAddressName  + '</p>';
+    }
+
+    if(places.businessHour.split('·')[1] !== undefined){
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour.split('·')[0] + '</span>' +
+            '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour.split('·')[1] + '</span>' +
+            '</div>';
+    } else {
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + places.businessHour + '</span>' +
+            '</div>'
     }
 
     itemStr += '  <span class="tel">' + places.phone  + '</span>' +
@@ -178,8 +227,10 @@ function getListItem(index, places) {
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+function addMarker(position, idx, category) {
+
+    console.log("marker image 설정전 카테고리 확인 : " + category);
+    var imageSrc = '', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
         imgOptions =  {
             spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
@@ -207,34 +258,153 @@ function removeMarker() {
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i;
+function displayPagination(pageParams, searchKeywords) {
+    var paginationEl = document.getElementsByClassName('pagination')[0];
+    // fragment = document.createDocumentFragment(),
+    i;
 
     // 기존에 추가된 페이지번호를 삭제합니다
     while (paginationEl.hasChildNodes()) {
         paginationEl.removeChild (paginationEl.lastChild);
     }
 
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
+    /*
+    * pageNum : 현재 페이지
+    * amount : 페이지 당 데이터 개수
+    * cnt : 총 데이터 개수
+    * */
+    // console.log("pageNum : " + pageParams["pageNum"] + ", amount : " + pageParams["amount"] + ", cnt : " + pageParams["cnt"]);
+    var totalPage = (pageParams["cnt"] / pageParams["amount"]) + 1;
 
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
+    var pageSet = Math.ceil( pageParams["pageNum"] / 5);
+    var startNum = (pageSet - 1) * 5 + 1;
+    var endNum = pageSet * 5;
+    searchKeywords["startNum"] = startNum;
+    searchKeywords["endNum"] = endNum;
+    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum);
+    var prevEl = document.createElement('li');
 
-        fragment.appendChild(el);
+    if(pageParams["pageNum"] != 1 && endNum > 5){
+        prevEl.classList.add('page-item');
+
+        let prevA = document.createElement('a');
+        prevA.classList.add('page-link');
+        prevA.setAttribute('aria-label', 'Previous');
+        prevA.innerText = '<';
+        prevEl.appendChild(prevA);
     }
-    paginationEl.appendChild(fragment);
+    paginationEl.appendChild(prevEl);
+
+    if(totalPage > endNum){
+        for(i = startNum; i <= endNum; i++){
+            if(i == pageParams["pageNum"]){
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+                pageEl.classList.add('active');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            } else {
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            }
+        }
+    } else {
+        for(i = startNum; i <= totalPage; i++){
+            if(i == pageParams["pageNum"]){
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+                pageEl.classList.add('active');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            } else {
+
+                let pageEl = document.createElement('li');
+                pageEl.classList.add('page-item');
+
+                let pageA = document.createElement('a');
+                pageA.classList.add('page-link');
+                pageA.setAttribute('id', i);
+                pageA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+                pageA.innerText = i;
+
+                pageEl.appendChild(pageA);
+                paginationEl.appendChild(pageEl);
+            }
+        }
+    }
+
+    var nextEl = document.createElement('li');
+    if(endNum % 5 == 0 && totalPage > 5){
+        nextEl.classList.add('page-item');
+
+        let nextA = document.createElement('a');
+        nextA.classList.add('page-link');
+        nextA.setAttribute('aria-label', 'Next');
+        nextA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
+        nextA.innerText = '>';
+        nextEl.appendChild(nextA);
+    }
+    paginationEl.appendChild(nextEl);
+}
+
+function pageActiveFunc(pageInfo, searchKeywords){
+    $('.pagination li').removeClass('active');
+
+    let pageNum = pageInfo.getAttribute('id');
+    searchKeywords["pageNum"] = pageNum;
+
+    if(searchKeywords["pageNum"] === null){
+        searchKeywords["Next"] = true;
+    } else {
+        searchKeywords["Next"] = false;
+    }
+    console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
+    $.ajax({
+        method : "POST",
+        headers : {
+            'content-type':'application/json'
+        },
+        url : "/searchPlaces",
+        async : true,
+        dataType: "json",
+        data : JSON.stringify(searchKeywords),
+        success : function(result){
+            console.log(result["data"][0]);
+            // console.log("ajax : result : " + JSON.stringify(result));
+            displayPlaces(result["data"]);
+            // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
+            displayPagination(result, JSON.stringify(searchKeywords));
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
+
+    // console.log(pageInfo);
+    // $('.pagination ' + pageNum).addClass('active');
 }
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
@@ -256,24 +426,7 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    $("#dataChk").on("click", function(){
-        $.ajax({
-            method : "POST",
-            headers : {
-                'content-type':'application/json'
-            },
-            url : "/kakaoData",
-            async : true,
-            dataType: "json",
-            data : JSON.stringify(placeData),
-            success : function(result){
-                console.log("ajax : result : " + result);
-            },
-            error : function(request, status, error){
-                console.log(error);
-            }
-        });
-    });
+    var category = 'food';
 
     $('#addSearchBtn').on('click', e => {
         $('#inputPlace2').show();
@@ -295,6 +448,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'food';
             }
         }
         // 카페 선택시
@@ -304,6 +458,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#FAB7B7');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'caffe';
             }
         }
         // 관광지 선택시
@@ -313,6 +468,7 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#96E781');
                 $('#course_rest_label').css('background', '#fff');
+                category = 'tour';
             }
         }
         // 숙소 선택시
@@ -322,13 +478,30 @@ window.onload = function(){
                 $('#course_caffe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#D7AFFF');
+                category = 'hotel';
             }
         }
         // console.log(this);
     });
 
+    $("#inputPlace1").on("keyup", function(key){
+        if(key.keyCode == 13){
+            searchPlaces(category);
+        }
+    });
+
     $('#searchBtn1').on("click", function(){
-        searchPlaces();
+        searchPlaces(category);
+    });
+
+    $("#inputPlace2").on("keyup", function(key){
+        if(key.keyCode == 13){
+            searchPlaces(category);
+        }
+    });
+
+    $('#searchBtn2').on("click", function(){
+        searchPlaces(category);
     });
 
     //사이드 네브바 열고 닫는 기능 구현

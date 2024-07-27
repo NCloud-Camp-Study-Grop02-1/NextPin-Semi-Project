@@ -303,21 +303,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // 코스 버튼 클릭 시 course-details 토글
-function toggleCourseDetails() {
-    const courseDetails = document.querySelector('.course-details');
-    courseDetails.classList.toggle('active');
-}
-// 유저들이 코스 누르면 여행 코스가 보이게 하기
 function toggleCourseDetails(button) {
-    const courseDetails = document.querySelector('.course-details');
-    const isVisible = courseDetails.style.display === 'block';
-
-    if (isVisible) {
-        courseDetails.style.display = 'none';
-    } else {
+    const rankingItem = button.closest('.ranking-item');
+    const courseDetails = rankingItem.nextElementSibling;
+    if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
         courseDetails.style.display = 'block';
+    } else {
+        courseDetails.style.display = 'none';
     }
 }
+
 
 // 저장버튼 누르면 아이콘 색 채워지기
 function toggleSave(button) {
@@ -353,22 +348,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
 
-    const sidebar = $('.content');
-    const sidebarToggle = $('.sidebar-toggle');
+window.onload = function() {
+    const communitySection = $('.community_section');
+    const foldToggle = $('.slide-toggle');
+    const mapContainer = $('#map'); // 지도 컨테이너 선택
     let isExpand = false;
 
-    sidebarToggle.on('click', () => {
+    foldToggle.on('click', () => {
         isExpand = !isExpand;
-        sidebar.toggle('open');
+        communitySection.toggle('open');
 
         if(isExpand) {
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
+            $('.slide-toggle').css({'transform': 'rotate(180deg)'});
+            mapContainer.css('width', 'calc(100% - 200px)'); // 사이드바가 열렸을 때 지도의 너비를 조정
+        } else {
+            $('.slide-toggle').css({'transform': 'rotate(0deg)'});
+            mapContainer.css('width', '100%'); // 사이드바가 닫혔을 때 지도의 너비를 원래대로
         }
-
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
     });
-});
+};

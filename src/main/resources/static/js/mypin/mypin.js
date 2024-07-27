@@ -256,7 +256,7 @@ function removeAllChildNods(el) {
 
 // 검색 입력 값에 따라 항목을 필터링하는 함수
 function filterItems() {
-    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+    const searchValue = document.getElementById('inputPlace1').value.toLowerCase();
 
     // .mypin-content 내의 항목을 필터링
     const myPinItems = document.querySelectorAll('.mypin-content .container');
@@ -282,7 +282,7 @@ function filterItems() {
 }
 
 // 검색 입력 창에 이벤트 리스너 추가
-document.getElementById('searchInput').addEventListener('input', filterItems);
+document.getElementById('inputPlace1').addEventListener('input', filterItems);
 
 
 

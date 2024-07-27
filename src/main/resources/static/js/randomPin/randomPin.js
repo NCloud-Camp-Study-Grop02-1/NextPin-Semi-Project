@@ -173,6 +173,27 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
+
+function placesSearchCB(data, status, pagination) {
+    // Hide the loading spinner after the search completes
+    document.getElementById('loading-spinner').style.display = 'none';
+    document.getElementById('modal-cont').style.display = 'none';
+
+    if (status === kakao.maps.services.Status.OK) {
+        // Shuffle the array
+        shuffleArray(data);
+
+        // Select the first 4 elements
+        var selectedData = data.slice(0, 4);
+        displayPlaces(selectedData);
+        displayPagination(pagination);
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert('검색 결과가 존재하지 않습니다.');
+    } else if (status === kakao.maps.services.Status.ERROR) {
+        alert('검색 결과 중 오류가 발생했습니다.');
+    }
+}
+
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -312,19 +333,3 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
-
-$(function() {
-    $("#testDatepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNamesMin: ['일','월','화','수','목','금','토'],
-        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-        showButtonPanel: true,
-        showMonthAfterYear:true,
-        dateFormat:"yy-mm-dd",
-        beforeShow: function(input, inst) {
-            var sidebarWidth = $('#side-bar').outerWidth();
-            inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
-        }
-    });
-});

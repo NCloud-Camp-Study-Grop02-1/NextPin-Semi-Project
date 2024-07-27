@@ -139,6 +139,27 @@ p{
     -webkit-appearance: none;
 }
 
+/* 검색창 돋보기 스타일(장호님 코드 가져옴) */
+/* 메인 장소 입력칸 */
+.side-navbar .input-group{
+    margin: 2rem;
+    margin-bottom: 2.6rem !important;
+    width: 25rem;
+    height: 3rem;
+    border-radius: 0.8rem !important;
+}
+#inputPlace1, #inputPlace2 {
+    border: 2px solid #40a0ff;
+    border-right: #fff;
+}
+/* 메인 장소 입력칸 오른쪽 버튼 */
+#searchBtn1 {
+    border: 2px solid #40a0ff;
+    border-left: #fff;
+}
+.search-img{
+    width: 2rem;
+}
 
 /*구분선*/
 .division-line {
@@ -235,7 +256,7 @@ p{
     transition: height 0.3s ease-in-out;
 }
 /*코스 박스에 대한 속성*/
-.content ul{
+.content > ul{
     padding-left: 0.1rem;
 }
 .content ul li{
