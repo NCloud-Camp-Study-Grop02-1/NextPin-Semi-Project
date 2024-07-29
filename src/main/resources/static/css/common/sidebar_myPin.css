@@ -18,6 +18,10 @@ body {
 }
 
 #side-bar {
+    position: fixed; /*다른 요소에 영향을 받지 않도록 사이드바 고정*/
+    top: 0;
+    left: 0; /* 화면의 오른쪽에 고정 */
+    z-index: 1000; /* 다른 요소보다 위에 표시되도록 설정 */
     width: 7.5rem;
     height: 100vh;
     background-color: white;
@@ -26,7 +30,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-top: 1rem;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    /*box-shadow: 2px 0 5px rgba(0,0,0,0.1);*/
 }
 
 /* 코스, 일정, 커뮤니티, 랜덤핀 */
