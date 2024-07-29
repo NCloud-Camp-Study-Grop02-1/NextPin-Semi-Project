@@ -1,3 +1,77 @@
+/*reset css*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/*-----------------------------------------------------*/
+
+body {
+    font-family: 'pretendard-semibold';
+    height: 100%;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    box-sizing: content-box;
+}
+
+#root {
+    -webkit-print-color-adjust: exact;
+}
+
+.root_wrap {
+    display: flex;
+    height: 100vh;
+    user-select: none;
+}
+
+/*사이드바 제외 전체화면*/
+#app_layout {
+    flex: 1 1 auto;
+}
+
 /* modal.css */
 .modal-content {
     background-color: white;
@@ -9,7 +83,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    display: none;
+    /*display: none;*/
     transform: translate(-50%, -50%);
     z-index: 2;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -60,7 +134,7 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    display: none;
+    /*display: none;*/
     transform: translate(-50%, -50%);
     z-index: 2;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -90,3 +164,262 @@
     }
 }
 
+/* 검색 결과 창 */
+.course_detail {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    z-index: 200;
+    height: 100%;
+    min-width: 450px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
+}
+
+.course_detail_outline {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.random_list {
+    position: relative;
+    width: 390px;
+    height: 100%;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    z-index: 20;
+    align-items: normal;
+    margin-top: 30px;
+}
+
+.course_detail .logo img {
+    width: auto;
+    height: auto;
+    margin-bottom: .6rem;
+}
+/* 메인 장소 입력칸 */
+.course_detail #inputPlace {
+    border-top: 2px solid #40a0ff;
+    border-left: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-right: #fff;
+}
+/* 메인 장소 입력칸 오른쪽 버튼 */
+.course_detail #searchBtn {
+    border-top: 2px solid #40a0ff;
+    border-right: 2px solid #40a0ff;
+    border-bottom: 2px solid #40a0ff;
+    border-left: #fff;
+}
+
+.save-button button{
+    font-size: 25px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 30px;
+
+}
+
+
+.course-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.sub_panel {
+    display: none;
+    position: relative;
+    min-width: 300px;
+    height: 100%;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    margin-left: 60px;
+}
+
+.sub_panel.show {
+    display: block;
+    position: relative;
+    max-width: 300px;
+    height: 100%;
+    flex: 0 0 auto;
+    flex-direction: column;
+    box-sizing: content-box;
+    border-left: 1px solid #e0e0e0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.courseMaker {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    padding-top: 0px;
+    box-sizing: border-box;
+    margin-left: 410px;
+}
+
+.blue {
+    color: #4098FF;
+}
+
+/*메모*/
+.memo-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+}
+.memo-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.memo-title h3 {
+    margin: 0;
+    font-size: 18px;
+}
+.memo-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4098FF;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    resize: none; /* 크기 조절 막기 */
+}
+.memo-input:disabled {
+    background: #ffffff;
+    border: 1px solid #c3c3c3;
+}
+
+/*캘린더 날짜 선택*/
+.calendar {
+    padding: 20px;
+}
+
+.calendar h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.calendar .input__item {
+    margin-top: 10px;
+    padding: 0;
+}
+
+/*색상 선택*/
+
+.color {
+    padding: 20px;
+}
+
+.color h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.colorPalette {
+    border: 1px solid #c3c3c3;
+    border-radius: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap; /* 버튼이 넘치면 자동으로 다음 줄로 내리기 */
+    justify-content: center; /* 가운데 정렬 */
+}
+
+.colorPalette button {
+    width: 40px; /* 버튼의 크기 조절 */
+    height: 40px; /* 버튼의 크기 조절 */
+    border-radius: 50%; /* 원형 모양 */
+    margin: 10px 5px; /* 버튼 간격 조절 */
+    border: none; /* 테두리 없애기 */
+    cursor: pointer; /* 마우스 오버 시 포인터 모양 */
+}
+
+.color-button.selected {
+    border: 3px solid #4098FF; /* 선택된 버튼에만 테두리 추가 */
+}
+
+.finishButton {
+    text-align: right;
+    padding: 20px;
+}
+
+.finish-button {
+    border: none;
+    border-radius: 10px;
+    width: 55px;
+    height: 35px;
+    color: white;
+}
+
+/*설정한 코스창*/
+.hidden { display: none; }
+
+.selected { border: 2px solid black; }
+
+/*닫기 버튼*/
+.close_icon {
+    border: none;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-left: 230px;
+    margin-bottom: 15px;
+}
+
+.icon_close {
+    width: 20px;
+    height: 20px;
+}
+
+.new-panel h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: large;
+}
+
+.new-panel p {
+    text-align: left;
+    margin-left: 15px;
+    line-height: 2.5rem;
+}
+
+.color-sample {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.new-panel {
+    width: 300px;
+    height: 100%;
+    padding: 10px 20px;
+    background-color: white;
+    border-left: 1px solid #e0e0e0;
+    margin-left: 60px;
+}
+
+.dayCourse {
+    border: 2px solid #4098FF;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.courseList {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin: 0px 15px 15px 15px;
+}
