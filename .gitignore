@@ -19,8 +19,8 @@ bin/
 
 ### IntelliJ IDEA ###
 application.properties
+logs/
 src/main/resources/conf/BzyXmlConfig.xml
-log/
 .idea
 *.iws
 *.iml
