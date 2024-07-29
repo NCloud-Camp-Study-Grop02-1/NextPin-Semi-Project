@@ -21,7 +21,7 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
+function searchPlaces(category) {
 
     var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
 
@@ -84,11 +84,11 @@ function placesSearchCB(data, status, pagination) {
         // console.log(placeData);
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
+        displayPlaces(data, category);
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+        // displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -111,10 +111,10 @@ function printResult(data) {
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
+function displayPlaces(places, category) {
 
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('courseDetail'),
+    var menuEl = document.getElementById('courseDetail'),
+        listEl = document.getElementById('placesList'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
@@ -126,16 +126,16 @@ function displayPlaces(places) {
     }
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
+    for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -161,7 +161,7 @@ function displayPlaces(places) {
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
-        })(marker, places[i].place_name);
+        })(marker, places[i].placeName);
 
         fragment.appendChild(itemEl);
     }
@@ -181,16 +181,16 @@ function getListItem(index, place) {
     let itemHref = "/courseHomeReview2?id=" + place["id"];
     let el = document.createElement('li'),
         itemStr = '<a href='+ itemHref +' style="text-decoration-line: none; color:black; text-align: left">' +
-                         '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
-                         '   <h5 class="place_name">' + place.placeName + '</h5>' +
-                         '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
-                         '</div>';
+            '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
+            '   <h5 class="place_name">' + place.placeName + '</h5>' +
+            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
+            '</div>';
 
-        itemStr += '<div class="review_score">' +
-                   '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
-                   '</div>'
+    itemStr += '<div class="review_score">' +
+        '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+        '</div>'
 
-        itemStr += '<div class="info_item"><div class="addr">'
+    itemStr += '<div class="info_item"><div class="addr">'
 
     if (place.addressName) {
         itemStr += '    <p class="addressName">' + place.addressName + '</p>';
@@ -228,15 +228,15 @@ function addMarker(position, idx, category) {
 
     // console.log("marker image 설정전 카테고리 확인 : " + category);
     let imageSrc = '../images/icons/food_map_icon.png'; // 마커 이미지 url
-        if(category === 'food'){
-            imageSrc = '../images/icons/food_map_icon.png';
-        } else if(category === 'cafe'){
-            imageSrc = '../images/icons/cafe_map_icon.png';
-        } else if(category === 'tour'){
-            imageSrc = '../images/icons/tour_map_icon.png';
-        } else if(category === 'hotel'){
-            imageSrc = '../images/icons/hotel_map_icon.png';
-        }
+    if(category === 'food'){
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if(category === 'cafe'){
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if(category === 'tour'){
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if(category === 'hotel'){
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
 
 
     let imageSize = new kakao.maps.Size(32, 32),  // 마커 이미지의 크기
@@ -261,10 +261,10 @@ function removeMarker() {
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i;
+function displayPagination(pageParams, searchKeywords) {
+    var paginationEl = document.getElementsByClassName('pagination')[0];
+    // fragment = document.createDocumentFragment(),
+    i;
 
     // 기존에 추가된 페이지번호를 삭제합니다
     while (paginationEl.hasChildNodes()) {
@@ -437,24 +437,7 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    $("#dataChk").on("click", function(){
-        $.ajax({
-            method : "POST",
-            headers : {
-                'content-type':'application/json'
-            },
-            url : "/kakaoData",
-            async : true,
-            dataType: "json",
-            data : JSON.stringify(placeData),
-            success : function(result){
-                console.log("ajax : result : " + result);
-            },
-            error : function(request, status, error){
-                console.log(error);
-            }
-        });
-    });
+    var category = 'food';
 
     $('#addSearchBtn').on('click', e => {
         $('#inputPlace2').show();
