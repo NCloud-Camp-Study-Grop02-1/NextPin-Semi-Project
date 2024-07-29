@@ -4,57 +4,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
-<mapper namespace="DataMapper">
-    <insert id="crowlData" parameterType="list">
-        INSERT INTO MAP
+<mapper namespace="com.nextpin.app.mapper.DataMapper">
+    <insert id="kakaoInsert" parameterType="list">
+        INSERT INTO KAKAO_MAP_DATA
         (
-            categoryGroupCode,
-            categoryGroupName,
-            categoryName,
-            placeName,
-            score,
-            addressName,
-            roadAddressName,
-            businessHour,
+            address_name,
+            category_group,
+            category_group_name,
+            category_name,
+            distance,
+            id,
             phone,
-            courseShare,
+            place_name,
+            place_url,
+            road_address_name,
             x,
-            y
-        )
+            y)
         VALUES
         <foreach collection="list" item="item" separator=",">
             (
-            #{item.categoryGroupCode, jdbcType=VARCHAR},
-            #{item.categoryGroupName, jdbcType=VARCHAR},
-            #{item.categoryName, jdbcType=VARCHAR},
-            #{item.placeName},
-            #{item.score},
             #{item.addressName},
-            #{item.roadAddressName, jdbcType=VARCHAR},
-            #{item.businessHour, jdbcType=VARCHAR},
-            #{item.phone, jdbcType=VARCHAR},
-            #{item.courseShare, jdbcType=VARCHAR},
+            #{item.categoryGroup, jdbcType=VARCHAR},
+            #{item.categoryGroupName},
+            #{item.categoryName},
+            #{item.distance},
+            #{item.id},
+            #{item.phone},
+            #{item.placeName},
+            #{item.placeUrl},
+            #{item.roadAddressName},
             #{item.x},
             #{item.y}
             )
         </foreach>
     </insert>
-    <select id="getAddressDatas" resultType="kakaoMapData">
-        SELECT ID
-             , CATEGORYGROUPCODE
-             , CATEGORYGROUPNAME
-             , CATEGORYNAME
-             , PLACENAME
-             , SCORE
-             , ADDRESSNAME
-             , ROADADDRESSNAME
-             , BUSINESSHOUR
-             , PHONE
-             , COURSESHARE
-             , X
-             , Y
-          FROM MAP
-    </select>
 
     <update id="updateAddressConversion" parameterType="kakaoMapData">
         UPDATE MAP
@@ -133,14 +116,33 @@
             PLACENAME LIKE CONCAT('%', #{keyword}, '%')
             OR
             ADDRESSNAME LIKE CONCAT('%', #{keyword}, '%')
+    <insert id="kakaoTestInsert" parameterType="com.nextpin.app.dto.KakaoMapDto">
+            INSERT INTO KAKAO_MAP_DATA(
+                address_name
+                , category_group
+                , category_group_name
+                , category_name
+                , distance
+                , id
+                , phone
+                , place_name
+                , place_url
+                , road_address_name
+                , x
+                , y
+                ) VALUES (
+                #{address_name}
+                , #{category_group, jdbcType=VARCHAR}
+                , #{category_group_name}
+                , #{category_name}
+                , #{distance}
+                , #{id}
+                , #{phone}
+                , #{place_name}
+                , #{place_url}
+                , #{road_address_name}
+                , #{x}
+                , #{y}
             )
-        </if>
-        <if test="keyword2 != null and keyword2 != ''">
-            OR (
-            PLACENAME LIKE CONCAT('%', #{keyword2}, '%')
-            OR
-            ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')
-            )
-        </if>
-    </select>
+    </insert>
 </mapper>

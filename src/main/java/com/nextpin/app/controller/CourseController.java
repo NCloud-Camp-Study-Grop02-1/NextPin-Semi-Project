@@ -8,20 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.HashMap;
 
 @RestController
 public class CourseController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseController.class);
-    private CourseService courseService;
-
-    @Autowired
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
 
     @GetMapping("/courseHomeReview2")
     public ModelAndView courseHomeReview2(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
@@ -42,11 +37,5 @@ public class CourseController {
 
         logger.debug("mainCourse페이지 이동");
         return mav;
-    }
-
-    @PostMapping("/searchPlaces")
-    @ResponseBody
-    public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
-        return courseService.searchPinDatas(searchKeywords, cri);
     }
 }

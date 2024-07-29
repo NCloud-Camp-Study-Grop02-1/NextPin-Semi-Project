@@ -34,8 +34,6 @@ function searchPlaces(category) {
 
     $("#inputPlace2").val(keyword2);
 
-
-
     let searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
 
     // console.log(JSON.stringify(searchKeywords));
@@ -50,7 +48,6 @@ function searchPlaces(category) {
         dataType: "json",
         data : JSON.stringify(searchKeywords),
         success : function(result){
-            console.log(result["data"][0]);
             // console.log(result["data"][0]);
             // console.log("ajax : result : " + JSON.stringify(result));
             displayPlaces(result["data"], category);
@@ -180,7 +177,6 @@ function displayPlaces(places, category) {
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, place) {
 
-
     // console.log("place : " + JSON.stringify(place));
     let itemHref = "/courseHomeReview2?id=" + place["id"];
     let el = document.createElement('li'),
@@ -194,7 +190,7 @@ function getListItem(index, place) {
                    '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
                    '</div>'
 
-    itemStr += '<div class="info_item"><div class="addr">'
+        itemStr += '<div class="info_item"><div class="addr">'
 
     if (place.addressName) {
         itemStr += '    <p class="addressName">' + place.addressName + '</p>';
@@ -230,17 +226,6 @@ function getListItem(index, place) {
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, category) {
 
-<<<<<<< HEAD
-    console.log("marker image 설정전 카테고리 확인 : " + category);
-    var imageSrc = '', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-=======
     // console.log("marker image 설정전 카테고리 확인 : " + category);
     let imageSrc = '../images/icons/food_map_icon.png'; // 마커 이미지 url
         if(category === 'food'){
@@ -256,7 +241,6 @@ function addMarker(position, idx, category) {
 
     let imageSize = new kakao.maps.Size(32, 32),  // 마커 이미지의 크기
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
->>>>>>> backend/jangho
         marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage
@@ -279,8 +263,8 @@ function removeMarker() {
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pageParams, searchKeywords) {
     var paginationEl = document.getElementsByClassName('pagination')[0];
-    // fragment = document.createDocumentFragment(),
-    i;
+        // fragment = document.createDocumentFragment(),
+        i;
 
     // 기존에 추가된 페이지번호를 삭제합니다
     while (paginationEl.hasChildNodes()) {

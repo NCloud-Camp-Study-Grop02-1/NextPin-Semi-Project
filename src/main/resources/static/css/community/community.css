@@ -142,20 +142,11 @@ body {
     top: 0px;
     bottom: 0px;
     z-index: 200;
-    height: 100%;
-    min-width: 390px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
-    position: relative;
-    /*display: flex;*/
-    min-width: 390px;
+    min-width: 450px;
+    max-width: 450px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.04) 10px 0px 20px 0px;
     position: relative;
-    /*display: flex;*/
-    /*height: auto;*/
-    /*max-height: none;*/
-    /*overflow-y: auto;*/
 }
 
 
@@ -270,12 +261,8 @@ body {
 .ranking {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    max-height: 100vh; /* 최대 높이 설정 */
-=======
     height: 82vh;
     /*max-height: 100vh; !* 최대 높이 설정 *!*/
->>>>>>> origin/backend/mingyo
     overflow-y: auto; /* 세로 스크롤바 추가 */
 }
 
@@ -481,12 +468,12 @@ body {
 }
 
 #map {
-    width: 100%;
+    width: 200%;
     height: 100%;
 }
 
 /* 사이드바 토글 버튼 */
-.slide-arrow-container {
+.sidebar-arrow-container {
     position: relative;
     top: 0;
     left: 0;
@@ -497,7 +484,7 @@ body {
     transition: width 0.3s ease;
     z-index: 2;
 }
-.slide-arrow-container .slide-toggle {
+.sidebar-arrow-container .sidebar-toggle {
     position: absolute;
     top: 50vh;
     left: 30%;
@@ -513,7 +500,7 @@ body {
     background-repeat: no-repeat;
     z-index: 2;
 }
-.slide-container.open {
+.sidebar-container.open {
     width: 200px;
 }
 

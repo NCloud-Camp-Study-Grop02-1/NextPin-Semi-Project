@@ -1,19 +1,14 @@
 package com.nextpin.app.service.impl;
 
 import ch.qos.logback.classic.Logger;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
-import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -28,16 +23,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<KakaoMapDto> getAddressDatas() {
-        logger.debug("주소 데이터 가져오기");
         return courseDao.getAddressDatas();
     }
 
     @Override
     public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList) {
-        logger.debug("좌표 데이터 값 반영하기");
         courseDao.updateAddressConversion(kakaoMapDtoList);
     }
-
     @Override
     public String searchPinDetail(int id) {
         ObjectMapper objectMapper = new ObjectMapper();

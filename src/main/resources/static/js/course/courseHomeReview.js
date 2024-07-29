@@ -1,104 +1,3 @@
-$(function() {
-    $("#testDatepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dayNamesMin: ['일','월','화','수','목','금','토'],
-        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-        showButtonPanel: true,
-        showMonthAfterYear:true,
-        dateFormat: "MM/dd",
-        beforeShow: function(input, inst) {
-            var sidebarWidth = $('#side-bar').outerWidth();
-            inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
-        }
-    });
-
-    // 확인 버튼 클릭 시 코스 생성
-    $('.finishButton').click(function() {
-        const selectedDate = $('#testDatepicker').val();
-        const memoActive = $('#memo-active').is(':checked');
-        const selectedMemo = memoActive ? $('#memo-text').val() : '';
-        const selectedColor = $('.color-button.selected').css('background-color');
-
-        if (selectedDate && selectedColor) {
-            var memoText = '';
-            if ($('#memo-active').is(':checked')) {
-                memoText = $('#memo-text').val();
-            }
-            $('#selectedDate').text(selectedDate);
-            $('#selectedMemo').text(selectedMemo);
-            $('#selectedColor').css('background-color', selectedColor);
-
-            $('#makeCourse').removeClass('show');
-            $('#newCoursePanel').removeClass('hidden');
-        } else {
-            alert('날짜와 색상은 필수 선택 항목입니다.');
-        }
-    });
-});
-
-// 핀 선택 시 색상 채우기
-function toggleImage(button) {
-    var img = button.querySelector('.icon_pin');
-    var originalSrc = "../images/icons/locationPin-before_icon.png";
-    var newSrc = "../images/icons/locationPin-after_icon.png";
-
-    if (img.src.includes("locationPin-after_icon.png")) {
-        img.src = originalSrc;
-    } else {
-        img.src = newSrc;
-    }
-}
-
-// 핀 선택시 코스 생성 창 나오기
-document.addEventListener('DOMContentLoaded', () => {
-    const chosenpinBtn = document.getElementById('chosenPin');
-    const makeCourse = document.getElementById('makeCourse');
-
-    chosenpinBtn.addEventListener('click', () => {
-        const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
-        chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
-        makeCourse.classList.toggle('show', !isExpanded);
-        $('#newCoursePanel').addClass('hidden');
-    });
-});
-
-// 닫기 버튼 -> 코스 생성 창 닫기
-document.addEventListener('DOMContentLoaded', () => {
-    const closeBtn = document.getElementById('close_icon');
-
-    closeBtn.addEventListener('click', () => {
-        const isExpanded = closeBtn.getAttribute('aria-expanded') === 'true';
-        closeBtn.setAttribute('aria-expanded', !isExpanded);
-        $('#makeCourse').removeClass('show');
-        $('#newCoursePanel').addClass('hidden');
-    });
-});
-
-// 색상 버튼 클릭 시 테두리 추가
-document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.color-button');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (button.classList.contains('selected')) {
-                button.classList.remove('selected');
-            } else {
-                buttons.forEach(btn => btn.classList.remove('selected'));
-                button.classList.add('selected');
-            }
-        });
-    });
-});
-
-// 메모 입력 함수
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('memo-active').addEventListener('change', function() {
-        document.getElementById('memo-text').disabled = !this.checked;
-    });
-});
-
-// 카카오맵
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
@@ -355,29 +254,24 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    console.log($('#hiddenValue').text());
-
-    let loadData = '';
-    if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
-        loadData = JSON.parse($('#hiddenValue').text());
-    }
-
-    console.log(loadData);
-
-    // 데이터 채우기
-    $('#locationTitle').text(loadData['data']['placeName']);
-    $('#foodType').text(loadData['data']['categoryName']);
-    $('#reviewScore').text('★ ' + loadData['data']['score']);
-
-    $('#locationAddress').text(loadData['data']['addressName']);
-    $('#streetNumber').text('지번 | ' + loadData['data']['roadAddressName']);
-
-    let businessHour = loadData['data']['businessHour'].split('·')[0];
-    let breakTime = loadData['data']['businessHour'].split('·')[1];
-    $('#businessHour').text(businessHour);
-    $('#breakTime').text(breakTime);
-
-    $('#locationPhone').text(loadData['data']['phone']);
+    $("#dataChk").on("click", function(){
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/kakaoData",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(placeData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
+    });
 
     $("input[name=courseType][value=course_food]").prop("checked", true);
     $('#course_food_label').css('background', '#FFC061');
@@ -425,7 +319,7 @@ window.onload = function(){
         searchPlaces();
     });
 
-    const sidebar = $('.storeDetail_courseMaker');
+    const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
@@ -457,4 +351,3 @@ window.onload = function(){
         $('#reviewContents').css('display', 'block');
     });
 };
-
