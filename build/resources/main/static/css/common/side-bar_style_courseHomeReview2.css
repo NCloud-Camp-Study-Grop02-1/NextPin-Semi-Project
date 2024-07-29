@@ -1,0 +1,98 @@
+/* 문자깨짐 방지 */
+/* 안넣으면 스타일 시트 적용 안됌 */
+@charset "utf-8";
+
+/* 글꼴 */
+@font-face {
+    font-family: 'pretendard-semibold';
+    src: url('../../webfonts/woff/Pretendard-SemiBold.woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    font-family: 'pretendard-semibold';
+}
+
+.sidebar {
+    width: 6.5rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    /*box-shadow: 2px 0 5px rgba(0,0,0,0.1);*/
+    border-right: 1px solid #e0e0e0;
+}
+
+.logo img {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* 구분선 */
+.separator {
+    width: 80%;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin-bottom: 1rem;
+}
+
+.menu-item {
+    width: 100%;
+    text-align: center;
+    padding: 1.3rem 0;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-item img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item-course img{
+    width: 2rem;
+}
+
+.menu-item span {
+    font-size: 0.875rem;
+}
+
+.profile {
+    margin-top: auto;
+    padding: 2.5rem 0;
+    text-decoration: none;
+}
+
+.profile img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+/* 호버시, 이미지 변경 */
+.menu-item:hover:nth-of-type(2) img {
+    content: url('../../images/icons/course-hover_icon.png');
+}
+
+.menu-item:hover:nth-of-type(3) img {
+    content: url('../../images/icons/calendar-hover_icon.png');
+}
+
+.menu-item:hover:nth-of-type(4) img {
+    content: url('../../images/icons/community-hover_icon.png');
+}
+
+.menu-item:hover:nth-of-type(5) img {
+    content: url('../../images/icons/random-hover_icon.png');
+}
