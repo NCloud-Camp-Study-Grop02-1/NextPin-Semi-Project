@@ -1,7 +1,9 @@
 package com.nextpin.app.service;
 
+import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface CourseService {
