@@ -49,9 +49,12 @@
     grid-template-columns: repeat(7, 1fr);
 }
 
-#calendar .header {
+.daysOfWeekDiv {
+    display: flex;
+    justify-content: space-around;
     background-color: #FFC671;
     height: 40px;
+    align-items: center;
 }
 
 /* 날짜 */
@@ -69,8 +72,7 @@
 
 }
 
-.prev-month,
-.next-month {
+.prev-month, .next-month {
     color: #B3B3B3;
 }
 
@@ -82,8 +84,26 @@
     color: #FF1E1E;
 }
 
+.user-schedule {
+    font-size: 15px;
+    background: #7BD0FF;
+    color: #ffffff;
+    margin-top: 15px;
+    padding: 5px 0 5px 0;
+    /*position: absolute;*/
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer; /* 클릭 가능한 아이템임을 표시 */
+}
+
+.userSchedule {
+    position: relative; /* 내부 요소의 position: absolute; 사용을 위해 설정 */
+}
+
+
 #calendar-panel {
-    min-width: 25vw;
+    width: 400px;
     padding: 20px;
     border-left: 1px solid #ddd;
     display: none;
@@ -185,18 +205,6 @@
 .weather img {
     width: 60px;
     height: 60px;
-}
-
-#share-button {
-    background-image: url('../../images/icons/share_icon.png');
-    background-color: transparent;  /* 배경색을 투명하게 설정 */
-    width: 33px;
-    height: 43px;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    bottom: 3vh;
-    right: 3vw;
 }
 
 /* 반응형 페이지 미디어 쿼리문 */
