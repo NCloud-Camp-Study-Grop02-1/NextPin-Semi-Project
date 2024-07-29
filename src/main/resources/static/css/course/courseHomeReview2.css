@@ -39,7 +39,6 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
->>>>>>> origin/backend/mingyo
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -116,7 +115,7 @@ body {
 /*사이드바 제외 전체화면*/
 #app_layout {
     flex: 1 1 auto;
-    padding-left: 6.5rem;
+    /*padding-left: 6.5rem;*/
 }
 
 /*가게 정보와 코스 만들기 창*/
@@ -239,76 +238,6 @@ body {
 /*니뽕내뽕 데이터*/
 /* 메인 > 장소이름 */
 #homeTitle {
-    /* margin-top: 1rem;
-    margin-left: 2rem; */
-    margin-left: 7%;
-    margin-top: 3%;
-    width: 100%;
-    display: flex;
-    text-align: justify;
-    justify-content: space-between;
-    position: relative;
-    padding-right: 40px;
-}
-
-#homeTitle h1{
-    /*font-size: 20px;*/
-    font-weight: bold;
-    font-size: calc(1.3rem + .7vw);
-}
-
-a {
-    text-decoration: none;
-}
-
-/* 메인 뒤로가기 버튼 */
-#backToMainCourse{
-    vertical-align: top;
-    margin-right: 3%;
-}
-
-/* 메인 > 이미지 영역 */
-#homeDetail {
-    text-align: left;
-}
-/*검색장소 Detail*/
-.storeDetail_wrap {
-    position: relative;
-    width: 390px;
-    height: 100%;
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: column;
-    box-sizing: content-box;
-    z-index: 20;
-    /*box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);*/
-
-}
-
-.panel_content {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: rgb(255, 255, 255);
-    padding-top: 76px;
-    box-sizing: border-box;
-}
-
-.storeDetail {
-    width: 390px;
-    height: 100%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/*니뽕내뽕 데이터*/
-/* 메인 > 장소이름 */
-#homeTitle {
     margin-top: 1rem;
     margin-left: 2rem;
     width: 100%;
@@ -360,6 +289,7 @@ a {
 /*    opacity: 1;*/
 /*    visibility: visible;*/
 /*}*/
+
 .icon_pin {
     width: 45px;
     height: 45px;
@@ -461,7 +391,7 @@ a {
 /* 장소 리스트 */
 #reviewContents {
     margin-top: 1rem;
-    height: 420px;
+    height: 45vh;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -491,27 +421,6 @@ a {
 /*니뽕내뽕 데이터 END*/
 
 /*코스 생성창*/
-.sub_panel {
-    display: none;
-    position: relative;
-    width: 300px;
-    height: 100%;
-    flex: 0 0 auto;
-    flex-direction: column;
-    box-sizing: content-box;
-}
-.close_icon {
-    border: none;
-    background-color: #ffffff;
-    cursor: pointer;
-    margin-left: 250px;
-}
-
-.icon_close {
-    width: 25px;
-    height: 25px;
-}
-
 .sub_panel {
     display: none;
     position: relative;
@@ -732,20 +641,4 @@ a {
 }
 .sidebar-container.open {
     width: 200px;
-}
-.selected { border: 2px solid black; }
-.new-panel h3 { margin-bottom: 10px; text-align: center;}
-.color-sample { width: 20px; height: 20px; display: inline-block; vertical-align: middle; }
-
-.new-panel {
-    width: 300px;
-    height: 100%;
-    padding: 20px;
-    background-color: white;
-}
-
-.dayCourse {
-    border: 1px solid #4098FF;
-    border-radius: 5px;
-    background-color: white;
 }

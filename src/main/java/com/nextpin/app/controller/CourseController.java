@@ -1,25 +1,15 @@
 package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.nextpin.app.dto.Criteria;
-import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.HashMap;
 
 @RestController
 public class CourseController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseController.class);
-    private CourseService courseService;
-
-    @Autowired
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
 
     @GetMapping("/courseHomeReview")
     public ModelAndView courseHomeReview() {
@@ -64,11 +54,5 @@ public class CourseController {
 
         logger.debug("mainCourse페이지 이동");
         return mav;
-    }
-
-    @PostMapping("/searchPlaces")
-    @ResponseBody
-    public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
-        return courseService.searchPinDatas(searchKeywords, cri);
     }
 }

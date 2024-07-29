@@ -1,4 +1,3 @@
-// 카맵 API
 var placeData = [];
 // 마커를 담을 배열입니다
 var markers = [];
@@ -24,22 +23,22 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
-    var keyword = $('#inputPlace').val() === undefined ? "강남 고깃집" : $('#inputPlace').val();
+    var keyword = $('#inputPlace').val() === undefined ? "" : $('#inputPlace').val();
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        alert('키워드를 입력해주세요!');
+        // alert('키워드를 입력해주세요!');
         return false;
     }
 
-    $("#keyword").val(keyword);
+    $("#inputPlace").val(keyword);
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
     // ps.keywordSearch( keyword, placesSearchCB);
-    // ps.keywordSearch(keyword, placesSearchCB
-    //     , {
-    //         radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
-    //         // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
-    //     }
-    // );
+    ps.keywordSearch(keyword, placesSearchCB
+        , {
+            radius : 500                  // 반경범위 미터 단위(0m ~ 20000m)
+            // ,location: new kakao.maps.LatLng(37.566826, 126.9786567)
+        }
+    );
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -62,7 +61,7 @@ function placesSearchCB(data, status, pagination) {
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+        // displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -81,20 +80,20 @@ function printResult(data) {
 
     console.log(++i + "번째 실행");
     console.log(data);
-    console.log("print placeData : " + placeData);
+    // console.log("print placeData : " + placeData);
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
     var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('menu_wrap'),
+        menuEl = document.getElementById('courseDetail'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
@@ -135,8 +134,8 @@ function displayPlaces(places) {
     }
 
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    // listEl.appendChild(fragment);
+    // menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
@@ -160,8 +159,9 @@ function getListItem(index, places) {
             '   <h5>' + places.place_name + '</h5>';
 
     if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-            '   <span class="jibun gray">' +  places.address_name  + '</span>';
+        itemStr += '    <span>' + places.road_address_name + '</span>';
+        // +
+        // '   <span class="jibun gray">' +  places.address_name  + '</span>';
     } else {
         itemStr += '    <span>' +  places.address_name  + '</span>';
     }
@@ -273,85 +273,53 @@ window.onload = function(){
         });
     });
 
-};
-
-// 프로필 사진을 클릭하면 해당 유저의 페이지로 이동 (추후 수정 예정)
-// function goToProfile(button) {
-//     let profileName = button.querySelector('span').textContent; // 프로필 버튼 내 span 요소의 텍스트 가져오기
-//     alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
-// }
-
-// 유저들의 코스 하트 누르기
-function toggleHeart(button) {
-    const heartImage = button.querySelector('img');
-    const heartCount = button.querySelector('span');
-    const isLiked = heartImage.src.includes('after');
-
-    if (isLiked) {
-        heartImage.src = '../images/icons/heart-before_icon.png';
-        heartCount.textContent = parseInt(heartCount.textContent) - 1;
-    } else {
-        heartImage.src = '../images/icons/heart-after_icon.png';
-        heartCount.textContent = parseInt(heartCount.textContent) + 1;
-    }
-}
-
-// 초기 로드 시 실행
-document.addEventListener('DOMContentLoaded', function() {
-    const courseDetails = document.querySelector('.course-details');
-    courseDetails.style.display = 'none'; // 초기에 숨김 처리
-});
-
-// 코스 버튼 클릭 시 course-details 토글
-function toggleCourseDetails(button) {
-    const rankingItem = button.closest('.ranking-item');
-    const courseDetails = rankingItem.nextElementSibling;
-    if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
-        courseDetails.style.display = 'block';
-    } else {
-        courseDetails.style.display = 'none';
-    }
-}
-
-
-// 저장버튼 누르면 아이콘 색 채워지기
-function toggleSave(button) {
-    const saveImage = button.querySelector('img');
-    const isSaved = saveImage.src.includes('after');
-
-    if (isSaved) {
-        saveImage.src = 'images/icons/save-before-icon.png';
-    } else {
-        saveImage.src = 'images/icons/save-after-icon.png';
-    }
-}
-
-// 유저가 클릭한 일차 글자 색상 변경
-document.addEventListener('DOMContentLoaded', function() {
-    // 모든 'day' 클래스를 가진 요소들을 선택
-    const dayElements = document.querySelectorAll('.day');
-
-    // 각 요소에 대해 클릭 이벤트 리스너 추가
-    dayElements.forEach(function(dayElement) {
-        dayElement.addEventListener('click', function() {
-            // 클릭된 요소가 이미 active 클래스가 있는지 확인
-            const isActive = this.classList.contains('active');
-
-            // 모든 day 요소에서 active 클래스 제거
-            dayElements.forEach(function(el) {
-                el.classList.remove('active');
-            });
-
-            // 클릭된 요소에 active 클래스 추가/제거
-            if (!isActive) {
-                this.classList.add('active');
+    $("input[name=courseType][value=course_food]").prop("checked", true);
+    $('#course_food_label').css('background', '#FFC061');
+    $("input[name=courseType]").on("click",function(){
+        // 맛집 선택시
+        if($(this).attr('id') === 'course_food'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#FFC061');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
             }
-        });
+        }
+        // 카페 선택시
+        else if($(this).attr('id') === 'course_caffe'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#FAB7B7');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 관광지 선택시
+        else if($(this).attr('id') === 'course_tour'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#96E781');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 숙소 선택시
+        else if($(this).attr('id') === 'course_rest'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#D7AFFF');
+            }
+        }
+        // console.log(this);
     });
-});
 
-window.onload = function(){
-    const sidebar = $('.community_section');
+    $('#searchBtn').on("click", function(){
+        searchPlaces();
+    });
+
+    const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
@@ -367,5 +335,19 @@ window.onload = function(){
         $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         // sidebarContainer.classList.toggle('open');
         // sidebarArrowContainer.classList.toggle('open');
+    });
+
+    $('#homeTab').on('click', function(){
+        $('#homeTab').attr('aria-selected', true);
+        $('#reviewTab').attr('aria-selected', false);
+        $('#homeContents').css('display', 'flex');
+        $('#reviewContents').css('display', 'none');
+    });
+
+    $('#reviewTab').on('click', function(){
+        $('#reviewTab').attr('aria-selected', true);
+        $('#homeTab').attr('aria-selected', false);
+        $('#homeContents').css('display', 'none');
+        $('#reviewContents').css('display', 'block');
     });
 };
