@@ -256,7 +256,7 @@ function removeAllChildNods(el) {
 
 // 검색 입력 값에 따라 항목을 필터링하는 함수
 function filterItems() {
-    const searchValue = document.getElementById('inputPlace1').value.toLowerCase();
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
 
     // .mypin-content 내의 항목을 필터링
     const myPinItems = document.querySelectorAll('.mypin-content .container');
@@ -282,7 +282,7 @@ function filterItems() {
 }
 
 // 검색 입력 창에 이벤트 리스너 추가
-document.getElementById('inputPlace1').addEventListener('input', filterItems);
+document.getElementById('searchInput').addEventListener('input', filterItems);
 
 
 
@@ -330,24 +330,18 @@ window.onload = function(){
 
     sidebarToggle.on('click', () => {
         isExpand = !isExpand;
-        sidebar.toggleClass('collapsed');
-        $('.map_wrap').toggleClass('expanded');
+        sidebar.toggleClass('collapsed'); /* 여기 수정했당 */
+        $('.map_wrap').toggleClass('expanded'); /* 여기 수정했당 */
         sidebar.toggle('open');
-
-        //고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드
-        //아래 코드를 추가해야 사이드바 너비만큼 사이드 토글바가 이동
-        if (sidebar.hasClass('collapsed')) {
-            sidebarToggle.css({'margin-left': '7.5rem'}); // 사이드 네브바가 닫힐 때 마진 추가
-        } else {
-            sidebarToggle.css({'margin-left': '0'}); // 사이드 네브바가 열릴 때 마진 제거
-        }
 
         if(isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
             return;
-        } else {
-            $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
     });
 
     // 공개여부,컬러편집 모달 닫기 이벤트 리스너

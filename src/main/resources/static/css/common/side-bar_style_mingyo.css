@@ -16,7 +16,7 @@ body {
 }
 
 .sidebar {
-    width: 6.5rem;
+    width: 7.45rem;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -69,7 +69,7 @@ body {
 }
 
 .profile {
-    margin-top: auto;
+    margin-top: 0.625px;
     padding: 2.5rem 0;
     text-decoration: none;
 }

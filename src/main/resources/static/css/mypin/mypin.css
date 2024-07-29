@@ -56,10 +56,7 @@ p{
     height: 100vh;
     background-color: white;
     overflow-y: auto;
-    /*고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드*/
-    margin-left: 7.5rem;
 }
-
 /*사이드 네브바에 스크롤바 만들기*/
 .side-navbar::-webkit-scrollbar {
     width: 10px;
@@ -77,7 +74,7 @@ p{
 /* 사이드바 토글 버튼*/
 .sidebar-toggle {
     position: absolute;
-    top: 50vh;
+    top: 50%;
     left: 30%;
     width: 50px;
     height: 80px;
@@ -94,7 +91,6 @@ p{
 .sidebar-container.open {
     width: 200px;
 }
-
 .sidebar-arrow-container {
     position: relative;
     top: 0;
@@ -139,27 +135,6 @@ p{
     -webkit-appearance: none;
 }
 
-/* 검색창 돋보기 스타일(장호님 코드 가져옴) */
-/* 메인 장소 입력칸 */
-.side-navbar .input-group{
-    margin: 2rem;
-    margin-bottom: 2.6rem !important;
-    width: 25rem;
-    height: 3rem;
-    border-radius: 0.8rem !important;
-}
-#inputPlace1, #inputPlace2 {
-    border: 2px solid #40a0ff;
-    border-right: #fff;
-}
-/* 메인 장소 입력칸 오른쪽 버튼 */
-#searchBtn1 {
-    border: 2px solid #40a0ff;
-    border-left: #fff;
-}
-.search-img{
-    width: 2rem;
-}
 
 /*구분선*/
 .division-line {
@@ -256,7 +231,7 @@ p{
     transition: height 0.3s ease-in-out;
 }
 /*코스 박스에 대한 속성*/
-.content > ul{
+.content ul{
     padding-left: 0.1rem;
 }
 .content ul li{

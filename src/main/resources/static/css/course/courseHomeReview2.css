@@ -100,9 +100,11 @@ body {
     overflow: hidden;
     -webkit-print-color-adjust: exact;
     box-sizing: content-box;
+    display: block;
 }
 
 #root {
+    display: block;
     -webkit-print-color-adjust: exact;
 }
 
@@ -115,7 +117,6 @@ body {
 /*사이드바 제외 전체화면*/
 #app_layout {
     flex: 1 1 auto;
-    /*padding-left: 6.5rem;*/
 }
 
 /*가게 정보와 코스 만들기 창*/
@@ -125,7 +126,8 @@ body {
     bottom: 0px;
     z-index: 200;
     height: 100%;
-    min-width: 390px;
+    min-width: 450px;
+    max-width: 450px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
 }
@@ -157,7 +159,7 @@ body {
     left: 0px;
     display: block;
     z-index: 100;
-    width: 390px;
+    width: 450px;
     padding: 15px 25px;
 }
 
@@ -203,7 +205,7 @@ body {
 /*검색장소 Detail*/
 .storeDetail_wrap {
     position: relative;
-    width: 390px;
+    width: 450px;
     height: 100%;
     display: flex;
     flex: 0 0 auto;
@@ -226,7 +228,7 @@ body {
 }
 
 .storeDetail {
-    width: 390px;
+    width: 450px;
     height: 100%;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -441,6 +443,7 @@ a {
     box-sizing: content-box;
     border-left: 1px solid #e0e0e0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .courseMaker {

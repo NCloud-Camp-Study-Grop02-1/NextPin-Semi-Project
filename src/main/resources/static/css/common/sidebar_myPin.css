@@ -26,7 +26,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-top: 1rem;
-    /*box-shadow: 2px 0 5px rgba(0,0,0,0.1);*/
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 
 /* 코스, 일정, 커뮤니티, 랜덤핀 */
