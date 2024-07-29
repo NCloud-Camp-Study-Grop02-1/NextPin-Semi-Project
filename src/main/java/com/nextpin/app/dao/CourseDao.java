@@ -1,16 +1,13 @@
 package com.nextpin.app.dao;
 
 import ch.qos.logback.classic.Logger;
-import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class CourseDao {
@@ -32,7 +29,6 @@ public class CourseDao {
             mybatis.update("DataMapper.updateAddressConversion", kakaoMapDtoList.get(i));
         }
     }
-
     public KakaoMapDto searchPinDetail(int id){
         return mybatis.selectOne("DataMapper.searchPinDetail", id);
     }

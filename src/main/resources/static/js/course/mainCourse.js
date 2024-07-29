@@ -21,7 +21,7 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces(category) {
+function searchPlaces() {
 
     var keyword = $('#inputPlace1').val() === undefined ? "" : $('#inputPlace1').val();
 
@@ -84,11 +84,11 @@ function placesSearchCB(data, status, pagination) {
         // console.log(placeData);
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        displayPlaces(data, category);
+        displayPlaces(data);
         printResult(placeData);
 
         // 페이지 번호를 표출합니다
-        // displayPagination(pagination);
+        displayPagination(pagination);
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -111,10 +111,10 @@ function printResult(data) {
 }
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places, category) {
+function displayPlaces(places) {
 
-    var menuEl = document.getElementById('courseDetail'),
-        listEl = document.getElementById('placesList'),
+    var listEl = document.getElementById('placesList'),
+        menuEl = document.getElementById('courseDetail'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
@@ -126,16 +126,16 @@ function displayPlaces(places, category) {
     }
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
-    // removeAllChildNods(listEl);
+    removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    for ( var i=0; i < places.length; i++ ) {
+    for ( var i=0; i<places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i, category),
+            marker = addMarker(placePosition, i),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -161,7 +161,7 @@ function displayPlaces(places, category) {
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
-        })(marker, places[i].placeName);
+        })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
     }
@@ -261,9 +261,9 @@ function removeMarker() {
 }
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pageParams, searchKeywords) {
-    var paginationEl = document.getElementsByClassName('pagination')[0];
-        // fragment = document.createDocumentFragment(),
+function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
         i;
 
     // 기존에 추가된 페이지번호를 삭제합니다
@@ -437,7 +437,24 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    var category = 'food';
+    $("#dataChk").on("click", function(){
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/kakaoData",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(placeData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
+    });
 
     $('#addSearchBtn').on('click', e => {
         $('#inputPlace2').show();
