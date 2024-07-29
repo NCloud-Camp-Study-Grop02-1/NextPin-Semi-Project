@@ -51,6 +51,7 @@ function searchPlaces(category) {
         data : JSON.stringify(searchKeywords),
         success : function(result){
             console.log(result["data"][0]);
+            // console.log(result["data"][0]);
             // console.log("ajax : result : " + JSON.stringify(result));
             displayPlaces(result["data"], category);
             // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
@@ -121,6 +122,12 @@ function displayPlaces(places, category) {
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
+    let placeListEl = $('#placesList');
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (placeListEl.children().length > 0) {
+        placeListEl.empty();
+    }
+
     // 검색 결과 목록에 추가된 항목들을 제거합니다
     // removeAllChildNods(listEl);
 
@@ -171,52 +178,46 @@ function displayPlaces(places, category) {
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
+function getListItem(index, place) {
 
-    // for(key in places){
-    //     let rowData = {};
-    //     rowData.key = key;
-    //     rowData.value = places[key]
-    //     console.log("지도 데이터1 : " + JSON.stringify(placeData));
-    //     console.log("지도 데이터 개수: " + placeData.length);
-    //     placeData.push(rowData);
-    // }
-    // console.log("지도 데이터 : " + JSON.stringify(placeData));
-    var el = document.createElement('li'),
-        itemStr = '<a href="courseHomeReview2" style="text-decoration-line: none; color:black; text-align: left">' +
-            '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
-            '   <h5 class="place_name">' + places.placeName + '</h5>' +
-            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + places.categoryName + '</span>' +
-            '</div>';
 
-    itemStr += '<div class="review_score">' +
-        '   <span className="reviewScore" style="color:red;"> ★  ' + places.score + '</span>' +
-        '</div>'
+    // console.log("place : " + JSON.stringify(place));
+    let itemHref = "/courseHomeReview2?id=" + place["id"];
+    let el = document.createElement('li'),
+        itemStr = '<a href='+ itemHref +' style="text-decoration-line: none; color:black; text-align: left">' +
+                         '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
+                         '   <h5 class="place_name">' + place.placeName + '</h5>' +
+                         '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
+                         '</div>';
+
+        itemStr += '<div class="review_score">' +
+                   '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+                   '</div>'
 
     itemStr += '<div class="info_item"><div class="addr">'
 
-    if (places.addressName) {
-        itemStr += '    <p class="addressName">' + places.addressName + '</p>';
+    if (place.addressName) {
+        itemStr += '    <p class="addressName">' + place.addressName + '</p>';
     } else {
-        itemStr += '    <p class="roadAdressName">' +  places.roadAddressName  + '</p>';
+        itemStr += '    <p class="roadAdressName">' +  place.roadAddressName  + '</p>';
     }
 
-    if(places.businessHour.split('·')[1] !== undefined){
+    if(place.businessHour.split('·')[1] !== undefined){
         itemStr += '</div>' +
             '<div class="businessHour">' +
-            '<span>' + places.businessHour.split('·')[0] + '</span>' +
+            '<span>' + place.businessHour.split('·')[0] + '</span>' +
             '</div>' +
             '<div class="businessHour">' +
-            '<span>' + places.businessHour.split('·')[1] + '</span>' +
+            '<span>' + place.businessHour.split('·')[1] + '</span>' +
             '</div>';
     } else {
         itemStr += '</div>' +
             '<div class="businessHour">' +
-            '<span>' + places.businessHour + '</span>' +
+            '<span>' + place.businessHour + '</span>' +
             '</div>'
     }
 
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+    itemStr += '  <span class="tel">' + place.phone  + '</span>' +
         '</a>'  +
         '</div>';
 
@@ -229,6 +230,7 @@ function getListItem(index, places) {
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, category) {
 
+<<<<<<< HEAD
     console.log("marker image 설정전 카테고리 확인 : " + category);
     var imageSrc = '', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
@@ -238,6 +240,23 @@ function addMarker(position, idx, category) {
             offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+=======
+    // console.log("marker image 설정전 카테고리 확인 : " + category);
+    let imageSrc = '../images/icons/food_map_icon.png'; // 마커 이미지 url
+        if(category === 'food'){
+            imageSrc = '../images/icons/food_map_icon.png';
+        } else if(category === 'cafe'){
+            imageSrc = '../images/icons/cafe_map_icon.png';
+        } else if(category === 'tour'){
+            imageSrc = '../images/icons/tour_map_icon.png';
+        } else if(category === 'hotel'){
+            imageSrc = '../images/icons/hotel_map_icon.png';
+        }
+
+
+    let imageSize = new kakao.maps.Size(32, 32),  // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+>>>>>>> backend/jangho
         marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage
@@ -281,15 +300,19 @@ function displayPagination(pageParams, searchKeywords) {
     var endNum = pageSet * 5;
     searchKeywords["startNum"] = startNum;
     searchKeywords["endNum"] = endNum;
-    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum);
+    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum + ", totalPage : " + totalPage);
     var prevEl = document.createElement('li');
 
-    if(pageParams["pageNum"] != 1 && endNum > 5){
+    if(startNum > 5){
         prevEl.classList.add('page-item');
 
         let prevA = document.createElement('a');
         prevA.classList.add('page-link');
+
+        let prevValue = (startNum - 1).toString();
+        prevA.setAttribute('id', prevValue);
         prevA.setAttribute('aria-label', 'Previous');
+        prevA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
         prevA.innerText = '<';
         prevEl.appendChild(prevA);
     }
@@ -357,11 +380,14 @@ function displayPagination(pageParams, searchKeywords) {
     }
 
     var nextEl = document.createElement('li');
-    if(endNum % 5 == 0 && totalPage > 5){
+    if(totalPage > 5 && endNum < totalPage){
         nextEl.classList.add('page-item');
 
         let nextA = document.createElement('a');
         nextA.classList.add('page-link');
+
+        let nextValue = (endNum + 1).toString();
+        nextA.setAttribute('id', nextValue);
         nextA.setAttribute('aria-label', 'Next');
         nextA.setAttribute('onclick', "pageActiveFunc(this, " + searchKeywords + ")");
         nextA.innerText = '>';
@@ -373,15 +399,16 @@ function displayPagination(pageParams, searchKeywords) {
 function pageActiveFunc(pageInfo, searchKeywords){
     $('.pagination li').removeClass('active');
 
+    let placeListEl = $('#placesList');
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (placeListEl.children().length > 0) {
+        placeListEl.empty();
+    }
+
     let pageNum = pageInfo.getAttribute('id');
     searchKeywords["pageNum"] = pageNum;
 
-    if(searchKeywords["pageNum"] === null){
-        searchKeywords["Next"] = true;
-    } else {
-        searchKeywords["Next"] = false;
-    }
-    console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
+    // console.log("pageActiveFunc params : " + JSON.stringify(searchKeywords));
     $.ajax({
         method : "POST",
         headers : {
@@ -392,9 +419,9 @@ function pageActiveFunc(pageInfo, searchKeywords){
         dataType: "json",
         data : JSON.stringify(searchKeywords),
         success : function(result){
-            console.log(result["data"][0]);
+            // console.log(result["data"][0]);
             // console.log("ajax : result : " + JSON.stringify(result));
-            displayPlaces(result["data"]);
+            displayPlaces(result["data"], searchKeywords["category"]);
             // displayPagination(result["pageNum"], result["amount"], result["cnt"]);
             displayPagination(result, JSON.stringify(searchKeywords));
         },
@@ -445,40 +472,44 @@ window.onload = function(){
         if($(this).attr('id') === 'course_food'){
             if($(this).is(':checked')) {
                 $('#course_food_label').css('background', '#FFC061');
-                $('#course_caffe_label').css('background', '#fff');
+                $('#course_cafe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
                 category = 'food';
+                searchPlaces(category);
             }
         }
         // 카페 선택시
-        else if($(this).attr('id') === 'course_caffe'){
+        else if($(this).attr('id') === 'course_cafe'){
             if($(this).is(':checked')) {
                 $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#FAB7B7');
+                $('#course_cafe_label').css('background', '#FAB7B7');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#fff');
-                category = 'caffe';
+                category = 'cafe';
+                searchPlaces(category);
             }
         }
         // 관광지 선택시
         else if($(this).attr('id') === 'course_tour'){
             if($(this).is(':checked')) {
                 $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#fff');
+                $('#course_cafe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#96E781');
                 $('#course_rest_label').css('background', '#fff');
                 category = 'tour';
+                searchPlaces(category);
             }
         }
         // 숙소 선택시
         else if($(this).attr('id') === 'course_rest'){
             if($(this).is(':checked')) {
                 $('#course_food_label').css('background', '#fff');
-                $('#course_caffe_label').css('background', '#fff');
+                $('#course_cafe_label').css('background', '#fff');
                 $('#course_tour_label').css('background', '#fff');
                 $('#course_rest_label').css('background', '#D7AFFF');
                 category = 'hotel';
+                searchPlaces(category);
             }
         }
         // console.log(this);

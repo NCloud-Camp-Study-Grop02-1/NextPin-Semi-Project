@@ -404,24 +404,29 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    $("#dataChk").on("click", function(){
-        $.ajax({
-            method : "POST",
-            headers : {
-                'content-type':'application/json'
-            },
-            url : "/kakaoData",
-            async : true,
-            dataType: "json",
-            data : JSON.stringify(placeData),
-            success : function(result){
-                console.log("ajax : result : " + result);
-            },
-            error : function(request, status, error){
-                console.log(error);
-            }
-        });
-    });
+    console.log($('#hiddenValue').text());
+
+    let loadData = '';
+    if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
+        loadData = JSON.parse($('#hiddenValue').text());
+    }
+
+    console.log(loadData);
+
+    // 데이터 채우기
+    $('#locationTitle').text(loadData['data']['placeName']);
+    $('#foodType').text(loadData['data']['categoryName']);
+    $('#reviewScore').text('★ ' + loadData['data']['score']);
+
+    $('#locationAddress').text(loadData['data']['addressName']);
+    $('#streetNumber').text('지번 | ' + loadData['data']['roadAddressName']);
+
+    let businessHour = loadData['data']['businessHour'].split('·')[0];
+    let breakTime = loadData['data']['businessHour'].split('·')[1];
+    $('#businessHour').text(businessHour);
+    $('#breakTime').text(breakTime);
+
+    $('#locationPhone').text(loadData['data']['phone']);
 
     $("input[name=courseType][value=course_food]").prop("checked", true);
     $('#course_food_label').css('background', '#FFC061');

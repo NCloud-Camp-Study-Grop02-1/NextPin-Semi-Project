@@ -64,6 +64,25 @@
            AND ID = #{id}
     </update>
 
+    <select id="searchPinDetail" parameterType="map" resultType="kakaoMapData">
+        SELECT ID
+            , CATEGORYGROUPCODE
+            , CATEGORYGROUPNAME
+            , CATEGORYNAME
+            , PLACENAME
+            , SCORE
+            , ADDRESSNAME
+            , ROADADDRESSNAME
+            , BUSINESSHOUR
+            , PHONE
+            , COURSESHARE
+            , X
+            , Y
+         FROM MAP
+        WHERE 1=1
+          AND ID = #{id}
+    </select>
+
     <select id="searchPinDatas" parameterType="map" resultType="kakaoMapData">
         SELECT ID
              , CATEGORYGROUPCODE

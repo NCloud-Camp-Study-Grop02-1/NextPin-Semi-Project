@@ -11,6 +11,8 @@ public interface CourseService {
 
     public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList);
 
+    public String searchPinDetail(int id);
+
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri);
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords);
