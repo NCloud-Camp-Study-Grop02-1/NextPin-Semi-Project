@@ -33,6 +33,10 @@ public class CourseDao {
         }
     }
 
+    public KakaoMapDto searchPinDetail(int id){
+        return mybatis.selectOne("DataMapper.searchPinDetail", id);
+    }
+
     public List<KakaoMapDto> searchPinDatas(Map<String, Object> paramMap){
         Criteria criteria = (Criteria) paramMap.get("cri");
         logger.debug("검색어 : " + paramMap.get("searchKewords").toString() + criteria.getPageNum() + "페이지에 관한 데이터들 가져오기");

@@ -39,6 +39,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public String searchPinDetail(int id) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> jsonMap = new HashMap<>();
+
+        jsonMap.put("data", courseDao.searchPinDetail(id));
+
+        String jsonString = "";
+
+        try {
+            jsonString = objectMapper.writerWithDefaultPrettyPrinter()
+                                     .writeValueAsString(jsonMap);
+        } catch(JsonProcessingException je){
+            logger.error(je.getMessage());
+        }
+        return jsonString;
+    }
+
+    @Override
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri) {
         if(null != searchKeywords.get("pageNum") && !searchKeywords.get("pageNum").equals("")){
             cri.setPageNum(Integer.parseInt(searchKeywords.get("pageNum")));
