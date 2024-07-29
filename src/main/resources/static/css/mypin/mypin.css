@@ -52,7 +52,7 @@ p{
 
 /*스크롤바 속성(장호님 css)*/
 .side-navbar {
-    width: 50rem;
+    width: 820px;
     height: 100vh;
     background-color: white;
     overflow-y: auto;
@@ -92,7 +92,7 @@ p{
     z-index: 2;
 }
 .sidebar-container.open {
-    width: 200px;
+    width: 820px;
 }
 
 .sidebar-arrow-container {
@@ -142,9 +142,9 @@ p{
 /* 검색창 돋보기 스타일(장호님 코드 가져옴) */
 /* 메인 장소 입력칸 */
 .side-navbar .input-group{
-    margin: 2rem;
+    margin: auto;
     margin-bottom: 2.6rem !important;
-    width: 25rem;
+    width: 26rem;
     height: 3rem;
     border-radius: 0.8rem !important;
 }
@@ -392,8 +392,7 @@ p{
 .popover-content {
     position: absolute;
     bottom: 100%; /* 미트볼 버튼 바로 위에 위치하도록 설정 */
-    left: 50%;
-    transform: translateX(217%);
+    left: 85%;
     z-index: 1000; /* 쌓임 순서 결정(z-index): 팝오버가 다른 요소에 덮히지 않도록 가장 위에 표시되도록 설정 */
     display: flex;
     flex-direction: column; /* 팝오버 창의 항목들을 세로로 배치 */
@@ -440,7 +439,7 @@ p{
 .modal {
     display: none;
     position: fixed;
-    z-index: 3;
+    z-index: 99999;
     top: 0;
     left: 0;
     width: 100%;

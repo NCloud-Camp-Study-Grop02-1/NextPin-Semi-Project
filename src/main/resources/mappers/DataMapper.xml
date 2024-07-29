@@ -4,68 +4,143 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
-<mapper namespace="com.nextpin.app.mapper.DataMapper">
-    <insert id="kakaoInsert" parameterType="list">
-        INSERT INTO KAKAO_MAP_DATA
+<mapper namespace="DataMapper">
+    <insert id="crowlData" parameterType="list">
+        INSERT INTO MAP
         (
-            address_name,
-            category_group,
-            category_group_name,
-            category_name,
-            distance,
-            id,
-            phone,
-            place_name,
-            place_url,
-            road_address_name,
-            x,
-            y)
+        categoryGroupCode,
+        categoryGroupName,
+        categoryName,
+        placeName,
+        score,
+        addressName,
+        roadAddressName,
+        businessHour,
+        phone,
+        courseShare,
+        x,
+        y
+        )
         VALUES
         <foreach collection="list" item="item" separator=",">
             (
-            #{item.addressName},
-            #{item.categoryGroup, jdbcType=VARCHAR},
-            #{item.categoryGroupName},
-            #{item.categoryName},
-            #{item.distance},
-            #{item.id},
-            #{item.phone},
+            #{item.categoryGroupCode, jdbcType=VARCHAR},
+            #{item.categoryGroupName, jdbcType=VARCHAR},
+            #{item.categoryName, jdbcType=VARCHAR},
             #{item.placeName},
-            #{item.placeUrl},
-            #{item.roadAddressName},
+            #{item.score},
+            #{item.addressName},
+            #{item.roadAddressName, jdbcType=VARCHAR},
+            #{item.businessHour, jdbcType=VARCHAR},
+            #{item.phone, jdbcType=VARCHAR},
+            #{item.courseShare, jdbcType=VARCHAR},
             #{item.x},
             #{item.y}
             )
         </foreach>
     </insert>
+    <select id="getAddressDatas" resultType="kakaoMapData">
+        SELECT ID
+             , CATEGORYGROUPCODE
+             , CATEGORYGROUPNAME
+             , CATEGORYNAME
+             , PLACENAME
+             , SCORE
+             , ADDRESSNAME
+             , ROADADDRESSNAME
+             , BUSINESSHOUR
+             , PHONE
+             , COURSESHARE
+             , X
+             , Y
+        FROM MAP
+    </select>
 
-    <insert id="kakaoTestInsert" parameterType="com.nextpin.app.dto.KakaoMapDto">
-            INSERT INTO KAKAO_MAP_DATA(
-                address_name
-                , category_group
-                , category_group_name
-                , category_name
-                , distance
-                , id
-                , phone
-                , place_name
-                , place_url
-                , road_address_name
-                , x
-                , y
-                ) VALUES (
-                #{address_name}
-                , #{category_group, jdbcType=VARCHAR}
-                , #{category_group_name}
-                , #{category_name}
-                , #{distance}
-                , #{id}
-                , #{phone}
-                , #{place_name}
-                , #{place_url}
-                , #{road_address_name}
-                , #{x}
-                , #{y}
+    <update id="updateAddressConversion" parameterType="kakaoMapData">
+        UPDATE MAP
+        SET X = #{x}
+          , Y = #{y}
+        WHERE ADDRESSNAME = #{addressName}
+          AND ID = #{id}
+    </update>
+
+    <select id="searchPinDetail" parameterType="map" resultType="kakaoMapData">
+        SELECT ID
+             , CATEGORYGROUPCODE
+             , CATEGORYGROUPNAME
+             , CATEGORYNAME
+             , PLACENAME
+             , SCORE
+             , ADDRESSNAME
+             , ROADADDRESSNAME
+             , BUSINESSHOUR
+             , PHONE
+             , COURSESHARE
+             , X
+             , Y
+        FROM MAP
+        WHERE 1=1
+          AND ID = #{id}
+    </select>
+
+    <select id="searchPinDatas" parameterType="map" resultType="kakaoMapData">
+        SELECT ID
+        , CATEGORYGROUPCODE
+        , CATEGORYGROUPNAME
+        , CATEGORYNAME
+        , PLACENAME
+        , SCORE
+        , ADDRESSNAME
+        , ROADADDRESSNAME
+        , BUSINESSHOUR
+        , PHONE
+        , COURSESHARE
+        , X
+        , Y
+        FROM MAP
+        WHERE 1=1
+        <if test="searchKewords.category != null and searchKewords.category != ''">
+            AND CATEGORYGROUPCODE = #{searchKewords.category}
+        </if>
+        <if test="searchKewords.keyword != null and searchKewords.keyword != ''">
+            AND (
+            PLACENAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
             )
-    </insert>
+        </if>
+        <if test="searchKewords.keyword2 != null and searchKewords.keyword2 != ''">
+            OR (
+            PLACENAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
+            )
+        </if>
+        ORDER BY SCORE DESC
+        , X
+        LIMIT #{cri.amount} OFFSET #{cri.startNum}
+    </select>
+
+    <select id="getPinTotalCnt" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM MAP
+        WHERE 1=1
+        <if test="category != null and category != ''">
+            AND CATEGORYGROUPCODE = #{category}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            PLACENAME LIKE CONCAT('%', #{keyword}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        <if test="keyword2 != null and keyword2 != ''">
+            OR (
+            PLACENAME LIKE CONCAT('%', #{keyword2}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')
+            )
+        </if>
+    </select>
 </mapper>

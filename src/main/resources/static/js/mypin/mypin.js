@@ -263,7 +263,7 @@ function filterItems() {
     myPinItems.forEach(item => {
         const value = item.querySelector('input').value.toLowerCase();
         if (value.includes(searchValue)) {
-            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+            item.parentElement.style.display = 'flex'; // 부모 li 요소를 표시
         } else {
             item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
         }
@@ -274,7 +274,7 @@ function filterItems() {
     likeItems.forEach(item => {
         const value = item.querySelector('input').value.toLowerCase();
         if (value.includes(searchValue)) {
-            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+            item.parentElement.style.display = 'flex'; // 부모 li 요소를 표시
         } else {
             item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
         }

@@ -142,20 +142,26 @@ body {
     top: 0px;
     bottom: 0px;
     z-index: 200;
-    height: 100%;
+    min-width: 450px;
+    max-width: 450px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.04) 10px 0px 20px 0px;
+    position: relative;
+/*    height: 100%;
     min-width: 390px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
     position: relative;
-    /*display: flex;*/
+    display: flex;
     min-width: 390px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.04) 10px 0px 20px 0px;
     position: relative;
-    /*display: flex;*/
-    /*height: auto;*/
-    /*max-height: none;*/
-    /*overflow-y: auto;*/
+    display: flex;
+    height: auto;
+    max-height: none;
+    overflow-y: auto;
+*/
 }
 
 
@@ -270,12 +276,8 @@ body {
 .ranking {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    max-height: 100vh; /* 최대 높이 설정 */
-=======
     height: 82vh;
     /*max-height: 100vh; !* 최대 높이 설정 *!*/
->>>>>>> origin/backend/mingyo
     overflow-y: auto; /* 세로 스크롤바 추가 */
 }
 
@@ -526,4 +528,5 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
+
 }

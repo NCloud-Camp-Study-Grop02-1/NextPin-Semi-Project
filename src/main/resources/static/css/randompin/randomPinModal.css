@@ -3,6 +3,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -28,9 +29,9 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
-/*body {*/
-/*    line-height: 1;*/
-/*}*/
+body {
+    line-height: 1;
+}
 ol, ul {
     list-style: none;
 }
@@ -69,7 +70,6 @@ body {
 /*사이드바 제외 전체화면*/
 #app_layout {
     flex: 1 1 auto;
-    padding-left: 6.5rem;
 }
 
 /* modal.css */
@@ -171,7 +171,7 @@ body {
     bottom: 0px;
     z-index: 200;
     height: 100%;
-    min-width: 390px;
+    min-width: 450px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
 }
@@ -192,7 +192,7 @@ body {
     flex-direction: column;
     box-sizing: content-box;
     z-index: 20;
-    align-items: center;
+    align-items: normal;
     margin-top: 30px;
 }
 
@@ -240,6 +240,7 @@ body {
     flex: 0 0 auto;
     flex-direction: column;
     box-sizing: content-box;
+    margin-left: 60px;
 }
 
 .sub_panel.show {
@@ -407,6 +408,7 @@ body {
     padding: 10px 20px;
     background-color: white;
     border-left: 1px solid #e0e0e0;
+    margin-left: 60px;
 }
 
 .dayCourse {
@@ -421,4 +423,3 @@ body {
     color: white;
     margin: 0px 15px 15px 15px;
 }
-

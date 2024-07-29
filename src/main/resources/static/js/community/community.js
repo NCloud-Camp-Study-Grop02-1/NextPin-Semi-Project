@@ -276,10 +276,10 @@ window.onload = function(){
 };
 
 // 프로필 사진을 클릭하면 해당 유저의 페이지로 이동 (추후 수정 예정)
-function goToProfile(button) {
-    let profileName = button.querySelector('span').textContent; // 프로필 버튼 내 span 요소의 텍스트 가져오기
-    alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
-}
+// function goToProfile(button) {
+//     let profileName = button.querySelector('span').textContent; // 프로필 버튼 내 span 요소의 텍스트 가져오기
+//     alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
+// }
 
 // 유저들의 코스 하트 누르기
 function toggleHeart(button) {
@@ -350,22 +350,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-window.onload = function() {
-    const communitySection = $('.community_section');
-    const foldToggle = $('.slide-toggle');
-    const mapContainer = $('#map'); // 지도 컨테이너 선택
+window.onload = function(){
+    const sidebar = $('.community_section');
+    const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
-    foldToggle.on('click', () => {
+    sidebarToggle.on('click', () => {
         isExpand = !isExpand;
-        communitySection.toggle('open');
+        sidebar.toggle('open');
 
         if(isExpand) {
-            $('.slide-toggle').css({'transform': 'rotate(180deg)'});
-            mapContainer.css('width', 'calc(100% - 200px)'); // 사이드바가 열렸을 때 지도의 너비를 조정
-        } else {
-            $('.slide-toggle').css({'transform': 'rotate(0deg)'});
-            mapContainer.css('width', '100%'); // 사이드바가 닫혔을 때 지도의 너비를 원래대로
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
         }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
     });
 };
