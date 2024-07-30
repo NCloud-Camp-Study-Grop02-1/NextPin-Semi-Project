@@ -518,6 +518,7 @@ function closeVisibilityModal() {
 
 
 // 컬러 변경 기능
+
 function editColor(element) {
     var popover = element.closest('.popover-content');
     var colorPalette = document.getElementById('colorPalette');

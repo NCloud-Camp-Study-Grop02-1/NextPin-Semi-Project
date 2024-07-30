@@ -59,14 +59,14 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-body {
-    line-height: 1;
-}
+/*!* HTML5 display-role reset for older browsers *!*/
+/*article, aside, details, figcaption, figure,*/
+/*footer, header, hgroup, menu, nav, section {*/
+/*    display: block;*/
+/*}*/
+/*body {*/
+/*    line-height: 1;*/
+/*}*/
 ol, ul {
     list-style: none;
 }
@@ -94,13 +94,13 @@ table {
     font-style: normal;
 }
 
-body {
-    font-family: 'pretendard-semibold';
-    height: 100%;
-    overflow: hidden;
-    -webkit-print-color-adjust: exact;
-    box-sizing: content-box;
-}
+/*body {*/
+/*    font-family: 'pretendard-semibold';*/
+/*    height: 100%;*/
+/*    overflow: hidden;*/
+/*    -webkit-print-color-adjust: exact;*/
+/*    box-sizing: content-box;*/
+/*}*/
 
 #root {
     -webkit-print-color-adjust: exact;
@@ -369,9 +369,9 @@ a[aria-selected='false'] {
     list-style: none;
 }
 
-a {
-    text-decoration: none;
-}
+/*a {*/
+/*    text-decoration: none;*/
+/*}*/
 
 /* 메인 > 장소이름 > 홈 > 상세정보 url */
 #locationUrl {

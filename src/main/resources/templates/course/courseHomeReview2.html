@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <!-- 코스 홈&리뷰2 스타일 시트 적용 -->
     <link rel="stylesheet" href="css/course/courseHomeReview2.css"/>
-    <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/sidebar_myPin.css">
 
     <!-- jQuery UI CSS 파일 -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
@@ -21,40 +19,42 @@
     <!--카카오맵 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
 
+    <!-- 사이드바 스타일 시트 적용 -->
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css">
     <!-- 파비콘 설정 -->
     <link rel="icon" href="../images/icons/NP_pavicon.png">
 </head>
 <body>
+<!-- 사이드바 -->
+<nav id="side-bar">
+    <!--로고-->
+    <a href="/main" class="logo">
+        <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+    </a>
+    <!--구분선-->
+    <div class="separator"></div>
+    <a href="/courseHomeReview2" class="menu-item menu-item-course">
+        <img src="../images/icons/course-hover_icon.png" alt="코스">
+        <span>코스</span>
+    </a>
+    <a href="/calendar" class="menu-item">
+        <img src="../images/icons/calendar_icon.png" alt="일정">
+        <span>일정</span>
+    </a>
+    <a href="/community" class="menu-item">
+        <img src="../images/icons/community_icon.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/randomPin" class="menu-item">
+        <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+        <span>랜덤핀</span>
+    </a>
+    <a href="/myPin" class="sidebar-profile">
+        <img src="../images/icons/mypage_icon.png" alt="Profile">
+    </a>
+</nav>
 <div id="root">
     <div class="root_wrap">
-        <!-- 사이드바 -->
-        <nav id="side-bar">
-            <!--로고-->
-            <a href="/main" class="logo">
-                <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
-            </a>
-            <!--구분선-->
-            <div class="separator"></div>
-            <a href="/courseHomeReview2" class="menu-item menu-item-course">
-                <img src="../images/icons/course-hover_icon.png" alt="코스">
-                <span>코스</span>
-            </a>
-            <a href="/calendar" class="menu-item">
-                <img src="../images/icons/calendar_icon.png" alt="일정">
-                <span>일정</span>
-            </a>
-            <a href="/community" class="menu-item">
-                <img src="../images/icons/community_icon.png" alt="커뮤니티">
-                <span>커뮤니티</span>
-            </a>
-            <a href="/randomPin" class="menu-item">
-                <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
-                <span>랜덤핀</span>
-            </a>
-            <a href="/myPin" class="sidebar-profile">
-                <img src="../images/icons/mypage_icon.png" alt="Profile">
-            </a>
-        </nav>
 
         <!--사이드바 END-->
         <div id="app_layout">
