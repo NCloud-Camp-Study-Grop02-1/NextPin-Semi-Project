@@ -110,10 +110,80 @@ main {
    margin-top: 10px;
 }
 
-.feature:nth-child(3) img:hover {
-  filter: hue-rotate(180deg) saturate(1.5);
-  transition: filter 0.3s ease-in-out;
+/*.feature:nth-child(3) img:hover {*/
+/*  filter: hue-rotate(180deg) saturate(1.5);*/
+/*  transition: filter 0.3s ease-in-out;*/
+/*}*/
+.mainCourse-link {
+    display: inline-block;
+    position: relative;
 }
+
+.mainCourse-img {
+    display: block;
+}
+
+.mainCourse-link:hover {
+    content: url('../images/icons/home_course-hover_icon.png');
+
+}
+
+.calendar-link {
+    display: inline-block;
+    position: relative;
+}
+
+.calendar-img {
+    display: block;
+}
+
+.calendar-link:hover {
+    content: url('../images/icons/home_calendar-hover_icon.png');
+
+}
+
+.randomPin-link {
+    display: inline-block;
+    position: relative;
+}
+
+.randomPin-img {
+    display: block;
+}
+
+.randomPin-link:hover {
+    content: url('../images/icons/home_randomPin-hover_icon.png');
+
+}
+
+.community-link {
+    display: inline-block;
+    position: relative;
+}
+
+.community-img {
+    display: block;
+}
+
+.community-link:hover {
+
+    content: url('../images/icons/home_community-hover_icon.png');
+}
+
+.userPage-link {
+    display: inline-block;
+    position: relative;
+}
+
+.userPage-img {
+    display: block;
+}
+
+.userPage-link:hover {
+    content: url('../images/icons/home_myPage-hover_icon.png') ;
+
+}
+
 
 footer {
     max-width: 1100px;

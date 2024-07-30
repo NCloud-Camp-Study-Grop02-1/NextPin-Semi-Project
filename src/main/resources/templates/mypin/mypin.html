@@ -23,7 +23,7 @@
 
     <!-- 파비콘 설정 -->
     <link rel="icon" type="images/png" href="../images/icons/NP_pavicon.png">
-    <!--내 css파일을 가장 마지막에 주기(cascading으로 인해 다른 파일의 스타일이 적용될 수 있음.)-->
+    <!--내 css파일을 가장 마지막에 주기(cascading으로 인해 다른 파일(특히 부트스트랩)의 스타일이 적용될 수 있음.)-->
     <link rel="stylesheet" href="css/mypin/mypin.css">
 </head>
 <body>
@@ -75,15 +75,15 @@
         <div class="division-line"></div>
 
         <!-- 검색창 -->
-        <div class="nav-search box">
-            <input class="search-bar" type="text" placeholder="코스 검색" id="searchInput">
+        <div class="input-group mb-3">
+            <input type="text" id="inputPlace1" class="form-control" placeholder="코스 검색" value="">
+            <button class="btn" type="button" id="searchBtn1">
+                <img src="../images/icons/Search-blue_icon.png" class="search-img" alt="돋보기">
+            </button>
         </div>
-        <!--<div class="input-group mb-3">-->
-        <!--    <input type="text" id="searchInput" class="form-control" placeholder="오늘은 어디로 가시겠어요?" value="">-->
-        <!--    <button class="btn" type="button" id="searchBtn">-->
-        <!--        <img src="../images/icons/Search-blue_icon.png" alt="돋보기">-->
-        <!--    </button>-->
-        <!--</div>-->
+<!--        <div class="nav-search" style="display: none">-->
+<!--            <input class="search-bar" type="text" placeholder="코스 검색" id="searchInput">-->
+<!--        </div>-->
 
         <!--구분선-->
         <div class="division-line"></div>

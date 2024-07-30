@@ -9,8 +9,6 @@ import java.util.List;
 public interface CourseService {
     public List<KakaoMapDto> getAddressDatas();
 
-    public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList);
-
     public String searchPinDetail(int id);
 
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri);

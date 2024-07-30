@@ -24,7 +24,7 @@ public class CourseDao {
 
     public List<KakaoMapDto> getAddressDatas() {
         logger.debug("주소 데이터 select");
-        return mybatis.selectList("DataMapper.getAddressDatas");
+        return mybatis.selectList("NextpinMapper.getAddressDatas");
     }
 
     public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList){
@@ -32,18 +32,24 @@ public class CourseDao {
             mybatis.update("DataMapper.updateAddressConversion", kakaoMapDtoList.get(i));
         }
     }
-
     public KakaoMapDto searchPinDetail(int id){
-        return mybatis.selectOne("DataMapper.searchPinDetail", id);
+        return mybatis.selectOne("NextpinMapper.searchPinDetail", id);
     }
 
     public List<KakaoMapDto> searchPinDatas(Map<String, Object> paramMap){
         Criteria criteria = (Criteria) paramMap.get("cri");
         logger.debug("검색어 : " + paramMap.get("searchKewords").toString() + criteria.getPageNum() + "페이지에 관한 데이터들 가져오기");
-        return mybatis.selectList("DataMapper.searchPinDatas", paramMap);
+
+//        paramMap.put("keyword", keyword);
+//        paramMap.put("category", "food");
+//        List<KakaoMapDto> foodc = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
+//        List<KakaoMapDto> cafec = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
+//        List<KakaoMapDto> tourc = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
+//        List<KakaoMapDto> hotelc = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
+        return mybatis.selectList("NextpinMapper.searchPinDatas", paramMap);
     }
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
-        return mybatis.selectOne("DataMapper.getPinTotalCnt", searchKeywords);
+        return mybatis.selectOne("NextpinMapper.getPinTotalCnt", searchKeywords);
     }
 }

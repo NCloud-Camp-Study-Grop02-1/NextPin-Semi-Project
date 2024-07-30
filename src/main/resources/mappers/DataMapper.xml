@@ -8,18 +8,18 @@
     <insert id="crowlData" parameterType="list">
         INSERT INTO MAP
         (
-            categoryGroupCode,
-            categoryGroupName,
-            categoryName,
-            placeName,
-            score,
-            addressName,
-            roadAddressName,
-            businessHour,
-            phone,
-            courseShare,
-            x,
-            y
+        categoryGroupCode,
+        categoryGroupName,
+        categoryName,
+        placeName,
+        score,
+        addressName,
+        roadAddressName,
+        businessHour,
+        phone,
+        courseShare,
+        x,
+        y
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
@@ -39,108 +39,40 @@
             )
         </foreach>
     </insert>
-    <select id="getAddressDatas" resultType="kakaoMapData">
-        SELECT ID
-             , CATEGORYGROUPCODE
-             , CATEGORYGROUPNAME
-             , CATEGORYNAME
-             , PLACENAME
-             , SCORE
-             , ADDRESSNAME
-             , ROADADDRESSNAME
-             , BUSINESSHOUR
-             , PHONE
-             , COURSESHARE
-             , X
-             , Y
-          FROM MAP
-    </select>
 
     <update id="updateAddressConversion" parameterType="kakaoMapData">
         UPDATE MAP
-           SET X = #{x}
-             , Y = #{y}
-         WHERE ADDRESSNAME = #{addressName}
-           AND ID = #{id}
+        SET X = #{x}
+          , Y = #{y}
+        WHERE ADDRESSNAME = #{addressName}
+          AND ID = #{id}
     </update>
 
-    <select id="searchPinDetail" parameterType="map" resultType="kakaoMapData">
-        SELECT ID
-            , CATEGORYGROUPCODE
-            , CATEGORYGROUPNAME
-            , CATEGORYNAME
-            , PLACENAME
-            , SCORE
-            , ADDRESSNAME
-            , ROADADDRESSNAME
-            , BUSINESSHOUR
-            , PHONE
-            , COURSESHARE
-            , X
-            , Y
-         FROM MAP
-        WHERE 1=1
-          AND ID = #{id}
-    </select>
-
-    <select id="searchPinDatas" parameterType="map" resultType="kakaoMapData">
-        SELECT ID
-             , CATEGORYGROUPCODE
-             , CATEGORYGROUPNAME
-             , CATEGORYNAME
-             , PLACENAME
-             , SCORE
-             , ADDRESSNAME
-             , ROADADDRESSNAME
-             , BUSINESSHOUR
-             , PHONE
-             , COURSESHARE
-             , X
-             , Y
-        FROM MAP
-       WHERE 1=1
-       <if test="searchKewords.category != null and searchKewords.category != ''">
-         AND CATEGORYGROUPCODE = #{searchKewords.category}
-       </if>
-       <if test="searchKewords.keyword != null and searchKewords.keyword != ''">
-         AND (
-             PLACENAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
-                OR
-             ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
-           )
-       </if>
-       <if test="searchKewords.keyword2 != null and searchKewords.keyword2 != ''">
-         OR (
-              PLACENAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
-                OR
-              ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
-           )
-       </if>
-       ORDER BY SCORE DESC
-              , X
-       LIMIT #{cri.amount} OFFSET #{cri.startNum}
-    </select>
-
-    <select id="getPinTotalCnt" parameterType="map" resultType="int">
-        SELECT COUNT(*)
-          FROM MAP
-         WHERE 1=1
-        <if test="category != null and category != ''">
-            AND CATEGORYGROUPCODE = #{category}
-        </if>
-        <if test="keyword != null and keyword != ''">
-            AND (
-            PLACENAME LIKE CONCAT('%', #{keyword}, '%')
-            OR
-            ADDRESSNAME LIKE CONCAT('%', #{keyword}, '%')
-            )
-        </if>
-        <if test="keyword2 != null and keyword2 != ''">
-            OR (
-            PLACENAME LIKE CONCAT('%', #{keyword2}, '%')
-            OR
-            ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')
-            )
-        </if>
-    </select>
+    <update id="mergeData" parameterType="kakaoMapData">
+        INSERT INTO MAP(
+             categoryName
+           , placeName
+           , score
+           , addressName
+           , roadAddressName
+           , businessHour
+           , phone
+           , placeUrl
+        ) VALUE (
+            #{categoryName, jdbcType=VARCHAR}
+          , #{placeName}
+          , #{score}
+          , #{addressName}
+          ,	#{roadAddressName, jdbcType=VARCHAR}
+          , #{businessHour, jdbcType=VARCHAR}
+          , #{phone, jdbcType=VARCHAR}
+          , #{placeUrl, jdbcType=VARCHAR})
+        ON DUPLICATE KEY
+        UPDATE categoryName = #{categoryName, jdbcType=VARCHAR}
+             , score = #{score}
+             , roadAddressName = #{roadAddressName, jdbcType=VARCHAR}
+             , businessHour = #{businessHour, jdbcType=VARCHAR}
+             , phone = #{phone, jdbcType=VARCHAR}
+             , placeUrl = #{placeUrl, jdbcType=VARCHAR}
+    </update>
 </mapper>

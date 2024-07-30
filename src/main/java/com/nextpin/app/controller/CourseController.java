@@ -2,11 +2,9 @@ package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dto.Criteria;
-import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +41,8 @@ public class CourseController {
         logger.debug("mainCourse페이지 이동");
         return mav;
     }
-
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.POST)
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.GET)
     @PostMapping("/searchPlaces")
     @ResponseBody
     public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {

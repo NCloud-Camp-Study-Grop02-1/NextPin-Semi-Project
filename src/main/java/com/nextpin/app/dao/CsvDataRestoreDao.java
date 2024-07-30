@@ -19,6 +19,7 @@ public class CsvDataRestoreDao {
     public CsvDataRestoreDao(SqlSessionTemplate sqlSessionTemplate) {
         this.mybatis = sqlSessionTemplate;
     }
+
     public void insertCrowlData(List<KakaoMapDto> csvDataList){
         logger.info("insert crowl data");
         logger.debug("insert 실행전 확인 : " + csvDataList.toString());
@@ -26,5 +27,11 @@ public class CsvDataRestoreDao {
         logger.debug("phone 확인 : " + csvDataList.get(0).getPhone());
         mybatis.insert("DataMapper.crowlData", csvDataList);
         logger.info("insert crowl data success");
+    }
+
+    public void mergeCsvData(List<KakaoMapDto> csvDataList){
+        for(KakaoMapDto csvData : csvDataList){
+            mybatis.update("DataMapper.mergeData", csvData);
+        }
     }
 }

@@ -28,14 +28,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<KakaoMapDto> getAddressDatas() {
-        logger.debug("주소 데이터 가져오기");
         return courseDao.getAddressDatas();
-    }
-
-    @Override
-    public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList) {
-        logger.debug("좌표 데이터 값 반영하기");
-        courseDao.updateAddressConversion(kakaoMapDtoList);
     }
 
     @Override
@@ -64,7 +57,12 @@ public class CourseServiceImpl implements CourseService {
         cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount());
 
         Map<String, Object> paramMap = new HashMap<>();
+        //{"searchKewords" : {"keyword" : keyword, "keyword2" : keyword2, "category" : category}}
         paramMap.put("searchKewords", searchKeywords);
+//        Criteria cri1 = new Criteria();
+//        cri1.setAmount(2);
+//        Criteria cri2 = new Criteria();
+//        cri.setAmount(3);
         paramMap.put("cri", cri);
 
         List<KakaoMapDto> pinDatas = courseDao.searchPinDatas(paramMap);
