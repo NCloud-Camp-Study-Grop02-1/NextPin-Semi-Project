@@ -2,13 +2,17 @@ package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dto.Criteria;
+import com.nextpin.app.dto.SearchRequestDto;
 import com.nextpin.app.service.CourseService;
+import com.nextpin.app.service.PlaceService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class CourseController {
@@ -47,4 +51,5 @@ public class CourseController {
     public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
         return courseService.searchPinDatas(searchKeywords, cri);
     }
+
 }

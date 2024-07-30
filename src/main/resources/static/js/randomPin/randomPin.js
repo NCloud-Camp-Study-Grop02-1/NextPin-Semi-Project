@@ -97,10 +97,6 @@ document.getElementById('loading-spinner').addEventListener('click', function (e
 });
 
 
-
-
-
-
 var placeData = [];
 var markers = [];
 var polylines = [];
@@ -119,74 +115,153 @@ function handleKeyPress(event) {
     // Enter 키의 keyCode는 13입니다.
     if (event.keyCode === 13) {
         event.preventDefault(); // 기본 엔터 키 동작(폼 제출)을 막습니다.
-        searchPlaces();
+        searchPlaces1();
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.querySelector('.modal-content input[type="text"]');
+    const inputPlace = document.getElementById('inputPlace');
 
+    if (searchBtn) {
+        searchBtn.addEventListener('click', searchPlacesFromInput);
+    }
 
-function searchPlaces() {
-    var keyword = document.querySelector('.modal-content input[type="text"]').value;
-    // console.log(document.querySelector("#menu_wrap"));
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchPlaces1();
+            }
+        });
+    }
 
+    if (inputPlace) {
+        inputPlace.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchPlacesFromInput();
+            }
+        });
+    }
+});
 
-    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+function searchPlaces1() {
+    const modalInput = document.querySelector('.modal-content input[type="text"]').value.trim();
+    const inputPlace = document.getElementById('inputPlace');
+
+    if (!modalInput) {
         alert('키워드를 입력해주세요!');
         return false;
     }
 
-    // Show the loading spinner and hide the modal content
+    if (inputPlace) {
+        inputPlace.value = modalInput;
+    }
+
     document.getElementById('loading-spinner').style.display = 'flex';
     document.getElementById('modal-cont').style.display = 'none';
 
     setTimeout(function () {
-        document.querySelector("#courseDetail").style.display = "block";
-        document.querySelector("#inputPlace").value = keyword;
-    }, 3000); // Adjust the delay time as needed (in milliseconds)
+        document.getElementById('loading-spinner').style.display = 'none';
+        document.getElementById('modal-cont').style.display = 'none';
+        document.getElementById('courseDetail').style.display = "block";
+    }, 3000);
 
-    // Perform the search after a delay
-    setTimeout(function () {
-        ps.keywordSearch(keyword, placesSearchCB, { radius: 500 });
-    }, 3000); // Adjust the delay time as needed (in milliseconds)
+    // setTimeout(function () {
+    //     ps.keywordSearch(modalInput, placesSearchCB, { radius: 500 });
+    // }, 3000);
 
+    // console.log(JSON.stringify({ "keyword": modalInput }));
+    $.ajax({
+        method : "GET",
+        url : "/randomPlaces",
+        async : true,
+        dataType: "json",
+        data : { "keyword": modalInput },
+        success : function(result){
+            // console.log(result);
 
+            displayPlaces(result);
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
 }
 
-function placesSearchCB(data, status, pagination) {
-    // Hide the loading spinner after the search completes
-    document.getElementById('loading-spinner').style.display = 'none';
+function searchPlacesFromInput() {
+    const inputPlaceValue = document.getElementById('inputPlace').value.trim();
+
+    if (!inputPlaceValue) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+
+    document.getElementById('loading-spinner').style.display = 'flex';
     document.getElementById('modal-cont').style.display = 'none';
+    document.getElementById('courseDetail').style.display = "none";
 
-    if (status === kakao.maps.services.Status.OK) {
-        // Shuffle the array
-        shuffleArray(data);
+    setTimeout(function () {
+        document.getElementById('loading-spinner').style.display = 'none';
+        document.getElementById('modal-cont').style.display = 'none';
+        document.getElementById('courseDetail').style.display = "block";
+    }, 3000);
 
-        // Select the first 4 elements
-        var selectedData = data.slice(0, 4);
-        console.log(selectedData);
-        displayPlaces(selectedData);
 
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert('검색 결과가 존재하지 않습니다.');
-    } else if (status === kakao.maps.services.Status.ERROR) {
-        alert('검색 결과 중 오류가 발생했습니다.');
-    }
+    // console.log(JSON.stringify({ "keyword": inputPlaceValue }));
+    $.ajax({
+        method : "GET",
+        url : "/randomPlaces",
+        async : true,
+        dataType: "json",
+        data : { "keyword": inputPlaceValue },
+        success : function(result){
+            // console.log(result);
+
+            displayPlaces(result);
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
+
+    // setTimeout(function () {
+    //     ps.keywordSearch(inputPlaceValue, placesSearchCB, { radius: 500 });
+    // }, 3000);
 }
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+// function placesSearchCB(data, status) {
+//     document.getElementById('loading-spinner').style.display = 'none';
+//     document.getElementById('modal-cont').style.display = 'none';
+//
+//     if (status === kakao.maps.services.Status.OK) {
+//         shuffleArray(data);
+//         var selectedData = data.slice(0, 4);
+//         displayPlaces(selectedData);
+//     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+//         alert('검색 결과가 존재하지 않습니다.');
+//     } else if (status === kakao.maps.services.Status.ERROR) {
+//         alert('검색 결과 중 오류가 발생했습니다.');
+//     }
+// }
 
-function displayPlaces(places) {
-    var bounds = new kakao.maps.LatLngBounds(),
+// function shuffleArray(array) {
+//     for (var i = array.length - 1; i > 0; i--) {
+//         var j = Math.floor(Math.random() * (i + 1));
+//         var temp = array[i];
+//         array[i] = array[j];
+//         array[j] = temp;
+//     }
+// }
+
+function displayPlaces(places, category) {
+    var menuEl = document.getElementById('courseDetail'),
         listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('courseDetail'),
-        fragment = document.createDocumentFragment();
+        fragment = document.createDocumentFragment(),
+        bounds = new kakao.maps.LatLngBounds(),
+        listStr = '';
 
     // 검색 결과 목록에 추가된 항목들을 제거합니다
     removeAllChildNods(listEl);
@@ -195,21 +270,30 @@ function displayPlaces(places) {
     removePolyline();
 
     for (var i = 0; i < places.length; i++) {
+        console.log(places[i]);
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, places[i].categoryGroupCode),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
         bounds.extend(placePosition);
         linePath.push(placePosition);
 
-        (function (marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function () {
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
             });
 
-            kakao.maps.event.addListener(marker, 'mouseout', function () {
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
                 infowindow.close();
             });
-        })(marker, places[i].place_name);
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, places[i].placeName);
 
         fragment.appendChild(itemEl);
     }
@@ -228,37 +312,50 @@ function displayPlaces(places) {
     polyline.setMap(map);
     polylines.push(polyline);
 
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
+function getListItem(index, place) {
+    // console.log(place);
+    let itemHref = "/courseHomeReview2?id=" + place["id"];
+    let el = document.createElement('li'),
+        itemStr = '<a href="'+ itemHref +'" style="text-decoration-line: none; color:black; text-align: left">' +
+            '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
+            '   <h5 class="place_name">' + place.placeName + '</h5>' +
+            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
+            '</div>';
 
-    // for(key in places){
-    //     let rowData = {};
-    //     rowData.key = key;
-    //     rowData.value = places[key]
-    //     console.log("지도 데이터1 : " + JSON.stringify(placeData));
-    //     console.log("지도 데이터 개수: " + placeData.length);
-    //     placeData.push(rowData);
-    // }
-    // console.log("지도 데이터 : " + JSON.stringify(placeData));
-    var el = document.createElement('li'),
-        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-            '<a href="courseHomeReview2">' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
+    itemStr += '<div class="review_score">' +
+        '   <span class="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+        '</div>';
 
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>';
-        // +
-        // '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    itemStr += '<div class="info_item"><div class="addr">';
+
+    if (place.addressName) {
+        itemStr += '    <p class="addressName">' + place.addressName + '</p>';
     } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>';
+        itemStr += '    <p class="roadAdressName">' + place.roadAddressName + '</p>';
     }
 
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-        '</a>'  +
+    if(place.businessHour && place.businessHour.split('·')[1] !== undefined){
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + place.businessHour.split('·')[0] + '</span>' +
+            '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + place.businessHour.split('·')[1] + '</span>' +
+            '</div>';
+    } else {
+        itemStr += '</div>' +
+            '<div class="businessHour">' +
+            '<span>' + place.businessHour + '</span>' +
+            '</div>';
+    }
+
+    itemStr += '  <span class="tel">' + place.phone + '</span>' +
+        '</a>' +
         '</div>';
 
     el.innerHTML = itemStr;
@@ -267,11 +364,25 @@ function getListItem(index, places) {
     return el;
 }
 
-function addMarker(position, idx, title) {
+
+function addMarker(position, idx, category) {
+    // console.log(position);
+    let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
+    if (category === 'food') {
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if (category === 'cafe') {
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if (category === 'tour') {
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if (category === 'hotel') {
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
+
+    // 마커 이미지를 새롭게 정의합니다.
     var markerImage = new kakao.maps.MarkerImage(
-        'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',
+        imageSrc,
         new kakao.maps.Size(36, 37),
-        { spriteSize: new kakao.maps.Size(36, 691), spriteOrigin: new kakao.maps.Point(0, (idx * 46) + 10), offset: new kakao.maps.Point(13, 37) }
+        { offset: new kakao.maps.Point(13, 37) }
     );
 
     var marker = new kakao.maps.Marker({

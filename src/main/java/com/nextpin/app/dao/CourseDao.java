@@ -45,4 +45,5 @@ public class CourseDao {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
         return mybatis.selectOne("DataMapper.getPinTotalCnt", searchKeywords);
     }
+
 }

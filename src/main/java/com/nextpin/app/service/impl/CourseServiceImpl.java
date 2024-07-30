@@ -97,4 +97,5 @@ public class CourseServiceImpl implements CourseService {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
     }
+
 }

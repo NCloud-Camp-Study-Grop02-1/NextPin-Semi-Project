@@ -27,44 +27,44 @@
     <link rel="icon" href="../images/icons/NP_pavicon.png" type="image/png">
 </head>
 <body>
+<!-- 김션이 수정, 사이드바 html부분 바꿈-->
+<!-- 사이드바 -->
+<nav id="side-bar">
+    <!--로고-->
+    <a href="/main" class="logo">
+        <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+    </a>
+    <!--구분선-->
+    <div class="separator"></div>
+    <a href="/courseHomeReview2" class="menu-item menu-item-course">
+        <img src="../images/icons/course_icon.png" alt="코스">
+        <span>코스</span>
+    </a>
+    <a href="/calendar" class="menu-item">
+        <img src="../images/icons/calendar_icon.png" alt="일정">
+        <span>일정</span>
+    </a>
+    <a href="/community" class="menu-item">
+        <img src="../images/icons/community_icon.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/randomPin" class="menu-item">
+        <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+        <span>랜덤핀</span>
+    </a>
+    <a href="/myPin" class="sidebar-profile">
+        <img src="../images/icons/mypage_icon.png" alt="Profile">
+    </a>
+</nav>
 <div id="root">
     <div class="root_wrap">
-        <!-- 김션이 수정, 사이드바 html부분 바꿈-->
-        <!-- 사이드바 -->
-        <nav id="side-bar">
-            <!--로고-->
-            <a href="/main" class="logo">
-                <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
-            </a>
-            <!--구분선-->
-            <div class="separator"></div>
-            <a href="/courseHomeReview2" class="menu-item menu-item-course">
-                <img src="../images/icons/course_icon.png" alt="코스">
-                <span>코스</span>
-            </a>
-            <a href="/calendar" class="menu-item">
-                <img src="../images/icons/calendar_icon.png" alt="일정">
-                <span>일정</span>
-            </a>
-            <a href="/community" class="menu-item">
-                <img src="../images/icons/community_icon.png" alt="커뮤니티">
-                <span>커뮤니티</span>
-            </a>
-            <a href="/randomPin" class="menu-item">
-                <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
-                <span>랜덤핀</span>
-            </a>
-            <a href="/myPin" class="sidebar-profile">
-                <img src="../images/icons/mypage_icon.png" alt="Profile">
-            </a>
-        </nav>
 
         <div id="app_layout">
             <!--장소 검색창-->
             <div class="modal-content" id="modal-cont">
                 <h2>어디로 가시겠습니까?</h2>
                 <input type="text" placeholder="지역을 입력해주세요." onkeydown="handleKeyPress(event)">
-                <button onclick="searchPlaces()">전국 어디든!</button>
+                <button onclick="searchPlaces1()">전국 어디든!</button>
             </div>
 
             <!-- Loading spinner -->
@@ -82,7 +82,7 @@
                         <!--                                <img src="../images/icons/logo-NextPin-A_icon.png" alt="NextPin Logo">-->
                         <!--                            </a>-->
                         <!--                        </div>-->
-                        <form onsubmit="searchPlaces(); return false;">
+                        <form onsubmit="searchPlaces1(); return false;">
                             <div class="input-group mb-3">
                                 <input type="text" id="inputPlace" class="form-control" >
                                 <button class="btn" type="button" id="searchBtn">
