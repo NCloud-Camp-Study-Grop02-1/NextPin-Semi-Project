@@ -1,5 +1,6 @@
 package com.nextpin.app.service;
 
+import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 
@@ -11,9 +12,12 @@ public interface CourseService {
 
     public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList);
 
-    public String searchPinDetail(int id);
+    public KakaoMapDto searchPinDetail(int id);
 
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri);
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords);
+
+    Long createCourse(CourseDto.CourseDTO courseDTO);  // Add this method
+
 }
