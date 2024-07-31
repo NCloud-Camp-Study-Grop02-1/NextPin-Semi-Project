@@ -193,6 +193,57 @@ body {
     border-left: #fff;
 }
 
+/* 장소 리스트 */
+#locationList {
+    margin-top: 4%;
+    /*height: 420px;*/
+    overflow-y: auto;
+}
+
+/* 스크롤바 가로길이 */
+#locationList::-webkit-scrollbar {
+    width: 10px;
+}
+/* 스크롤바 바영역 색상 */
+#locationList::-webkit-scrollbar-thumb {
+    background-color: #40a0ff;
+    border-radius: 5px;
+}
+/* 스크롤바 스크롤영역 색상 */
+#locationList::-webkit-scrollbar-track {
+    background-color: #E1E1E1;
+    border-radius: 5px;
+}
+
+/* 사이드바 토글 버튼 */
+.sidebar-arrow-container {
+    position: relative;
+    top: 0;
+    left: 608px;
+    height: 100%;
+    width: 0;
+    text-align: center;
+    background-color: transparent;
+    transition: width 0.3s ease;
+    z-index: 2;
+}
+.sidebar-toggle {
+    position: absolute;
+    top: 50vh;
+    left: 30%;
+    width: 50px;
+    height: 80px;
+    border-left: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-image: url('../../images/icons/toggleButton_icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
 .save-button button{
     font-size: 25px;
     padding: 10px 20px;
