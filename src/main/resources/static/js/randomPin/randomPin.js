@@ -282,7 +282,7 @@ function displayPlaces(places, category) {
     removePolyline();
 
     for (var i = 0; i < places.length; i++) {
-        console.log(places[i]);
+        // console.log(places[i]);
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i, places[i].categoryGroupCode),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
@@ -369,6 +369,8 @@ function getListItem(index, place) {
     itemStr += '  <span class="tel">' + place.phone + '</span>' +
         '</a>' +
         '</div>';
+
+    itemStr += ' <div class="division-line" style="border-top: 0.1rem solid #E1E1E1; margin: 2rem"></div> '
 
     el.innerHTML = itemStr;
     el.className = 'item';
