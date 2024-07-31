@@ -25,9 +25,15 @@ public class ExcelManageRestController {
         this.excelManageRestService = excelManageRestService;
     }
 
-    @PostMapping("/uploadExcel")
-    public String uploadExcel(@RequestParam("uploadFile") MultipartFile file, HttpServletResponse response) throws IOException {
-        excelManageRestService.readExcelAndRestore(file);
+    @PostMapping("/uploadCsv")
+    public String uploadMapcsv(@RequestParam("uploadFile") MultipartFile file, HttpServletResponse response) throws IOException {
+        excelManageRestService.kakaoMapCsvDataStore(file);
+        return "uploadProcessing";
+    }
+
+    @PostMapping("/uploadReviewCsv")
+    public String uploadReviewCsv(@RequestParam("uploadFile") MultipartFile file, HttpServletResponse response) throws IOException {
+        excelManageRestService.kakaoMapReviewCsvDataStore(file);
         return "uploadProcessing";
     }
 }

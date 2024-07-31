@@ -27,9 +27,7 @@ public class KakaoMapDataRestoreImpl implements KakaoMapDataRestore {
     @Override
     public void restore(List<KakaoMapDto> data) {
         for(KakaoMapDto kakaoMapDto : data) {
-
             dataMapper.kakaoTestInsert(kakaoMapDto);
-
         }
     }
 

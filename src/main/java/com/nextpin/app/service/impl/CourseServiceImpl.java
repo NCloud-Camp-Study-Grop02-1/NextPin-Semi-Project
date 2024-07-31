@@ -31,6 +31,13 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getAddressDatas();
     }
 
+    public List<KakaoMapDto> getUpdateForData() { return courseDao.getUpdateForData(); }
+
+    @Override
+    public void updateForData(List<KakaoMapDto> kakaoMapDtoList) {
+        courseDao.updateForData(kakaoMapDtoList);
+    }
+
     @Override
     public String searchPinDetail(int id) {
         ObjectMapper objectMapper = new ObjectMapper();

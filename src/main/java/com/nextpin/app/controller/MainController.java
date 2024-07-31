@@ -59,7 +59,8 @@ public class MainController {
     @GetMapping("/getData")
     public void getData() {
         logger.debug("getData 실행");
-//        octoparseData.getData();
+//        List<KakaoMapDto> getUpdateFordata = courseService.getUpdateForData();
+//        courseService.updateForData(getUpdateFordata);
     }
 
     @PostMapping("/kakaoData")
@@ -104,7 +105,7 @@ public class MainController {
                     response.append(inputLine);
                 }
 
-//            logger.debug("응답 데이터 : " + response.toString());
+            logger.debug("응답 데이터 : " + response.toString());
                 JSONParser parser = new JSONParser();
                 JSONObject jsonObject = (JSONObject) parser.parse(response.toString());
 

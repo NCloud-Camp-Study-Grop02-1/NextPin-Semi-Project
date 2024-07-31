@@ -50,7 +50,9 @@
 
     <update id="mergeData" parameterType="kakaoMapData">
         INSERT INTO MAP(
-             categoryName
+             categoryGroupCode
+           , categoryGroupName
+           , categoryName
            , placeName
            , score
            , addressName
@@ -59,20 +61,63 @@
            , phone
            , placeUrl
         ) VALUE (
-            #{categoryName, jdbcType=VARCHAR}
+        <choose>
+            <when test="categoryName != null and categoryName != ''">
+              (SELECT DISTINCT M.categoryGroupCode FROM MAP M WHERE M.categoryName = REPLACE(#{categoryName, jdbcType=VARCHAR}, '"', ''))
+            , (SELECT DISTINCT M.categoryGroupName FROM MAP M WHERE M.categoryName = REPLACE(#{categoryName, jdbcType=VARCHAR}, '"', ''))
+            </when>
+            <otherwise>
+              NULL
+            , NULL
+            </otherwise>
+        </choose>
+          , REPLACE(#{categoryName, jdbcType=VARCHAR}, '"', '')
           , #{placeName}
           , #{score}
-          , #{addressName}
+          , REPLACE(#{addressName}, '"', '')
           ,	#{roadAddressName, jdbcType=VARCHAR}
-          , #{businessHour, jdbcType=VARCHAR}
+          , REPLACE(#{businessHour, jdbcType=VARCHAR}, '"', '')
           , #{phone, jdbcType=VARCHAR}
           , #{placeUrl, jdbcType=VARCHAR})
         ON DUPLICATE KEY
-        UPDATE categoryName = #{categoryName, jdbcType=VARCHAR}
+        UPDATE categoryName = REPLACE(#{categoryName, jdbcType=VARCHAR}, '"', '')
              , score = #{score}
              , roadAddressName = #{roadAddressName, jdbcType=VARCHAR}
-             , businessHour = #{businessHour, jdbcType=VARCHAR}
+             , businessHour = REPLACE(#{businessHour, jdbcType=VARCHAR}, '"', '')
              , phone = #{phone, jdbcType=VARCHAR}
              , placeUrl = #{placeUrl, jdbcType=VARCHAR}
+    </update>
+
+    <update id="mergeReviewData" parameterType="kakaoMapReviewData">
+        INSERT INTO MAPREVIEW(
+             refMapId
+           , placeName
+           , addressName
+           , roadAddressName
+           , userNickName
+           , regDate
+           , score
+           , comment
+        ) VALUE (
+            (SELECT ID FROM MAP WHERE placeName = #{placeName} and addressName = REPLACE(#{addressName}, '"', '') and roadAddressName = #{roadAddressName, jdbcType=VARCHAR})
+           , #{placeName}
+           , #{addressName}
+           , #{roadAddressName, jdbcType=VARCHAR}
+           , #{userNickName}
+           , #{regDate}
+           , #{score}
+           , #{comment, jdbcType=VARCHAR})
+        ON DUPLICATE KEY
+        UPDATE refMapId = (SELECT ID FROM MAP WHERE placeName = #{placeName} and addressName = REPLACE(#{addressName}, '"', '') and roadAddressName = #{roadAddressName, jdbcType=VARCHAR})
+             , score = #{score}
+             , roadAddressName = #{roadAddressName, jdbcType=VARCHAR}
+             , userNickName = #{userNickName}
+             , moddate = now()
+    </update>
+
+    <update id="updateForData" parameterType="map">
+        UPDATE MAP
+           SET ID = #{newId}
+         WHERE ID = #{id}
     </update>
 </mapper>

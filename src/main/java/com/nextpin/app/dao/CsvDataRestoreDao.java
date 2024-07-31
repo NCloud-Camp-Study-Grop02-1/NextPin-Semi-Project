@@ -2,6 +2,7 @@ package com.nextpin.app.dao;
 
 import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,12 @@ public class CsvDataRestoreDao {
     public void mergeCsvData(List<KakaoMapDto> csvDataList){
         for(KakaoMapDto csvData : csvDataList){
             mybatis.update("DataMapper.mergeData", csvData);
+        }
+    }
+
+    public void mergeCsvReviewData(List<KakaoMapReviewDto> csvReviewDataList){
+        for(KakaoMapReviewDto csvReviewData : csvReviewDataList){
+            mybatis.update("DataMapper.mergeReviewData", csvReviewData);
         }
     }
 }

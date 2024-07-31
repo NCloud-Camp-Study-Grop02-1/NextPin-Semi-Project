@@ -355,7 +355,7 @@ function removeAllChildNods(el) {
 window.onload = function(){
     searchPlaces();
     // printResult();
-    console.log($('#hiddenValue').text());
+    // console.log($('#hiddenValue').text());
 
     let loadData = '';
     if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
@@ -388,7 +388,7 @@ window.onload = function(){
     let timeImageEl = document.createElement('img');
     timeImageEl.classList.add('icon_location');
     timeImageEl.setAttribute('src', '../images/icons/clock_icon.png');
-    timeImageEl.setAttribute('alt', '시간');
+    timeImageEl.setAttribute('alt', '주소');
     timeImageEl.style.marginRight = '3%';
 
     businessTimeEl.append(timeImageEl);

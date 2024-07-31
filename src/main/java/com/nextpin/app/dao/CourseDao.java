@@ -32,6 +32,20 @@ public class CourseDao {
             mybatis.update("DataMapper.updateAddressConversion", kakaoMapDtoList.get(i));
         }
     }
+
+    public List<KakaoMapDto> getUpdateForData(){
+        return mybatis.selectList("NextpinMapper.getUpdateForData");
+    }
+
+    public void updateForData(List<KakaoMapDto> kakaoMapDtoList){
+        Map<String, Object> dataMap = new HashMap<>();
+        for(int i = 0; i <kakaoMapDtoList.size(); i++){
+            dataMap.put("newId", i + 1522);
+            dataMap.put("id", kakaoMapDtoList.get(i).getId());
+            mybatis.update("DataMapper.updateForData", dataMap);
+        }
+    }
+
     public KakaoMapDto searchPinDetail(int id){
         return mybatis.selectOne("NextpinMapper.searchPinDetail", id);
     }
@@ -52,4 +66,5 @@ public class CourseDao {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
         return mybatis.selectOne("NextpinMapper.getPinTotalCnt", searchKeywords);
     }
+
 }

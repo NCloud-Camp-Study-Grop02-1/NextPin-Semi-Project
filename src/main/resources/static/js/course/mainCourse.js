@@ -177,7 +177,7 @@ function displayPlaces(places, category) {
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, place) {
 
-    // console.log("place : " + JSON.stringify(place));
+    console.log("place : " + JSON.stringify(place));
     let itemHref = "/courseHomeReview2?id=" + place["id"];
     let el = document.createElement('li'),
         itemStr = '<a href='+ itemHref +' style="text-decoration-line: none; color:black; text-align: left">' +
@@ -187,35 +187,42 @@ function getListItem(index, place) {
             '</div>';
 
     itemStr += '<div class="review_score">' +
-        '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
-        '</div>'
+                   '<span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+               '</div>'
 
-    itemStr += '<div class="info_item"><div class="addr">'
+    itemStr += '<div class="info_item">' +
+                   '<div class="addr" style="display: flex">';
+    itemStr +=         '<span class="location_image">' +
+                           '<img class="icon_address" src="../images/icons/pin_icon.png" alt="주소"/>' +
+                       '</span>';
+    itemStr +=         '<span class="addressName" style="margin-left: 3%;">' + place.addressName + '</span>' +
+                   '</div>';
 
-    if (place.addressName) {
-        itemStr += '    <p class="addressName">' + place.addressName + '</p>';
-    } else {
-        itemStr += '    <p class="roadAdressName">' +  place.roadAddressName  + '</p>';
+    if (place.roadAddressName) {
+        itemStr += '<span class="roadAdressName" style="margin-left: 9%;color: #8D8D8D;"> 지번 | ' +  place.roadAddressName  + '</span>';
+    }
+    if(place.businessHour !== undefined && place.businessHour !== ''){
+        if(place.businessHour.split('·')[1] !== undefined){
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour.split('·')[0]  +
+                '</div>' +
+                '<span>' + place.businessHour.split('·')[1] + '</span>';
+        } else {
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour +
+                '</div>';
+        }
     }
 
-    if(place.businessHour.split('·')[1] !== undefined){
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[0] + '</span>' +
-            '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[1] + '</span>' +
-            '</div>';
-    } else {
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour + '</span>' +
-            '</div>'
+    if(place.phone !== undefined){
+        itemStr +=  '<span class="location_phone">' +
+                       '<img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호" style="margin-right: 3%;"/>' +
+                            place.phone  +
+                    '</span>';
     }
-
-    itemStr += '  <span class="tel">' + place.phone  + '</span>' +
-        '</a>'  +
-        '</div>';
+    itemStr += '</div></a>';
 
     el.innerHTML = itemStr;
     el.className = 'item';
