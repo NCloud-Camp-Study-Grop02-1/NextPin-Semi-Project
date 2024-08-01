@@ -369,3 +369,70 @@ window.onload = function(){
         // sidebarArrowContainer.classList.toggle('open');
     });
 };
+
+// 커뮤니티에 코스 나열하기 (보류)
+document.addEventListener('DOMContentLoaded', function() {
+    fetchCourses();
+});
+
+function fetchCourses() {
+    fetch('/courses')
+        .then(response => response.json())
+        .then(courses => {
+            const rankingContainer = document.querySelector('.ranking');
+            rankingContainer.innerHTML = '';
+            courses.forEach((course, index) => {
+                const courseItem = document.createElement('div');
+                courseItem.classList.add('ranking-item');
+
+                const rankingNumber = document.createElement('div');
+                rankingNumber.classList.add('ranking-number');
+                rankingNumber.textContent = index + 1;
+
+                const profilePicture = document.createElement('button');
+                profilePicture.classList.add('profilePicture');
+                profilePicture.innerHTML = `<img src="../images/icons/default-profile_icon.svg" alt="${course.nickname}">
+                                            <span>${course.nickname}</span>`;
+
+                const courseButton = document.createElement('button');
+                courseButton.classList.add('course-button');
+                courseButton.textContent = course.courseName;
+                courseButton.style.backgroundColor = course.color || '#D4ADFB';
+                courseButton.onclick = () => toggleCourseDetails(course.courseId, courseItem);
+
+                courseItem.appendChild(rankingNumber);
+                courseItem.appendChild(profilePicture);
+                courseItem.appendChild(courseButton);
+
+                rankingContainer.appendChild(courseItem);
+            });
+        });
+}
+
+function toggleCourseDetails(courseId, courseItem) {
+    fetch(`/courses/${courseId}/details`)
+        .then(response => response.json())
+        .then(details => {
+            let detailsContainer = courseItem.querySelector('.course-details');
+            if (!detailsContainer) {
+                detailsContainer = document.createElement('div');
+                detailsContainer.classList.add('course-details');
+                courseItem.appendChild(detailsContainer);
+            }
+            detailsContainer.innerHTML = ''; // 기존 내용을 지움
+
+            details.forEach(detail => {
+                const dayContainer = document.createElement('div');
+                dayContainer.classList.add('day');
+                dayContainer.innerHTML = `<h2>Day ${detail.day}</h2>`;
+
+                const locationList = document.createElement('ul');
+                const locationItem = document.createElement('li');
+                locationItem.textContent = detail.location;
+                locationList.appendChild(locationItem);
+
+                dayContainer.appendChild(locationList);
+                detailsContainer.appendChild(dayContainer);
+            });
+        });
+}
