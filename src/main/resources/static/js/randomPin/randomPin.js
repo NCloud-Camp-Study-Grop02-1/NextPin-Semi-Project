@@ -46,27 +46,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-$('.finishButton').click(function() {
-    const selectedDate = $('#testDatepicker').val();
-    const memoActive = $('#memo-active').is(':checked');
-    const selectedMemo = memoActive ? $('#memo-text').val() : '';
-    const selectedColor = $('.color-button.selected').css('background-color');
-
-    if (selectedDate && selectedColor) {
-        var memoText = '';
-        if ($('#memo-active').is(':checked')) {
-            memoText = $('#memo-text').val();
-        }
-        $('#selectedDate').text(selectedDate);
-        $('#selectedMemo').text(selectedMemo);
-        $('#selectedColor').css('background-color', selectedColor);
-
-        $('#makeCourse').removeClass('show');
-        $('#newCoursePanel').removeClass('hidden');
-    } else {
-        alert('날짜와 색상은 필수 선택 항목입니다.');
-    }
-});
+// $('.finishButton').click(function() {
+//     const selectedDate = $('#testDatepicker').val();
+//     const memoActive = $('#memo-active').is(':checked');
+//     const selectedMemo = memoActive ? $('#memo-text').val() : '';
+//     const selectedColor = $('.color-button.selected').css('background-color');
+//
+//     if (selectedDate && selectedColor) {
+//         var memoText = '';
+//         if ($('#memo-active').is(':checked')) {
+//             memoText = $('#memo-text').val();
+//         }
+//         $('#selectedDate').text(selectedDate);
+//         $('#selectedMemo').text(selectedMemo);
+//         $('#selectedColor').css('background-color', selectedColor);
+//
+//         $('#makeCourse').removeClass('show');
+//         $('#newCoursePanel').removeClass('hidden');
+//     } else {
+//         alert('날짜와 색상은 필수 선택 항목입니다.');
+//     }
+// });
 
 document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('close_icon');
@@ -411,11 +411,24 @@ document.querySelector(".finishButton").addEventListener("click", function(event
     // 데이터 매핑 로직
     var userId = 'sampleUserId';
     var nickname = 'sampleNickname';
-    var courseName = 'sampleCourseName';
+    var courseName = '';
     var bookMark = 0;
     var heartCnt = 0;
     var isPublic = 1;
-    var color = "#fff";
+    var color = "";
+
+    $('.color-button').each(function(index, item){
+       if(item.classList.contains('selected')){
+           console.log(item.style.backgroundColor)
+           color = item.style.backgroundColor;
+       }
+    });
+
+    $('.myCourse').each(function (item){
+        if(item.classList.contains('selected')){
+            courseName = item.options.value
+        }
+    });
 
     var courseData = {
         userId: userId,
@@ -428,8 +441,28 @@ document.querySelector(".finishButton").addEventListener("click", function(event
         isPublic: isPublic,
         color: color
     };
+    const selectedDate = $('#testDatepicker').val();
+    const memoActive = $('#memo-active').is(':checked');
+    const selectedMemo = memoActive ? $('#memo-text').val() : '';
+    const selectedColor = $('.color-button.selected').css('background-color');
 
-    insertCourse(courseData);
+    if (selectedDate && selectedColor) {
+        var memoText = '';
+        if ($('#memo-active').is(':checked')) {
+            memoText = $('#memo-text').val();
+        }
+        $('#selectedDate').text(selectedDate);
+        $('#selectedMemo').text(selectedMemo);
+        $('#selectedColor').css('background-color', selectedColor);
+
+        $('#makeCourse').removeClass('show');
+        $('#newCoursePanel').removeClass('hidden');
+
+        insertCourse(courseData);
+    } else {
+        alert('날짜와 색상은 필수 선택 항목입니다.');
+    }
+
 });
 
 // 데이터 저장을 위한 함수
@@ -441,9 +474,11 @@ function insertCourse(courseData) {
         contentType: 'application/json',
         success: function(response) {
             console.log('Data inserted successfully:', response);
+            alert('코스 저장이 성공되었습니다.');
         },
         error: function(error) {
             console.error('Error inserting data:', error);
+            alert('코스 저장이 실패되었습니다.')
         }
     });
 }

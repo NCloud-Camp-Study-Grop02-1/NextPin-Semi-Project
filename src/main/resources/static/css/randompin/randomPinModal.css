@@ -330,6 +330,20 @@ body {
     border: 1px solid #c3c3c3;
 }
 
+/*생성할 코스 선택*/
+.myCourse {
+    padding: 20px;
+}
+
+.myCourse h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.myCourse form {
+    padding-top: 10px;
+}
+
 /*캘린더 날짜 선택*/
 .calendar {
     padding: 20px;

@@ -23,7 +23,7 @@
         FROM MAP
     </select>
 
-    <select id="getPlacesByKeyword" resultType="kakaoMapData">
+    <select id="getPlacesByKeyword" parameterType="map" resultType="kakaoMapData">
         SELECT ID
         , CATEGORYGROUPCODE
         , CATEGORYGROUPNAME

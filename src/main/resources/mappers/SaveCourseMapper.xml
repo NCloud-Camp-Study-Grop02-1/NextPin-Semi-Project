@@ -6,6 +6,6 @@
 <mapper namespace="com.nextpin.app.mapper.SaveCourseMapper">
     <insert id="saveCourse" parameterType="com.nextpin.app.dto.SaveCourseDto">
         INSERT INTO course (userId, nickname, courseName, regDate, modifyDate, bookMark, heartCnt, isPublic, color)
-        VALUES ('user2', 'nickname2', 'courseName2', NOW(), null, 0, 0, 0, '#fff');
+        VALUES (#{userId}, #{nickname}, #{courseName}, NOW(), null, #{bookMark}, #{heartCnt}, #{isPublic}, #{color});
     </insert>
 </mapper>
