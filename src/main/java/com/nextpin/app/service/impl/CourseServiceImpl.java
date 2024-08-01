@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
+    }
+
+    @Override
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
+        return courseDao.searchPinDetailReview(id);
     }
 }

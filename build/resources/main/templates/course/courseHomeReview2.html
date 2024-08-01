@@ -121,67 +121,32 @@
                                     </div>
                                     <div id="reviewContents" style="display:none;">
                                         <span class="review_counts">
-                                            <h5>리뷰<a href="#"> 223</a></h5>
+                                            <h5>리뷰<a href="#"> [(${rtnKaMapReviewListCnt})]</a></h5>
                                         </span>
                                         <div id="reviewList">
                                             <ul id="reviewDetailList">
-                                                <li class="review_item" id="reviewItem1" style="border-bottom: 1px solid #DDD">
+
+                                                <li class="review_item"  style="border-bottom: 1px solid #DDD" th:each="eachReview : ${rtnKaMapReviewList}">
                                                     <div style="display: flex;">
-                                                        <div id="userReviewProfile1" style="margin-top: 3%; margin-right: 0.6rem;">
+                                                        <div  style="margin-top: 3%; margin-right: 0.6rem;">
                                                         <span class="user_review">
                                                             <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
                                                         </span>
                                                         </div>
-                                                        <div id="userReviewContents1" style="margin-top:3%;">
-                                                            담곰
-                                                            <span class="user_review" id="userAfterCourseDate1">
-                                                            | 후기 8 코스 3 | 2024.05.08
+                                                        <div style="margin-top:3%;">
+                                                            [(${eachReview.userNickName})]
+                                                            <span class="user_review" style="color:#7B7B7B;">
+                                                                | 후기 [(${eachReview.userReviewCnt})] 코스 | [(${#dates.format(eachReview.regDate, 'yyyy.MM.dd')})]
                                                             </span>
                                                             <br>
-                                                            <span class="user_score">
-                                                                ★★★★☆
+                                                            <span class="user_score" style="color:red;">
+                                                                ★[(${eachReview.score})]
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <p class="user_review_content1" style="line-height: 1.25rem;">
-                                                            역시 크뽕은 주기적으로 먹어줘야 하는 것 같아요!
-                                                            너무너무 맛있어요ㅠㅠㅠ
-                                                            다만 서비스 측면에서 조금 아쉬웠던 부분이 있었던 것 같아요ㅠ
-                                                            그래도 다음에도 또 올께요!
-                                                            맛있게 잘 먹었습니다!
-                                                        </p>
-                                                    </div>
-                                                    <div style="display: flex">
-                                                        <img class="review-image" src="../images/img/sample-review1_img.png" alt="리뷰이미지">
-                                                        <img class="review-image" src="../images/img/sample-review2_img.png" alt="리뷰이미지">
-                                                    </div>
-                                                </li>
-                                                <li class="review_item" id="reviewItem2">
-                                                    <div style="display: flex;">
-                                                        <div id="userReviewProfile2" style="margin-top: 3%; margin-right: 0.6rem;">
-                                                        <span class="user_review">
-                                                            <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
-                                                        </span>
-                                                        </div>
-                                                        <div id="userReviewContents2" style="margin-top:3%;">
-                                                            담곰
-                                                            <span class="user_review" id="userAfterCourseDate2">
-                                                        | 후기 8 코스 3 | 2024.05.08
-                                                        </span>
-                                                            <br>
-                                                            <span class="user_score">
-                                                        ★★★★☆
-                                                        </span>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <p class="user_review_content1" style="line-height: 1.25rem;">
-                                                            역시 크뽕은 주기적으로 먹어줘야 하는 것 같아요!
-                                                            너무너무 맛있어요ㅠㅠㅠ
-                                                            다만 서비스 측면에서 조금 아쉬웠던 부분이 있었던 것 같아요ㅠ
-                                                            그래도 다음에도 또 올께요!
-                                                            맛있게 잘 먹었습니다!
+                                                        <p class="user_review_content" style="line-height: 1.25rem;">
+                                                            [(${eachReview.comment})]
                                                         </p>
                                                     </div>
                                                     <div style="display: flex">

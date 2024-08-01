@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
+<mapper namespace="MainCourseMapper">
+    <select id="getAddressDatas" resultType="kakaoMapData">
+        SELECT ID
+             , CATEGORYGROUPCODE
+             , CATEGORYGROUPNAME
+             , CATEGORYNAME
+             , PLACENAME
+             , SCORE
+             , ADDRESSNAME
+             , ROADADDRESSNAME
+             , BUSINESSHOUR
+             , PHONE
+             , COURSESHARE
+             , X
+             , Y
+             , PLACEURL
+        FROM MAP
+    </select>
+
+    <update id="updateAddressConversion" parameterType="kakaoMapData">
+        UPDATE MAP
+        SET X = #{x}
+          , Y = #{y}
+        WHERE ADDRESSNAME = #{addressName}
+          AND ID = #{id}
+    </update>
+
+    <select id="searchPinDetail" parameterType="map" resultType="kakaoMapData">
+        SELECT ID
+             , CATEGORYGROUPCODE
+             , CATEGORYGROUPNAME
+             , CATEGORYNAME
+             , PLACENAME
+             , SCORE
+             , ADDRESSNAME
+             , ROADADDRESSNAME
+             , BUSINESSHOUR
+             , PHONE
+             , COURSESHARE
+             , X
+             , Y
+             , PLACEURL
+        FROM MAP
+        WHERE 1=1
+          AND ID = #{id}
+    </select>
+
+    <select id="searchPinDatas" parameterType="map" resultType="kakaoMapData">
+        SELECT ID
+        , CATEGORYGROUPCODE
+        , CATEGORYGROUPNAME
+        , CATEGORYNAME
+        , PLACENAME
+        , SCORE
+        , ADDRESSNAME
+        , ROADADDRESSNAME
+        , BUSINESSHOUR
+        , PHONE
+        , COURSESHARE
+        , X
+        , Y
+        , PLACEURL
+        FROM MAP
+        WHERE 1=1
+        <if test="searchKewords.category != null and searchKewords.category != ''">
+            AND CATEGORYGROUPCODE = #{searchKewords.category}
+        </if>
+        <if test="searchKewords.keyword != null and searchKewords.keyword != ''">
+            AND (
+            PLACENAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword}, '%')
+            )
+        </if>
+        <if test="searchKewords.keyword2 != null and searchKewords.keyword2 != ''">
+            OR (
+            PLACENAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
+            )
+        </if>
+        ORDER BY SCORE DESC
+        , X
+        LIMIT #{cri.amount} OFFSET #{cri.startNum}
+    </select>
+
+    <select id="getPinTotalCnt" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM MAP
+        WHERE 1=1
+        <if test="category != null and category != ''">
+            AND CATEGORYGROUPCODE = #{category}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND (
+            PLACENAME LIKE CONCAT('%', #{keyword}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        <if test="keyword2 != null and keyword2 != ''">
+            OR (
+            PLACENAME LIKE CONCAT('%', #{keyword2}, '%')
+            OR
+            ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')
+            )
+        </if>
+    </select>
+
+    <select id="searchPinDetailReview" parameterType="int" resultType="kakaoMapReviewData">
+        SELECT M1.ID				as ID
+             , M1.REFMAPID			as refMapId
+             , M1.USERNICKNAME		as userNickName
+             , M1.REGDATE			as regDate
+             , M1.SCORE				as score
+             , M1.COMMENT			as comment
+             , M2.reviewCnt			as userReviewCnt
+        FROM MAPREVIEW M1
+                 JOIN (SELECT USERNICKNAME
+                            , COUNT(USERNICKNAME) as reviewCnt
+                       FROM MAPREVIEW
+                       GROUP BY USERNICKNAME) M2
+                      ON M1.USERNICKNAME = M2.USERNICKNAME
+        WHERE M1.refMapId = #{id}
+    </select>
+</mapper>
