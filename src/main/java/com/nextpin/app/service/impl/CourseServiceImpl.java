@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,21 +40,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public String searchPinDetail(int id) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> jsonMap = new HashMap<>();
+    public KakaoMapDto searchPinDetail(int id) {
+        return courseDao.searchPinDetail(id);
+    }
 
-        jsonMap.put("data", courseDao.searchPinDetail(id));
-
-        String jsonString = "";
-
-        try {
-            jsonString = objectMapper.writerWithDefaultPrettyPrinter()
-                                     .writeValueAsString(jsonMap);
-        } catch(JsonProcessingException je){
-            logger.error(je.getMessage());
-        }
-        return jsonString;
+    @Override
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
+        return courseDao.searchPinDetailReview(id);
     }
 
     @Override

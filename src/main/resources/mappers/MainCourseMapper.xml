@@ -4,7 +4,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
-<mapper namespace="NextpinMapper">
+<mapper namespace="MainCourseMapper">
     <select id="getAddressDatas" resultType="kakaoMapData">
         SELECT ID
              , CATEGORYGROUPCODE
@@ -19,6 +19,7 @@
              , COURSESHARE
              , X
              , Y
+             , PLACEURL
         FROM MAP
     </select>
 
@@ -44,6 +45,7 @@
              , COURSESHARE
              , X
              , Y
+             , PLACEURL
         FROM MAP
         WHERE 1=1
           AND ID = #{id}
@@ -63,6 +65,7 @@
         , COURSESHARE
         , X
         , Y
+        , PLACEURL
         FROM MAP
         WHERE 1=1
         <if test="searchKewords.category != null and searchKewords.category != ''">
@@ -108,5 +111,22 @@
             ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')
             )
         </if>
+    </select>
+
+    <select id="searchPinDetailReview" parameterType="int" resultType="kakaoMapReviewData">
+        SELECT M1.ID				as ID
+             , M1.REFMAPID			as refMapId
+             , M1.USERNICKNAME		as userNickName
+             , M1.REGDATE			as regDate
+             , M1.SCORE				as score
+             , M1.COMMENT			as comment
+             , M2.reviewCnt			as userReviewCnt
+          FROM MAPREVIEW M1
+          JOIN (SELECT USERNICKNAME
+                     , COUNT(USERNICKNAME) as reviewCnt
+                  FROM MAPREVIEW
+                 GROUP BY USERNICKNAME) M2
+            ON M1.USERNICKNAME = M2.USERNICKNAME
+         WHERE M1.refMapId = #{id}
     </select>
 </mapper>

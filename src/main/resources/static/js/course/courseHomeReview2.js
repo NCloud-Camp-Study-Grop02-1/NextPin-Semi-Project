@@ -6,36 +6,71 @@ $(function() {
         monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
         showButtonPanel: true,
         showMonthAfterYear:true,
-        dateFormat: "MM/dd",
+        dateFormat: "yy/mm/dd",
         beforeShow: function(input, inst) {
             var sidebarWidth = $('#side-bar').outerWidth();
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
         }
     });
+});
 
+$(document).ready(function() {
     // 확인 버튼 클릭 시 코스 생성
-    $('.finishButton').click(function() {
+    $('#confirmButton').click(function() {
         const selectedDate = $('#testDatepicker').val();
         const memoActive = $('#memo-active').is(':checked');
         const selectedMemo = memoActive ? $('#memo-text').val() : '';
         const selectedColor = $('.color-button.selected').css('background-color');
+        const placeName = $('#locationTitle').text(); // 장소 이름 가져오기
 
-        if (selectedDate && selectedColor) {
-            var memoText = '';
-            if ($('#memo-active').is(':checked')) {
-                memoText = $('#memo-text').val();
-            }
-            $('#selectedDate').text(selectedDate);
-            $('#selectedMemo').text(selectedMemo);
-            $('#selectedColor').css('background-color', selectedColor);
+        // 디버깅을 위한 콘솔 로그 추가
+        console.log("Selected Date: ", selectedDate);
+        console.log("Memo Active: ", memoActive);
+        console.log("Selected Memo: ", selectedMemo);
+        console.log("Selected Color: ", selectedColor);
+        console.log("Place Name: ", placeName);
 
-            $('#makeCourse').removeClass('show');
-            $('#newCoursePanel').removeClass('hidden');
+        if (selectedDate && selectedColor && placeName) {
+            $.ajax({
+                type: 'POST',
+                url: '/createCourse',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    courseName: "새 코스", // 새 코스 이름은 필요에 따라 변경
+                    userId: "song", // 실제 사용자 ID로 변경
+                    nickname: "오레오", // 실제 닉네임으로 변경
+                    color: selectedColor,
+                    courseDetail: {
+                        location: placeName,
+                        x: 0, // 실제 x 좌표로 변경
+                        y: 0, // 실제 y 좌표로 변경
+                        visitDate: selectedDate,
+                        memo: selectedMemo
+                    }
+                }),
+                success: function(response) {
+                    alert('코스가 성공적으로 생성되었습니다.');
+                    // 성공적으로 생성된 후 추가적인 작업
+                    $('#selectedDate').text(selectedDate);
+                    $('#selectedMemo').text(selectedMemo);
+                    $('#selectedColor').css('background-color', selectedColor);
+                    $('#selectedColor').css('border-color', selectedColor);
+                    $('.dayCourse').css('border-color', selectedColor);
+
+                    $('#makeCourse').removeClass('show');
+                    $('#newCoursePanel').removeClass('hidden');
+                },
+                error: function(xhr, status, error) {
+                    alert('코스 생성에 실패하였습니다. 다시 시도해주세요.');
+                }
+            });
         } else {
-            alert('날짜와 색상은 필수 선택 항목입니다.');
+            alert('날짜와 색상, 장소 이름은 필수 선택 항목입니다.');
         }
     });
 });
+
+
 
 // 핀 선택 시 색상 채우기
 function toggleImage(button) {
@@ -72,6 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.setAttribute('aria-expanded', !isExpanded);
         $('#makeCourse').removeClass('show');
         $('#newCoursePanel').addClass('hidden');
+    });
+});
+
+// 코스 이름 선택 창
+document.addEventListener('DOMContentLoaded', function() {
+    const myCourseSelect = document.getElementById('myCourse');
+    const dayCourseH3 = document.querySelector('.dayCourse h3');
+
+    myCourseSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.value === 'newCourse') {
+            dayCourseH3.textContent = '새 코스';
+        } else {
+            dayCourseH3.textContent = selectedOption.text;
+        }
     });
 });
 
@@ -354,60 +404,49 @@ function removeAllChildNods(el) {
 
 window.onload = function(){
     searchPlaces();
-    // printResult();
-    // console.log($('#hiddenValue').text());
+    printResult();
 
-    let loadData = '';
-    if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
-        loadData = JSON.parse($('#hiddenValue').text());
-    }
-
-    console.log(loadData);
-
-    // 데이터 채우기
-    $('#locationTitle').text(loadData['data']['placeName']);
-    $('#foodType').text(loadData['data']['categoryName']);
-    $('#reviewScore').text('★ ' + loadData['data']['score']);
-
-    let locationAddressImageEl = $('#locationImage');
-    let locationImageEl = document.createElement('img');
-    locationImageEl.classList.add('icon_address');
-    locationImageEl.setAttribute('src', '../images/icons/pin_icon.png');
-    locationImageEl.setAttribute('alt', '시간');
-    locationAddressImageEl.append(locationImageEl);
-
-    let locationAddressEl = $('#locationAddress');
-    let locationAddressSpanEl = document.createElement('span');
-    locationAddressSpanEl.append(loadData['data']['addressName']);
-    locationAddressEl.append(locationAddressSpanEl);
-
-    $('#streetNumber').text('지번 | ' + loadData['data']['roadAddressName']);
-    $('#streetNumber').css('margin-left', '9%');
-
-    let businessTimeEl = $('#businessTime');
-    let timeImageEl = document.createElement('img');
-    timeImageEl.classList.add('icon_location');
-    timeImageEl.setAttribute('src', '../images/icons/clock_icon.png');
-    timeImageEl.setAttribute('alt', '주소');
-    timeImageEl.style.marginRight = '3%';
-
-    businessTimeEl.append(timeImageEl);
-    businessTimeEl.append(loadData['data']['businessHour'].split('·')[0]);
-
-    let breakTimeEl = $('#breakTime');
-    breakTimeEl.text(loadData['data']['businessHour'].split('·')[1]);
-    breakTimeEl.css('margin-left', '9%');
-
-
-    let locationPhoneEl = $('#locationPhone');
-    let phoneImageEl = document.createElement('img');
-    phoneImageEl.classList.add('icon_location');
-    phoneImageEl.setAttribute('src', '../images/icons/phone_icon.png');
-    phoneImageEl.setAttribute('alt', '전화번호');
-    phoneImageEl.style.marginRight = '3%';
-
-    locationPhoneEl.append(phoneImageEl);
-    locationPhoneEl.append(loadData['data']['phone']);
+    $("input[name=courseType][value=course_food]").prop("checked", true);
+    $('#course_food_label').css('background', '#FFC061');
+    $("input[name=courseType]").on("click",function(){
+        // 맛집 선택시
+        if($(this).attr('id') === 'course_food'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#FFC061');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 카페 선택시
+        else if($(this).attr('id') === 'course_caffe'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#FAB7B7');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 관광지 선택시
+        else if($(this).attr('id') === 'course_tour'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#96E781');
+                $('#course_rest_label').css('background', '#fff');
+            }
+        }
+        // 숙소 선택시
+        else if($(this).attr('id') === 'course_rest'){
+            if($(this).is(':checked')) {
+                $('#course_food_label').css('background', '#fff');
+                $('#course_caffe_label').css('background', '#fff');
+                $('#course_tour_label').css('background', '#fff');
+                $('#course_rest_label').css('background', '#D7AFFF');
+            }
+        }
+        // console.log(this);
+    });
 
     $('#searchBtn').on("click", function(){
         searchPlaces();
@@ -446,3 +485,18 @@ window.onload = function(){
     });
 };
 
+// 장소 검색 시 mainCourse 페이지로 넘어가게 하기
+function performSearch() {
+    var searchTerm = $('#inputPlace').val();
+    localStorage.setItem('searchTerm', searchTerm);
+    window.location.href = '/mainCourse';
+}
+
+$('#searchBtn').on("click", performSearch);
+
+$('#inputPlace').on("keypress", function(event) {
+    if (event.which === 13) { // 13 is the key code for Enter
+        event.preventDefault();
+        performSearch();
+    }
+});

@@ -19,4 +19,5 @@ public class KakaoMapReviewDto {
     private Date modDate;
     private double score;
     private String comment;
+    private int userReviewCnt;
 }

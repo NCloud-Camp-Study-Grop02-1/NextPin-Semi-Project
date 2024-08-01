@@ -3,6 +3,7 @@ package com.nextpin.app.dao;
 import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class CourseDao {
 
     public List<KakaoMapDto> getAddressDatas() {
         logger.debug("주소 데이터 select");
-        return mybatis.selectList("NextpinMapper.getAddressDatas");
+        return mybatis.selectList("MainCourseMapper.getAddressDatas");
     }
 
     public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList){
@@ -34,7 +35,7 @@ public class CourseDao {
     }
 
     public List<KakaoMapDto> getUpdateForData(){
-        return mybatis.selectList("NextpinMapper.getUpdateForData");
+        return mybatis.selectList("MainCourseMapper.getUpdateForData");
     }
 
     public void updateForData(List<KakaoMapDto> kakaoMapDtoList){
@@ -47,7 +48,11 @@ public class CourseDao {
     }
 
     public KakaoMapDto searchPinDetail(int id){
-        return mybatis.selectOne("NextpinMapper.searchPinDetail", id);
+        return mybatis.selectOne("MainCourseMapper.searchPinDetail", id);
+    }
+
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id){
+        return mybatis.selectList("MainCourseMapper.searchPinDetailReview", id);
     }
 
     public List<KakaoMapDto> searchPinDatas(Map<String, Object> paramMap){
@@ -60,11 +65,11 @@ public class CourseDao {
 //        List<KakaoMapDto> cafec = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
 //        List<KakaoMapDto> tourc = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
 //        List<KakaoMapDto> hotelc = mybatis.selectList("DataMapper.searchPinDatas", paramMap);
-        return mybatis.selectList("NextpinMapper.searchPinDatas", paramMap);
+        return mybatis.selectList("MainCourseMapper.searchPinDatas", paramMap);
     }
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
-        return mybatis.selectOne("NextpinMapper.getPinTotalCnt", searchKeywords);
+        return mybatis.selectOne("MainCourseMapper.getPinTotalCnt", searchKeywords);
     }
 
 }
