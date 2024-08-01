@@ -22,6 +22,7 @@ $(document).ready(function() {
         const selectedMemo = memoActive ? $('#memo-text').val() : '';
         const selectedColor = $('.color-button.selected').css('background-color');
         const placeName = $('#locationTitle').text(); // 장소 이름 가져오기
+        const courseName = $('#myCourse option:selected').text(); // 선택된 코스 이름 가져오기
 
         // 디버깅을 위한 콘솔 로그 추가
         console.log("Selected Date: ", selectedDate);
@@ -29,6 +30,7 @@ $(document).ready(function() {
         console.log("Selected Memo: ", selectedMemo);
         console.log("Selected Color: ", selectedColor);
         console.log("Place Name: ", placeName);
+        console.log("Course Name: ", courseName);
 
         if (selectedDate && selectedColor && placeName) {
             $.ajax({
@@ -36,7 +38,7 @@ $(document).ready(function() {
                 url: '/createCourse',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    courseName: "새 코스", // 새 코스 이름은 필요에 따라 변경
+                    courseName: courseName, // 새 코스 이름은 필요에 따라 변경
                     userId: "song", // 실제 사용자 ID로 변경
                     nickname: "오레오", // 실제 닉네임으로 변경
                     color: selectedColor,
@@ -65,7 +67,7 @@ $(document).ready(function() {
                 }
             });
         } else {
-            alert('날짜와 색상, 장소 이름은 필수 선택 항목입니다.');
+            alert('날짜와 색상은 필수 선택 항목입니다.');
         }
     });
 });

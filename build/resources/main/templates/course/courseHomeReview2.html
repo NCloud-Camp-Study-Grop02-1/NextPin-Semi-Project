@@ -81,24 +81,19 @@
                                 <div class="storeInfo">
                                     <div id="homeTitle">
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>
-                                        <span class="food_type" id="foodType" style="margin-top: 12px;" th:text="${rtnKaMapDto.categoryName}"></span>
+                                        <span class="food_type" id="foodType" style="margin-top: 5.5px;" th:text="${rtnKaMapDto.categoryName}"></span>
                                         <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin" onclick="toggleImage(this);">
                                             <img class="icon_pin" src="../images/icons/locationPin-before_icon.png" alt="위치 찍기">
                                         </button>
                                     </div>
                                     <div id="reviewStatics">
                                         <span id="reviewScore"><span th:text="'★' + ${rtnKaMapDto.score}"></span></span>
-                                        <span id="reviewAll">리뷰 <a href="#">223</a>건</span>
-                                        <span id="reviewBlog">블로그 리뷰 <a href="#">13</a>건</span>
                                     </div>
                                     <div id="homeOrReview">
                                         <span><a href="#" class="tab_menu" id="homeTab" aria-selected="true"><h4 id="goHome">홈</h4></a></span>
                                         <span><a href="#" class="tab_menu" id="reviewTab" aria-selected="false"><h4 id="goReview">리뷰</h4></a></span>
                                     </div>
                                     <div id="homeContents">
-                                        <span class="location_modify_suggestion">
-                                         <a href="#" id="modifyLink">정보 수정 제안</a>
-                                        </span>
                                         <h4>상세정보</h4>
                                         <span class="location_address" id="locationAddress">
                                             <img class="icon_address" src="../images/icons/pin_icon.png" alt="시간">
@@ -247,7 +242,7 @@
                         </div>
                         <!--확인 버튼 (코스 생성)-->
                         <div class="finishButton">
-                            <button id="confirmButton" class="finish-button" style="background-color: #4098FF;">확인</button>
+                            <button type="button" id="confirmButton" class="finish-button" style="background-color: #4098FF;">확인</button>
                         </div>
                         <!--                        </div>-->
                         <!--                        <button>창 접는 버튼</button>-->

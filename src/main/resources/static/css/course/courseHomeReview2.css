@@ -339,10 +339,19 @@ a[aria-selected='false'] {
     color: #8D8D8D;
     font-size: 15px;
 }
+
+/* 메인 > 장소이름 > 홈 > 상세정보  */
+#homeContents h4 {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 /* 메인 > 장소이름 > 홈 > 상세정보 span 태그 */
 #homeContents span {
-    margin: 0.4rem 0;
+    /*margin: 0.4rem 0;*/
+    margin-top: 10px;
 }
+
 /* 메인 > 장소이름 > 홈 > 영업중 시간 */
 .location_time li {
     margin-left: 1rem;

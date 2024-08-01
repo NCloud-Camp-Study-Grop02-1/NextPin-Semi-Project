@@ -12,6 +12,13 @@
 
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
         INSERT INTO course_detail (courseId, location, x, y, visitDate, memo)
-        VALUES (#{courseId}, #{location}, #{x}, #{y}, #{visitDate}, #{memo})
+        VALUES (
+                   #{courseId},
+                   #{location},
+                   (SELECT x FROM map WHERE placeName = #{location}),
+                   (SELECT y FROM map WHERE placeName = #{location}),
+                   #{visitDate},
+                   #{memo}
+               )
     </insert>
 </mapper>

@@ -61,6 +61,7 @@ public class CourseController {
 
     @PostMapping("/createCourse")
     public String createCourse(@RequestBody HashMap<String, Object> requestData) {
+        System.out.println("1111111111111111111111");
         try {
             // CourseDto와 CourseDetailDto를 생성하여 requestData에서 데이터를 설정합니다.
             CourseDto course = new CourseDto();
