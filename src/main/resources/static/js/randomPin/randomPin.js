@@ -9,12 +9,11 @@ $(function() {
         dateFormat:"yy-mm-dd",
         beforeShow: function(input, inst) {
             var sidebarWidth = $('#side-bar').outerWidth();
-            inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
+            inst.dpDiv.css({ marginLeft: sidebarWidth });
         }
     });
 });
 
-// 핀 선택시 코스 생성 창 나오기
 document.addEventListener('DOMContentLoaded', () => {
     const chosenpinBtn = document.getElementById('course-btn');
     const makeCourse = document.getElementById('makeCourse');
@@ -26,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 색상 버튼 클릭 시 테두리 추가
 document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
 
@@ -42,14 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 메모 입력 함수
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('memo-active').addEventListener('change', function() {
         document.getElementById('memo-text').disabled = !this.checked;
     });
 });
 
-// 확인 버튼 클릭 시 코스 생성
 $('.finishButton').click(function() {
     const selectedDate = $('#testDatepicker').val();
     const memoActive = $('#memo-active').is(':checked');
@@ -72,7 +68,6 @@ $('.finishButton').click(function() {
     }
 });
 
-// 닫기 버튼 -> 코스 생성 창 닫기
 document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('close_icon');
 
@@ -84,9 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-
-
 document.getElementById('loading-spinner').addEventListener('click', function (e) {
     var modal = document.getElementById('modal-cont');
     if (modal.style.display === "none" || modal.style.display === "") {
@@ -95,7 +87,6 @@ document.getElementById('loading-spinner').addEventListener('click', function (e
         modal.style.display = 'none';
     }
 });
-
 
 var placeData = [];
 var markers = [];
@@ -112,9 +103,8 @@ var ps = new kakao.maps.services.Places();
 var infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
 function handleKeyPress(event) {
-    // Enter 키의 keyCode는 13입니다.
     if (event.keyCode === 13) {
-        event.preventDefault(); // 기본 엔터 키 동작(폼 제출)을 막습니다.
+        event.preventDefault();
         searchPlaces1();
     }
 }
@@ -147,8 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
 function searchPlaces1() {
     const modalInput = document.querySelector('.modal-content input[type="text"]').value.trim();
     const inputPlace = document.getElementById('inputPlace');
@@ -169,30 +157,20 @@ function searchPlaces1() {
         document.getElementById('loading-spinner').style.display = 'none';
         document.getElementById('modal-cont').style.display = 'none';
         document.getElementById('courseDetail').style.display = "block";
-        // 검색 결과가 표시될 때 토글 버튼을 보이게 설정
         $('.sidebar-toggle').show();
         $('.sidebar-toggle').css({'margin-left': '0px'});
     }, 3000);
 
-
-
-    // setTimeout(function () {
-    //     ps.keywordSearch(modalInput, placesSearchCB, { radius: 500 });
-    // }, 3000);
-
-    // console.log(JSON.stringify({ "keyword": modalInput }));
     $.ajax({
-        method : "GET",
-        url : "/randomPlaces",
-        async : true,
+        method: "GET",
+        url: "/randomPlaces",
+        async: true,
         dataType: "json",
-        data : { "keyword": modalInput },
-        success : function(result){
-            // console.log(result);
-
+        data: { "keyword": modalInput },
+        success: function(result) {
             displayPlaces(result);
         },
-        error : function(request, status, error){
+        error: function(request, status, error) {
             console.log(error);
         }
     });
@@ -206,12 +184,10 @@ function searchPlacesFromInput() {
         return false;
     }
 
-
     document.getElementById('loading-spinner').style.display = 'flex';
     document.getElementById('modal-cont').style.display = 'none';
     document.getElementById('courseDetail').style.display = "none";
     $('.sidebar-toggle').hide();
-
 
     setTimeout(function () {
         document.getElementById('loading-spinner').style.display = 'none';
@@ -221,71 +197,43 @@ function searchPlacesFromInput() {
         $('.sidebar-toggle').css({'margin-left': '0px'});
     }, 3000);
 
-
-    // console.log(JSON.stringify({ "keyword": inputPlaceValue }));
     $.ajax({
-        method : "GET",
-        url : "/randomPlaces",
-        async : true,
+        method: "GET",
+        url: "/randomPlaces",
+        async: true,
         dataType: "json",
-        data : { "keyword": inputPlaceValue },
-        success : function(result){
-            // console.log(result);
-
+        data: { "keyword": inputPlaceValue },
+        success: function(result) {
             displayPlaces(result);
         },
-        error : function(request, status, error){
+        error: function(request, status, error) {
             console.log(error);
         }
     });
-
-    // setTimeout(function () {
-    //     ps.keywordSearch(inputPlaceValue, placesSearchCB, { radius: 500 });
-    // }, 3000);
 }
 
-// function placesSearchCB(data, status) {
-//     document.getElementById('loading-spinner').style.display = 'none';
-//     document.getElementById('modal-cont').style.display = 'none';
-//
-//     if (status === kakao.maps.services.Status.OK) {
-//         shuffleArray(data);
-//         var selectedData = data.slice(0, 4);
-//         displayPlaces(selectedData);
-//     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-//         alert('검색 결과가 존재하지 않습니다.');
-//     } else if (status === kakao.maps.services.Status.ERROR) {
-//         alert('검색 결과 중 오류가 발생했습니다.');
-//     }
-// }
-
-// function shuffleArray(array) {
-//     for (var i = array.length - 1; i > 0; i--) {
-//         var j = Math.floor(Math.random() * (i + 1));
-//         var temp = array[i];
-//         array[i] = array[j];
-//         array[j] = temp;
-//     }
-// }
-
-function displayPlaces(places, category) {
+function displayPlaces(places) {
     var menuEl = document.getElementById('courseDetail'),
         listEl = document.getElementById('placesList'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
     removeAllChildNods(listEl);
     var linePath = [];
     removeMarker();
     removePolyline();
 
     for (var i = 0; i < places.length; i++) {
-        // console.log(places[i]);
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i, places[i].categoryGroupCode),
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            itemEl = getListItem(places[i]);
+
+        if (!itemEl) {
+            console.error(`Failed to create list item for place: ${places[i].id}`);
+            continue;
+        }
+
         bounds.extend(placePosition);
         linePath.push(placePosition);
 
@@ -298,11 +246,11 @@ function displayPlaces(places, category) {
                 infowindow.close();
             });
 
-            itemEl.onmouseover =  function () {
+            itemEl.onmouseover = function () {
                 displayInfowindow(marker, title);
             };
 
-            itemEl.onmouseout =  function () {
+            itemEl.onmouseout = function () {
                 infowindow.close();
             };
         })(marker, places[i].placeName);
@@ -311,27 +259,27 @@ function displayPlaces(places, category) {
     }
 
     listEl.appendChild(fragment);
-    // 지도에 표시할 선을 생성합니다
     var polyline = new kakao.maps.Polyline({
-        path: linePath, // 선을 구성하는 좌표배열 입니다
-        strokeWeight: 5, // 선의 두께 입니다
-        strokeColor: '#0056b3', // 선의 색깔입니다
-        strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        strokeStyle: 'solid' // 선의 스타일입니다
-    });
+        path: linePath,
+        strokeWeight: 5,
+        strokeColor: '#0056b3',
+        strokeOpacity: 0.7,
+        strokeStyle: 'solid'
+});
 
-    // 지도에 선을 표시합니다
     polyline.setMap(map);
     polylines.push(polyline);
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
 }
 
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, place) {
-    // console.log(place);
-    let itemHref = "/courseHomeReview2?id=" + place["id"];
+function getListItem(place) {
+    if (!place || !place.id) {
+        console.error("Place or place.id is undefined");
+        return null;
+    }
+
+    console.log(place);
+    let itemHref = "/courseHomeReview2?id=" + place.id;
     let el = document.createElement('li'),
         itemStr = '<a href="'+ itemHref +'" style="text-decoration-line: none; color:black; text-align: left">' +
             '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
@@ -357,8 +305,7 @@ function getListItem(index, place) {
             '<span>' + place.businessHour.split('·')[0] + '</span>' +
             '</div>' +
             '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[1] + '</span>' +
-            '</div>';
+            '<span>' + place.businessHour.split('·')[1] + '</span>';
     } else {
         itemStr += '</div>' +
             '<div class="businessHour">' +
@@ -378,9 +325,7 @@ function getListItem(index, place) {
     return el;
 }
 
-
 function addMarker(position, idx, category) {
-    // console.log(position);
     let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
     if (category === 'food') {
         imageSrc = '../images/icons/food_map_icon.png';
@@ -392,7 +337,6 @@ function addMarker(position, idx, category) {
         imageSrc = '../images/icons/hotel_map_icon.png';
     }
 
-    // 마커 이미지를 새롭게 정의합니다.
     var markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         new kakao.maps.Size(36, 37),
@@ -429,23 +373,18 @@ function displayInfowindow(marker, title) {
     infowindow.open(map, marker);
 }
 
-
-
-// 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {
     while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
+        el.removeChild(el.lastChild);
     }
 }
 
 window.onload = function(){
-    //사이드 네브바 열고 닫는 기능 구현
     const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
 
-    // 처음에는 토글 버튼을 숨김
-    sidebarToggle.hide(); // 처음에 숨기기
+    sidebarToggle.hide();
 
     sidebarToggle.on('click', () => {
         isExpand = !isExpand;
@@ -453,19 +392,72 @@ window.onload = function(){
         $('.map_wrap').toggleClass('expanded');
         sidebar.toggle('open');
 
-        //고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드
-        //아래 코드를 추가해야 사이드바 너비만큼 사이드 토글바가 이동
         if (sidebar.hasClass('collapsed')) {
-            sidebarToggle.css({'margin-left': '-490px'}); // 사이드 네브바가 닫힐 때 마진 추가
+            sidebarToggle.css({'margin-left': '-490px'});
         } else {
-            sidebarToggle.css({'margin-left': '0px'}); // 사이드 네브바가 열릴 때 마진 제거
+            sidebarToggle.css({'margin-left': '0px'});
         }
 
         if(isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
         } else {
             $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         }
     });
 }
+
+// finish-button 클릭 이벤트 핸들러
+document.querySelector(".finishButton").addEventListener("click", function(event) {
+    // 데이터 매핑 로직
+    var userId = 'sampleUserId';
+    var nickname = 'sampleNickname';
+    var courseName = 'sampleCourseName';
+    var bookMark = 0;
+    var heartCnt = 0;
+    var isPublic = 1;
+    var color = "#fff";
+
+    var courseData = {
+        userId: userId,
+        nickname: nickname,
+        courseName: courseName,
+        regDate: new Date().toISOString(),
+        modifyDate: new Date().toISOString(),
+        bookMark: bookMark,
+        heartCnt: heartCnt,
+        isPublic: isPublic,
+        color: color
+    };
+
+    insertCourse(courseData);
+});
+
+// 데이터 저장을 위한 함수
+function insertCourse(courseData) {
+    $.ajax({
+        url: '/api/insertCourse', // 실제 Spring Boot 서버 URL로 변경
+        type: 'POST',
+        data: JSON.stringify(courseData),
+        contentType: 'application/json',
+        success: function(response) {
+            console.log('Data inserted successfully:', response);
+        },
+        error: function(error) {
+            console.error('Error inserting data:', error);
+        }
+    });
+}
+
+// document.querySelector(".finishButton").addEventListener("click", function(event) {
+//     var courseData = {
+//         userId: 'sampleUserId',
+//         nickname: 'sampleNickname',
+//         courseName: 'sampleCourseName',
+//         regDate: new Date().toISOString(),
+//         modifyDate: new Date().toISOString(),
+//         bookMark: 0,
+//         heartCnt: 0,
+//         openClose: 1
+//     };
+//     insertCourse(courseData);
+// });

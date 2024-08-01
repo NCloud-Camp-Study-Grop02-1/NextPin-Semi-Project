@@ -383,7 +383,7 @@ body {
     padding: 20px;
 }
 
-.finish-button {
+#finish-button {
     border: none;
     border-radius: 10px;
     width: 55px;

@@ -52,4 +52,6 @@ public class CourseController {
         return courseService.searchPinDatas(searchKeywords, cri);
     }
 
+
+
 }
