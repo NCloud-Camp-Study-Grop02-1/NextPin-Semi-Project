@@ -6,38 +6,71 @@ $(function() {
         monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
         showButtonPanel: true,
         showMonthAfterYear:true,
-        dateFormat: "MM/dd",
+        dateFormat: "yy/mm/dd",
         beforeShow: function(input, inst) {
             var sidebarWidth = $('#side-bar').outerWidth();
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
         }
     });
+});
 
+$(document).ready(function() {
     // 확인 버튼 클릭 시 코스 생성
-    $('.finishButton').click(function() {
+    $('#confirmButton').click(function() {
         const selectedDate = $('#testDatepicker').val();
         const memoActive = $('#memo-active').is(':checked');
         const selectedMemo = memoActive ? $('#memo-text').val() : '';
         const selectedColor = $('.color-button.selected').css('background-color');
+        const placeName = $('#locationTitle').text(); // 장소 이름 가져오기
 
-        if (selectedDate && selectedColor) {
-            var memoText = '';
-            if ($('#memo-active').is(':checked')) {
-                memoText = $('#memo-text').val();
-            }
-            $('#selectedDate').text(selectedDate);
-            $('#selectedMemo').text(selectedMemo);
-            $('#selectedColor').css('background-color', selectedColor);
-            $('#selectedColor').css('border-color', selectedColor);
-            $('.dayCourse').css('border-color', selectedColor);
+        // 디버깅을 위한 콘솔 로그 추가
+        console.log("Selected Date: ", selectedDate);
+        console.log("Memo Active: ", memoActive);
+        console.log("Selected Memo: ", selectedMemo);
+        console.log("Selected Color: ", selectedColor);
+        console.log("Place Name: ", placeName);
 
-            $('#makeCourse').removeClass('show');
-            $('#newCoursePanel').removeClass('hidden');
+        if (selectedDate && selectedColor && placeName) {
+            $.ajax({
+                type: 'POST',
+                url: '/createCourse',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    courseName: "새 코스", // 새 코스 이름은 필요에 따라 변경
+                    userId: "song", // 실제 사용자 ID로 변경
+                    nickname: "오레오", // 실제 닉네임으로 변경
+                    color: selectedColor,
+                    courseDetail: {
+                        location: placeName,
+                        x: 0, // 실제 x 좌표로 변경
+                        y: 0, // 실제 y 좌표로 변경
+                        visitDate: selectedDate,
+                        memo: selectedMemo
+                    }
+                }),
+                success: function(response) {
+                    alert('코스가 성공적으로 생성되었습니다.');
+                    // 성공적으로 생성된 후 추가적인 작업
+                    $('#selectedDate').text(selectedDate);
+                    $('#selectedMemo').text(selectedMemo);
+                    $('#selectedColor').css('background-color', selectedColor);
+                    $('#selectedColor').css('border-color', selectedColor);
+                    $('.dayCourse').css('border-color', selectedColor);
+
+                    $('#makeCourse').removeClass('show');
+                    $('#newCoursePanel').removeClass('hidden');
+                },
+                error: function(xhr, status, error) {
+                    alert('코스 생성에 실패하였습니다. 다시 시도해주세요.');
+                }
+            });
         } else {
-            alert('날짜와 색상은 필수 선택 항목입니다.');
+            alert('날짜와 색상, 장소 이름은 필수 선택 항목입니다.');
         }
     });
 });
+
+
 
 // 핀 선택 시 색상 채우기
 function toggleImage(button) {

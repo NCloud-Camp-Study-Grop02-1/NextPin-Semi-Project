@@ -1,6 +1,8 @@
 package com.nextpin.app.dao;
 
 import ch.qos.logback.classic.Logger;
+import com.nextpin.app.dto.CourseDetailDto;
+import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -45,4 +47,5 @@ public class CourseDao {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
         return mybatis.selectOne("DataMapper.getPinTotalCnt", searchKeywords);
     }
+
 }
