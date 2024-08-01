@@ -29,6 +29,7 @@ $(function() {
             $('#selectedMemo').text(selectedMemo);
             $('#selectedColor').css('background-color', selectedColor);
             $('#selectedColor').css('border-color', selectedColor);
+            $('.dayCourse').css('border-color', selectedColor);
 
             $('#makeCourse').removeClass('show');
             $('#newCoursePanel').removeClass('hidden');

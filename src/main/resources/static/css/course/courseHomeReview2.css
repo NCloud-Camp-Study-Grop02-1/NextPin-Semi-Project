@@ -256,7 +256,7 @@ body {
 #homeTitle h1{
     /*font-size: 20px;*/
     font-weight: bold;
-    font-size: calc(1.3rem + .6vw);
+    font-size: calc(1.1rem + .4vw);
 }
 /* 메인 > 장소이름 > 카테로고리명 */
 #homeTitle .food_type {
@@ -595,7 +595,7 @@ a {
 }
 
 .dayCourse {
-    border: 2px solid #4098FF;
+    border: 2px solid transparent;
     border-radius: 5px;
     background-color: white;
 }

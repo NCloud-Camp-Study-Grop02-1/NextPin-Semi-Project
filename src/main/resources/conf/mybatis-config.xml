@@ -7,9 +7,6 @@
     <typeAliases>
         <typeAlias type="com.nextpin.app.dto.KakaoMapDto"
                    alias="kakaoMapData"/>
-        <typeAlias type="com.nextpin.app.dto.CourseDto"
-                   alias="CourseDto"/>
     </typeAliases>
 
 </configuration>
-

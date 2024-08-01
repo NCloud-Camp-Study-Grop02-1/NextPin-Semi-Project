@@ -143,14 +143,4 @@
             )
         </if>
     </select>
-
-    <insert id="insertCourse" parameterType="CourseDto" useGeneratedKeys="true" keyProperty="courseId">
-        INSERT INTO course (userId, nickname, courseName, regDate, openClose)
-        VALUES (#{userId}, #{nickname}, #{courseName}, #{regDate}, #{openClose})
-    </insert>
-
-    <insert id="insertCourseDetail" parameterType="CourseDto">
-        INSERT INTO course_detail (courseId, location, date, memo, color, x, y)
-        VALUES (#{courseId}, #{location}, #{date}, #{memo}, #{color}, #{x}, #{y})
-    </insert>
 </mapper>
