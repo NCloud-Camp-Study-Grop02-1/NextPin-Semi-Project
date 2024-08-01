@@ -23,6 +23,7 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     @Transactional
     public void createCourse(CourseDto course, CourseDetailDto courseDetail) {
         int courseId = courseHomeReview2Dao.insertCourse(course);
+        courseHomeReview2Dao.insertCourse(course);
         courseDetail.setCourseId(courseId);
         courseHomeReview2Dao.insertCourseDetail(courseDetail);
     }

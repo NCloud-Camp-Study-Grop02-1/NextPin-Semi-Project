@@ -4,7 +4,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
-<mapper namespace="com.nextpin.app.dao.CourseDao">
+<mapper namespace="com.nextpin.app.dao.CourseHomeReview2Dao">
     <insert id="insertCourse" parameterType="com.nextpin.app.dto.CourseDto" useGeneratedKeys="true" keyProperty="courseId">
         INSERT INTO course (userId, nickname, courseName, regDate, color)
         VALUES (#{userId}, #{nickname}, #{courseName}, NOW(), #{color})
