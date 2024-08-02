@@ -9,6 +9,9 @@
                    alias="kakaoMapData"/>
         <typeAlias type="com.nextpin.app.dto.MemberDto"
                    alias="user"/>
+        <typeAlias type="com.nextpin.app.dto.CourseDto"
+                   alias="CourseDto"/>
     </typeAliases>
 
 </configuration>
+

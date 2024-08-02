@@ -28,6 +28,7 @@ $(function() {
             $('#selectedDate').text(selectedDate);
             $('#selectedMemo').text(selectedMemo);
             $('#selectedColor').css('background-color', selectedColor);
+            $('#selectedColor').css('border-color', selectedColor);
 
             $('#makeCourse').removeClass('show');
             $('#newCoursePanel').removeClass('hidden');
@@ -72,6 +73,21 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.setAttribute('aria-expanded', !isExpanded);
         $('#makeCourse').removeClass('show');
         $('#newCoursePanel').addClass('hidden');
+    });
+});
+
+// 코스 이름 선택 창
+document.addEventListener('DOMContentLoaded', function() {
+    const myCourseSelect = document.getElementById('myCourse');
+    const dayCourseH3 = document.querySelector('.dayCourse h3');
+
+    myCourseSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption.value === 'newCourse') {
+            dayCourseH3.textContent = '새 코스';
+        } else {
+            dayCourseH3.textContent = selectedOption.text;
+        }
     });
 });
 
@@ -354,30 +370,7 @@ function removeAllChildNods(el) {
 
 window.onload = function(){
     searchPlaces();
-    // printResult();
-    console.log($('#hiddenValue').text());
-
-    let loadData = '';
-    if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
-        loadData = JSON.parse($('#hiddenValue').text());
-    }
-
-    console.log(loadData);
-
-    // 데이터 채우기
-    $('#locationTitle').text(loadData['data']['placeName']);
-    $('#foodType').text(loadData['data']['categoryName']);
-    $('#reviewScore').text('★ ' + loadData['data']['score']);
-
-    $('#locationAddress').text(loadData['data']['addressName']);
-    $('#streetNumber').text('지번 | ' + loadData['data']['roadAddressName']);
-
-    let businessHour = loadData['data']['businessHour'].split('·')[0];
-    let breakTime = loadData['data']['businessHour'].split('·')[1];
-    $('#businessHour').text(businessHour);
-    $('#breakTime').text(breakTime);
-
-    $('#locationPhone').text(loadData['data']['phone']);
+    printResult();
 
     $("input[name=courseType][value=course_food]").prop("checked", true);
     $('#course_food_label').css('background', '#FFC061');
@@ -458,3 +451,18 @@ window.onload = function(){
     });
 };
 
+// 장소 검색 시 mainCourse 페이지로 넘어가게 하기
+function performSearch() {
+    var searchTerm = $('#inputPlace').val();
+    localStorage.setItem('searchTerm', searchTerm);
+    window.location.href = '/mainCourse';
+}
+
+$('#searchBtn').on("click", performSearch);
+
+$('#inputPlace').on("keypress", function(event) {
+    if (event.which === 13) { // 13 is the key code for Enter
+        event.preventDefault();
+        performSearch();
+    }
+});

@@ -546,4 +546,32 @@ window.onload = function(){
             $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
         }
     });
+
+    // courseHomeReview2에서 넘어온 검색어
+    function checkAndPerformSearch() {
+        var storedSearchTerm = localStorage.getItem('searchTerm');
+        if (storedSearchTerm) {
+            $('#inputPlace1').val(storedSearchTerm);
+            searchPlaces();
+            localStorage.removeItem('searchTerm');
+        }
+    }
+
+    $(document).ready(function() {
+        checkAndPerformSearch();
+
+        // Existing code...
+
+        $('#searchBtn1').on("click", searchPlaces);
+
+        $('#inputPlace1').on("keypress", function(event) {
+            if (event.which === 13) { // 13 is the key code for Enter
+                event.preventDefault();
+                searchPlaces();
+            }
+        });
+    });
+
+
 };
+
