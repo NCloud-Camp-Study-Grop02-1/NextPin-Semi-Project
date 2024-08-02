@@ -121,12 +121,12 @@
              , M1.SCORE				as score
              , M1.COMMENT			as comment
              , M2.reviewCnt			as userReviewCnt
-        FROM MAPREVIEW M1
-                 JOIN (SELECT USERNICKNAME
-                            , COUNT(USERNICKNAME) as reviewCnt
-                       FROM MAPREVIEW
-                       GROUP BY USERNICKNAME) M2
-                      ON M1.USERNICKNAME = M2.USERNICKNAME
-        WHERE M1.refMapId = #{id}
+          FROM MAPREVIEW M1
+          JOIN (SELECT USERNICKNAME
+                     , COUNT(USERNICKNAME) as reviewCnt
+                  FROM MAPREVIEW
+                 GROUP BY USERNICKNAME) M2
+            ON M1.USERNICKNAME = M2.USERNICKNAME
+         WHERE M1.refMapId = #{id}
     </select>
 </mapper>

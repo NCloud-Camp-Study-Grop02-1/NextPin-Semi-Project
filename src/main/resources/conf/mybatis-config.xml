@@ -13,6 +13,7 @@
                    alias="courseDto"/>
         <typeAlias type="com.nextpin.app.dto.CourseDetailDto"
                    alias="courseDetailDto"/>
+                   alias="kakaoMapReviewData"/>
     </typeAliases>
 
 </configuration>
