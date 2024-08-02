@@ -6,7 +6,9 @@ import com.nextpin.app.service.CourseHomeReview2Service;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.dto.KakaoMapReviewDto;
+import com.nextpin.app.dto.SearchRequestDto;
 import com.nextpin.app.service.CourseService;
+import com.nextpin.app.service.PlaceService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,9 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class CourseController {
