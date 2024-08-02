@@ -3,26 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nextpin.app.mapper.MemberMapper">
-    <insert id="signUp" parameterType="user">
+    <insert id="signUp" parameterType="member">
         INSERT INTO user(
               userId
             , nickname
             , userPwd
+            , joinDate
         ) values (
               #{userId}
             , #{nickname}
-            , #{password}
+            , #{pwd}
+            , now()
         )
     </insert>
 
-    <select id="getMembers" resultType="user">
+    <select id="getMembers" resultType="member">
         select userId
             , nickname
             , userPwd
             from user
     </select>
 
-    <select id="getMemberByUserId" parameterType="string" resultType="user">
+    <select id="getMemberByUserId" parameterType="string" resultType="member">
         select userId
             , userPwd
             , nickname
@@ -42,12 +44,12 @@
             where nickname = #{nickname}
     </select>
 
-    <select id="login" parameterType="user" resultType="user">
+    <select id="login" parameterType="member" resultType="member">
         select userId
             , userPwd
             , nickname
             from user
             where userId = #{userId}
-              and userPwd = #{password}
+              and userPwd = #{pwd}
     </select>
 </mapper>

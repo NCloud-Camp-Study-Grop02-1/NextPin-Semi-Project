@@ -16,7 +16,7 @@ body {
 }
 
 .sidebar {
-    width: 7.45rem;
+    width: 6.5rem;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -69,7 +69,7 @@ body {
 }
 
 .profile {
-    margin-top: 0.625px;
+    margin-top: auto;
     padding: 2.5rem 0;
     text-decoration: none;
 }
@@ -95,48 +95,4 @@ body {
 
 .menu-item:hover:nth-of-type(5) img {
     content: url('../../images/icons/random-hover_icon.png');
-}
-
-/* 반응형 웹 디자인을 위한 미디어 쿼리 */
-@media (max-width: 768px) {
-    #side-bar {
-        width: 100px;
-    }
-
-    .logo img {
-        width: 80px;
-        height: 60px;
-    }
-
-    .menu-item {
-        width: 80px;
-    }
-
-    .icon {
-        width: 50px;
-        height: 47px;
-        margin-left: 16px;
-    }
-
-    .icon img {
-        width: 39px;
-        height: 40px;
-    }
-
-    .icon #couse-icon {
-        width: 35px;
-        height: 43px;
-    }
-
-    #community-span {
-        display: inline-block;
-        width: 56px;
-    }
-
-    .sidebar-profile {
-        width: 40px;
-        height: 40px;
-        padding: 5%;
-        top: 25vh;
-    }
 }
