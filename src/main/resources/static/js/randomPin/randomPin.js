@@ -411,7 +411,7 @@ document.querySelector(".finishButton").addEventListener("click", function(event
     // 데이터 매핑 로직
     var userId = 'sampleUserId';
     var nickname = 'sampleNickname';
-    var courseName = '';
+    var courseName = $("#myCourse").val();
     var bookMark = 0;
     var heartCnt = 0;
     var isPublic = 1;
@@ -424,11 +424,12 @@ document.querySelector(".finishButton").addEventListener("click", function(event
        }
     });
 
-    $('.myCourse').each(function (item){
-        if(item.classList.contains('selected')){
-            courseName = item.options.value
-        }
-    });
+    console.log(courseName);
+    // $('.myCourse').each(function (item){
+    //     if(item.classList.contains('selected')){
+    //         courseName = item.options.value
+    //     }
+    // });
 
     var courseData = {
         userId: userId,
