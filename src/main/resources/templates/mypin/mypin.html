@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>NextPin</title>
@@ -60,11 +60,11 @@
     <div class="side-navbar">
         <!--프로필-->
         <div class="profile">
-            <img id="profile-img" src="../images/icons/userprofile.png" alt="Profile Picture">
+            <img id="profile-img" src="${profileURL}" alt="Profile Picture">
             <div class="profile-container">
-                <p class="profile-name">농담곰</p>
+                <p class="profile-name">${nickname}</p>
                 <p class="profile-content">
-                    <p id="profile-description">30세 남 싱글 외로워(비트캠프 이상진)</p>
+                    <p id="profile-description">${message}</p>
                     <textarea id="profile-textarea" rows="2"></textarea>
                     <img src="../images/icons/edit-gray_icon.png" alt="Edit Icon" class="profile-edit-icon" onclick="profileEditDescription()">
                 </p>
@@ -126,7 +126,12 @@
                     <div class='collapse' id='collapseExample1'>
                         <!--card,card-body: 부트스트랩에서 미리 정의된 스타일. 카드의 레이아웃, 배경색, 테두리 등이 미리 정의되어 있음.-->
                         <div class="card card-body">
-                            <ul>1일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">1일차</p>
+                                    <p class="course-day">24/08/12</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         당신의 안목 펜션
@@ -164,7 +169,12 @@
                                     </div>
                                 </li>
                             </ul>
-                            <ul>2일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">2일차</p>
+                                    <p class="course-day">08/13</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         아르떼뮤지엄 강릉
@@ -228,7 +238,12 @@
                     <div class="collapse" id="collapseExample2">
                         <!--card,card-body: 부트스트랩에서 미리 정의된 스타일. 카드의 레이아웃, 배경색, 테두리 등이 미리 정의되어 있음.-->
                         <div class="card card-body">
-                            <ul>1일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">1일차</p>
+                                    <p class="course-day">08/20</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         계월 곰탕
@@ -297,7 +312,12 @@
                     <!--각 목록의 세부(콜랩스) 내용-->
                     <div class="collapse" id="collapseExample3">
                         <div class="card card-body">
-                            <ul>1일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">1일차</p>
+                                    <p class="course-day">09/02</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         저스트텐동 행리단길점
@@ -367,7 +387,12 @@
                     </li>
                     <div class="collapse" id="collapseExample4">
                         <div class="card card-body">
-                            <ul>1일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">1일차</p>
+                                    <p class="course-day">10/12</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         H Avenue 호텔 광안리점
@@ -405,7 +430,12 @@
                                     </div>
                                 </li>
                             </ul>
-                            <ul>2일차
+                            <ul>
+                                <div class="course-day-box">
+                                    <p class="course-day-label">1일차</p>
+                                    <p class="course-day">10/13</p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
+                                </div>
                                 <li>
                                     <div>
                                         해운대 블루라인파크

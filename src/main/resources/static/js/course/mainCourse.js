@@ -532,6 +532,27 @@ window.onload = function(){
         // console.log(this);
     });
 
+    // html에서 시작
+    // 여기부터 검색 이벤트 실행됨 >> 자바스크립트 24번째 줄로 연결됨 > ajax에서 매핑 방식에 맞게 컨트롤러로 넘어감.
+
+    // 컨트롤러는 ajax에서 호풀한것을 받아주는 역할
+    // jsp,html 상관없이 컨트롤러부터는 흐름 똑같으니 강사님 강의 다시 듣기.. timeleaf쓰면 html을 jsp처럼도 사용 가능
+    // @ResponseBody, @RequestBody 어노테이션 잘 씀용, ajax에서 string타입으로 받은 json을 map형식으로 받기 위해 쓰는 어노테이션
+    // RequestBody로 받고 ResponseBody로 다시 보내주는 것임
+
+    // 컨트롤러에서 받고 서비스 임플, 서비스 파일로 이동
+    // 서비스는 파라미터 가꿔주는 역할
+    // 여기서는 데이터 가공 처리정도만
+
+    // dao로 이동. 여기서 본격적으로 db에 있는 것을 호출하는 역할. 데이터를 뽑아옴. mapper에 있는 쿼리문을 실행해서 원하는 데이터를 뽑아옴.
+
+    // mapper는 쿼리문을 이용해서 실제 db에 연결
+    // select문은 변수가 필요한 부분은 파라미터타입 지정해줘야 함.
+
+    // dto는 내가 쓸 객체를 지정해주는 곳.
+    // mybatis.config.xml에서 dto 변수명을 더 간단히 설정 가능
+    // application.properties파일의 21-23줄 부분도 참고. 그 부분도 설정해야 함.
+
     $("#inputPlace1").on("keyup", function(key){
         if(key.keyCode == 13){
             searchPlaces(category);
