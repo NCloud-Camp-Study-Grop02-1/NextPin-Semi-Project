@@ -20,7 +20,6 @@ public class CsvDataRestoreDao {
     public CsvDataRestoreDao(SqlSessionTemplate sqlSessionTemplate) {
         this.mybatis = sqlSessionTemplate;
     }
-
     public void insertCrowlData(List<KakaoMapDto> csvDataList){
         logger.info("insert crowl data");
         logger.debug("insert 실행전 확인 : " + csvDataList.toString());

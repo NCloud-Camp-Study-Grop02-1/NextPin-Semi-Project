@@ -72,9 +72,4 @@ public class CourseDao {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords){
         return mybatis.selectOne("MainCourseMapper.getPinTotalCnt", searchKeywords);
     }
-
-    public List<KakaoMapReviewDto> searchPinDetailReview(int id){
-        return mybatis.selectList("MainCourseMapper.searchPinDetailReview", id);
-    }
-
 }

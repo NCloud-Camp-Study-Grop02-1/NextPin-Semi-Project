@@ -37,7 +37,7 @@ public class MypinController {
 
         @GetMapping("/user/{userId}")
         public String getUserDetails(@PathVariable String userId, Model model) {
-            UserDto user = myPinService.getUserDetails(userId);
+            UserDto user = myPinService.getUserProfile(userId);
             model.addAttribute("nickname", user.getNickname());
             model.addAttribute("message", user.getMessage());
             model.addAttribute("profileURL", user.getProfileURL());

@@ -34,11 +34,6 @@ public class CourseServiceImpl implements CourseService {
 
     public List<KakaoMapDto> getUpdateForData() { return courseDao.getUpdateForData(); }
 
-    @Override
-    public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList) {
-        courseDao.updateAddressConversion(kakaoMapDtoList);
-    }
-
     public void updateForData(List<KakaoMapDto> kakaoMapDtoList) {
         courseDao.updateForData(kakaoMapDtoList);
     }
@@ -100,10 +95,5 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
-    }
-
-    @Override
-    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
-        return courseDao.searchPinDetailReview(id);
     }
 }

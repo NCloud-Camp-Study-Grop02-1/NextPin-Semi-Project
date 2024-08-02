@@ -6,16 +6,18 @@ import com.nextpin.app.service.MyPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MyPinServiceImpl implements MyPinService {
-    @Autowired
     private MyPinDao myPinDao;
 
-    // 기존 메소드...
+    @Autowired
+    public MyPinServiceImpl(MyPinDao myPinDao){ this.myPinDao = myPinDao;}
 
     @Override
-    public UserDto getUserDetails(String userId) {
-        return myPinDao.getUserDetails(userId);
-    }
+    public UserDto getUserProfile(String userId){return myPinDao.getUserProfile();}
+
+
 }
 

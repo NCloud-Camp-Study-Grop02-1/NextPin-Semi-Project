@@ -21,7 +21,4 @@ public interface CourseService {
     public String searchPinDatas(HashMap<String, String> searchKeywords, Criteria cri);
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords);
-
-    public List<KakaoMapReviewDto> searchPinDetailReview(int id);
-
 }

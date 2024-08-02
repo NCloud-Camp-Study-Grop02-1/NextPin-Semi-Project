@@ -7,7 +7,7 @@
 <!--&lt;!&ndash;생성한 Mapper 인터페이스와 namespace 속성으로 연결&ndash;&gt;-->
 <!--&lt;!&ndash;쿼리문이 Dao클래스에서 분리되어 온 것이기 때문에 namespace는 관례적으로 Dao클래스명과 일치시킴.&ndash;&gt;-->
 <mapper namespace="MyPinDao">
-    <select id="getUserDetails" parameterType="String" resultType="UserDto">
+    <select id="getUserProfile" parameterType="String" resultType="UserDto">
         SELECT nickname, message, profileURL
         FROM user
         WHERE userId = #{userId}

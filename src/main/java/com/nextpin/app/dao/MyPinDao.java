@@ -2,10 +2,23 @@ package com.nextpin.app.dao;
 
 import com.nextpin.app.dto.UserDto;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-public interface MyPinDao {
+import java.util.List;
 
-    // 사용자 정보를 가져오는 메소드 추가
-    UserDto getUserDetails(String userId);
+@Repository
+public class MyPinDao {
+    private SqlSessionTemplate mybatis;
+
+    @Autowired
+    public MyPinDao(SqlSessionTemplate sqlSessionTemplate){
+        this.mybatis = sqlSessionTemplate;
+    }
+
+    public UserDto getUserProfile(){
+        System.out.println("MyPinDao의 getUserProfile 메소드 실행...ㅜ,,ㅜ");
+        return mybatis.selectOne("MyPinDao.getUserProfile");
+    }
 }
 
