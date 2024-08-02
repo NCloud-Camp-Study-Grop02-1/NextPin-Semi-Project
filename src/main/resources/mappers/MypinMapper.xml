@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--&lt;!&ndash;생성한 Mapper 인터페이스와 namespace 속성으로 연결&ndash;&gt;-->
+<!--&lt;!&ndash;쿼리문이 Dao클래스에서 분리되어 온 것이기 때문에 namespace는 관례적으로 Dao클래스명과 일치시킴.&ndash;&gt;-->
+<mapper namespace="MyPinDao">
+    <select id="getUserDetails" parameterType="String" resultType="UserDto">
+        SELECT nickname, message, profileURL
+        FROM user
+        WHERE userId = #{userId}
+    </select>
+
+    <!--    <select id="getUser" parameterType="userId" resultType="user">-->
+<!--        SELECT NICKNAME,-->
+<!--               MESSAGE,-->
+<!--               PROFILEURL-->
+<!--        FROM USER-->
+<!--            WHERE USERID = #{USERID}-->
+<!--    </select>-->
+
+<!--    <select id="getUserCourse" parameterType="userId" resultType="course">-->
+<!--        SELECT COURSENAME,-->
+<!--               REGDATE,-->
+<!--               MODIFTDATE,-->
+<!--               BOOKMARK,-->
+<!--               HEARTCNT,-->
+<!--               ISPUBLIC,-->
+<!--               COLOR-->
+<!--        FROM COURSE-->
+<!--            WHERE USERID = #{USERID}-->
+<!--    </select>-->
+
+<!--    <select id="getUserCourseDetail" parameterType="userId" resultType="courseDetail">-->
+<!--        SELECT-->
+<!--    </select>-->
+
+<!--    <select id="getUserCourse" parameterType="userId" resultType="course">-->
+<!--        SELECT U.NICKNAME,-->
+<!--               U.MESSAGE,-->
+<!--               U.PROFILEURL,-->
+<!--               C.COURSENAME,-->
+<!--               C.REGDATE,-->
+<!--               C.MODIFTDATE,-->
+<!--               C.BOOKMARK,-->
+<!--               C.HEARTCNT,-->
+<!--               C.ISPUBLIC,-->
+<!--               C.COLOR-->
+<!--        FROM COURSE C-->
+<!--        JOIN USER U-->
+<!--          ON C.USERID = U.USERID-->
+<!--        WHERE USERID = #{USERID}-->
+<!--    </select>-->
+
+</mapper>

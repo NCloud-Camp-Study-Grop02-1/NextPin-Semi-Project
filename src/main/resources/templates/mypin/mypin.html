@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>NextPin</title>
@@ -60,11 +60,11 @@
     <div class="side-navbar">
         <!--프로필-->
         <div class="profile">
-            <img id="profile-img" src="../images/icons/userprofile.png" alt="Profile Picture">
+            <img id="profile-img" src="${profileURL}" alt="Profile Picture">
             <div class="profile-container">
-                <p class="profile-name">농담곰</p>
+                <p class="profile-name">${nickname}</p>
                 <p class="profile-content">
-                    <p id="profile-description">30세 남 싱글 외로워(비트캠프 이상진)</p>
+                    <p id="profile-description">${message}</p>
                     <textarea id="profile-textarea" rows="2"></textarea>
                     <img src="../images/icons/edit-gray_icon.png" alt="Edit Icon" class="profile-edit-icon" onclick="profileEditDescription()">
                 </p>

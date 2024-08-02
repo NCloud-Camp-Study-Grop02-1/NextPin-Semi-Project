@@ -1,3 +1,35 @@
+window.onload = function(){
+    //사이드 네브바 열고 닫는 기능 구현
+    const sidebar = $('.course_detail');
+    const sidebarToggle = $('.sidebar-toggle');
+    let isExpand = false;
+
+    // 처음에는 토글 버튼을 숨김
+    sidebarToggle.hide();
+
+    sidebarToggle.on('click', () => {
+        isExpand = !isExpand;
+        sidebar.toggleClass('collapsed');
+        $('.map_wrap').toggleClass('expanded');
+        sidebar.toggle('open');
+
+        //고정된 사이드바로 인해 사이드 토글바 위치 조정을 위해 추가한 코드
+        //아래 코드를 추가해야 사이드바 너비만큼 사이드 토글바가 이동
+        if (sidebar.hasClass('collapsed')) {
+            sidebarToggle.css({'margin-left': '7.5rem'}); // 사이드 네브바가 닫힐 때 마진 추가
+        } else {
+            sidebarToggle.css({'margin-left': '580px'}); // 사이드 네브바가 열릴 때 마진 제거
+        }
+
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        } else {
+            $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        }
+    });
+}
+
 $(function() {
     $("#testDatepicker").datepicker({
         changeMonth: true,
@@ -142,6 +174,10 @@ function searchPlaces() {
     setTimeout(function () {
         document.querySelector("#courseDetail").style.display = "block";
         document.querySelector("#inputPlace").value = keyword;
+
+        // 검색 결과가 표시될 때 토글 버튼을 보이게 설정
+        $('.sidebar-toggle').show();
+        $('.sidebar-toggle').css({'margin-left': '580px'});
     }, 3000); // Adjust the delay time as needed (in milliseconds)
 
     // Perform the search after a delay
@@ -312,3 +348,5 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
+
+
