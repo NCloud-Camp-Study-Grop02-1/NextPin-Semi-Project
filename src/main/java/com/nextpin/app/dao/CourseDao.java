@@ -1,9 +1,7 @@
 package com.nextpin.app.dao;
 
 import ch.qos.logback.classic.Logger;
-import com.nextpin.app.dto.CourseDto;
-import com.nextpin.app.dto.Criteria;
-import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.*;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +45,8 @@ public class CourseDao {
         return mybatis.selectOne("DataMapper.getPinTotalCnt", searchKeywords);
     }
 
-    public Long insertCourse(CourseDto.CourseDTO courseDTO) {
-        mybatis.insert("CourseMapper.insertCourse", courseDTO);
-        return (long) courseDTO.getCourseId();
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id){
+        return mybatis.selectList("MainCourseMapper.searchPinDetailReview", id);
     }
 
-    public void insertCourseDetail(CourseDto.CourseDTO courseDTO) {
-        mybatis.insert("CourseMapper.insertCourseDetail", courseDTO);
-    }
 }
-

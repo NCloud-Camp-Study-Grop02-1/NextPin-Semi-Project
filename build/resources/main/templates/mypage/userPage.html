@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextPin</title>
+    <link href="css/reset.css" rel="stylesheet"/>
+    <link href="css/kakaoMap.css" rel="stylesheet"/>
+    <!-- 사이드바 스타일 시트 적용 -->
+    <link href="css/common/sidebar_userPage.css" rel="stylesheet" >
+    <!-- 마이페이지 스타일 시트 적용 -->
+    <link href="css/mypage/userPage.css" rel="stylesheet" >
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!--카카오맵 불러오기-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
+
+    <!-- 파비콘 설정 -->
+    <link href="../images/icons/NP_pavicon.png" rel="icon" type="image/png">
+</head>
+<body>
+    <!-- 사이드바 -->
+    <div id="side-bar">
+        <li id="title">
+            <!-- 메인화면으로 이동 -->
+            <a href="/main">
+                <img src="../images/icons/NP_icon.png" alt="NP아이콘">
+            </a>
+        </li>
+        <!-- 메뉴들 -->
+        <div id="icons">
+            <li class="icon">
+                <!-- 코스로 이동 -->
+                <a href="/mainCourse">
+                    <img src="../images/icons/course_icon.png" alt="코스아이콘" id="couse-icon">
+                    <span>코스</span>
+                </a>
+            </li>
+            <li class="icon">
+                <!-- 일정으로 이동 -->
+                <a href="/calendar">
+                    <img src="../images/icons/calendar_icon.png" alt="일정아이콘" id="calendar-icon">
+                    <span>일정</span>
+                </a>
+            </li>
+            <li class="icon">
+                <!-- 커뮤니티로 이동 -->
+                <a href="/community">
+                    <img src="../images/icons/community_icon.png" alt="커뮤니티아이콘" id="community-icon">
+                    <span id="community-span">커뮤니티</span>
+                </a>
+            </li>
+            <li class="icon">
+                <!-- 랜덤핀으로 이동 -->
+                <a href="/randomPin">
+                    <img src="../images/icons/randomPin_icon.png" alt="랜덤아이콘" id="random-icon">
+                    <span>랜덤핀</span>
+                </a>
+            </li>
+        </div>
+        <div id="profile">
+            <li>
+                <!-- 로그인으로 이동 -->
+                <a href="/login">
+                    <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
+                </a>
+            </li>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile">
+            <img src="../images/icons/userprofile.png" alt="Profile Picture">
+            <div>
+                <h2>농담곰</h2>
+                <p id="profile-description">30세 남 싱글 외로워(비트캠프 이상진)</p>
+                <textarea id="profile-textarea" rows="2"></textarea>
+                <img src="../images/icons/edit-gray_icon.png" alt="Edit Icon" class="edit-icon" onclick="editDescription()">
+            </div>
+        </div>
+        <div class="mycoursepin">
+            <img class="content-title-icon" src="../images/icons/course_icon.png" alt="pin 아이콘">
+            <p class="content-title">My <span class="highlight">P</span>in</p>
+            <p class="mypin-num">2</p>
+        </div>
+        <div class="coursepin">
+        <button class="course-button" onclick="toggleCourseDetails(this)">서울 추천 코스</button>
+        <button class="heart-button" onclick="toggleHeart(this)">
+            <img src="../images/icons/heart-before_icon.png" alt="Heart">
+            <span>0</span>
+        </button>
+        </div>
+        <!--course-button 클릭하면 여행 일정 보이기-->
+        <div class="course-details">
+            <div class="day user1day1">
+                <div class="card card-body">
+                    <ul>1일차
+                        <li>
+                            <div>
+                                00음식점
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00카페
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00전시회
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00가게
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>2일차
+                        <li>
+                            <div>
+                                00음식점
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00카페
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00전시회
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                00가게
+                                <img class="pin-icon" src="../images/icons/course_icon.png" alt="pin아이콘">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <div class="settings">
+        <a href="#" id="openModalLink">회원 탈퇴</a>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p class="modal-title">정말 탈퇴하시겠습니까?</p>
+            <p class="modal-subtitle">그리울거에요😭</p>
+            <div class="modal-buttons">
+                <button class="yes-btn">예</button>
+                <button class="no-btn">아니요</button>
+            </div>
+    <!-- 사이드바 감추기/보이기 버튼 -->
+    <div class="sidebar-arrow-container">
+        <div class="sidebar-toggle">
+            <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
+        </div>
+    </div>
+    <div class="map_wrap">
+        <div id="map" style="width:200%;height:100vh;position:relative;overflow:hidden;"></div>
+    </div>
+
+<script src="js/kktmap.js"></script>
+<script src="js/mypage/userPage.js"></script>
+</body>
+
+</html>

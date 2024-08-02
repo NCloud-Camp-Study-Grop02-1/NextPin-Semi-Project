@@ -1,8 +1,8 @@
 package com.nextpin.app.service;
 
-import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +18,6 @@ public interface CourseService {
 
     public int getPinDatasCnt(HashMap<String, String> searchKeywords);
 
-    Long createCourse(CourseDto.CourseDTO courseDTO);  // Add this method
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id);
 
 }

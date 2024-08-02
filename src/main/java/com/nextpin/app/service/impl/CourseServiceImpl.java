@@ -4,14 +4,13 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
-import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +74,7 @@ public class CourseServiceImpl implements CourseService {
 
         try {
             jsonString = objectMapper.writerWithDefaultPrettyPrinter()
-                                     .writeValueAsString(jsonMap);
+                    .writeValueAsString(jsonMap);
         } catch(JsonProcessingException je){
             logger.error(je.getMessage());
         }
@@ -88,11 +87,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    @Transactional
-    public Long createCourse(CourseDto.CourseDTO courseDTO) {
-        Long courseId = courseDao.insertCourse(courseDTO);
-        courseDTO.setCourseId(Math.toIntExact(courseId));
-        courseDao.insertCourseDetail(courseDTO);
-        return courseId;
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
+        return courseDao.searchPinDetailReview(id);
     }
 }
