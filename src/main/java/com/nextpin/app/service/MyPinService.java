@@ -1,11 +1,22 @@
 package com.nextpin.app.service;
 
+import com.nextpin.app.dto.CourseDetailDto;
+import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.UserDto;
 
-public interface MyPinService {
-    // 기존 메소드...
+import java.util.List;
+import java.util.Map;
 
-    // 사용자 정보를 가져오는 메소드 추가
-    UserDto getUserDetails(String userId);
+public interface MyPinService {
+
+    UserDto getUserProfile(String userId);
+
+    List<CourseDto> getUserCourse(String userId);
+
+    List<CourseDetailDto> getUserCourseDetail(String userId);
+
+    void editUserProfile(Map<String, Object> userDto);
+
+    void editUserCourse(Map<String, Object> courseDto);
 }
 

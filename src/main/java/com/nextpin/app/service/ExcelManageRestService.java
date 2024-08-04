@@ -6,5 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ExcelManageRestService {
-    public List<String> readExcel(MultipartFile file) throws IOException;
+    public void kakaoMapCsvDataStore(MultipartFile file) throws IOException;
+
+    public void kakaoMapReviewCsvDataStore(MultipartFile file) throws IOException;
 }

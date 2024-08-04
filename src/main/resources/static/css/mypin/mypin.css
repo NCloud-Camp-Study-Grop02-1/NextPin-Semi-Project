@@ -44,6 +44,10 @@ body{
     font-family: "pretendard-semibold";
 }
 
+.hidden {
+    visibility: hidden;
+}
+
 p{
     display: inline-block;
     margin-bottom: 0; /*부트스트랩의 속성 초기화*/
@@ -273,6 +277,8 @@ p{
 }
 /*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
 .collapse {
+    width: 100%; /* collapse div가 li 태그의 전체 너비를 차지 */
+    margin-top: 1rem; /* 위쪽에 여백을 추가 */
     transition: height 0.3s ease-in-out;
     overflow: hidden;
 }
@@ -285,8 +291,16 @@ p{
     padding-left: 0.1rem;
 }
 .content ul li{
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*flex-direction: column; !* li 태그의 요소들을 세로로 배치 *!*/
+}
+/* rock-icon, container, pin-heart-box를 한 줄에 배치 */
+.content ul li .inner-container {
     display: flex;
     align-items: center;
+    width: 100%;
+    justify-content: space-between; /* 요소들을 공간을 두고 양쪽 끝에 배치합니다 */
 }
 .content ul li .container{
     width: 24rem;
@@ -297,10 +311,10 @@ p{
     border-radius: 1rem;
     position: relative;
     display: flex;
-    /*자물쇠,하트가 같은 라인에 위치하도록 함*/
-    flex-grow: 1;
-    flex: 1;
     text-align: center;
+    /*자물쇠,하트가 같은 라인에 위치하도록 함*/
+    /*flex-grow: 1;*/
+    /*flex: 1;*/
 }
 .content ul li .container input{
     background-color: transparent;
