@@ -12,5 +12,4 @@ public class MemberDto {
     private String nickname;
     private String pwd;
     private String pwdChk;
-
 }
