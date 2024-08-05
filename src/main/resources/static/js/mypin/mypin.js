@@ -263,7 +263,7 @@ function filterItems() {
     myPinItems.forEach(item => {
         const value = item.querySelector('input').value.toLowerCase();
         if (value.includes(searchValue)) {
-            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+            item.parentElement.style.display = 'flex'; // 부모 li 요소를 표시
         } else {
             item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
         }
@@ -274,7 +274,7 @@ function filterItems() {
     likeItems.forEach(item => {
         const value = item.querySelector('input').value.toLowerCase();
         if (value.includes(searchValue)) {
-            item.parentElement.style.display = 'block'; // 부모 li 요소를 표시
+            item.parentElement.style.display = 'flex'; // 부모 li 요소를 표시
         } else {
             item.parentElement.style.display = 'none'; // 부모 li 요소를 숨김
         }
@@ -441,10 +441,12 @@ cards.forEach(card => {
 
 // 프로필 자기소개 수정하는 기능
 function profileEditDescription() {
-    var p = document.getElementById('profile-description');
-    var textarea = document.getElementById('profile-textarea');
-    var editIcon = document.querySelector('.profile-edit-icon');
+    let p = document.getElementById('profile-description');
+    let textarea = document.getElementById('profile-textarea');
+    let editIcon = document.querySelector('.profile-edit-icon');
+    let updateProfileMessage = '';
 
+    // 프로필 자기소개 수정하는 부분
     if (textarea.style.display === 'none' || textarea.style.display === '') {
         textarea.value = p.textContent;
         p.style.display = 'none';
@@ -457,7 +459,34 @@ function profileEditDescription() {
         p.style.display = 'inline-block';
         textarea.style.display = 'none';
         editIcon.src = '../images/icons/edit-gray_icon.png'; // Edit icon when not editing
+        updateProfileMessage = textarea.value;
+
+        console.log(updateProfileMessage);
+
+        // db에 가져갈 값을 밑에서 정의. ajax에서 data에 넣어줄 값임
+        // "dto에 있는 값 이름 : js쪽에서 가져온 값 "으로 매핑하는 것ㅇㅇ
+        let sendData = {
+            "userId" : 'ksy',
+            "message": updateProfileMessage
+        };
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/editProfileMessage",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(sendData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
     }
+
 }
 
 
@@ -490,13 +519,51 @@ function toggleVisibility(element) {
     var li = element.closest('li');
     var rockIcon = li.querySelector('.rock-icon');
     var isHidden = rockIcon.style.visibility === 'hidden';
+    let updateOpenClose = '';
+    let containerElement = element.closest('.container');
+    let inputElement = containerElement.querySelector('input');
+    let courseName = inputElement.value;
 
+    console.log(inputElement);
+    console.log(courseName);
 
     if (isHidden) {
         rockIcon.style.visibility = 'visible';
     } else {
         rockIcon.style.visibility = 'hidden';
     }
+
+    updateOpenClose = rockIcon.style.visibility;
+
+
+    // rockIcon 스타일이 'visible'로 설정되면 updateOpenClose 값을 0으로, 그렇지 않으면 1로 설정
+    updateOpenClose = (updateOpenClose === 'visible') ? 0 : 1;
+
+    console.log(updateOpenClose);
+
+    // db에 가져갈 값을 밑에서 정의. ajax에서 data에 넣어줄 값임
+    // "dto에 있는 값 이름 : js쪽에서 가져온 값 "으로 매핑하는 것ㅇㅇ
+    let sendData = {
+        "userId" : 'ksy',
+        "openClose": updateOpenClose,
+        "courseName": courseName
+    };
+    $.ajax({
+        method : "POST",
+        headers : {
+            'content-type':'application/json'
+        },
+        url : "/editCoueseOpenClose",
+        async : true,
+        dataType: "json",
+        data : JSON.stringify(sendData),
+        success : function(result){
+            console.log("ajax : result : " + result);
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
 
     closePopover(); // 팝오버 창 닫기
     openVisibilityModal();
@@ -518,6 +585,7 @@ function closeVisibilityModal() {
 
 
 // 컬러 변경 기능
+
 function editColor(element) {
     var popover = element.closest('.popover-content');
     var colorPalette = document.getElementById('colorPalette');
@@ -727,6 +795,5 @@ window.onclick = function(event) {
         });
     }
 };
-
 
 

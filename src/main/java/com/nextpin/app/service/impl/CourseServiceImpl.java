@@ -34,7 +34,6 @@ public class CourseServiceImpl implements CourseService {
 
     public List<KakaoMapDto> getUpdateForData() { return courseDao.getUpdateForData(); }
 
-    @Override
     public void updateForData(List<KakaoMapDto> kakaoMapDtoList) {
         courseDao.updateForData(kakaoMapDtoList);
     }
@@ -86,7 +85,7 @@ public class CourseServiceImpl implements CourseService {
 
         try {
             jsonString = objectMapper.writerWithDefaultPrettyPrinter()
-                                     .writeValueAsString(jsonMap);
+                    .writeValueAsString(jsonMap);
         } catch(JsonProcessingException je){
             logger.error(je.getMessage());
         }

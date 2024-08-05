@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
+<!--쿼리문이 Dao클래스에서 분리되어 온 것이기 때문에 namespace는 관례적으로 Dao클래스명과 일치시킴-->
+<mapper namespace="MyPinDao">
+    <!--USER 테이블 정보 조회 기능-->
+    <select id="getUserProfile" parameterType="String" resultType="UserDto">
+        SELECT userId,
+               NICKNAME,
+               userPwd,
+               ROLES,
+               NAME,
+               MESSAGE,
+               profileURL
+        FROM USER
+        WHERE userId = #{userId}
+    </select>
+
+    <!--COURSE 테이블 정보 조회 기능-->
+    <select id="getUserCourse" parameterType="String" resultType="CourseDto">
+        SELECT courseId,
+               userId,
+               courseName,
+               BOOKMARK,
+               heartCnt,
+               openClose,
+               color
+        FROM COURSE
+        WHERE userId = #{userId}
+    </select>
+
+    <!--COURSE_DETAIL 테이블 정보 조회 기능-->
+    <select id="getUserCourseDetail" parameterType="String" resultType="CourseDetailDto">
+        SELECT COURSEID,
+               LOCATION,
+               X,
+               Y,
+            DAY,
+            visitDate,
+            MEMO
+        FROM COURSE_DETAIL
+        WHERE userId = #{userId}
+    </select>
+
+    <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
+    <update id="editUserProfile" parameterType="userDto">
+        UPDATE USER
+        SET MESSAGE = #{message},
+            profileURL = #{profileURL}
+        WHERE userId = #{userId}
+    </update>
+
+    <!--COURSE 테이블의 코스 이름,컬러,공개여부 수정 기능-->
+    <update id="editUserCourse" parameterType="CourseDto">
+        UPDATE COURSE
+        SET courseNAME = #{courseNAME},
+            color = #{color},
+            openClose = #{openClose}
+        WHERE userId = #{userId}
+          AND courseId = #{courseId}
+    </update>
+
+    <!--COURSE 테이블의 코스 삭제 기능-->
+
+    <!--COURSE_DETAIL 테이블의 코스 상세 장소 삭제 기능-->
+
+</mapper>

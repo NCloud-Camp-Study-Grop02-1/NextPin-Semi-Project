@@ -8,7 +8,15 @@
         <typeAlias type="com.nextpin.app.dto.KakaoMapDto"
                    alias="kakaoMapData"/>
         <typeAlias type="com.nextpin.app.dto.KakaoMapReviewDto"
-                   alias="kakaoMapReviewData"/>
+                   alias="KakaoMapReviewData"/>
+        <typeAlias type="com.nextpin.app.dto.MemberDto"
+                   alias="member"/>
+        <typeAlias type="com.nextpin.app.dto.UserDto"
+                   alias="UserDto"/>
+        <typeAlias type="com.nextpin.app.dto.CourseDto"
+                   alias="courseDto"/>
+        <typeAlias type="com.nextpin.app.dto.CourseDetailDto"
+                   alias="courseDetailDto"/>
     </typeAliases>
 
 </configuration>

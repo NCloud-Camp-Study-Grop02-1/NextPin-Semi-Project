@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +7,50 @@
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/kakaoMap.css"/>
     <link rel="stylesheet" href="css/course/maincourse.css"/>
-    <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/side-bar_style_mingyo.css"/>
+
     <!--커뮤니티 메인페이지 스타일 시트 적용-->
     <link rel="stylesheet" href="css/community/community.css"/>
 
     <!-- 파비콘 설정 -->
     <link rel="icon" type="image/png" href="../images/icons/NP_pavicon.png">
 
-    <script src="js/jquery-3.7.1.min.js"></script>
     <!--카카오맵 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- 사이드바 스타일 시트 적용 -->
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css"/>
 </head>
 <body>
+<!-- 사이드바 -->
+<nav id="side-bar">
+    <!--로고-->
+    <a href="/main" class="logo">
+        <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+    </a>
+    <!--구분선-->
+    <div class="separator"></div>
+    <a href="/mainCourse" class="menu-item menu-item-course">
+        <img src="../images/icons/course_icon.png" alt="코스">
+        <span>코스</span>
+    </a>
+    <a href="/calendar" class="menu-item">
+        <img src="../images/icons/calendar_icon.png" alt="일정">
+        <span>일정</span>
+    </a>
+    <a href="/community" class="menu-item">
+        <img src="../images/icons/community_icon.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/randomPin" class="menu-item">
+        <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+        <span>랜덤핀</span>
+    </a>
+    <a href="/myPin" class="sidebar-profile">
+        <img src="../images/icons/mypage_icon.png" alt="Profile">
+    </a>
+</nav>
 <div class="root">
     <div class="root_wrap">
-        <!--사이드바-->
-        <div class="sidebar">
-            <a href="/main" class="logo">
-                <img src="images/icons/NP_icon.png" alt="Logo">
-            </a>
-            <div class="separator"></div>
-            <a href="/mainCourse" class="menu-item menu-item-course">
-                <img src="images/icons/course_icon.png" alt="코스">
-                <span>코스</span>
-            </a>
-            <a href="/calendar" class="menu-item">
-                <img src="images/icons/calendar_icon.png" alt="일정">
-                <span>일정</span>
-            </a>
-            <a href="/community" class="menu-item">
-                <img src="images/icons/community-hover_icon.png" alt="커뮤니티">
-                <span>커뮤니티</span>
-            </a>
-            <a href="/randomPin" class="menu-item">
-                <img src="images/icons/randomPin_icon.png" alt="랜덤핀">
-                <span>랜덤핀</span>
-            </a>
-            <a href="/login" class="profile">
-                <img src="images/icons/mypage_icon.png" alt="Profile">
-            </a>
-        </div>
         <!--사이드바 END-->
 
         <div id="app_layout">
@@ -68,219 +71,223 @@
 
                 <!--유저들의 코스 랭킹-->
                 <div class="ranking">
-                    <div class="ranking-item">
-                        <div class="ranking-number">1</div>
-                        <button class="profilePicture" onclick="goToProfile(this)">
-                            <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">
-                            <span>푸린</span>
-                        </button>
-                        <button class="course-button" style="background-color: #D4ADFB" onclick="toggleCourseDetails(this)">서울 추천 코스</button>
-                        <button class="heart-button" onclick="toggleHeart(this)">
-                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                            <span>125</span>
-                        </button>
-                    </div>
-                    <!--course-button 클릭하면 여행 일정 보이기-->
-                    <div class="course-details">
-                        <div class="day user1day1">
-                            <h2>1일차</h2>
-                            <ul>
-                                <li>비트캠</li>
-                                <li>쑤항계절</li>
-                                <li>커피나인 </li>
-                                <li>부엉이 산장</li>
-                            </ul>
-                        </div>
-                        <div class="day user1day2">
-                            <h2>2일차</h2>
-                            <ul>
-                                <li>도모카레</li>
-                                <li>천호 CGV</li>
-                                <li>썸머러너 </li>
-                                <li>갯벌의 조개 천호점</li>
-                            </ul>
-                        </div>
-                        <div class="button-container">
-                            <button class="save-button" onclick="toggleSave(this)">
-                                <img src="images/icons/save-before-icon.png" alt="Save">
-                            </button>
-                            <button class="share-button">
-                                <img src="images/icons/share_icon.png" alt="Share">
-                            </button>
-                        </div>
-                    </div>
+                    <ul>
 
-                    <div class="ranking-item">
-                        <div class="ranking-number">2</div>
-                        <button class="profilePicture" onclick="goToProfile(this)">
-                            <img src="../images/icons/마멜-profile_icon.svg" alt="마멜">
-                            <span>마멜</span>
-                        </button>
-                        <button class="course-button" style="background-color: #F9A7A7;" onclick="toggleCourseDetails(this)">강릉 커플여행 추천코스</button>
-                        <button class="heart-button" onclick="toggleHeart(this)">
-                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                            <span>104</span>
-                        </button>
-                    </div>
-                    <!--course-button 클릭하면 여행 일정 보이기-->
-                    <div class="course-details">
-                        <div class="day user1day1">
-                            <h2>1일차</h2>
-                            <ul>
-                                <li>당신의 안목 펜션</li>
-                                <li>송정해수욕장</li>
-                                <li>번패티번 강릉 </li>
-                                <li>순두부젤라또 1호점</li>
-                                <li>차현희순두부청국장</li>
-                            </ul>
-                        </div>
-                        <div class="day user1day2">
-                            <h2>2일차</h2>
-                            <ul>
-                                <li>아르떼뮤지엄 강릉</li>
-                                <li>카페덕덕</li>
-                                <li>이모네생선찜 </li>
-                                <li>현대장칼국수</li>
-                                <li>스튜디오 킨조 소품샵</li>
-                            </ul>
-                        </div>
-                        <div class="button-container">
-                            <button class="save-button" onclick="toggleSave(this)">
-                                <img src="images/icons/save-before-icon.png" alt="Save">
-                            </button>
-                            <button class="share-button">
-                                <img src="images/icons/share_icon.png" alt="Share">
-                            </button>
-                        </div>
-                    </div>
+                    </ul>
+<!--                    <div class="ranking-item">-->
+<!--                        <div class="ranking-number">1</div>-->
+<!--                        <button class="profilePicture" onclick="goToProfile(this)">-->
+<!--                            <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">-->
+<!--                            <span>푸린</span>-->
+<!--                        </button>-->
+<!--                        <button class="course-button" style="background-color: #D4ADFB" onclick="toggleCourseDetails(this)">서울 추천 코스</button>-->
+<!--                        <button class="heart-button" onclick="toggleHeart(this)">-->
+<!--                            <img src="../images/icons/heart-before_icon.png" alt="Heart">-->
+<!--                            <span>125</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;course-button 클릭하면 여행 일정 보이기&ndash;&gt;-->
+<!--                    <div class="course-details">-->
+<!--                        <div class="day user1day1">-->
+<!--                            <h2>1일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>비트캠</li>-->
+<!--                                <li>쑤항계절</li>-->
+<!--                                <li>커피나인 </li>-->
+<!--                                <li>부엉이 산장</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="day user1day2">-->
+<!--                            <h2>2일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>도모카레</li>-->
+<!--                                <li>천호 CGV</li>-->
+<!--                                <li>썸머러너 </li>-->
+<!--                                <li>갯벌의 조개 천호점</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="button-container">-->
+<!--                            <button class="save-button" onclick="toggleSave(this)">-->
+<!--                                <img src="images/icons/save-before-icon.png" alt="Save">-->
+<!--                            </button>-->
+<!--                            <button class="share-button">-->
+<!--                                <img src="images/icons/share_icon.png" alt="Share">-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div class="ranking-item">
-                        <div class="ranking-number">3</div>
-                        <button class="profilePicture" onclick="goToProfile(this)">
-                            <img src="../images/icons/햄톨-profile_icon.svg" alt="햄톨">
-                            <span>햄톨</span>
-                        </button>
-                        <button class="course-button" style="background-color: #7BD0FF;" onclick="toggleCourseDetails(this)">쇼핑 중독러를 위한 성수 놀거리</button>
-                        <button class="heart-button" onclick="toggleHeart(this)">
-                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                            <span>93</span>
-                        </button>
-                    </div>
-                    <!--course-button 클릭하면 여행 일정 보이기-->
-                    <div class="course-details">
-                        <div class="day user1day1">
-                            <h2>1일차</h2>
-                            <ul>
-                                <li>섬세이 테라리움</li>
-                                <li>계월곰탕</li>
-                                <li>쿠어 플래그십 스토어</li>
-                                <li>비이커 성수점</li>
-                                <li>밀리언 아카이브</li>
-                                <li>EQL 성수점</li>
-                            </ul>
-                        </div>
-                        <div class="button-container">
-                            <button class="save-button" onclick="toggleSave(this)">
-                                <img src="images/icons/save-before-icon.png" alt="Save">
-                            </button>
-                            <button class="share-button">
-                                <img src="images/icons/share_icon.png" alt="Share">
-                            </button>
-                        </div>
-                    </div>
+<!--                    <div class="ranking-item">-->
+<!--                        <div class="ranking-number">2</div>-->
+<!--                        <button class="profilePicture" onclick="goToProfile(this)">-->
+<!--                            <img src="../images/icons/마멜-profile_icon.svg" alt="마멜">-->
+<!--                            <span>마멜</span>-->
+<!--                        </button>-->
+<!--                        <button class="course-button" style="background-color: #F9A7A7;" onclick="toggleCourseDetails(this)">강릉 커플여행 추천코스</button>-->
+<!--                        <button class="heart-button" onclick="toggleHeart(this)">-->
+<!--                            <img src="../images/icons/heart-before_icon.png" alt="Heart">-->
+<!--                            <span>104</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;course-button 클릭하면 여행 일정 보이기&ndash;&gt;-->
+<!--                    <div class="course-details">-->
+<!--                        <div class="day user1day1">-->
+<!--                            <h2>1일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>당신의 안목 펜션</li>-->
+<!--                                <li>송정해수욕장</li>-->
+<!--                                <li>번패티번 강릉 </li>-->
+<!--                                <li>순두부젤라또 1호점</li>-->
+<!--                                <li>차현희순두부청국장</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="day user1day2">-->
+<!--                            <h2>2일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>아르떼뮤지엄 강릉</li>-->
+<!--                                <li>카페덕덕</li>-->
+<!--                                <li>이모네생선찜 </li>-->
+<!--                                <li>현대장칼국수</li>-->
+<!--                                <li>스튜디오 킨조 소품샵</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="button-container">-->
+<!--                            <button class="save-button" onclick="toggleSave(this)">-->
+<!--                                <img src="images/icons/save-before-icon.png" alt="Save">-->
+<!--                            </button>-->
+<!--                            <button class="share-button">-->
+<!--                                <img src="images/icons/share_icon.png" alt="Share">-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div class="ranking-item">
-                        <div class="ranking-number">4</div>
-                        <button class="profilePicture" onclick="goToProfile(this)">
-                            <img src="../images/icons/mypage_icon.png" alt="탈퇴한 회원">
-                            <span> - </span>
-                        </button>
-                        <button class="course-button" style="background-color: #BADCE3;" onclick="toggleCourseDetails(this)">에디터픽 수원 행리단길 데이트 코스</button>
-                        <button class="heart-button" onclick="toggleHeart(this)">
-                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                            <span>77</span>
-                        </button>
-                    </div>
-                    <!--course-button 클릭하면 여행 일정 보이기-->
-                    <div class="course-details">
-                        <div class="day user1day1">
-                            <h2>1일차</h2>
-                            <ul>
-                                <li>저스트텐동 행리단길점</li>
-                                <li>카페 스퀘어드</li>
-                                <li>사계면</li>
-                                <li>그리핑 카페</li>
-                                <li>화성행궁</li>
-                            </ul>
-                        </div>
-                        <div class="button-container">
-                            <button class="save-button" onclick="toggleSave(this)">
-                                <img src="images/icons/save-before-icon.png" alt="Save">
-                            </button>
-                            <button class="share-button">
-                                <img src="images/icons/share_icon.png" alt="Share">
-                            </button>
-                        </div>
-                    </div>
+<!--                    <div class="ranking-item">-->
+<!--                        <div class="ranking-number">3</div>-->
+<!--                        <button class="profilePicture" onclick="goToProfile(this)">-->
+<!--                            <img src="../images/icons/햄톨-profile_icon.svg" alt="햄톨">-->
+<!--                            <span>햄톨</span>-->
+<!--                        </button>-->
+<!--                        <button class="course-button" style="background-color: #7BD0FF;" onclick="toggleCourseDetails(this)">쇼핑 중독러를 위한 성수 놀거리</button>-->
+<!--                        <button class="heart-button" onclick="toggleHeart(this)">-->
+<!--                            <img src="../images/icons/heart-before_icon.png" alt="Heart">-->
+<!--                            <span>93</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;course-button 클릭하면 여행 일정 보이기&ndash;&gt;-->
+<!--                    <div class="course-details">-->
+<!--                        <div class="day user1day1">-->
+<!--                            <h2>1일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>섬세이 테라리움</li>-->
+<!--                                <li>계월곰탕</li>-->
+<!--                                <li>쿠어 플래그십 스토어</li>-->
+<!--                                <li>비이커 성수점</li>-->
+<!--                                <li>밀리언 아카이브</li>-->
+<!--                                <li>EQL 성수점</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="button-container">-->
+<!--                            <button class="save-button" onclick="toggleSave(this)">-->
+<!--                                <img src="images/icons/save-before-icon.png" alt="Save">-->
+<!--                            </button>-->
+<!--                            <button class="share-button">-->
+<!--                                <img src="images/icons/share_icon.png" alt="Share">-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div class="ranking-item">
-                        <div class="ranking-number">5</div>
-                        <button class="profilePicture" onclick="goToProfile(this)">
-                            <img src="../images/icons/태리-profile_icon.svg" alt="태리">
-                            <span>태리</span>
-                        </button>
-                        <button class="course-button" style="background-color: #97E285;" onclick="toggleCourseDetails(this)">부산 힐링 여행코스</button>
-                        <button class="heart-button" onclick="toggleHeart(this)">
-                            <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                            <span>80</span>
-                        </button>
-                    </div>
-                    <!--course-button 클릭하면 여행 일정 보이기-->
-                    <div class="course-details">
-                        <div class="day user1day1">
-                            <h2>1일차</h2>
-                            <ul>
-                                <li>룩앳더바리스타 광안점션</li>
-                                <li>나사리식당 광안점</li>
-                                <li>밀락더마켓</li>
-                                <li>수변최고돼지국밥 민락본점</li>
-                                <li>치플레 부산</li>
-                            </ul>
-                        </div>
-                        <div class="day user1day2">
-                            <h2>2일차</h2>
-                            <ul>
-                                <li>해운대블루라인파크</li>
-                                <li>디아트카페</li>
-                                <li>우봉 샤브 청사포점 </li>
-                                <li>부산샌드 청사포점</li>
-                                <li>오션브리즈</li>
-                                <li>도희네 조개구이</li>
-                            </ul>
-                        </div>
-                        <div class="button-container">
-                            <button class="save-button" onclick="toggleSave(this)">
-                                <img src="images/icons/save-before-icon.png" alt="Save">
-                            </button>
-                            <button class="share-button">
-                                <img src="images/icons/share_icon.png" alt="Share">
-                            </button>
-                        </div>
-                    </div>
+<!--                    <div class="ranking-item">-->
+<!--                        <div class="ranking-number">4</div>-->
+<!--                        <button class="profilePicture" onclick="goToProfile(this)">-->
+<!--                            <img src="../images/icons/mypage_icon.png" alt="탈퇴한 회원">-->
+<!--                            <span> - </span>-->
+<!--                        </button>-->
+<!--                        <button class="course-button" style="background-color: #BADCE3;" onclick="toggleCourseDetails(this)">에디터픽 수원 행리단길 데이트 코스</button>-->
+<!--                        <button class="heart-button" onclick="toggleHeart(this)">-->
+<!--                            <img src="../images/icons/heart-before_icon.png" alt="Heart">-->
+<!--                            <span>77</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;course-button 클릭하면 여행 일정 보이기&ndash;&gt;-->
+<!--                    <div class="course-details">-->
+<!--                        <div class="day user1day1">-->
+<!--                            <h2>1일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>저스트텐동 행리단길점</li>-->
+<!--                                <li>카페 스퀘어드</li>-->
+<!--                                <li>사계면</li>-->
+<!--                                <li>그리핑 카페</li>-->
+<!--                                <li>화성행궁</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="button-container">-->
+<!--                            <button class="save-button" onclick="toggleSave(this)">-->
+<!--                                <img src="images/icons/save-before-icon.png" alt="Save">-->
+<!--                            </button>-->
+<!--                            <button class="share-button">-->
+<!--                                <img src="images/icons/share_icon.png" alt="Share">-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="ranking-item">-->
+<!--                        <div class="ranking-number">5</div>-->
+<!--                        <button class="profilePicture" onclick="goToProfile(this)">-->
+<!--                            <img src="../images/icons/태리-profile_icon.svg" alt="태리">-->
+<!--                            <span>태리</span>-->
+<!--                        </button>-->
+<!--                        <button class="course-button" style="background-color: #97E285;" onclick="toggleCourseDetails(this)">부산 힐링 여행코스</button>-->
+<!--                        <button class="heart-button" onclick="toggleHeart(this)">-->
+<!--                            <img src="../images/icons/heart-before_icon.png" alt="Heart">-->
+<!--                            <span>80</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;course-button 클릭하면 여행 일정 보이기&ndash;&gt;-->
+<!--                    <div class="course-details">-->
+<!--                        <div class="day user1day1">-->
+<!--                            <h2>1일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>룩앳더바리스타 광안점션</li>-->
+<!--                                <li>나사리식당 광안점</li>-->
+<!--                                <li>밀락더마켓</li>-->
+<!--                                <li>수변최고돼지국밥 민락본점</li>-->
+<!--                                <li>치플레 부산</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="day user1day2">-->
+<!--                            <h2>2일차</h2>-->
+<!--                            <ul>-->
+<!--                                <li>해운대블루라인파크</li>-->
+<!--                                <li>디아트카페</li>-->
+<!--                                <li>우봉 샤브 청사포점 </li>-->
+<!--                                <li>부산샌드 청사포점</li>-->
+<!--                                <li>오션브리즈</li>-->
+<!--                                <li>도희네 조개구이</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div class="button-container">-->
+<!--                            <button class="save-button" onclick="toggleSave(this)">-->
+<!--                                <img src="images/icons/save-before-icon.png" alt="Save">-->
+<!--                            </button>-->
+<!--                            <button class="share-button">-->
+<!--                                <img src="images/icons/share_icon.png" alt="Share">-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
             </div>
+            <input type="hidden" id="hiddenDetailData" th:value="${courseListMap}"/>
             <div class="sidebar-arrow-container">
                 <div class="sidebar-toggle">
                     <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
                 </div>
             </div>
-            <!-- 카카오맵-->
-            <div class="mapping">
-                <div class="map_wrap">
-                    <div id="map" style="width:100%;height:100vh;position:absolute;overflow:hidden;"></div>
-                </div>
-            </div>
         </div>
+    </div>
+</div>
+<!-- 카카오맵-->
+<div class="mapping">
+    <div class="map_wrap">
+        <div id="map" style="width:200%;height:100vh;position:absolute;overflow:hidden;"></div>
     </div>
 </div>
 </body>
