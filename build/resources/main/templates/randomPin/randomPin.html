@@ -27,44 +27,44 @@
     <link rel="icon" href="../images/icons/NP_pavicon.png" type="image/png">
 </head>
 <body>
-<!-- 김션이 수정, 사이드바 html부분 바꿈-->
-<!-- 사이드바 -->
-<nav id="side-bar">
-    <!--로고-->
-    <a href="/main" class="logo">
-        <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
-    </a>
-    <!--구분선-->
-    <div class="separator"></div>
-    <a href="/mainCourse" class="menu-item menu-item-course">
-        <img src="../images/icons/course_icon.png" alt="코스">
-        <span>코스</span>
-    </a>
-    <a href="/calendar" class="menu-item">
-        <img src="../images/icons/calendar_icon.png" alt="일정">
-        <span>일정</span>
-    </a>
-    <a href="/community" class="menu-item">
-        <img src="../images/icons/community_icon.png" alt="커뮤니티">
-        <span>커뮤니티</span>
-    </a>
-    <a href="/randomPin" class="menu-item">
-        <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
-        <span>랜덤핀</span>
-    </a>
-    <a href="/myPin" class="sidebar-profile">
-        <img src="../images/icons/mypage_icon.png" alt="Profile">
-    </a>
-</nav>
 <div id="root">
     <div class="root_wrap">
+        <!-- 김션이 수정, 사이드바 html부분 바꿈-->
+        <!-- 사이드바 -->
+        <nav id="side-bar">
+            <!--로고-->
+            <a href="/main" class="logo">
+                <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+            </a>
+            <!--구분선-->
+            <div class="separator"></div>
+            <a href="/courseHomeReview2" class="menu-item menu-item-course">
+                <img src="../images/icons/course_icon.png" alt="코스">
+                <span>코스</span>
+            </a>
+            <a href="/calendar" class="menu-item">
+                <img src="../images/icons/calendar_icon.png" alt="일정">
+                <span>일정</span>
+            </a>
+            <a href="/community" class="menu-item">
+                <img src="../images/icons/community_icon.png" alt="커뮤니티">
+                <span>커뮤니티</span>
+            </a>
+            <a href="/randomPin" class="menu-item">
+                <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+                <span>랜덤핀</span>
+            </a>
+            <a href="/myPin" class="sidebar-profile">
+                <img src="../images/icons/mypage_icon.png" alt="Profile">
+            </a>
+        </nav>
 
         <div id="app_layout">
             <!--장소 검색창-->
             <div class="modal-content" id="modal-cont">
                 <h2>어디로 가시겠습니까?</h2>
                 <input type="text" placeholder="지역을 입력해주세요." onkeydown="handleKeyPress(event)">
-                <button onclick="searchPlaces1()">전국 어디든!</button>
+                <button onclick="searchPlaces()">전국 어디든!</button>
             </div>
 
             <!-- Loading spinner -->
@@ -82,18 +82,17 @@
                         <!--                                <img src="../images/icons/logo-NextPin-A_icon.png" alt="NextPin Logo">-->
                         <!--                            </a>-->
                         <!--                        </div>-->
-                        <form onsubmit="searchPlaces1(); return false;">
+                        <form onsubmit="searchPlaces(); return false;">
                             <div class="input-group mb-3">
                                 <input type="text" id="inputPlace" class="form-control" >
                                 <button class="btn" type="button" id="searchBtn">
                                     <img src="../images/icons/Search-blue_icon.png" alt="돋보기">
                                 </button>
                             </div>
+                            <div id="locationList">
+                                <ul id="placesList"></ul>
+                            </div>
                         </form>
-                        <!--슬라이드바 추가-->
-                        <div id="locationList">
-                            <ul id="placesList"></ul>
-                        </div>
                         <div class="save-button">
                             <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="course-btn" id="course-btn">
                                 코스 저장하기</button>
@@ -101,19 +100,6 @@
                     </div>
                     <!--내 코스 생성창-->
                     <div class="sub_panel" id="makeCourse" role="dialog" aria-labelledby="chosenPinHeading" aria-modal="true" tabindex="-1">
-                        <!--코스 선택-->
-                        <div class="myCourse">
-                            <h3><span class="blue"> • </span>코스를 선택하세요.</h3>
-                            <form action="#">
-                                <select name="myCourse" id="myCourse">
-                                    <option value="newCourse">새 코스</option>
-                                    <option value="myCourse1">신논현 맛집 투어</option>
-                                    <option value="myCourse2">압구정 로데오 핫플</option>
-                                    <option value="myCourse3">성수 카페 투어</option>
-                                </select>
-                                <!--                                <input type="submit" value="Submit" />-->
-                            </form>
-                        </div>
                         <!--캘린더 날짜 선택-->
                         <div class="calendar">
                             <h3><span class="blue"> • </span>날짜를 입력하세요.</h3>
@@ -145,7 +131,7 @@
                         </div>
                         <!--확인 버튼 (코스 생성)-->
                         <div class="finishButton">
-                            <button id="finish-button" style="background-color: #4098FF;">확인</button>
+                            <button class="finish-button" style="background-color: #4098FF;">확인</button>
                         </div>
                         <!--                        </div>-->
                         <!--                        <button>창 접는 버튼</button>-->
@@ -167,13 +153,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!--토글버튼 추가-->
-<div class="sidebar-arrow-container">
-    <div class="sidebar-toggle">
-        <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
     </div>
 </div>
 
