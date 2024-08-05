@@ -191,6 +191,7 @@ function searchPlaces1() {
         data: { "keyword": modalInput },
         success: function(result) {
             displayPlaces(result);
+            saveData(result);
             setTimeout(function () {
                 document.getElementById('loading-spinner').style.display = 'none';
                 document.getElementById('modal-cont').style.display = 'none';
@@ -198,7 +199,7 @@ function searchPlaces1() {
                 $('.sidebar-toggle').show();
                 $('.sidebar-toggle').css({'margin-left': '0px'});
             }, 3000);
-            
+
         },
         error: function(request, status, error) {
             console.log(error);
@@ -237,6 +238,7 @@ function searchPlacesFromInput() {
         data: { "keyword": inputPlaceValue },
         success: function(result) {
             displayPlaces(result);
+            saveData(result);
             setTimeout(function () {
                 document.getElementById('loading-spinner').style.display = 'none';
                 document.getElementById('modal-cont').style.display = 'none';
@@ -478,23 +480,36 @@ window.onload = function () {
         }
     });
 }
+// 데이터 매핑 로직
+var userId = 'sampleUserId';
+var nickname = 'sampleNickname';
+var courseName = $("#myCourse").val();
+var bookMark = 0;
+var heartCnt = 0;
+var openClose = 1;
+var color = "";
+var placeName = [];
+var xLoc = [];
+var yLoc = [];
+
+function saveData(data){
+    // console.log("data : " + JSON.stringify(data));
+
+    for(idx in data){
+        placeName.push(data[idx].placeName);
+        xLoc.push(data[idx].x);
+        yLoc.push(data[idx].y);
+    }
+
+    console.log("placeName : " + JSON.stringify(placeName));
+    console.log("xLoc : " + JSON.stringify(xLoc));
+    console.log("yLoc : " + JSON.stringify(yLoc));
+}
 
 // finish-button 클릭 이벤트 핸들러
 document.querySelector("#finish-button").addEventListener("click", function (event) {
-    // 데이터 매핑 로직
-    var userId = 'sampleUserId';
-    var nickname = 'sampleNickname';
-    var courseName = $("#myCourse").val();
-    var placeName = 'placeName';
-    var bookMark = 0;
-    var heartCnt = 0;
-    var openClose = 1;
-    var color = "";
-    var location = '';
-    var x = 0;
-    var y = 0;
-    var visitDate = ""
-    var memo = "";
+
+
 
     const selectedDate = $('#testDatepicker').val();
     const memoActive = $('#memo-active').is(':checked');
@@ -527,36 +542,49 @@ document.querySelector("#finish-button").addEventListener("click", function (eve
         color: color
     };
 
-    var courseDetailData =
-    [{
-                userId: userId,
-                location: placeName,
-                x: 0, // 실제 x 좌표로 변경
-                y: 0, // 실제 y 좌표로 변경
-                visitDate: selectedDate,
-                memo: selectedMemo
-        }, {
-                userId: userId,
-                location: placeName,
-                x: 0, // 실제 x 좌표로 변경
-                y: 0, // 실제 y 좌표로 변경
-                visitDate: selectedDate,
-                memo: selectedMemo
-        }, {
-                userId: userId,
-                location: placeName,
-                x: 0, // 실제 x 좌표로 변경
-                y: 0, // 실제 y 좌표로 변경
-                visitDate: selectedDate,
-                memo: selectedMemo
-        }, {
-                userId: userId,
-                location: placeName,
-                x: 0, // 실제 x 좌표로 변경
-                y: 0, // 실제 y 좌표로 변경
-                visitDate: selectedDate,
-                memo: selectedMemo
-        }];
+
+    var courseDetailData = [];
+
+    for(let i = 0; i < placeName.length; i++){
+        let tempData = {
+            userId: userId,
+            location: placeName[i],
+            x: xLoc[i],
+            y: yLoc[i], // 실제 y 좌표로 변경
+            visitDate: selectedDate,
+            memo: selectedMemo
+        }
+        courseDetailData.push(tempData);
+    }
+    // [{
+    //             userId: userId,
+    //             location: placeName,
+    //             x: xLoc, // 실제 x 좌표로 변경
+    //             y: yLoc, // 실제 y 좌표로 변경
+    //             visitDate: selectedDate,
+    //             memo: selectedMemo
+    //     }, {
+    //             userId: userId,
+    //             location: placeName,
+    //             x: 0, // 실제 x 좌표로 변경
+    //             y: 0, // 실제 y 좌표로 변경
+    //             visitDate: selectedDate,
+    //             memo: selectedMemo
+    //     }, {
+    //             userId: userId,
+    //             location: placeName,
+    //             x: 0, // 실제 x 좌표로 변경
+    //             y: 0, // 실제 y 좌표로 변경
+    //             visitDate: selectedDate,
+    //             memo: selectedMemo
+    //     }, {
+    //             userId: userId,
+    //             location: placeName,
+    //             x: 0, // 실제 x 좌표로 변경
+    //             y: 0, // 실제 y 좌표로 변경
+    //             visitDate: selectedDate,
+    //             memo: selectedMemo
+    //     }];
 
 
 
@@ -590,6 +618,9 @@ function insertCourse(courseData, courseDetailData) {
         success: function (response) {
             console.log('Data inserted successfully:', response);
             alert('코스 저장이 성공되었습니다.');
+            placeName = [];
+            xLoc = [];
+            yLoc = [];
         },
         error: function (error) {
             console.error('Error inserting data:', error);
