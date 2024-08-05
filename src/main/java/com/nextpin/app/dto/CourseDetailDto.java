@@ -9,6 +9,7 @@ public class CourseDetailDto {
         private double y;
         private LocalDate visitDate;
         private String memo;
+        private String userId;
 
         public int getCourseId() {
             return courseId;
@@ -58,16 +59,25 @@ public class CourseDetailDto {
             this.memo = memo;
         }
 
-        @Override
-        public String toString() {
-            return "CourseDetailDTO{" +
-                    "courseId=" + courseId +
-                    ", location='" + location + '\'' +
-                    ", x=" + x +
-                    ", y=" + y +
-                    ", visitDate=" + visitDate +
-                    ", memo='" + memo + '\'' +
-                    '}';
-        }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseDetailDto{" +
+                "courseId=" + courseId +
+                ", location='" + location + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", visitDate=" + visitDate +
+                ", memo='" + memo + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 
 }

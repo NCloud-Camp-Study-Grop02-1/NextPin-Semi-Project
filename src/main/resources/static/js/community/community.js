@@ -296,11 +296,11 @@ function toggleHeart(button) {
     }
 }
 
-// 초기 로드 시 실행
-document.addEventListener('DOMContentLoaded', function() {
-    const courseDetails = document.querySelector('.course-details');
-    courseDetails.style.display = 'none'; // 초기에 숨김 처리
-});
+// // 초기 로드 시 실행
+// document.addEventListener('DOMContentLoaded', function() {
+//     const courseDetails = document.querySelector('.course-details');
+//     courseDetails.style.display = 'none'; // 초기에 숨김 처리
+// });
 
 // 코스 버튼 클릭 시 course-details 토글
 function toggleCourseDetails(button) {
