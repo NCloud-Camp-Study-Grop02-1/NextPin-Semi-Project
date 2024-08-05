@@ -113,27 +113,55 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.querySelector('.modal-content input[type="text"]');
     const inputPlace = document.getElementById('inputPlace');
+    let isSearching = false; // 상태 변수
 
-    if (searchBtn) {
-        searchBtn.addEventListener('click', searchPlacesFromInput);
+    function handleSearch(callback, searchType) {
+        if (!isSearching) {
+            isSearching = true;
+            console.log(`Starting ${searchType} search...`);
+            callback().finally(() => {
+                isSearching = false;
+                console.log(`Completed ${searchType} search.`);
+            });
+        } else {
+            console.log(`Search already in progress.`);
+        }
     }
 
-    if (searchInput) {
-        searchInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchPlaces1();
-            }
-        });
+    function startInputSearch() {
+        console.log("Button clicked, starting search from input...");
+        handleSearch(searchPlacesFromInput, 'input');
+    }
+
+    function handleInputEnter(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            console.log("Enter pressed in input, starting search from input...");
+            handleSearch(searchPlacesFromInput, 'input');
+        }
+    }
+
+    function handleModalEnter(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            console.log("Enter pressed in modal input, starting search from modal...");
+            handleSearch(searchPlaces1, 'modal');
+        }
+    }
+
+    if (searchBtn) {
+        searchBtn.removeEventListener('click', startInputSearch); // 기존 리스너 제거
+        searchBtn.addEventListener('click', startInputSearch);
     }
 
     if (inputPlace) {
-        inputPlace.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchPlacesFromInput();
-            }
-        });
+        inputPlace.removeEventListener('keydown', handleInputEnter); // 기존 리스너 제거
+        inputPlace.addEventListener('keydown', handleInputEnter);
+    }
+
+    if (searchInput) {
+        searchInput.removeEventListener('keydown', handleModalEnter); // 기존 리스너 제거
+        searchInput.addEventListener('keydown', handleModalEnter);
     }
 });
 
@@ -146,20 +174,14 @@ function searchPlaces1() {
         return false;
     }
 
-    if (inputPlace) {
-        inputPlace.value = modalInput;
-    }
+    // if (inputPlace) {
+    //     inputPlace.value = modalInput;
+    // }
 
     document.getElementById('loading-spinner').style.display = 'flex';
     document.getElementById('modal-cont').style.display = 'none';
 
-    setTimeout(function () {
-        document.getElementById('loading-spinner').style.display = 'none';
-        document.getElementById('modal-cont').style.display = 'none';
-        document.getElementById('courseDetail').style.display = "block";
-        $('.sidebar-toggle').show();
-        $('.sidebar-toggle').css({'margin-left': '0px'});
-    }, 3000);
+
 
     $.ajax({
         method: "GET",
@@ -169,10 +191,26 @@ function searchPlaces1() {
         data: { "keyword": modalInput },
         success: function(result) {
             displayPlaces(result);
+            setTimeout(function () {
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.getElementById('modal-cont').style.display = 'none';
+                document.getElementById('courseDetail').style.display = "block";
+                $('.sidebar-toggle').show();
+                $('.sidebar-toggle').css({'margin-left': '0px'});
+            }, 3000);
+            
         },
         error: function(request, status, error) {
             console.log(error);
         }
+    });
+
+    return new Promise((resolve) => {
+        console.log("Searching places in modal...");
+        setTimeout(() => {
+            console.log("Modal search completed");
+            resolve();
+        }, 500); // Simulate 500ms search delay
     });
 }
 
@@ -189,13 +227,7 @@ function searchPlacesFromInput() {
     document.getElementById('courseDetail').style.display = "none";
     $('.sidebar-toggle').hide();
 
-    setTimeout(function () {
-        document.getElementById('loading-spinner').style.display = 'none';
-        document.getElementById('modal-cont').style.display = 'none';
-        document.getElementById('courseDetail').style.display = "block";
-        $('.sidebar-toggle').show();
-        $('.sidebar-toggle').css({'margin-left': '0px'});
-    }, 3000);
+
 
     $.ajax({
         method: "GET",
@@ -205,10 +237,25 @@ function searchPlacesFromInput() {
         data: { "keyword": inputPlaceValue },
         success: function(result) {
             displayPlaces(result);
+            setTimeout(function () {
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.getElementById('modal-cont').style.display = 'none';
+                document.getElementById('courseDetail').style.display = "block";
+                $('.sidebar-toggle').show();
+                $('.sidebar-toggle').css({'margin-left': '0px'});
+            }, 3000);
         },
         error: function(request, status, error) {
             console.log(error);
         }
+    });
+
+    return new Promise((resolve) => {
+        console.log("Searching places from input...");
+        setTimeout(() => {
+            console.log("Input search completed");
+            resolve();
+        }, 500); // Simulate 500ms search delay
     });
 }
 
@@ -284,39 +331,65 @@ function getListItem(place) {
         itemStr = '<a href="'+ itemHref +'" style="text-decoration-line: none; color:black; text-align: left">' +
             '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
             '   <h5 class="place_name">' + place.placeName + '</h5>' +
-            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
             '</div>';
+
+    if (place.categoryGroupCode === 'food') {
+        itemStr += '<label id="course_food_label" style="margin-right: 3%; width: 100px; text-align: center; padding-left: 0; border-radius: 15px; border: 2px solid #FFC061; background-color: #FFC061;  margin-bottom: 10px;">' +
+            '           <img src="../images/icons/foodPlace_icon.png" alt="맛집 이미지"/> #맛집' +
+            '       </label>';
+    } else if(place.categoryGroupCode === 'cafe'){
+        itemStr += '<label id="course_cafe_label" style="margin-right: 3%; width: 100px; text-align: center; padding-left: 0; border-radius: 15px; border: 2px solid #FAB7B7; background-color: #FAB7B7; margin-bottom: 10px;">' +
+            '            <img src="../images/icons/cafePlace_icon.png" alt="카페 이미지"/> #카페' +
+            '        </label>';
+    } else if(place.categoryGroupCode === 'tour'){
+        itemStr += '<label id="course_tour_label" style="margin-right: 3%; width: 100px; text-align: center; padding-left: 0; border-radius: 15px; border: 2px solid #96E781; background-color: #96E781; margin-bottom: 10px;">' +
+            '               <img src="../images/icons/tourPlace_icon.png" alt="관광지 이미지"/> #관광지' +
+            '        </label>';
+    } else if(place.categoryGroupCode === 'hotel'){
+        itemStr += '<label id="course_rest_label" style="margin-right: 3%; width: 100px; text-align: center; padding-left: 0; border-radius: 15px; border: 2px solid #D7AFFF; background-color: #D7AFFF; margin-bottom: 10px;">' +
+            '                <img src="../images/icons/lodgingPlace_icon.png" alt="숙소 이미지"> #숙소' +
+            '       </label>';
+    }
+
+    itemStr += '<span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>'
 
     itemStr += '<div class="review_score">' +
-        '   <span class="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+        '<span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+        '</div>'
+
+
+    itemStr += '<div class="info_item">' +
+        '<div class="addr" style="display: flex">';
+    itemStr +=         '<span class="location_image">' +
+        '<img class="icon_address" src="../images/icons/pin_icon.png" alt="주소"/>' +
+        '</span>';
+    itemStr +=         '<span class="addressName" style="margin-left: 2%;">' + place.addressName + '</span>' +
         '</div>';
 
-    itemStr += '<div class="info_item"><div class="addr">';
-
-    if (place.addressName) {
-        itemStr += '    <p class="addressName">' + place.addressName + '</p>';
-    } else {
-        itemStr += '    <p class="roadAdressName">' + place.roadAddressName + '</p>';
+    if (place.roadAddressName) {
+        itemStr += '<span class="roadAdressName" style="margin-left: 10%;color: #8D8D8D;"> 지번 | ' +  place.roadAddressName  + '</span>';
+    }
+    if(place.businessHour !== undefined && place.businessHour !== ''){
+        if(place.businessHour.split('·')[1] !== undefined){
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour.split('·')[0]  +
+                '</div>' +
+                '<span style="margin-left: 8%;">' + place.businessHour.split('·')[1] + '</span>';
+        } else {
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour +
+                '</div>';
+        }
     }
 
-    if(place.businessHour && place.businessHour.split('·')[1] !== undefined){
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[0] + '</span>' +
-            '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[1] + '</span>';
-    } else {
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour + '</span>' +
-            '</div>';
+    if(place.phone !== undefined && place.phone !== ''){
+        itemStr +=  '<span class="location_phone">' +
+            '<img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호" style="margin-right: 2%;"/>' +
+            place.phone  +
+            '</span>';
     }
-
-    itemStr += '  <span class="tel">' + place.phone + '</span>' +
-        '</a>' +
-        '</div>';
-
     itemStr += ' <div class="division-line" style="border-top: 0.1rem solid #E1E1E1; margin: 2rem"></div> '
 
     el.innerHTML = itemStr;
@@ -340,7 +413,7 @@ function addMarker(position, idx, category) {
     var markerImage = new kakao.maps.MarkerImage(
         imageSrc,
         new kakao.maps.Size(36, 37),
-        { offset: new kakao.maps.Point(13, 37) }
+        {offset: new kakao.maps.Point(13, 37)}
     );
 
     var marker = new kakao.maps.Marker({
@@ -379,7 +452,7 @@ function removeAllChildNods(el) {
     }
 }
 
-window.onload = function(){
+window.onload = function () {
     const sidebar = $('.course_detail');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
@@ -398,7 +471,7 @@ window.onload = function(){
             sidebarToggle.css({'margin-left': '0px'});
         }
 
-        if(isExpand) {
+        if (isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
         } else {
             $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
@@ -407,21 +480,32 @@ window.onload = function(){
 }
 
 // finish-button 클릭 이벤트 핸들러
-document.querySelector(".finishButton").addEventListener("click", function(event) {
+document.querySelector("#finish-button").addEventListener("click", function (event) {
     // 데이터 매핑 로직
     var userId = 'sampleUserId';
     var nickname = 'sampleNickname';
     var courseName = $("#myCourse").val();
+    var placeName = 'placeName';
     var bookMark = 0;
     var heartCnt = 0;
-    var isPublic = 1;
+    var openClose = 1;
     var color = "";
+    var location = '';
+    var x = 0;
+    var y = 0;
+    var visitDate = ""
+    var memo = "";
 
-    $('.color-button').each(function(index, item){
-       if(item.classList.contains('selected')){
-           console.log(item.style.backgroundColor)
-           color = item.style.backgroundColor;
-       }
+    const selectedDate = $('#testDatepicker').val();
+    const memoActive = $('#memo-active').is(':checked');
+    const selectedMemo = memoActive ? $('#memo-text').val() : '';
+    const selectedColor = $('.color-button.selected').css('background-color');
+
+    $('.color-button').each(function (index, item) {
+        if (item.classList.contains('selected')) {
+            console.log(item.style.backgroundColor);
+            color = item.style.backgroundColor;
+        }
     });
 
     console.log(courseName);
@@ -435,17 +519,46 @@ document.querySelector(".finishButton").addEventListener("click", function(event
         userId: userId,
         nickname: nickname,
         courseName: courseName,
-        regDate: new Date().toISOString(),
-        modifyDate: new Date().toISOString(),
+        // regDate: new Date().toISOString(),
+        // modifyDate: new Date().toISOString(),
         bookMark: bookMark,
         heartCnt: heartCnt,
-        isPublic: isPublic,
+        openClose: openClose,
         color: color
     };
-    const selectedDate = $('#testDatepicker').val();
-    const memoActive = $('#memo-active').is(':checked');
-    const selectedMemo = memoActive ? $('#memo-text').val() : '';
-    const selectedColor = $('.color-button.selected').css('background-color');
+
+    var courseDetailData =
+    [{
+                userId: userId,
+                location: placeName,
+                x: 0, // 실제 x 좌표로 변경
+                y: 0, // 실제 y 좌표로 변경
+                visitDate: selectedDate,
+                memo: selectedMemo
+        }, {
+                userId: userId,
+                location: placeName,
+                x: 0, // 실제 x 좌표로 변경
+                y: 0, // 실제 y 좌표로 변경
+                visitDate: selectedDate,
+                memo: selectedMemo
+        }, {
+                userId: userId,
+                location: placeName,
+                x: 0, // 실제 x 좌표로 변경
+                y: 0, // 실제 y 좌표로 변경
+                visitDate: selectedDate,
+                memo: selectedMemo
+        }, {
+                userId: userId,
+                location: placeName,
+                x: 0, // 실제 x 좌표로 변경
+                y: 0, // 실제 y 좌표로 변경
+                visitDate: selectedDate,
+                memo: selectedMemo
+        }];
+
+
 
     if (selectedDate && selectedColor) {
         var memoText = '';
@@ -459,7 +572,7 @@ document.querySelector(".finishButton").addEventListener("click", function(event
         $('#makeCourse').removeClass('show');
         $('#newCoursePanel').removeClass('hidden');
 
-        insertCourse(courseData);
+        insertCourse(courseData, courseDetailData);
     } else {
         alert('날짜와 색상은 필수 선택 항목입니다.');
     }
@@ -467,17 +580,18 @@ document.querySelector(".finishButton").addEventListener("click", function(event
 });
 
 // 데이터 저장을 위한 함수
-function insertCourse(courseData) {
+function insertCourse(courseData, courseDetailData) {
     $.ajax({
-        url: '/api/insertCourse', // 실제 Spring Boot 서버 URL로 변경
+        url: '/insertCourse', // 실제 Spring Boot 서버 URL로 변경
         type: 'POST',
-        data: JSON.stringify(courseData),
+        data: JSON.stringify({"courseData" : courseData, "courseDetailData" : courseDetailData}),
+
         contentType: 'application/json',
-        success: function(response) {
+        success: function (response) {
             console.log('Data inserted successfully:', response);
             alert('코스 저장이 성공되었습니다.');
         },
-        error: function(error) {
+        error: function (error) {
             console.error('Error inserting data:', error);
             alert('코스 저장이 실패되었습니다.')
         }

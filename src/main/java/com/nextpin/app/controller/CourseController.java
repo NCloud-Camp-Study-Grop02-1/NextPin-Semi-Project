@@ -1,6 +1,8 @@
 package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dto.*;
 import com.nextpin.app.service.CourseHomeReview2Service;
 import com.nextpin.app.dto.Criteria;
@@ -14,6 +16,7 @@ import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,7 +101,9 @@ public class CourseController {
                     // "yyyy/MM/dd" 형식을 처리할 수 있도록 DateTimeFormatter를 정의합니다.
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                     LocalDate localDate = LocalDate.parse(visitDateString, formatter);
-                    courseDetail.setVisitDate(localDate);
+//                    courseDetail.setVisitDate(localDate);
+                    Date date = Date.valueOf(localDate);
+                    courseDetail.setVisitDate(date);
                 } catch (DateTimeParseException e) {
                     // 올바르지 않은 날짜 형식 처리 (예: 기본값 설정 또는 예외 던지기)
                     throw new IllegalArgumentException("잘못된 날짜 형식: " + visitDateString, e);
@@ -118,4 +123,24 @@ public class CourseController {
             return "코스 생성에 실패하였습니다.";
         }
     }
+
+    @PostMapping("/insertCourse")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> insertCourse(@RequestBody Map<String, Object> requestData) {
+        // JSON 데이터에서 courseData와 courseDetailData 추출
+        ObjectMapper mapper = new ObjectMapper();
+        CourseDto courseDto = mapper.convertValue(requestData.get("courseData"), CourseDto.class);
+        List<CourseDetailDto> courseDetailDtoList = mapper.convertValue(requestData.get("courseDetailData"), new TypeReference<List<CourseDetailDto>>() {});
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Course data inserted successfully");
+        response.put("data", courseDto);
+        logger.debug("courseDto : " + courseDto.toString());
+        logger.debug("courseDetailDtoList : " + courseDetailDtoList.toString());
+
+        courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
+        return ResponseEntity.ok(response);
+    }
 }
+
+

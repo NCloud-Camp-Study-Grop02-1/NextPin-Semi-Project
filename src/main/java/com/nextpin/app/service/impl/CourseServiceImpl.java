@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
+import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.dto.KakaoMapReviewDto;
@@ -96,4 +97,6 @@ public class CourseServiceImpl implements CourseService {
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
     }
+
+
 }

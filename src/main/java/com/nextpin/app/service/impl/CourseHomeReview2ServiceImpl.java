@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     @Autowired
@@ -27,4 +29,19 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
         courseDetail.setCourseId(courseId);
         courseHomeReview2Dao.insertCourseDetail(courseDetail);
     }
+
+    @Override
+    public int saveCourse(CourseDto saveCourseDto) {
+        return courseHomeReview2Dao.insertCourse(saveCourseDto);
+    }
+
+    @Override
+    public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList) {
+        int courseId = saveCourse(saveCourseDto);
+        for(CourseDetailDto saveCourseDetailDto : saveCourseDetailDtoList) {
+            saveCourseDetailDto.setCourseId(courseId);
+        }
+        courseHomeReview2Dao.saveCourseDetail(saveCourseDetailDtoList);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.nextpin.app.dto.CourseDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import java.util.List;
 
 @Repository
 public class CourseHomeReview2Dao {
@@ -23,5 +24,16 @@ public class CourseHomeReview2Dao {
 
     public void insertCourseDetail(CourseDetailDto courseDetail) {
         mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourseDetail", courseDetail);
+    }
+
+//    public void saveCourse(CourseDto saveCourseDto) {
+//        mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourse", saveCourseDto);
+//    }
+
+    public void saveCourseDetail(List<CourseDetailDto> saveCourseDetailDtoList) {
+        for (int i = 0; i < saveCourseDetailDtoList.size(); i++) {
+            mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourseDetail", saveCourseDetailDtoList.get(i));
+        }
+
     }
 }
