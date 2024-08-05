@@ -8,24 +8,17 @@ $(function() {
         showMonthAfterYear:true,
         dateFormat:"yy-mm-dd",
         beforeShow: function(input, inst) {
+
+
             var sidebarWidth = $('#side-bar').outerWidth();
             inst.dpDiv.css({ marginLeft: sidebarWidth });
         }
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const chosenpinBtn = document.getElementById('course-btn');
     const makeCourse = document.getElementById('makeCourse');
-
-    chosenpinBtn.addEventListener('click', () => {
-        const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
-        chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
-        makeCourse.classList.toggle('show', !isExpanded);
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
 
     buttons.forEach(button => {
@@ -38,9 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
 
-document.addEventListener('DOMContentLoaded', function() {
+    chosenpinBtn.addEventListener('click', () => {
+        console.log(chosenpinBtn.getAttribute('aria-expanded'));
+        const isExpanded = chosenpinBtn.getAttribute('aria-expanded') === 'true';
+        console.log(isExpanded);
+        chosenpinBtn.setAttribute('aria-expanded', !isExpanded);
+        makeCourse.classList.toggle('show', !isExpanded);
+    });
+
     document.getElementById('memo-active').addEventListener('change', function() {
         document.getElementById('memo-text').disabled = !this.checked;
     });
@@ -72,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('close_icon');
 
     closeBtn.addEventListener('click', () => {
+        console.log(closeBtn.getAttribute('aria-expanded'));
         const isExpanded = closeBtn.getAttribute('aria-expanded') === 'true';
         closeBtn.setAttribute('aria-expanded', !isExpanded);
         $('#makeCourse').removeClass('show');
@@ -166,6 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function searchPlaces1() {
+    const chosenpinBtn = document.getElementById('course-btn');
+    chosenpinBtn.setAttribute('aria-expanded', 'false');
     const modalInput = document.querySelector('.modal-content input[type="text"]').value.trim();
     const inputPlace = document.getElementById('inputPlace');
 
@@ -180,7 +182,6 @@ function searchPlaces1() {
 
     document.getElementById('loading-spinner').style.display = 'flex';
     document.getElementById('modal-cont').style.display = 'none';
-
 
 
     $.ajax({
@@ -216,6 +217,8 @@ function searchPlaces1() {
 }
 
 function searchPlacesFromInput() {
+    const chosenpinBtn = document.getElementById('course-btn');
+    chosenpinBtn.setAttribute('aria-expanded', 'false');
     const inputPlaceValue = document.getElementById('inputPlace').value.trim();
 
     if (!inputPlaceValue) {
@@ -227,7 +230,6 @@ function searchPlacesFromInput() {
     document.getElementById('modal-cont').style.display = 'none';
     document.getElementById('courseDetail').style.display = "none";
     $('.sidebar-toggle').hide();
-
 
 
     $.ajax({
@@ -246,6 +248,20 @@ function searchPlacesFromInput() {
                 $('.sidebar-toggle').show();
                 $('.sidebar-toggle').css({'margin-left': '0px'});
             }, 3000);
+            $('#makeCourse').removeClass('show');
+            $('')
+            $("#newCourseName").val(''); // 코스 이름 초기화
+            $("#testDatepicker").val(''); // 날짜 초기화
+            $("#memo-active").prop("checked", false); // 체크박스 초기화
+            $("#memo-text").val(''); // 텍스트 초기화
+            $(".color-button").each(function() { // 모든 선택된 색상 버튼 초기화
+            $(this).removeClass("selected");
+
+            });
+
+            // course_close_btn 버튼 클릭
+            $("#course_close_btn").click();
+
         },
         error: function(request, status, error) {
             console.log(error);
@@ -483,7 +499,7 @@ window.onload = function () {
 // 데이터 매핑 로직
 var userId = 'sampleUserId';
 var nickname = 'sampleNickname';
-var courseName = $("#myCourse").val();
+
 var bookMark = 0;
 var heartCnt = 0;
 var openClose = 1;
@@ -493,6 +509,9 @@ var xLoc = [];
 var yLoc = [];
 
 function saveData(data){
+    placeName = [];
+    xLoc = [];
+    yLoc = [];
     // console.log("data : " + JSON.stringify(data));
 
     for(idx in data){
@@ -522,6 +541,14 @@ document.querySelector("#finish-button").addEventListener("click", function (eve
             color = item.style.backgroundColor;
         }
     });
+
+    // 사용자가 입력한 새 코스 이름 가져오기
+    const newCourseName = $('#newCourseName').val();
+    if (newCourseName) {
+        courseName = newCourseName;
+    } else {
+        courseName = $("#myCourse").val();
+    }
 
     console.log(courseName);
     // $('.myCourse').each(function (item){
@@ -587,12 +614,12 @@ document.querySelector("#finish-button").addEventListener("click", function (eve
     //     }];
 
 
-
     if (selectedDate && selectedColor) {
         var memoText = '';
         if ($('#memo-active').is(':checked')) {
             memoText = $('#memo-text').val();
         }
+
         $('#selectedDate').text(selectedDate);
         $('#selectedMemo').text(selectedMemo);
         $('#selectedColor').css('background-color', selectedColor);
@@ -618,9 +645,30 @@ function insertCourse(courseData, courseDetailData) {
         success: function (response) {
             console.log('Data inserted successfully:', response);
             alert('코스 저장이 성공되었습니다.');
+
+            $('#courseName').text(courseName);
+            $('#placeName').text(placeName);
+
+            // placeName 리스트를 <br> 태그로 변환하여 placeList에 저장
+            let placeListForDisplay = '';
+            for (let i in placeName) {
+                placeListForDisplay += placeName[i] + '<br>';
+            }
+
+            // placeList를 #placeName 요소에 설정
+            document.getElementById('placeName').innerHTML = placeListForDisplay;
+
+            // placeName 리스트를 \n으로 변환하여 저장할 때 사용할 placeList 생성
+            let placeListForStorage = '';
+            for (let i in placeName) {
+                placeListForStorage += placeName[i] + '\n';
+            }
+
+
             placeName = [];
             xLoc = [];
             yLoc = [];
+
         },
         error: function (error) {
             console.error('Error inserting data:', error);
@@ -628,6 +676,7 @@ function insertCourse(courseData, courseDetailData) {
         }
     });
 }
+
 
 // document.querySelector(".finishButton").addEventListener("click", function(event) {
 //     var courseData = {

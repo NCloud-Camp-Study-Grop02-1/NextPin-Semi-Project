@@ -105,13 +105,10 @@
                         <div class="myCourse">
                             <h3><span class="blue"> • </span>코스를 선택하세요.</h3>
                             <form action="#">
-                                <select name="myCourse" id="myCourse">
-                                    <option value="newCourse">새 코스</option>
-                                    <option value="myCourse1">신논현 맛집 투어</option>
-                                    <option value="myCourse2">압구정 로데오 핫플</option>
-                                    <option value="myCourse3">성수 카페 투어</option>
-                                </select>
-                                <!--                                <input type="submit" value="Submit" />-->
+<!--                                <select name="myCourse" id="myCourse">-->
+<!--                                    <option value="newCourse">새 코스</option>-->
+<!--                                </select>-->
+                                <input type="text" id="newCourseName" placeholder="새 코스 이름 입력">
                             </form>
                         </div>
                         <!--캘린더 날짜 선택-->
@@ -152,14 +149,14 @@
                     </div>
                     <div id="newCoursePanel" class="new-panel hidden">
                         <button type="button" class="close_icon" id="close_icon" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false">
-                            <img class="icon_close" src="../images/icons/cancel_icon.png" alt="닫기버튼">
+                            <img class="icon_close" id="course_close_btn" src="../images/icons/cancel_icon.png" alt="닫기버튼">
                         </button>
                         <div class="dayCourse">
-                            <h3>코스</h3>
+                            <h3 id="courseName"></h3>
                             <p><span id="selectedDate"></span></p>
                             <div class="courseList" id="selectedColor">
-                                <p><strong>1일차</strong></p>
-                                <p style="margin-left: 30px"><strong>니뽕내뽕 강남역점</strong> <span id="selectedStore"></span></p>
+                                <p><strong>일정</strong></p>
+                                <p style="margin-left: 30px"><strong></strong> <span id="placeName"></span></p>
                                 <p style="margin-left: 30px"><span id="selectedMemo"></span></p>
                             </div>
                         </div>
