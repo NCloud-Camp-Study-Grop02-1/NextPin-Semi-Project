@@ -83,7 +83,8 @@
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>
                                         <span class="food_type" id="foodType" style="margin-top: 5.5px;" th:text="${rtnKaMapDto.categoryName}"></span>
                                         <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin">
-                                            <img class="icon_pin" src="../images/icons/locationPin-before_icon.png" alt="위치 찍기">
+                                            <img class="icon_pin" src="../images/icons/locationPin-after_icon.png" alt="위치 찍기">
+                                            <p>저장</p>
                                         </button>
                                     </div>
                                     <div id="reviewStatics">
@@ -97,13 +98,13 @@
                                         <h4>상세정보</h4>
                                         <span class="location_address" id="locationAddress">
                                             <img class="icon_address" src="../images/icons/pin_icon.png" alt="시간">
-                                            서울 강남구 강남대로98길 8 2,3층
+                                            <span th:text="${rtnKaMapDto.addressName}"></span>
                                         </span>
-                                        <span class="street_number" id="streetNumber">지번 | 역삼동 817</span>
+                                        <span class="street_number" id="streetNumber" th:text="${rtnKaMapDto.roadAddressName}"></span>
                                         <span class="location_time">
                                             <img class="icon_location" src="../images/icons/clock_icon.png" alt="시간">
-                                            <li id="businessHour">월~금 11:30 ~ 21:30</li>
-                                            <li id="breakTime">토, 일 11:30 ~ 22:00</li>
+                                            <li id="businessHour" th:text="${rtnKaMapDto.businessHour}"></li>
+                                            <li id="breakTime"></li>
                                         </span>
                                         <span class="location_url">
 <!--                                            <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">-->
@@ -111,7 +112,7 @@
                                         </span>
                                         <span class="location_phone" id="locationPhone">
                                             <img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호">
-                                            02-557-5055
+                                            <span th:text="${rtnKaMapDto.phone}"></span>
                                         </span>
                                         <span class="location_tag">
                                             <img class="icon_location" src="../images/icons/tag_icon.png" alt="태그">
@@ -217,11 +218,11 @@
                             <img class="icon_close" src="../images/icons/cancel_icon.png" alt="닫기버튼">
                         </button>
                         <div class="dayCourse">
-                            <h3>코스</h3>
+                            <h3>새 코스</h3>
                             <p><span id="selectedDate"></span></p>
                             <div class="courseList" id="selectedColor">
                                 <p><strong>1일차</strong></p>
-                                <p style="margin-left: 30px"><strong>니뽕내뽕 강남역점</strong> <span id="selectedStore"></span></p>
+                                <p style="margin-left: 30px"><strong th:text="${rtnKaMapDto.placeName}"></strong> <span id="selectedStore"></span></p>
                                 <p style="margin-left: 30px"><span id="selectedMemo"></span></p>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 package com.nextpin.app.service.impl;
 
+import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dao.CourseDao;
 import com.nextpin.app.dao.CourseHomeReview2Dao;
 import com.nextpin.app.dto.CourseDetailDto;
@@ -8,6 +9,7 @@ import com.nextpin.app.service.CourseHomeReview2Service;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.mybatis.spring.MyBatisSystemException;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.Map;
 @Service
 public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
+    private Logger logger = (Logger) LoggerFactory.getLogger(CourseHomeReview2ServiceImpl.class);
     private CourseHomeReview2Dao courseHomeReview2Dao;
 
     @Autowired
@@ -41,7 +44,7 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
     @Override
     public void updateCourseColorAndModifyDate(int courseId, String color) {
-//        courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);
+        courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);
     }
 
     @Override
@@ -54,43 +57,46 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
         courseHomeReview2Dao.insertCourseDetail(courseDetail);
     }
 
-//    @Override
-//    public List<CourseDetailDto> getCourseDetails(int courseId) {
-//        return courseHomeReview2Dao.getCourseDetails(courseId);
-//    }
+    @Override
+    public List<CourseDetailDto> getCourseDetails(int courseId) {
+        return courseHomeReview2Dao.getCourseDetails(courseId);
+    }
 
     @Override
     public Map<String, Double> getCoordinatesByLocation(String location) {
-//        return courseHomeReview2Dao.getCoordinatesByLocation(location);
-        return null;
+        List<Map<String, Double>> coordinatesList = courseHomeReview2Dao.getCoordinatesByLocation(location);
+        if (coordinatesList.isEmpty()) {
+            return null;
+        } else {
+            // 여러 결과 중 첫 번째 결과를 반환
+            return coordinatesList.get(0);
+        }
     }
 
-//    @Override
-//    public boolean isDuplicateCourseDetail(int courseId, String location) {
-//        return courseHomeReview2Dao.isDuplicateCourseDetail(courseId, location);
-//    }
+    @Override
+    public boolean isDuplicateCourseDetail(int courseId, String location) {
+        return courseHomeReview2Dao.isDuplicateCourseDetail(courseId, location);
+    }
 
     @Override
     public List<CourseDetailDto> getCourseDetails(String courseName, String userId) {
-//        return courseHomeReview2Dao.getCourseDetailsByNameAndUser(courseName, userId);
-        return null;
+        return courseHomeReview2Dao.getCourseDetailsByNameAndUser(courseName, userId);
     }
 
     @Override
     public boolean isLocationExist(Integer courseId, String location) {
-//        return courseHomeReview2Dao.isLocationExist(courseId, location);
-        return false;
+        return courseHomeReview2Dao.isLocationExist(courseId, location);
     }
 
-//    @Override
-//    public boolean deleteCourseDetail(Integer courseId, String location) {
-//        int deletedRows = courseHomeReview2Dao.deleteCourseDetail(courseId, location);
-//        return deletedRows > 0;
-//    }
+    @Override
+    public boolean deleteCourseDetail(Integer courseId, String location) {
+        int deletedRows = courseHomeReview2Dao.deleteCourseDetail(courseId, location);
+        return deletedRows > 0;
+    }
 
     @Override
     public int deleteCourseDetail(int courseId, String location) {
-//        courseHomeReview2Dao.deleteCourseDetail(courseId, location);
+        courseHomeReview2Dao.deleteCourseDetail(courseId, location);
         return courseId;
     }
 
@@ -111,9 +117,12 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     @Override
     public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList) {
         int courseId = saveCourse(saveCourseDto);
+        logger.debug("courseId : " + courseId);
         for(CourseDetailDto saveCourseDetailDto : saveCourseDetailDtoList) {
             saveCourseDetailDto.setCourseId(courseId);
+            logger.debug("saveCourseDetailDto.courseId : " + saveCourseDetailDto.getCourseId());
         }
+
         courseHomeReview2Dao.saveCourseDetail(saveCourseDetailDtoList);
     }
 

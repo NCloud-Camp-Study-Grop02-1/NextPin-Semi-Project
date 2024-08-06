@@ -2,15 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nextpin.app.dao.CourseHomeReview2Dao">
+<mapper namespace="CourseHomeReview2Dao">
 
     <select id="findCourseIdByUserIdAndCourseName" parameterType="map" resultType="string">
         SELECT courseId FROM course WHERE userId = #{userId} AND courseName = #{courseName} LIMIT 1
     </select>
 
-    <insert id="insertCourse">
-        INSERT INTO course (courseId, userId, nickname, courseName, color, regDate, modifyDate)
-        VALUES (#{courseId}, #{userId}, #{nickname}, #{courseName}, #{color}, #{regDate}, #{modifyDate})
+    <insert id="insertCourse" parameterType="courseDto">
+        INSERT INTO course (userId, nickname, courseName, color, regDate, modifyDate)
+        VALUES (#{userId}, #{nickname}, #{courseName}, #{color}, #{regDate}, #{modifyDate})
     </insert>
 
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
@@ -26,31 +26,31 @@
                )
     </insert>
 
-    <update id="updateCourseColorAndModifyDate">
+    <update id="updateCourseColorAndModifyDate" parameterType="map">
         UPDATE course
         SET color = #{color}, modifyDate = now()
         WHERE courseId = #{courseId}
     </update>
 
-    <select id="getCourseDetails" resultType="com.nextpin.app.dto.CourseDetailDto">
+    <select id="getCourseDetails" parameterType="int" resultType="courseDetailDto">
         SELECT *
         FROM course_detail
         WHERE courseId = #{courseId}
     </select>
 
-    <select id="getCoordinatesByLocation" resultType="map">
+    <select id="getCoordinatesByLocation" parameterType="string" resultType="map">
         SELECT x, y
         FROM course_detail
         WHERE location = #{location}
     </select>
 
-    <select id="isDuplicateCourseDetail" resultType="boolean">
+    <select id="isDuplicateCourseDetail" parameterType="map" resultType="boolean">
         SELECT COUNT(*) > 0
         FROM course_detail
         WHERE courseId = #{courseId} AND location = #{location}
     </select>
 
-    <select id="getCourseDetailsByNameAndUser" resultType="com.nextpin.app.dto.CourseDetailDto">
+    <select id="getCourseDetailsByNameAndUser" parameterType="map" resultType="courseDetailDto">
         SELECT cd.*
         FROM course_detail cd
                  JOIN course c ON cd.courseId = c.courseId

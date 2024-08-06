@@ -15,7 +15,7 @@ public interface CourseService {
 
     public void updateForData(List<KakaoMapDto> kakaoMapDtoList);
 
-    public String searchPinDetail(int id);
+    public KakaoMapDto searchPinDetail(int id);
 
     public List<KakaoMapReviewDto> searchPinDetailReview(int id);
 
