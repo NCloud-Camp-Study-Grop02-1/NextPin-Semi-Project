@@ -13,9 +13,17 @@
         VALUES (#{courseId}, #{userId}, #{nickname}, #{courseName}, #{color}, #{regDate}, #{modifyDate})
     </insert>
 
-    <insert id="insertCourseDetail">
-        INSERT INTO course_detail (courseId, location, x, y, day, visitDate, memo)
-        VALUES (#{courseId}, #{location}, #{x}, #{y}, #{day}, #{visitDate}, #{memo})
+    <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
+        INSERT INTO course_detail (courseId, location, x, y, visitDate, memo, userId)
+        VALUES (
+                   #{courseId},
+                   #{location},
+                   #{x},
+                   #{y},
+                   #{visitDate},
+                   #{memo},
+                   #{userId}
+               )
     </insert>
 
     <update id="updateCourseColorAndModifyDate">

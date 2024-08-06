@@ -48,13 +48,21 @@ public class MypinController {
         logger.debug("user 값 : " + userProfile.toString());
         mav.addObject("user", userProfile); // 사용자 프로필 정보를 뷰에 추가
 
-        // 사용자 코스 정보 가져오기
+        // 사용자 코스(mypin) 정보 가져오기
         List<CourseDto> userCourseList = myPinService.getUserCourse(userId);
         logger.debug("userCourseList 값 : " + userCourseList.toString());
         for (CourseDto course : userCourseList) {
             logger.debug("Course나와..: " + course.toString());
         }
         mav.addObject("userCourseList", userCourseList); // 사용자 코스 정보를 뷰에 추가
+
+        // 사용자 코스 정보(관심있는코스) 가져오기
+        List<CourseDto> userLikeCourseList = myPinService.getUserLikeCourse(userId);
+        logger.debug("userCourseList 값 : " + userLikeCourseList.toString());
+        for (CourseDto course : userLikeCourseList) {
+            logger.debug("Course나와..: " + course.toString());
+        }
+        mav.addObject("userLikeCourseList", userLikeCourseList); // 사용자 코스 정보를 뷰에 추가
 
         // 사용자 코스 세부내용 정보 가져오기
         List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId);
@@ -92,22 +100,45 @@ public class MypinController {
     // 어차피 userId의 message값을 select해서 화면에 표출되도록 구현해놨으니
     // return문 없이 db값을 수정만 해주면 알아서 그 값이 표출되는거 아닌가유??
 
-    @PostMapping("/editCoueseOpenClose")
+    @PostMapping("/editCourseOpenClose")
     @ResponseBody
-    public void editUserCourse(@RequestBody Map<String, Object> courseDto){
+    public void editUserCourse1(@RequestBody CourseDto courseDto){
 
-        boolean dbprocess = false;
-        String rtnMessage = "";
-
-//        myPinService.updateProfile(sendData);
-        if(!dbprocess){
-            rtnMessage = "db 저장 성공";
-        } else {
-            rtnMessage = "db 저장 실패";
-        }
+        logger.debug("courseDto : " + courseDto.toString());
 
         // 사용자 프로필 메시지 변경하기
         // CourseDto에 userId, message 값 담아서 넘겨줄거임.
-        myPinService.editUserCourse(courseDto);
+        myPinService.editUserCourse1(courseDto);
     }
+
+    @PostMapping("/editCourseColor")
+    @ResponseBody
+    public void editUserCourse2(@RequestBody CourseDto courseDto){
+
+        logger.debug("courseDto : " + courseDto.toString());
+        // 사용자 프로필 메시지 변경하기
+        // CourseDto에 userId, message 값 담아서 넘겨줄거임.
+        myPinService.editUserCourse2(courseDto);
+    }
+
+    @PostMapping("/editCourseName")
+    @ResponseBody
+    public void editUserCourse3(@RequestBody CourseDto courseDto){
+
+        logger.debug("courseDto : " + courseDto.toString());
+        // 사용자 프로필 메시지 변경하기
+        // CourseDto에 userId, message 값 담아서 넘겨줄거임.
+        myPinService.editUserCourse3(courseDto);
+    }
+
+    @PostMapping("/editBookMark")
+    @ResponseBody
+    public void editUserBookMark(@RequestBody CourseDto courseDto){
+
+        logger.debug("courseDto : " + courseDto.toString());
+        // 사용자 프로필 메시지 변경하기
+        // CourseDto에 userId, message 값 담아서 넘겨줄거임.
+        myPinService.editUserBookMark(courseDto);
+    }
+
 }

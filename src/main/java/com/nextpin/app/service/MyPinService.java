@@ -12,11 +12,17 @@ public interface MyPinService {
     UserDto getUserProfile(String userId);
 
     List<CourseDto> getUserCourse(String userId);
+    List<CourseDto> getUserLikeCourse(String userId);
 
     List<CourseDetailDto> getUserCourseDetail(String userId);
 
     void editUserProfile(Map<String, Object> userDto);
 
-    void editUserCourse(Map<String, Object> courseDto);
+    void editUserCourse1(CourseDto courseDto);
+    void editUserCourse2(CourseDto courseDto);
+    void editUserCourse3(CourseDto courseDto);
+
+    void editUserBookMark(CourseDto courseDto);
+
 }
 

@@ -32,4 +32,7 @@ public interface CourseHomeReview2Service {
 
     public void createCourse(CourseDto course, CourseDetailDto courseDetail);
 
+    public int saveCourse(CourseDto saveCourseDto);
+
+    public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList);
 }

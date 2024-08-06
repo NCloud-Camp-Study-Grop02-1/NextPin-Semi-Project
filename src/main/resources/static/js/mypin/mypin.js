@@ -518,26 +518,35 @@ function togglePopover(element) {
 function toggleVisibility(element) {
     var li = element.closest('li');
     var rockIcon = li.querySelector('.rock-icon');
-    var isHidden = rockIcon.style.visibility === 'hidden';
+    var isHidden = rockIcon.classList.contains('hidden'); //rockIcon.style.visibility === 'hidden';
     let updateOpenClose = '';
     let containerElement = element.closest('.container');
     let inputElement = containerElement.querySelector('input');
     let courseName = inputElement.value;
 
+    // background-color 값을 가져오기
+    let computedStyle = window.getComputedStyle(containerElement);
+    let color = computedStyle.backgroundColor;
+
+    // container의 data-course-id 값을 가져오기
+    let courseId = containerElement.getAttribute('data-course-id');
+
     console.log(inputElement);
     console.log(courseName);
 
     if (isHidden) {
-        rockIcon.style.visibility = 'visible';
+        // rockIcon.style.visibility = 'visible';
+        rockIcon.classList.remove('hidden');
     } else {
-        rockIcon.style.visibility = 'hidden';
+        // rockIcon.style.visibility = 'hidden';
+        rockIcon.classList.add('hidden');
     }
 
-    updateOpenClose = rockIcon.style.visibility;
-
-
+    // updateOpenClose = rockIcon.style.visibility;
+    updateOpenClose = rockIcon.classList.contains('hidden');
+    console.log('updateOpenClose : ' + updateOpenClose);
     // rockIcon 스타일이 'visible'로 설정되면 updateOpenClose 값을 0으로, 그렇지 않으면 1로 설정
-    updateOpenClose = (updateOpenClose === 'visible') ? 0 : 1;
+    updateOpenClose = (updateOpenClose === true) ? 1 : 0;
 
     console.log(updateOpenClose);
 
@@ -545,15 +554,17 @@ function toggleVisibility(element) {
     // "dto에 있는 값 이름 : js쪽에서 가져온 값 "으로 매핑하는 것ㅇㅇ
     let sendData = {
         "userId" : 'ksy',
+        "courseId" : courseId,
         "openClose": updateOpenClose,
-        "courseName": courseName
+        "courseName": courseName,
+        "color": color
     };
     $.ajax({
         method : "POST",
         headers : {
             'content-type':'application/json'
         },
-        url : "/editCoueseOpenClose",
+        url : "/editCourseOpenClose",
         async : true,
         dataType: "json",
         data : JSON.stringify(sendData),
@@ -584,13 +595,18 @@ function closeVisibilityModal() {
 
 
 
-// 컬러 변경 기능
-
+// 컬러 편집 기능
 function editColor(element) {
-    var popover = element.closest('.popover-content');
-    var colorPalette = document.getElementById('colorPalette');
-    var colorButtonText = element.textContent;
-    var selectedContainer = element.closest('.container');
+    let popover = element.closest('.popover-content');
+    let li = element.closest('li');
+    let colorPalette = document.getElementById('colorPalette');
+    let containerElement = element.closest('.container');
+    let inputElement = containerElement.querySelector('input');
+    let courseName = inputElement.value;
+    let courseId = containerElement.getAttribute('data-course-id');
+    let rockIcon = li.querySelector('.rock-icon');
+    let updateOpenClose = rockIcon.classList.contains('hidden');
+    updateOpenClose = (updateOpenClose === true) ? 1 : 0;
 
     // 컬러 팔레트의 기존 위치 초기화
     colorPalette.style.left = '';
@@ -600,7 +616,7 @@ function editColor(element) {
         colorPalette.style.display = 'flex';
 
         // 팔레트를 팝오버 오른쪽에 위치시키기
-        var rect = popover.getBoundingClientRect();
+        let rect = popover.getBoundingClientRect();
         colorPalette.style.position = 'absolute';
         colorPalette.style.left = `${rect.right + 10}px`;
         colorPalette.style.top = `${rect.top}px`;
@@ -614,8 +630,8 @@ function editColor(element) {
         // 컬러 버튼 클릭 이벤트 설정
         colorPalette.onclick = function(event) {
             if (event.target.classList.contains('color-button')) {
-                var selectedColor = event.target.style.backgroundColor;
-                selectedContainer.style.backgroundColor = selectedColor;
+                let color = event.target.style.backgroundColor;
+                containerElement.style.backgroundColor = color;
 
                 // 팔레트를 숨기고 모달 열기
                 colorPalette.style.display = 'none';
@@ -624,6 +640,33 @@ function editColor(element) {
                 closePopover(); // 팝오버 창 닫기
 
                 openColorModal(); // 모달 열기
+
+                console.log("Selected Color (inline style):", color);
+
+                let sendData = {
+                    "userId" : 'ksy',
+                    "courseId" : courseId,
+                    "openClose": updateOpenClose,
+                    "courseName": courseName,
+                    "color": color
+                };
+                $.ajax({
+                    method : "POST",
+                    headers : {
+                        'content-type':'application/json'
+                    },
+                    url : "/editCourseColor",
+                    async : true,
+                    dataType: "json",
+                    data : JSON.stringify(sendData),
+                    success : function(result){
+                        console.log("ajax : result : " + result);
+                    },
+                    error : function(request, status, error){
+                        console.log(error);
+                    }
+                });
+
             }
         };
     } else {
@@ -635,6 +678,7 @@ function editColor(element) {
 
         openColorModal(); // 모달 열기
     }
+
 }
 
 // 컬러 편집 모달 열기 함수
@@ -685,6 +729,8 @@ function editDescription(icon) {
 
         // edit-icon 요소의 이미지를 "save-icon.png"로 변경합니다.
         icon.src = 'images/icons/save-icon-white.png';
+
+
     }
     // 그렇지 않다면 (즉, 편집 모드인 경우)
     else {
@@ -700,6 +746,44 @@ function editDescription(icon) {
 
         // edit-icon 요소의 이미지를 "edit-icon.png"로 변경합니다.
         icon.src = 'images/icons/edit-white_icon.png';
+
+        let containerElement = icon.closest('.container');
+        let courseId = containerElement.getAttribute('data-course-id');
+        let li = icon.closest('li');
+        let rockIcon = li.querySelector('.rock-icon');
+        let updateOpenClose = rockIcon.classList.contains('hidden');
+        updateOpenClose = (updateOpenClose === true) ? 1 : 0;
+        // background-color 값을 가져오기
+        let computedStyle = window.getComputedStyle(containerElement);
+        let color = computedStyle.backgroundColor;
+
+        let courseName = input.value;
+        console.log(input.value);
+        console.log(courseName);
+
+        let sendData = {
+            "userId" : 'ksy',
+            "courseId" : courseId,
+            "openClose": updateOpenClose,
+            "courseName": courseName,
+            "color": color
+        };
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/editCourseName",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(sendData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
     }
 }
 
@@ -707,17 +791,54 @@ function editDescription(icon) {
 
 //관심있는 코스에서 저장 버튼을 누르면 캘린더가 뜨고 지정한 날짜에 저장할 수 있는 기능
 let isSaved = false;
-let currentIcon;
+let currentElement;
 
-function toggleSaveState(icon) {
-    currentIcon = icon;
+function toggleSaveState(element) {
+    currentElement = element;
+    // element 요소의 부모 요소(container)를 가져옵니다.
+    let containerElement = element.closest('.container');
+    let inputElement = containerElement.querySelector('input');
+    let courseName = inputElement.value;
+    let courseId = containerElement.getAttribute('data-course-id');
+
+    // background-color 값을 가져오기
+    let computedStyle = window.getComputedStyle(containerElement);
+    let color = computedStyle.backgroundColor;
 
     if (!isSaved) {
         // 캘린더 표시
         $('#calendar-container').fadeIn();
+
+
+        let sendData = {
+            "userId" : 'ksy',
+            "courseId" : courseId,
+            "courseName": courseName,
+            "color": color
+        };
+
+        console.log(sendData);
+
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/editBookMark",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(sendData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+            },
+            error : function(request, status, error){
+                console.log(error);
+            }
+        });
+
     } else {
         // 이미지 변경 및 저장 상태 업데이트
-        icon.src = 'images/icons/save-before-icon.png';
+        element.src = 'images/icons/save-before-icon.png';
         isSaved = false;
 
         // 모달 표시
@@ -727,12 +848,12 @@ function toggleSaveState(icon) {
 
 $('#save-date-button').click(function() {
     // 이미지 변경 및 저장 상태 업데이트
-    if (currentIcon && !isSaved) {
-        currentIcon.src = 'images/icons/save-after-icon.png';
+    if (currentElement && !isSaved) {
+        currentElement.src = 'images/icons/save-after-icon.png';
         isSaved = true;
         showModal('캘린더에 저장되었습니다');
-    } else if (currentIcon && isSaved) {
-        currentIcon.src = 'images/icons/save-before-icon.png';
+    } else if (currentElement && isSaved) {
+        currentElement.src = 'images/icons/save-before-icon.png';
         isSaved = false;
         showModal('저장이 취소되었습니다');
     }

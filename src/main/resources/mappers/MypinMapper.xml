@@ -20,7 +20,7 @@
             WHERE userId = #{userId}
     </select>
 
-    <!--COURSE 테이블 정보 조회 기능-->
+    <!--COURSE 테이블(mypin) 정보 조회 기능-->
     <select id="getUserCourse" parameterType="String" resultType="CourseDto">
         SELECT courseId,
                userId,
@@ -31,6 +31,7 @@
                color
             FROM COURSE
             WHERE userId = #{userId}
+              AND myPinBoolean = 1
     </select>
 
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->
@@ -46,6 +47,20 @@
             WHERE userId = #{userId}
     </select>
 
+    <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
+    <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
+        SELECT courseId,
+               userId,
+               courseName,
+               BOOKMARK,
+               heartCnt,
+               openClose,
+               color
+        FROM COURSE
+        WHERE userId = #{userId}
+          AND likeBoolean = 1
+    </select>
+
     <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
     <update id="editUserProfile" parameterType="userDto">
         UPDATE USER
@@ -55,9 +70,9 @@
     </update>
 
     <!--COURSE 테이블의 코스 이름,컬러,공개여부 수정 기능-->
-    <update id="editUserCourse" parameterType="CourseDto">
+    <update id="editUserCourse" parameterType="courseDto">
         UPDATE COURSE
-        SET courseNAME = #{courseNAME},
+        SET courseNAME = #{courseName},
             color = #{color},
             openClose = #{openClose}
         WHERE userId = #{userId}
@@ -67,5 +82,18 @@
     <!--COURSE 테이블의 코스 삭제 기능-->
 
     <!--COURSE_DETAIL 테이블의 코스 상세 장소 삭제 기능-->
+
+    <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
+    <update id="editBookMark" parameterType="courseDto">
+        UPDATE COURSE
+        SET courseNAME = #{courseName},
+            color = #{color},
+            openClose = 0,
+            bookMark = 1,
+            myPinBoolean = 1,
+            likeBoolean = 0
+        WHERE userId = #{userId}
+          AND courseId = #{courseId}
+    </update>
 
 </mapper>
