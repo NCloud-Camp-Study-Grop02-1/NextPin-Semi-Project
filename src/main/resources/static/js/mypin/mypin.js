@@ -486,7 +486,7 @@ function profileEditDescription() {
             }
         });
     }
-    
+
 }
 
 

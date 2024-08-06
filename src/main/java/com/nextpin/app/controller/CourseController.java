@@ -5,7 +5,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dto.*;
 import com.nextpin.app.service.CourseHomeReview2Service;
+import com.nextpin.app.dto.Criteria;
+import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
+import com.nextpin.app.dto.SearchRequestDto;
+import com.nextpin.app.service.CourseService;
 import com.nextpin.app.service.PlaceService;
+import com.nextpin.app.dto.Criteria;
+import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Collections;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.awt.*;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 public class CourseController {

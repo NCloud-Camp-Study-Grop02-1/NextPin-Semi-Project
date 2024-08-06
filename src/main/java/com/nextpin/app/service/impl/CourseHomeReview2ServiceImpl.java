@@ -1,11 +1,13 @@
 package com.nextpin.app.service.impl;
 
+import com.nextpin.app.dao.CourseDao;
 import com.nextpin.app.dao.CourseHomeReview2Dao;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.service.CourseHomeReview2Service;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.mybatis.spring.MyBatisSystemException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,8 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
     @Override
     public String findCourseIdByUserIdAndCourseName(String userId, String courseName) {
-        List<String> courseIds = courseHomeReview2Dao.findCourseIdByUserIdAndCourseName(userId, courseName);
+        List<String> courseIds = null;
+//        List<String> courseIds = courseHomeReview2Dao.findCourseIdByUserIdAndCourseName(userId, courseName);
         if (courseIds == null || courseIds.isEmpty()) {
             return null; // 또는 적절한 예외 처리
         }
@@ -38,7 +41,7 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
     @Override
     public void updateCourseColorAndModifyDate(int courseId, String color) {
-        courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);
+//        courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);
     }
 
     @Override
@@ -51,40 +54,43 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
         courseHomeReview2Dao.insertCourseDetail(courseDetail);
     }
 
-    @Override
-    public List<CourseDetailDto> getCourseDetails(int courseId) {
-        return courseHomeReview2Dao.getCourseDetails(courseId);
-    }
+//    @Override
+//    public List<CourseDetailDto> getCourseDetails(int courseId) {
+//        return courseHomeReview2Dao.getCourseDetails(courseId);
+//    }
 
     @Override
     public Map<String, Double> getCoordinatesByLocation(String location) {
-        return courseHomeReview2Dao.getCoordinatesByLocation(location);
+//        return courseHomeReview2Dao.getCoordinatesByLocation(location);
+        return null;
     }
 
-    @Override
-    public boolean isDuplicateCourseDetail(int courseId, String location) {
-        return courseHomeReview2Dao.isDuplicateCourseDetail(courseId, location);
-    }
+//    @Override
+//    public boolean isDuplicateCourseDetail(int courseId, String location) {
+//        return courseHomeReview2Dao.isDuplicateCourseDetail(courseId, location);
+//    }
 
     @Override
     public List<CourseDetailDto> getCourseDetails(String courseName, String userId) {
-        return courseHomeReview2Dao.getCourseDetailsByNameAndUser(courseName, userId);
+//        return courseHomeReview2Dao.getCourseDetailsByNameAndUser(courseName, userId);
+        return null;
     }
 
     @Override
     public boolean isLocationExist(Integer courseId, String location) {
-        return courseHomeReview2Dao.isLocationExist(courseId, location);
+//        return courseHomeReview2Dao.isLocationExist(courseId, location);
+        return false;
     }
 
-    @Override
-    public boolean deleteCourseDetail(Integer courseId, String location) {
-        int deletedRows = courseHomeReview2Dao.deleteCourseDetail(courseId, location);
-        return deletedRows > 0;
-    }
+//    @Override
+//    public boolean deleteCourseDetail(Integer courseId, String location) {
+//        int deletedRows = courseHomeReview2Dao.deleteCourseDetail(courseId, location);
+//        return deletedRows > 0;
+//    }
 
     @Override
     public int deleteCourseDetail(int courseId, String location) {
-        courseHomeReview2Dao.deleteCourseDetail(courseId, location);
+//        courseHomeReview2Dao.deleteCourseDetail(courseId, location);
         return courseId;
     }
 

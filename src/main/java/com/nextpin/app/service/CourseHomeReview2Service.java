@@ -16,17 +16,17 @@ public interface CourseHomeReview2Service {
 
     void insertCourseDetail(CourseDetailDto courseDetail);
 
-    List<CourseDetailDto> getCourseDetails(int courseId);
+//    List<CourseDetailDto> getCourseDetails(int courseId);
 
     Map<String, Double> getCoordinatesByLocation(String location);
 
-    boolean isDuplicateCourseDetail(int courseId, String location);
+//    boolean isDuplicateCourseDetail(int courseId, String location);
 
     List<CourseDetailDto> getCourseDetails(String courseName, String userId);
 
     boolean isLocationExist(Integer courseId, String location);
 
-    boolean deleteCourseDetail(Integer courseId, String location);
+//    boolean deleteCourseDetail(Integer courseId, String location);
 
     int deleteCourseDetail(int courseId, String location);
 
