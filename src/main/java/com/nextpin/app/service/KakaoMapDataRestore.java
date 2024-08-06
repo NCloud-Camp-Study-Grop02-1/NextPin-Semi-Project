@@ -8,4 +8,6 @@ public interface KakaoMapDataRestore {
     public void restore(List<KakaoMapDto> data);
 
     public void testRestore(KakaoMapDto kakaoMapDto);
+
+    public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList);
 }

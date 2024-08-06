@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/kakaoMap.css"/>
     <link rel="stylesheet" href="css/course/maincourse.css"/>
-    <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/side-bar_style_mingyo.css"/>
+
     <!--커뮤니티 메인페이지 스타일 시트 적용-->
     <link rel="stylesheet" href="css/community/community.css"/>
 
@@ -18,36 +17,40 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <!--카카오맵 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
+    <!-- 사이드바 스타일 시트 적용 -->
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css"/>
 </head>
 <body>
+<!-- 사이드바 -->
+<nav id="side-bar">
+    <!--로고-->
+    <a href="/main" class="logo">
+        <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+    </a>
+    <!--구분선-->
+    <div class="separator"></div>
+    <a href="/mainCourse" class="menu-item menu-item-course">
+        <img src="../images/icons/course_icon.png" alt="코스">
+        <span>코스</span>
+    </a>
+    <a href="/calendar" class="menu-item">
+        <img src="../images/icons/calendar_icon.png" alt="일정">
+        <span>일정</span>
+    </a>
+    <a href="/community" class="menu-item">
+        <img src="../images/icons/community_icon.png" alt="커뮤니티">
+        <span>커뮤니티</span>
+    </a>
+    <a href="/randomPin" class="menu-item">
+        <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+        <span>랜덤핀</span>
+    </a>
+    <a href="/myPin" class="sidebar-profile">
+        <img src="../images/icons/mypage_icon.png" alt="Profile">
+    </a>
+</nav>
 <div class="root">
     <div class="root_wrap">
-        <!--사이드바-->
-        <div class="sidebar">
-            <a href="/main" class="logo">
-                <img src="images/icons/NP_icon.png" alt="Logo">
-            </a>
-            <div class="separator"></div>
-            <a href="/mainCourse" class="menu-item menu-item-course">
-                <img src="images/icons/course_icon.png" alt="코스">
-                <span>코스</span>
-            </a>
-            <a href="/calendar" class="menu-item">
-                <img src="images/icons/calendar_icon.png" alt="일정">
-                <span>일정</span>
-            </a>
-            <a href="/community" class="menu-item">
-                <img src="images/icons/community-hover_icon.png" alt="커뮤니티">
-                <span>커뮤니티</span>
-            </a>
-            <a href="/randomPin" class="menu-item">
-                <img src="images/icons/randomPin_icon.png" alt="랜덤핀">
-                <span>랜덤핀</span>
-            </a>
-            <a href="/login" class="profile">
-                <img src="images/icons/mypage_icon.png" alt="Profile">
-            </a>
-        </div>
         <!--사이드바 END-->
 
         <div id="app_layout">

@@ -15,7 +15,14 @@ public class CourseDto {
         private boolean isPublic;
         private String color;
 
-        public int getCourseId() {
+    public CourseDto(String userId, String courseName) {
+    }
+
+    public CourseDto() {
+
+    }
+
+    public int getCourseId() {
             return courseId;
         }
 

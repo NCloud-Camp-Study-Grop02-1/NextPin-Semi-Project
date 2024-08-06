@@ -35,7 +35,7 @@ function searchPlaces(category) {
     $("#inputPlace2").val(keyword2);
 
     let searchKeywords = {"keyword" : keyword, "keyword2" : keyword2, "category" : category};
-
+    // 'searchKeywords={"keyword" : keyword, "keyword2" : keyword2, "category" : category}'
     // console.log(JSON.stringify(searchKeywords));
 
     $.ajax({
@@ -174,52 +174,87 @@ function displayPlaces(places, category) {
     map.setBounds(bounds);
 }
 
+let imageIndex = 1;
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, place) {
 
     // console.log("place : " + JSON.stringify(place));
+    /*
+    * place : {"id":7,"categoryGroupCode":"food","categoryGroupName":"맛집","categoryName":"육류,고기"
+    *         ,"placeName":"삼원가든","score":0,"addressName":"서울 강남구 언주로 835"
+    *         ,"roadAddressName":"신사동 623-5","businessHour":"매일 15:00 ~ 17:00","phone":"02-548-3030"
+    *         ,"courseShare":null,"placeUrl":"https://place.map.kakao.com/19351143","x":127.03253030398
+    *         ,"y":37.524930419988}
+    * */
     let itemHref = "/courseHomeReview2?id=" + place["id"];
-    let el = document.createElement('li'),
-        itemStr = '<a href='+ itemHref +' style="text-decoration-line: none; color:black; text-align: left">' +
+    let el = document.createElement('li')
+    let itemStr = '<a href='+ itemHref +' style="text-decoration-line: none; color:black; text-align: left; width:300px;">' +
             '<div class="head_item clickArea" style="display: flex; justify-content: left;">' +
             '   <h5 class="place_name">' + place.placeName + '</h5>' +
-            '   <span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>' +
             '</div>';
 
+    itemStr += '<span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>'
     itemStr += '<div class="review_score">' +
-        '   <span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
-        '</div>'
+                   '<span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +
+               '</div>'
 
-    itemStr += '<div class="info_item"><div class="addr">'
+    itemStr += '<div class="info_item">' +
+                   '<div class="addr" style="display: flex">';
+    itemStr +=         '<span class="location_image">' +
+                           '<img class="icon_address" src="../images/icons/pin_icon.png" alt="주소"/>' +
+                       '</span>';
+    itemStr +=         '<span class="addressName" style="margin-left: 2%;">' + place.addressName + '</span>' +
+                   '</div>';
 
-    if (place.addressName) {
-        itemStr += '    <p class="addressName">' + place.addressName + '</p>';
-    } else {
-        itemStr += '    <p class="roadAdressName">' +  place.roadAddressName  + '</p>';
+    if (place.roadAddressName) {
+        itemStr += '<span class="roadAdressName" style="margin-left: 10%;color: #8D8D8D;"> 지번 | ' +  place.roadAddressName  + '</span>';
+    }
+    if(place.businessHour !== undefined && place.businessHour !== ''){
+        if(place.businessHour.split('·')[1] !== undefined){
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour.split('·')[0]  +
+                '</div>' +
+                '<span style="margin-left: 8%;">' + place.businessHour.split('·')[1] + '</span>';
+        } else {
+            itemStr += '<div class="location_time">' +
+                '<img class="icon_location" src="../images/icons/clock_icon.png" alt="시간" style="margin-right: 3%;"/>' +
+                place.businessHour +
+                '</div>';
+        }
     }
 
-    if(place.businessHour.split('·')[1] !== undefined){
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[0] + '</span>' +
-            '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour.split('·')[1] + '</span>' +
-            '</div>';
-    } else {
-        itemStr += '</div>' +
-            '<div class="businessHour">' +
-            '<span>' + place.businessHour + '</span>' +
-            '</div>'
+    if(place.phone !== undefined && place.phone !== ''){
+        itemStr +=  '<span class="location_phone">' +
+                       '<img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호" style="margin-right: 2%;"/>' +
+                            place.phone  +
+                    '</span>';
     }
-
-    itemStr += '  <span class="tel">' + place.phone  + '</span>' +
-        '</a>'  +
-        '</div>';
+    itemStr += '</div></a>';
 
     el.innerHTML = itemStr;
     el.className = 'item';
+    el.style.display = 'flex';
 
+    let imgEl = document.createElement('img');
+
+    imgEl.style.marginRight = '3%';
+    if(place.categoryGroupCode === 'food'){
+        imgEl.src = '../images/img/food/food' + imageIndex + '.jpg';
+    } else if (place.categoryGroupCode === 'cafe'){
+        imgEl.src = '../images/img/cafe/cafe' + imageIndex + '.jpg';
+    } else if (place.categoryGroupCode === 'tour'){
+        imgEl.src = '../images/img/tour/tour' + imageIndex + '.jpg';
+    } else if (place.categoryGroupCode === 'hotel'){
+        imgEl.src = '../images/img/hotel/hotel' + imageIndex + '.jpg';
+    }
+    el.prepend(imgEl);
+
+    if(imageIndex == 15){
+        imageIndex = 1;
+    } else {
+        imageIndex++;
+    }
     return el;
 }
 
@@ -276,15 +311,13 @@ function displayPagination(pageParams, searchKeywords) {
     * amount : 페이지 당 데이터 개수
     * cnt : 총 데이터 개수
     * */
-    // console.log("pageNum : " + pageParams["pageNum"] + ", amount : " + pageParams["amount"] + ", cnt : " + pageParams["cnt"]);
     var totalPage = (pageParams["cnt"] / pageParams["amount"]) + 1;
-
     var pageSet = Math.ceil( pageParams["pageNum"] / 5);
     var startNum = (pageSet - 1) * 5 + 1;
     var endNum = pageSet * 5;
     searchKeywords["startNum"] = startNum;
     searchKeywords["endNum"] = endNum;
-    console.log("pageSet : " + pageSet + ", startNum : " + startNum + ", endNum : " + endNum + ", totalPage : " + totalPage);
+    // console.log("cnt : " + pageParams["cnt"] + ", startNum : " + startNum + ", endNum : " + endNum + ", totalPage : " + totalPage);
     var prevEl = document.createElement('li');
 
     if(startNum > 5){
@@ -332,7 +365,7 @@ function displayPagination(pageParams, searchKeywords) {
             }
         }
     } else {
-        for(i = startNum; i <= totalPage; i++){
+        for(i = startNum; i < totalPage; i++){
             if(i == pageParams["pageNum"]){
                 let pageEl = document.createElement('li');
                 pageEl.classList.add('page-item');
@@ -364,7 +397,7 @@ function displayPagination(pageParams, searchKeywords) {
     }
 
     var nextEl = document.createElement('li');
-    if(totalPage > 5 && endNum < totalPage){
+    if(totalPage > 5 && Math.floor(pageParams["cnt"] / pageParams["amount"]) >= endNum){
         nextEl.classList.add('page-item');
 
         let nextA = document.createElement('a');
@@ -498,6 +531,27 @@ window.onload = function(){
         }
         // console.log(this);
     });
+
+    // html에서 시작
+    // 여기부터 검색 이벤트 실행됨 >> 자바스크립트 24번째 줄로 연결됨 > ajax에서 매핑 방식에 맞게 컨트롤러로 넘어감.
+
+    // 컨트롤러는 ajax에서 호풀한것을 받아주는 역할
+    // jsp,html 상관없이 컨트롤러부터는 흐름 똑같으니 강사님 강의 다시 듣기.. timeleaf쓰면 html을 jsp처럼도 사용 가능
+    // @ResponseBody, @RequestBody 어노테이션 잘 씀용, ajax에서 string타입으로 받은 json을 map형식으로 받기 위해 쓰는 어노테이션
+    // RequestBody로 받고 ResponseBody로 다시 보내주는 것임
+
+    // 컨트롤러에서 받고 서비스 임플, 서비스 파일로 이동
+    // 서비스는 파라미터 가꿔주는 역할
+    // 여기서는 데이터 가공 처리정도만
+
+    // dao로 이동. 여기서 본격적으로 db에 있는 것을 호출하는 역할. 데이터를 뽑아옴. mapper에 있는 쿼리문을 실행해서 원하는 데이터를 뽑아옴.
+
+    // mapper는 쿼리문을 이용해서 실제 db에 연결
+    // select문은 변수가 필요한 부분은 파라미터타입 지정해줘야 함.
+
+    // dto는 내가 쓸 객체를 지정해주는 곳.
+    // mybatis.config.xml에서 dto 변수명을 더 간단히 설정 가능
+    // application.properties파일의 21-23줄 부분도 참고. 그 부분도 설정해야 함.
 
     $("#inputPlace1").on("keyup", function(key){
         if(key.keyCode == 13){

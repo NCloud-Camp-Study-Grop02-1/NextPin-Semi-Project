@@ -32,14 +32,20 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getAddressDatas();
     }
 
-    @Override
-    public void updateAddressConversion(List<KakaoMapDto> kakaoMapDtoList) {
-        courseDao.updateAddressConversion(kakaoMapDtoList);
+    public List<KakaoMapDto> getUpdateForData() { return courseDao.getUpdateForData(); }
+
+    public void updateForData(List<KakaoMapDto> kakaoMapDtoList) {
+        courseDao.updateForData(kakaoMapDtoList);
     }
 
     @Override
     public KakaoMapDto searchPinDetail(int id) {
         return courseDao.searchPinDetail(id);
+    }
+
+    @Override
+    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
+        return courseDao.searchPinDetailReview(id);
     }
 
     @Override
@@ -50,7 +56,12 @@ public class CourseServiceImpl implements CourseService {
         cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount());
 
         Map<String, Object> paramMap = new HashMap<>();
+        //{"searchKewords" : {"keyword" : keyword, "keyword2" : keyword2, "category" : category}}
         paramMap.put("searchKewords", searchKeywords);
+//        Criteria cri1 = new Criteria();
+//        cri1.setAmount(2);
+//        Criteria cri2 = new Criteria();
+//        cri.setAmount(3);
         paramMap.put("cri", cri);
 
         List<KakaoMapDto> pinDatas = courseDao.searchPinDatas(paramMap);
@@ -84,10 +95,5 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
-    }
-
-    @Override
-    public List<KakaoMapReviewDto> searchPinDetailReview(int id) {
-        return courseDao.searchPinDetailReview(id);
     }
 }

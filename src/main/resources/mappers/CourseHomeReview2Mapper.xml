@@ -1,24 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
 <mapper namespace="com.nextpin.app.dao.CourseHomeReview2Dao">
-    <insert id="insertCourse" parameterType="com.nextpin.app.dto.CourseDto" useGeneratedKeys="true" keyProperty="courseId">
-        INSERT INTO course (userId, nickname, courseName, regDate, color)
-        VALUES (#{userId}, #{nickname}, #{courseName}, NOW(), #{color})
-    </insert>
+
+    <select id="findCourseIdByUserIdAndCourseName" parameterType="map" resultType="string">
+        SELECT courseId FROM course WHERE userId = #{userId} AND courseName = #{courseName} LIMIT 1
+    </select>
 
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
-        INSERT INTO course_detail (courseId, location, x, y, visitDate, memo)
-        VALUES (
-                   #{courseId},
-                   #{location},
-                   (SELECT x FROM map WHERE placeName = #{location}),
-                   (SELECT y FROM map WHERE placeName = #{location}),
-                   #{visitDate},
-                   #{memo}
-               )
+        INSERT INTO course_detail (courseId, location, x, y, day, visitDate, memo, userId)
+        VALUES (#{courseId}, #{location}, #{x}, #{y}, #{day}, #{visitDate}, #{memo}, #{userId})
     </insert>
+
+    <update id="updateCourseColorAndModifyDate">
+        UPDATE course
+        SET color = #{color}, modifyDate = now()
+        WHERE courseId = #{courseId}
+    </update>
+
+    <select id="getCourseDetails" resultType="com.nextpin.app.dto.CourseDetailDto">
+        SELECT *
+        FROM course_detail
+        WHERE courseId = #{courseId}
+    </select>
+
+    <select id="getCoordinatesByLocation" resultType="map">
+        SELECT x, y
+        FROM course_detail
+        WHERE location = #{location}
+    </select>
+
+    <select id="isDuplicateCourseDetail" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM course_detail
+        WHERE courseId = #{courseId} AND location = #{location}
+    </select>
+
+    <select id="getCourseDetailsByNameAndUser" resultType="com.nextpin.app.dto.CourseDetailDto">
+        SELECT cd.*
+        FROM course_detail cd
+                 JOIN course c ON cd.courseId = c.courseId
+        WHERE c.courseName = #{courseName} AND c.userId = #{userId}
+    </select>
+
+    <select id="isLocationExist" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM course_detail
+        WHERE courseId = #{courseId} AND location = #{location}
+    </select>
+
 </mapper>

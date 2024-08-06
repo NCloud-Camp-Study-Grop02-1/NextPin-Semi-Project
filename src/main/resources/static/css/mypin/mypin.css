@@ -52,7 +52,7 @@ p{
 
 /*스크롤바 속성(장호님 css)*/
 .side-navbar {
-    width: 50rem;
+    min-width: 480px; /* 최소 너비 설정으로 이 값 이하로 줄어들지 않도록 함 */
     height: 100vh;
     background-color: white;
     overflow-y: auto;
@@ -92,7 +92,7 @@ p{
     z-index: 2;
 }
 .sidebar-container.open {
-    width: 200px;
+    width: 820px;
 }
 
 .sidebar-arrow-container {
@@ -142,9 +142,9 @@ p{
 /* 검색창 돋보기 스타일(장호님 코드 가져옴) */
 /* 메인 장소 입력칸 */
 .side-navbar .input-group{
-    margin: 2rem;
+    margin: auto;
     margin-bottom: 2.6rem !important;
-    width: 25rem;
+    width: 26rem;
     height: 3rem;
     border-radius: 0.8rem !important;
 }
@@ -161,11 +161,11 @@ p{
     width: 2rem;
 }
 
-/*구분선*/
+/*구분선 스타일*/
 .division-line {
     border-top: 0.1rem solid #E1E1E1;
     margin: 3rem 1.5rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 /* 마지막 구분선 */
 .division-line:last-child {
@@ -181,17 +181,21 @@ p{
 .profile {
     display: flex;
     text-align: left;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     align-items: center;
     margin-bottom: 1rem;
 }
 #profile-img{
     padding: 1rem;
     width: 7rem;
+    margin-left: 0.3rem;
 }
 .profile-name {
     margin: 10px;
     font-size: 1.25rem;
+}
+.profile-container{
+    margin-bottom: 0.8rem;
 }
 .profile-content{
     display: flex;
@@ -216,6 +220,7 @@ p{
     cursor: pointer;
     width: 20px;
     height: 20px;
+    margin: 5px;
 }
 
 
@@ -245,6 +250,26 @@ p{
 /*card(코스)를 펼쳤을 때, 아래에 있는 코스 목록과 card 사이에 여백주기*/
 .card-body{
     margin-bottom: 3rem;
+}
+.course-day-box{
+    margin-bottom: 1rem;
+    overflow: hidden; /* float 요소가 부모의 높이를 확장시키지 않도록 */
+}
+.course-day{
+    margin-left: 0.7rem;
+}
+.course-day-label{
+    border: white 1.5px solid;
+    border-radius: 10px;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    width: 3.5rem;
+    text-align: center;
+}
+.course-day-link{
+    color: white;
+    font-size: 0.8rem;
+    float: right;
 }
 /*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
 .collapse {
@@ -392,8 +417,7 @@ p{
 .popover-content {
     position: absolute;
     bottom: 100%; /* 미트볼 버튼 바로 위에 위치하도록 설정 */
-    left: 50%;
-    transform: translateX(217%);
+    left: 85%;
     z-index: 1000; /* 쌓임 순서 결정(z-index): 팝오버가 다른 요소에 덮히지 않도록 가장 위에 표시되도록 설정 */
     display: flex;
     flex-direction: column; /* 팝오버 창의 항목들을 세로로 배치 */
@@ -440,7 +464,7 @@ p{
 .modal {
     display: none;
     position: fixed;
-    z-index: 3;
+    z-index: 99999;
     top: 0;
     left: 0;
     width: 100%;
@@ -573,7 +597,7 @@ p{
     background: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 9999;
 }
 
 #calendar-modal {
@@ -586,7 +610,7 @@ p{
     padding: 20px;
     border-radius: 1.5rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 9999;
     width: 300px; /* 모달의 가로 크기 */
     max-width: 30%; /* 모달의 최대 가로 크기 */
     max-height: 30vh; /* 모달의 최대 세로 크기 (화면 높이의 30%) */

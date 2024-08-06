@@ -35,7 +35,7 @@
             </a>
             <!--구분선-->
             <div class="separator"></div>
-            <a href="/courseHomeReview2" class="menu-item menu-item-course">
+            <a href="/mainCourse" class="menu-item menu-item-course">
                 <img src="../images/icons/course-hover_icon.png" alt="코스">
                 <span>코스</span>
             </a>
@@ -82,8 +82,9 @@
                                     <div id="homeTitle">
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>
                                         <span class="food_type" id="foodType" style="margin-top: 5.5px;" th:text="${rtnKaMapDto.categoryName}"></span>
-                                        <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin" onclick="toggleImage(this);">
-                                            <img class="icon_pin" src="../images/icons/locationPin-before_icon.png" alt="위치 찍기">
+                                        <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin">
+                                            <img class="icon_pin" src="../images/icons/locationPin-after_icon.png" alt="위치 찍기">
+                                            <p>저장</p>
                                         </button>
                                     </div>
                                     <div id="reviewStatics">
@@ -102,21 +103,15 @@
                                         <span class="street_number" id="streetNumber" th:text="${rtnKaMapDto.roadAddressName}"></span>
                                         <span class="location_time">
                                             <img class="icon_location" src="../images/icons/clock_icon.png" alt="시간">
-                                            <li id="businessHour" th:text="${rtnKaMapDto.businessHour}"></li>
-                                            <li id="breakTime"></li>
-                                        </span>
-                                        <span class="location_url">
-<!--                                            <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">-->
-                                            <!--                                            <a href="#" id="locationUrl"> www.nipongnaepong.co.kr</a>-->
+                                            <span id="businessHour" th:text="${rtnKaMapDto.businessHour}"></span>
                                         </span>
                                         <span class="location_phone" id="locationPhone">
                                             <img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호">
                                             <span th:text="${rtnKaMapDto.phone}"></span>
                                         </span>
-                                        <span class="location_tag">
-                                            <img class="icon_location" src="../images/icons/tag_icon.png" alt="태그">
-                                            <a href="#"> # 데이트코스</a>
-                                            <a href="#"> # 혼밥</a>
+                                        <span class="location_url">
+                                            <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">
+                                            <span id="placeUrl" th:text="${rtnKaMapDto.placeUrl}"></span>
                                         </span>
                                     </div>
                                     <div id="reviewContents" style="display:none;">
@@ -148,10 +143,6 @@
                                                         <p class="user_review_content" style="line-height: 1.25rem;">
                                                             [(${eachReview.comment})]
                                                         </p>
-                                                    </div>
-                                                    <div style="display: flex">
-                                                        <img class="review-image" src="../images/img/sample-review1_img.png" alt="리뷰이미지">
-                                                        <img class="review-image" src="../images/img/sample-review2_img.png" alt="리뷰이미지">
                                                     </div>
                                                 </li>
                                             </ul>
@@ -236,6 +227,14 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- 확인 창 및 배경 추가 -->
+<div id="overlay" style="display: none;"></div>
+<div id="deleteConfirmationDialog" style="display: none;">
+    <p>저장된 코스를 삭제하시겠습니까?</p>
+    <button id="confirmDeleteButton">삭제</button>
+    <button id="cancelDeleteButton">취소</button>
 </div>
 
 <!-- 카카오맵-->

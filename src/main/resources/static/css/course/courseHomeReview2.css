@@ -59,14 +59,14 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-    display: block;
-}
-body {
-    line-height: 1;
-}
+/*!* HTML5 display-role reset for older browsers *!*/
+/*article, aside, details, figcaption, figure,*/
+/*footer, header, hgroup, menu, nav, section {*/
+/*    display: block;*/
+/*}*/
+/*body {*/
+/*    line-height: 1;*/
+/*}*/
 ol, ul {
     list-style: none;
 }
@@ -94,12 +94,16 @@ table {
     font-style: normal;
 }
 
+/*body {*/
+/*    font-family: 'pretendard-semibold';*/
+/*    height: 100%;*/
+/*    overflow: hidden;*/
+/*    -webkit-print-color-adjust: exact;*/
+/*    box-sizing: content-box;*/
+/*}*/
+
 body {
-    font-family: 'pretendard-semibold';
-    height: 100%;
-    overflow: hidden;
-    -webkit-print-color-adjust: exact;
-    box-sizing: content-box;
+    overflow-y: hidden;
 }
 
 #root {
@@ -271,9 +275,14 @@ body {
     cursor: pointer;
 }
 
+.chosenPin p {
+    color:#40a0ff;
+    font-size: 14px;
+}
+
 .icon_pin {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 
 /* 메인 > 리뷰점수 */
@@ -348,8 +357,7 @@ a[aria-selected='false'] {
 
 /* 메인 > 장소이름 > 홈 > 상세정보 span 태그 */
 #homeContents span {
-    /*margin: 0.4rem 0;*/
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 /* 메인 > 장소이름 > 홈 > 영업중 시간 */
@@ -357,10 +365,6 @@ a[aria-selected='false'] {
     margin-left: 1rem;
     margin-top: 0.4rem;
     list-style: none;
-}
-
-a {
-    text-decoration: none;
 }
 
 /* 메인 > 장소이름 > 홈 > 상세정보 url */
@@ -585,7 +589,37 @@ a {
 .new-panel p {
     text-align: left;
     margin-left: 15px;
-    line-height: 2.5rem;
+    line-height: 1.8rem;
+}
+
+.courseDayBox {
+    border: 1px solid transparent;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.courseDayBox p {
+    margin: 5px 0;
+}
+
+.courseListItem {
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column; /* 세로 방향 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    border-bottom: 1px solid white; /* 밑줄 추가 */
+}
+
+.courseListItem p {
+    margin: 0;
+}
+
+.courseMemo {
+    font-size: smaller;
+    color: whitesmoke;
+    margin-top: 5px; /* 메모를 가게 이름 아래로 밀어냄 */
 }
 
 .color-sample {
@@ -596,11 +630,28 @@ a {
 }
 
 .new-panel {
-    width: 300px;
+    min-width: 300px;
+    max-width: 400px;
     height: 100%;
     padding: 10px 20px;
     background-color: white;
     border-left: 1px solid #e0e0e0;
+    overflow-y: auto;
+}
+
+/* 스크롤바 가로길이 */
+.new-panel::-webkit-scrollbar {
+    width: 10px;
+}
+/* 스크롤바 바영역 색상 */
+.new-panel::-webkit-scrollbar-thumb {
+    background-color: #40a0ff;
+    border-radius: 5px;
+}
+/* 스크롤바 스크롤영역 색상 */
+.new-panel::-webkit-scrollbar-track {
+    background-color: #E1E1E1;
+    border-radius: 5px;
 }
 
 .dayCourse {
@@ -647,3 +698,51 @@ a {
 .sidebar-container.open {
     width: 200px;
 }
+
+/*코스 삭제 확인 창*/
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#deleteConfirmationDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#deleteConfirmationDialog button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4098FF;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#deleteConfirmationDialog button#cancelDeleteButton {
+    background-color: #ccc;
+    border-radius: 5px;
+}
+
+#deleteConfirmationDialog p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
