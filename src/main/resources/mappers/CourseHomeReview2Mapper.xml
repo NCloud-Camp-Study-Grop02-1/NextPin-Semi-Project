@@ -15,8 +15,8 @@
         VALUES (
                    #{courseId},
                    #{location},
-                   (SELECT x FROM map WHERE placeName = #{location}),
-                   (SELECT y FROM map WHERE placeName = #{location}),
+                   #{x},
+                   #{y},
                    #{visitDate},
                    #{memo},
                    #{userId}

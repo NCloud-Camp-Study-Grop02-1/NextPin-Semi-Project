@@ -11,12 +11,13 @@ import java.util.Date;
 @Setter
 @ToString
 public class CourseDetailDto {
-        private int courseId;
-        private String location;
-        private double x;
-        private double y;
-        private Date visitDate;
-        private String memo;
-        private String userId;
+    private int courseId;
+    private String location;
+    private double x;
+    private double y;
+    private int day;
+    private Date visitDate;
+    private String memo;
+    private String userId;
 
 }

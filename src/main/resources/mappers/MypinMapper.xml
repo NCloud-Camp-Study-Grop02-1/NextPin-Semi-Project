@@ -4,54 +4,96 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--&lt;!&ndash;생성한 Mapper 인터페이스와 namespace 속성으로 연결&ndash;&gt;-->
-<!--&lt;!&ndash;쿼리문이 Dao클래스에서 분리되어 온 것이기 때문에 namespace는 관례적으로 Dao클래스명과 일치시킴.&ndash;&gt;-->
+<!--생성한 Mapper 인터페이스와 namespace 속성으로 연결-->
+<!--쿼리문이 Dao클래스에서 분리되어 온 것이기 때문에 namespace는 관례적으로 Dao클래스명과 일치시킴-->
 <mapper namespace="MyPinDao">
+    <!--USER 테이블 정보 조회 기능-->
     <select id="getUserProfile" parameterType="String" resultType="UserDto">
-        SELECT nickname, message, profileURL
-        FROM user
-        WHERE userId = #{userId}
+        SELECT userId,
+               NICKNAME,
+               userPwd,
+               ROLES,
+               NAME,
+               MESSAGE,
+               profileURL
+            FROM USER
+            WHERE userId = #{userId}
     </select>
 
-    <!--    <select id="getUser" parameterType="userId" resultType="user">-->
-<!--        SELECT NICKNAME,-->
-<!--               MESSAGE,-->
-<!--               PROFILEURL-->
-<!--        FROM USER-->
-<!--            WHERE USERID = #{USERID}-->
-<!--    </select>-->
+    <!--COURSE 테이블(mypin) 정보 조회 기능-->
+    <select id="getUserCourse" parameterType="String" resultType="CourseDto">
+        SELECT courseId,
+               userId,
+               courseName,
+               BOOKMARK,
+               heartCnt,
+               openClose,
+               color
+            FROM COURSE
+            WHERE userId = #{userId}
+              AND myPinBoolean = 1
+    </select>
 
-<!--    <select id="getUserCourse" parameterType="userId" resultType="course">-->
-<!--        SELECT COURSENAME,-->
-<!--               REGDATE,-->
-<!--               MODIFTDATE,-->
-<!--               BOOKMARK,-->
-<!--               HEARTCNT,-->
-<!--               ISPUBLIC,-->
-<!--               COLOR-->
-<!--        FROM COURSE-->
-<!--            WHERE USERID = #{USERID}-->
-<!--    </select>-->
+    <!--COURSE_DETAIL 테이블 정보 조회 기능-->
+    <select id="getUserCourseDetail" parameterType="String" resultType="CourseDetailDto">
+        SELECT COURSEID,
+               LOCATION,
+               X,
+               Y,
+               DAY,
+               visitDate,
+               MEMO
+            FROM COURSE_DETAIL
+            WHERE userId = #{userId}
+    </select>
 
-<!--    <select id="getUserCourseDetail" parameterType="userId" resultType="courseDetail">-->
-<!--        SELECT-->
-<!--    </select>-->
+    <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
+    <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
+        SELECT courseId,
+               userId,
+               courseName,
+               BOOKMARK,
+               heartCnt,
+               openClose,
+               color
+        FROM COURSE
+        WHERE userId = #{userId}
+          AND likeBoolean = 1
+    </select>
 
-<!--    <select id="getUserCourse" parameterType="userId" resultType="course">-->
-<!--        SELECT U.NICKNAME,-->
-<!--               U.MESSAGE,-->
-<!--               U.PROFILEURL,-->
-<!--               C.COURSENAME,-->
-<!--               C.REGDATE,-->
-<!--               C.MODIFTDATE,-->
-<!--               C.BOOKMARK,-->
-<!--               C.HEARTCNT,-->
-<!--               C.ISPUBLIC,-->
-<!--               C.COLOR-->
-<!--        FROM COURSE C-->
-<!--        JOIN USER U-->
-<!--          ON C.USERID = U.USERID-->
-<!--        WHERE USERID = #{USERID}-->
-<!--    </select>-->
+    <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
+    <update id="editUserProfile" parameterType="userDto">
+        UPDATE USER
+        SET MESSAGE = #{message},
+            profileURL = #{profileURL}
+        WHERE userId = #{userId}
+    </update>
+
+    <!--COURSE 테이블의 코스 이름,컬러,공개여부 수정 기능-->
+    <update id="editUserCourse" parameterType="courseDto">
+        UPDATE COURSE
+        SET courseNAME = #{courseName},
+            color = #{color},
+            openClose = #{openClose}
+        WHERE userId = #{userId}
+          AND courseId = #{courseId}
+    </update>
+
+    <!--COURSE 테이블의 코스 삭제 기능-->
+
+    <!--COURSE_DETAIL 테이블의 코스 상세 장소 삭제 기능-->
+
+    <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
+    <update id="editBookMark" parameterType="courseDto">
+        UPDATE COURSE
+        SET courseNAME = #{courseName},
+            color = #{color},
+            openClose = 0,
+            bookMark = 1,
+            myPinBoolean = 1,
+            likeBoolean = 0
+        WHERE userId = #{userId}
+          AND courseId = #{courseId}
+    </update>
 
 </mapper>
