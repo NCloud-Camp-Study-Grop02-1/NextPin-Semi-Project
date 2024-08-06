@@ -12,6 +12,32 @@ $(function() {
             inst.dpDiv.css({ marginLeft: sidebarWidth }); // 사이드바 너비만큼 왼쪽으로 이동
         }
     });
+<<<<<<< HEAD
+=======
+
+    // 확인 버튼 클릭 시 코스 생성
+    $('.finishButton').click(function() {
+        const selectedDate = $('#testDatepicker').val();
+        const memoActive = $('#memo-active').is(':checked');
+        const selectedMemo = memoActive ? $('#memo-text').val() : '';
+        const selectedColor = $('.color-button.selected').css('background-color');
+
+        if (selectedDate && selectedColor) {
+            var memoText = '';
+            if ($('#memo-active').is(':checked')) {
+                memoText = $('#memo-text').val();
+            }
+            $('#selectedDate').text(selectedDate);
+            $('#selectedMemo').text(selectedMemo);
+            $('#selectedColor').css('background-color', selectedColor);
+
+            $('#makeCourse').removeClass('show');
+            $('#newCoursePanel').removeClass('hidden');
+        } else {
+            alert('날짜와 색상은 필수 선택 항목입니다.');
+        }
+    });
+>>>>>>> origin/backend/Yubin
 });
 
 // 핀 선택시 코스 생성 창 나오기
@@ -228,21 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.setAttribute('aria-expanded', !isExpanded);
         $('#makeCourse').removeClass('show');
         $('#newCoursePanel').addClass('hidden');
-    });
-});
-
-// 코스 이름 선택 창
-document.addEventListener('DOMContentLoaded', function() {
-    const myCourseSelect = document.getElementById('myCourse');
-    const dayCourseH3 = document.querySelector('.dayCourse h3');
-
-    myCourseSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption.value === 'newCourse') {
-            dayCourseH3.textContent = '새 코스';
-        } else {
-            dayCourseH3.textContent = selectedOption.text;
-        }
     });
 });
 
@@ -492,7 +503,30 @@ function removeAllChildNods(el) {
 
 window.onload = function() {
     searchPlaces();
-    printResult();
+    // printResult();
+    console.log($('#hiddenValue').text());
+
+    let loadData = '';
+    if($('#hiddenValue').text() !== undefined || $('#hiddenValue').text() !== ''){
+        loadData = JSON.parse($('#hiddenValue').text());
+    }
+
+    console.log(loadData);
+
+    // 데이터 채우기
+    $('#locationTitle').text(loadData['data']['placeName']);
+    $('#foodType').text(loadData['data']['categoryName']);
+    $('#reviewScore').text('★ ' + loadData['data']['score']);
+
+    $('#locationAddress').text(loadData['data']['addressName']);
+    $('#streetNumber').text('지번 | ' + loadData['data']['roadAddressName']);
+
+    let businessHour = loadData['data']['businessHour'].split('·')[0];
+    let breakTime = loadData['data']['businessHour'].split('·')[1];
+    $('#businessHour').text(businessHour);
+    $('#breakTime').text(breakTime);
+
+    $('#locationPhone').text(loadData['data']['phone']);
 
     $("input[name=courseType][value=course_food]").prop("checked", true);
     $('#course_food_label').css('background', '#FFC061');

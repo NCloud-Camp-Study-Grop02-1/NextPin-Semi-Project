@@ -38,7 +38,7 @@ public class CourseController {
 
     @GetMapping("/courseHomeReview2")
     public ModelAndView courseHomeReview2(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
-        KakaoMapDto rtnKaMapDto = courseService.searchPinDetail(id);
+        String rtnKaMapDto = courseService.searchPinDetail(id);
 
         List<KakaoMapReviewDto> rtnKaMapReviewList = courseService.searchPinDetailReview(id);
         int rtnKaMapReviewListSize = rtnKaMapReviewList.size();

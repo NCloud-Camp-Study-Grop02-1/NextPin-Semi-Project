@@ -39,8 +39,21 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public KakaoMapDto searchPinDetail(int id) {
-        return courseDao.searchPinDetail(id);
+    public String searchPinDetail(int id) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> jsonMap = new HashMap<>();
+
+        jsonMap.put("data", courseDao.searchPinDetail(id));
+
+        String jsonString = "";
+
+        try {
+            jsonString = objectMapper.writerWithDefaultPrettyPrinter()
+                                     .writeValueAsString(jsonMap);
+        } catch(JsonProcessingException je){
+            logger.error(je.getMessage());
+        }
+        return jsonString;
     }
 
     @Override

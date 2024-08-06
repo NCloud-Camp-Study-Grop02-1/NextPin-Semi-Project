@@ -11,6 +11,7 @@ $(() => {
     // 비밀번호 재입력 일치 여부
     let passwordReChk = false;
 
+    // 아이디 입력받는 칸
     $('#inputId').on('blur', (e) => {
         if($('#inputId').val() === ''){
             $('#id-validate-message1').text('아이디를 입력해주세요.');
@@ -27,8 +28,8 @@ $(() => {
         // console.log("메시지 값 : " + $('#id-validate-message1').text());
     });
 
+    // 아이디 중복체크 버튼
     $('#button-addon1').on('click', function(){
-        var tempId = $('#inputId').val();
         if($("#inputId").val() == "") {
             $('#id-validate-message1').text('아이디를 입력해주세요.');
             $("#inputId").focus();
@@ -70,6 +71,7 @@ $(() => {
         $("#button-addon1").attr("disabled", false);
     });
 
+    // 닉네임 입력받는 칸
     $('#inputNickname').on('blur', (e) => {
         if($('#inputNickname').val() === ''){
             $('#id-validate-message3').text('닉네임을 입력해주세요.');
@@ -85,6 +87,7 @@ $(() => {
         // console.log("메시지 값 : " + $('#id-validate-message1').text());
     });
 
+    // 닉네임 중복체크 버튼
     $('#button-addon2').on('click', function(){
         var tempNickname = $('#inputNickname').val();
         // alert('중복체크 닉네임 값 : ' + tempNickname + '               DB 작업 필요...');
@@ -95,7 +98,6 @@ $(() => {
         }
 
         $.ajax({
-            // url 다시 작성
             url: "/loginSignUp/userNicknameCheck.do",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
@@ -128,6 +130,7 @@ $(() => {
         return /^(?=.*[a-zA-Z])(?=.*[0-8])(?=.*[!@#$%^&*+=-]).{8,}$/.test(pw);
     }
 
+    // 비밀번호 입력받는 칸
     $('#inputPassword').on('blur', (e) => {
         if($('#inputPassword').val() === ''){
             $('#id-validate-message5').text('비밀번호를 입력해주세요.');
@@ -151,6 +154,7 @@ $(() => {
         // console.log("메시지 값 : " + $('#id-validate-message1').text());
     });
 
+    // 비밀번호 재입력받는 칸
     $('#inputPasswordChk').on('blur', (e) => {
         if($('#inputPasswordChk').val() === ''){
             $('#id-validate-message6').text('비밀번호를 재입력해주세요.');
@@ -183,6 +187,7 @@ $(() => {
         passwordReChk = true;
     });
 
+    // 로그인창으로 다시 돌아가는 버튼
     $('#backToLogin').on('click', (e) => {
         if(idCheck || nicknameCheck || passwordChk || passwordReChk){
             e.preventDefault();
@@ -191,6 +196,7 @@ $(() => {
         }
     });
 
+    // 로그인 창으로 다시 돌아가는 메소드
     $('#modalYes').on('click', function(){
         $('#signupForm')[0].reset();
         location.replace('login');
@@ -209,6 +215,7 @@ $(() => {
         if(!nicknameCheck) {
             e.preventDefault();
             alert("닉네임 중복체크를 진행해주세요.")
+            return;
         }
 
         // 사용자가 비밀번호 유효성 검사를 만족하지 않음에도 버튼을 눌렀을 경우
@@ -216,6 +223,7 @@ $(() => {
             e.preventDefault();
             alert("비밀번호는 영문자, 숫자, 특수문자 조합의 8자 이상으로 입력해주세요.");
             $("#inputPassword").focus();
+            return;
         }
 
         // 사용자가 비밀번호가 일치하지 않음에도 버튼을 눌렀을 경우
@@ -223,6 +231,12 @@ $(() => {
             e.preventDefault();
             alert("비밀번호가 일치하지 않습니다.");
             $("#inputPasswordChk").focus();
+            return;
         }
-    })
+
+        // 모든 조건이 만족되는 경우 서버로 전송
+        if(idCheck && nicknameCheck && passwordChk && passwordReChk) {
+            alert("정상적으로 회원가입 되었습니다. 로그인 화면에서 새롭게 로그인해주십시오.");
+        }
+    });
 });

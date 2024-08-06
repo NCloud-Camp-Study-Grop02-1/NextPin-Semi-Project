@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dto.MemberDto;
 import com.nextpin.app.mapper.MemberMapper;
 import com.nextpin.app.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +47,6 @@ public class MemberServiceImpl implements MemberService {
         Map<String, String> jsonMap = new HashMap<>();
 
         if(userIdCheck == 0){
-//            System.out.println("아이디 체크함---------------------");
-            System.out.println(userIdCheck);
             jsonMap.put("userIdCheckMsg", "userIdOk");
         } else if(userIdCheck == 1) {
             jsonMap.put("userIdCheckMsg", "userIdFail");
@@ -106,5 +105,10 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return loginMember;
+    }
+
+    @Override
+    public void logout(HttpSession session) {
+        session.invalidate();
     }
 }
