@@ -34,6 +34,10 @@ public class MyPinServiceImpl implements MyPinService {
         return myPinDao.getUserCourse(userId);
     }
 
+    public List<CourseDto> getUserLikeCourse(String userId) {
+        return myPinDao.getUserLikeCourse(userId);
+    }
+
     public List<CourseDetailDto> getUserCourseDetail(String userId) {
         return myPinDao.getUserCourseDetail(userId);
     }
@@ -43,8 +47,18 @@ public class MyPinServiceImpl implements MyPinService {
     }
 
     @Override
-    public void editUserCourse(Map<String, Object> courseDto) {
-        myPinDao.editUserCourse(courseDto);
+    public void editUserCourse1(CourseDto courseDto) {myPinDao.editUserCourse1(courseDto);}
+
+    public void editUserCourse2(CourseDto courseDto) {myPinDao.editUserCourse2(courseDto);}
+
+    public void editUserCourse3(CourseDto courseDto) {myPinDao.editUserCourse3(courseDto);}
+
+    public void editUserBookMark(CourseDto courseDto){
+        myPinDao.editUserBookMark(courseDto);
+    }
+
+    public void deleteUserCourseDetail(CourseDetailDto courseDetailDto){
+        myPinDao.deleteUserCourseDetail(courseDetailDto);
     }
 
 }

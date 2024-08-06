@@ -14,6 +14,8 @@ public class CourseDto {
         private int heartCnt;
         private int openClose;
         private String color;
+        private boolean myPinBoolaen;
+        private boolean likeBoolean;
 
         public int getCourseId() {
             return courseId;
@@ -95,26 +97,37 @@ public class CourseDto {
             this.openClose = openClose;
         }
 
-        // boolean 변환 메소드 추가
-        public boolean isOpen() {
-            return openClose == 1;
+        public boolean isMyPinBoolaen() {
+            return myPinBoolaen;
         }
 
-        @Override
-        public String toString() {
-            return "CourseDto{" +
-                    "courseId=" + courseId +
-                    ", userId='" + userId + '\'' +
-                    ", nickname='" + nickname + '\'' +
-                    ", courseName='" + courseName + '\'' +
-                    ", regDate=" + regDate +
-                    ", modifyDate=" + modifyDate +
-                    ", bookMark=" + bookMark +
-                    ", heartCnt=" + heartCnt +
-                    ", openClose=" + openClose +
-                    ", color='" + color + '\'' +
-                    '}';
+        public void setMyPinBoolaen(boolean myPinBoolaen) {
+            this.myPinBoolaen = myPinBoolaen;
         }
 
+        public boolean isLikeBoolean() {
+            return likeBoolean;
+        }
 
+        public void setLikeBoolean(boolean likeBoolean) {
+            this.likeBoolean = likeBoolean;
+        }
+
+    @Override
+    public String toString() {
+        return "CourseDto{" +
+                "courseId=" + courseId +
+                ", userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", regDate=" + regDate +
+                ", modifyDate=" + modifyDate +
+                ", bookMark=" + bookMark +
+                ", heartCnt=" + heartCnt +
+                ", openClose=" + openClose +
+                ", color='" + color + '\'' +
+                ", myPinBoolaen=" + myPinBoolaen +
+                ", likeBoolean=" + likeBoolean +
+                '}';
+    }
 }
