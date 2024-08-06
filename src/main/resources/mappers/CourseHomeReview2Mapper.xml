@@ -14,8 +14,9 @@
     </insert>
 
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
-        INSERT INTO course_detail (location, x, y, visitDate, memo, userId)
+        INSERT INTO course_detail (courseId, location, x, y, visitDate, memo, userId)
         VALUES (
+                   #{courseId},
                    #{location},
                    #{x},
                    #{y},
