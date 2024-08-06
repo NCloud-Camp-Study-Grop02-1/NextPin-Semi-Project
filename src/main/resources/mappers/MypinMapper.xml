@@ -101,18 +101,4 @@
         WHERE userId = #{userId}
           AND courseId = #{courseId}
     </update>
-
-    <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
-    <update id="editBookMark" parameterType="courseDto">
-        UPDATE COURSE
-        SET courseNAME = #{courseName},
-            color = #{color},
-            openClose = 0,
-            bookMark = 1,
-            myPinBoolean = 1,
-            likeBoolean = 0
-        WHERE userId = #{userId}
-          AND courseId = #{courseId}
-    </update>
-
 </mapper>

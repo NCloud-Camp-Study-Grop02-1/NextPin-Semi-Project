@@ -20,9 +20,12 @@ import java.util.Map;
 public class MypinController {
 
     private static final Logger logger = LoggerFactory.getLogger(MypinController.class);
+    private MyPinService myPinService;
 
     @Autowired
-    private MyPinService myPinService;
+    public MypinController(MyPinService myPinService) {
+        this.myPinService = myPinService;
+    }
 
     @GetMapping("/myPin")
     public ModelAndView myPin(HttpSession session) {
@@ -145,7 +148,7 @@ public class MypinController {
         myPinService.editUserBookMark(courseDto);
     }
 
-    @PostMapping("/deleteCourseDetail")
+    @PostMapping("/deleteCoursePinDetail")
     @ResponseBody
     public void deleteUserCourse(@RequestBody CourseDetailDto courseDetailDto){
 

@@ -812,7 +812,7 @@ function deleteCourse(icon){
         headers : {
             'content-type':'application/json'
         },
-        url : "/deleteCourseDetail",
+        url : "/deleteCoursePinDetail",
         async : true,
         dataType: "json",
         data : JSON.stringify(sendData),
