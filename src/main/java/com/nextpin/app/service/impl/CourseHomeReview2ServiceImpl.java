@@ -8,6 +8,7 @@ import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,12 @@ import java.util.Map;
 @Service
 public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
-    @Autowired
     private CourseHomeReview2Dao courseHomeReview2Dao;
+
+    @Autowired
+    public CourseHomeReview2ServiceImpl(CourseHomeReview2Dao courseHomeReview2Dao) {
+        this.courseHomeReview2Dao = courseHomeReview2Dao;
+    }
 
     @Override
     public String findCourseIdByUserIdAndCourseName(String userId, String courseName) {
@@ -81,5 +86,14 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     public int deleteCourseDetail(int courseId, String location) {
         courseHomeReview2Dao.deleteCourseDetail(courseId, location);
         return courseId;
+    }
+
+    @Override
+    @Transactional
+    public void createCourse(CourseDto course, CourseDetailDto courseDetail) {
+        int courseId = courseHomeReview2Dao.insertCourse(course);
+//        courseHomeReview2Dao.insertCourse(course);
+        courseDetail.setCourseId(courseId);
+        courseHomeReview2Dao.insertCourseDetail(courseDetail);
     }
 }

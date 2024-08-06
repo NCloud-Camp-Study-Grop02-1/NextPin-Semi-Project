@@ -2,32 +2,26 @@ package com.nextpin.app.dao;
 
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+@Repository
+public class CourseHomeReview2Dao {
 
-@Mapper
-public interface CourseHomeReview2Dao {
+    private final SqlSessionTemplate mybatis;
 
-    public List<String> findCourseIdByUserIdAndCourseName(String userId, String courseName);
+    @Autowired
+    public CourseHomeReview2Dao(SqlSessionTemplate sqlSessionTemplate) {
+        this.mybatis = sqlSessionTemplate;
+    }
 
-    void updateCourseColorAndModifyDate(@Param("courseId") int courseId, @Param("color") String color);
+    public int insertCourse(CourseDto course) {
+        mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourse", course);
+        return course.getCourseId();
+    }
 
-    void insertCourse(CourseDto courseDto);
-
-    void insertCourseDetail(CourseDetailDto courseDetail);
-
-    List<CourseDetailDto> getCourseDetails(@Param("courseId") int courseId);
-
-    Map<String, Double> getCoordinatesByLocation(@Param("location") String location);
-
-    boolean isDuplicateCourseDetail(@Param("courseId") int courseId, @Param("location") String location);
-
-    List<CourseDetailDto> getCourseDetailsByNameAndUser(@Param("courseName") String courseName, @Param("userId") String userId);
-
-    boolean isLocationExist(@Param("courseId") Integer courseId, @Param("location") String location);
-
-    int deleteCourseDetail(@Param("courseId") Integer courseId, @Param("location") String location);
+    public void insertCourseDetail(CourseDetailDto courseDetail) {
+        mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourseDetail", courseDetail);
+    }
 }

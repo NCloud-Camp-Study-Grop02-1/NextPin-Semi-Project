@@ -30,4 +30,6 @@ public interface CourseHomeReview2Service {
 
     int deleteCourseDetail(int courseId, String location);
 
+    public void createCourse(CourseDto course, CourseDetailDto courseDetail);
+
 }

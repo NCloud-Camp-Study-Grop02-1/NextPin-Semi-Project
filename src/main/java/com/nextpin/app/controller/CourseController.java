@@ -3,6 +3,7 @@ package com.nextpin.app.controller;
 import ch.qos.logback.classic.Logger;
 import com.nextpin.app.dto.*;
 import com.nextpin.app.service.CourseHomeReview2Service;
+import com.nextpin.app.service.PlaceService;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.awt.*;
 import java.util.Map;
 
 @RestController
@@ -39,7 +43,7 @@ public class CourseController {
         List<KakaoMapReviewDto> rtnKaMapReviewList = courseService.searchPinDetailReview(id);
         int rtnKaMapReviewListSize = rtnKaMapReviewList.size();
 
-        logger.debug("리뷰 리스트 : " + rtnKaMapReviewList);
+        logger.debug("리뷰 리스트 : " + rtnKaMapReviewList.toString());
         ModelAndView mav = new ModelAndView();
         mav.setViewName("course/courseHomeReview2");
         mav.addObject("rtnKaMapDto", rtnKaMapDto);
@@ -58,7 +62,8 @@ public class CourseController {
         logger.debug("mainCourse페이지 이동");
         return mav;
     }
-
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.POST)
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.GET)
     @PostMapping("/searchPlaces")
     @ResponseBody
     public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
