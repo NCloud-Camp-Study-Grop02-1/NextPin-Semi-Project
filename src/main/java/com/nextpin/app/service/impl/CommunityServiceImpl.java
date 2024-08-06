@@ -35,30 +35,35 @@ public class CommunityServiceImpl implements CommunityService {
         return communityDao.getCourseDetailsByCourseId(courseId);
     }
 
-    public String getCourseListMap(){
+    public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds) {
+        return communityDao.getCourseDetailByCourses(courseIds);
+    }
+
+    public Map<String, Object> getCourseListMap(){
         List<CourseDto> courseList = getAllCourses();
-        List<Map<String, Object>> courseListMap = new ArrayList<>();
-        for (CourseDto course : courseList) {
-            List<CourseDetailDto> tempList = getCourseDetailsByCourseId(course.getCourseId());
-            if(tempList.size() > 0){
-                Map<String, Object> map = new HashMap<>();
-                map.put("nickname", course.getNickname());
-                map.put("courseName", course.getCourseName());
-                map.put("courseColor", course.getColor());
-                map.put("heartCnt", course.getHeartCnt());
-                map.put("data", tempList);
-                courseListMap.add(map);
-            }
+
+        List<Integer> courseIds = new ArrayList<>();
+        for(CourseDto courseDto : courseList){
+            courseIds.add(courseDto.getCourseId());
         }
+        List<CourseDetailDto> courseDetailList = getCourseDetailByCourses(courseIds);
+
+//        logger.debug("courseDetailList : " + courseDetailList.toString());
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = "";
+        String jsonCourseDetailList = "";
 
         try {
-            jsonString = objectMapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(courseListMap);
-        } catch(JsonProcessingException je){
-            logger.error(je.getMessage());
+            jsonCourseDetailList = objectMapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(courseDetailList);
+        } catch (JsonProcessingException je) {
+            System.out.println(je.getMessage());
         }
-        return jsonString;
+
+        logger.debug("jsonCourseDetailList : " + jsonCourseDetailList);
+        Map<String, Object> courseMap = new HashMap<>();
+        courseMap.put("courseList", courseList);
+        courseMap.put("courseDetailList", jsonCourseDetailList);
+
+        return courseMap;
     }
 }

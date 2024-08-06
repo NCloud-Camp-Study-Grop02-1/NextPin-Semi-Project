@@ -11,4 +11,14 @@
     <select id="getCourseDetailsByCourseId" parameterType="int" resultType="com.nextpin.app.dto.CourseDetailDto">
         SELECT * FROM course_detail WHERE courseId = #{courseId} ORDER BY visitDate
     </select>
+
+    <select id="getCourseDetailByCourses" parameterType="list" resultType="CourseDetailDto">
+        SELECT *
+          FROM COURSE_DETAIL
+         WHERE 1=1
+           AND COURSEID IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

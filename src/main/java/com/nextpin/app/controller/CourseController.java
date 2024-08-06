@@ -17,16 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 public class CourseController {
@@ -98,7 +95,9 @@ public class CourseController {
                     // "yyyy/MM/dd" 형식을 처리할 수 있도록 DateTimeFormatter를 정의합니다.
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                     LocalDate localDate = LocalDate.parse(visitDateString, formatter);
-                    courseDetail.setVisitDate(localDate);
+
+                    Date date = java.sql.Date.valueOf(localDate);
+                    courseDetail.setVisitDate(date);
                 } catch (DateTimeParseException e) {
                     // 올바르지 않은 날짜 형식 처리 (예: 기본값 설정 또는 예외 던지기)
                     throw new IllegalArgumentException("잘못된 날짜 형식: " + visitDateString, e);

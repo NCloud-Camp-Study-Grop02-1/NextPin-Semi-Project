@@ -367,14 +367,29 @@ window.onload = function(){
         });
     });
 
-    var detailData = JSON.parse($('#hiddenDetailData').val());
+    var detailData = JSON.parse($('#hiddenValue').val());
     // console.log(detailData);
-    var courseRankingDiv = $('.ranking');
 
     for(let i = 0; i <detailData.length; i++){
-        console.log(detailData[i]);
+        let visitD = new Date(detailData[i].visitDate);
+        let visitDa = visitD.getFullYear() + "-" + (visitD.getMonth() + 1) + "-" + visitD.getDate();
+        detailData[i].visitDate = visitDa;
+        // console.log(detailData[i]);
+
+        let divElement = $('.course-details #' + detailData[i].courseId);
+        let dayDivElement = document.createElement('div');
+        dayDivElement.classList.add('day');
+        dayDivElement.classList.add('user1day1');
+
+        let createLocationUlElement = document.createElement('ul');
+        let createDateLiElement = document.createElement('li');
+        createDateLiElement.textContent = detailData[i].visitDate;
+
+
+
     }
 };
+
 
 // function fetchCourses() {
 //     fetch('/courses')

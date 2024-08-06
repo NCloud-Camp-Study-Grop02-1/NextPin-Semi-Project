@@ -29,13 +29,15 @@ public class CommunityController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("community/community");
 
-        String courseListMap = communityService.getCourseListMap();
+        Map<String, Object> courseListMap = communityService.getCourseListMap();
 
 //        logger.debug("-------------------------------------------");
 //        logger.debug("courseListMap : " + courseListMap.toString());
 //        logger.debug("-------------------------------------------");
 
-        mav.addObject("courseListMap", courseListMap);
+        mav.addObject("courseList", courseListMap.get("courseList"));
+        mav.addObject("courseDetailList", courseListMap.get("courseDetailList"));
+
         logger.debug("community페이지 이동");
         return mav;
     }
