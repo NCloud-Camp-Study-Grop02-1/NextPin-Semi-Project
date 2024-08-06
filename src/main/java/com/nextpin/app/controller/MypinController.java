@@ -66,12 +66,17 @@ public class MypinController {
 
         // 사용자 코스 세부내용 정보 가져오기
         List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId);
-        logger.debug("userCourseDetailList 값 : " + userCourseList.toString());
-        for (CourseDetailDto course : userCourseDetailList) {
-            logger.debug("Course나와..: " + course.toString());
+
+
+        logger.debug("userCourseDetailList 값 : " + userCourseDetailList.toString());
+        for (CourseDetailDto courseDetail : userCourseDetailList) {
+            logger.debug("CourseDetail나와..: " + courseDetail.toString());
         }
         mav.addObject("userCourseDetailList", userCourseDetailList); // 사용자 코스 세부내용 정보를 뷰에 추가
 
+        // 리스트의 크기 계산
+        int listSize = userCourseList != null ? userCourseList.size() : 0;
+        mav.addObject("listSize", listSize);
         logger.debug("myPin페이지 이동");
         return mav;
     }
@@ -136,9 +141,17 @@ public class MypinController {
     public void editUserBookMark(@RequestBody CourseDto courseDto){
 
         logger.debug("courseDto : " + courseDto.toString());
-        // 사용자 프로필 메시지 변경하기
-        // CourseDto에 userId, message 값 담아서 넘겨줄거임.
+
         myPinService.editUserBookMark(courseDto);
+    }
+
+    @PostMapping("/deleteCourseDetail")
+    @ResponseBody
+    public void deleteUserCourse(@RequestBody CourseDetailDto courseDetailDto){
+
+        logger.debug("courseDetailDto : " + courseDetailDto.toString());
+
+        myPinService.deleteUserCourseDetail(courseDetailDto);
     }
 
 }

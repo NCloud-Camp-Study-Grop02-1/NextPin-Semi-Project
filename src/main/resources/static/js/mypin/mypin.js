@@ -707,12 +707,12 @@ function closePopover() {
 // 각 코스 이름을 수정하는 기능
 function editDescription(icon) {
     // icon 요소의 부모 요소(container)를 가져옵니다.
-    var container = icon.closest('.container');
+    let container = icon.closest('.container');
 
     // container 내의 pin-description, pin-textarea 요소를 가져옵니다.
-    var input = container.querySelector('.pin-description');
-    var textarea = container.querySelector('.pin-textarea');
-    var nameEdit = container.querySelector('.popover-item-nameEdit');
+    let input = container.querySelector('.pin-description');
+    let textarea = container.querySelector('.pin-textarea');
+    let nameEdit = container.querySelector('.popover-item-nameEdit');
     // pin-textarea 요소가 숨겨져 있다면 (즉, 편집 모드가 아닌 경우)
     if (textarea.style.display === 'none' || textarea.style.display === '') {
         // profile-textarea 요소의 값을 항상 profile-description 요소의 value 값으로 설정합니다.
@@ -789,6 +789,50 @@ function editDescription(icon) {
 
 
 
+
+
+
+//각 코스 삭제하는 기능
+function deleteCourse(icon){
+    // icon 요소의 부모 요소(container)를 가져옵니다.
+    let containerElement = icon.closest('.container');
+    let inputElement = containerElement.querySelector('input');
+    let courseName = inputElement.value;
+    let courseId = containerElement.getAttribute('data-course-id');
+    let courseDetailId = containerElement.getAttribute('data-course-detail-id');
+
+
+    let sendData = {
+        "userId" : 'ksy',
+        "course_detail_id" : courseDetailId
+    };
+
+    $.ajax({
+        method : "POST",
+        headers : {
+            'content-type':'application/json'
+        },
+        url : "/deleteCourseDetail",
+        async : true,
+        dataType: "json",
+        data : JSON.stringify(sendData),
+        success : function(result){
+            console.log("ajax : result : " + result);
+        },
+        error : function(request, status, error){
+            console.log(error);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
 //관심있는 코스에서 저장 버튼을 누르면 캘린더가 뜨고 지정한 날짜에 저장할 수 있는 기능
 let isSaved = false;
 let currentElement;
@@ -805,16 +849,24 @@ function toggleSaveState(element) {
     let computedStyle = window.getComputedStyle(containerElement);
     let color = computedStyle.backgroundColor;
 
+
     if (!isSaved) {
         // 캘린더 표시
         $('#calendar-container').fadeIn();
+
+        // 날짜 선택기 값 가져오기
+        let calendarElement = document.getElementById('calendar');
+        let regDate = calendarElement.value;
+
+        console.log(regDate);
 
 
         let sendData = {
             "userId" : 'ksy',
             "courseId" : courseId,
             "courseName": courseName,
-            "color": color
+            "color": color,
+            "regDate": regDate
         };
 
         console.log(sendData);

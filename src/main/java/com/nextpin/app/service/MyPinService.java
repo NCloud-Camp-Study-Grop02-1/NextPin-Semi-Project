@@ -24,5 +24,7 @@ public interface MyPinService {
 
     void editUserBookMark(CourseDto courseDto);
 
+    void deleteUserCourseDetail(CourseDetailDto courseDetailDto);
+
 }
 

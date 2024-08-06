@@ -57,5 +57,9 @@ public class MyPinServiceImpl implements MyPinService {
         myPinDao.editUserBookMark(courseDto);
     }
 
+    public void deleteUserCourseDetail(CourseDetailDto courseDetailDto){
+        myPinDao.deleteUserCourseDetail(courseDetailDto);
+    }
+
 }
 

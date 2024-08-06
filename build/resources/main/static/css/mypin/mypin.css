@@ -405,7 +405,9 @@ p{
     width: 1rem;
     margin-left: 1rem;
 }
-
+.delete-icon:hover{
+    cursor: pointer;
+}
 
 
 /*mypin 코스 목록에 대한 미트볼 버튼 속성*/
