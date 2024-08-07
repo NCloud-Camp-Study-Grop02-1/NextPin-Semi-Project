@@ -193,6 +193,20 @@ body {
     border-left: #fff;
 }
 
+/* 코스 분류 */
+.course_location_type {
+    text-align: left;
+    display: flex;
+}
+
+/* 라벨 위로 마우스 올렷을때 커서모양 변경 */
+.course_location_type label:hover {
+    cursor: pointer;
+}
+input[type='radio'] {
+    opacity: 0;
+}
+
 /* 장소 리스트 */
 #locationList {
     margin-top: 4%;

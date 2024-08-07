@@ -259,6 +259,10 @@ p{
     margin-bottom: 1rem;
     overflow: hidden; /* float 요소가 부모의 높이를 확장시키지 않도록 */
 }
+
+.course-day-box:hover{
+    cursor: pointer;
+}
 .course-day{
     margin-left: 0.7rem;
 }
@@ -592,6 +596,9 @@ p{
 
 
 
+
+
+
 /*관심있는코스 목록 속성*/
 .like-content ul li .container{
     background-color: #badce3;
@@ -700,6 +707,8 @@ button, .modal-buttons button {
 
 /* 회원탈퇴 모달 스타일 */
 #settingModalContainer .modal-content,
+#settingModalContainer2 .modal-content,
+#settingModalContainer3 .modal-content,
 #settingFarewellModal .setting-modal-content1 {
     background-color: white;
     margin: 5% auto;

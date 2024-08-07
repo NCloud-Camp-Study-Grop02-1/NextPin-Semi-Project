@@ -7,69 +7,47 @@
     <title>NextPin</title>
     <link rel="stylesheet" href="css/reset.css">
     <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/side-bar_style.css">
-    <!-- 캘린더 메인페이지 스타일 시트 적용-->
-    <link rel="stylesheet" href="css/calendar/calendar_main.css">
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
 
     <!-- 파비콘 설정 -->
     <link rel="icon" type="image/png" href="../images/icons/NP_pavicon.png">
 
+    <!-- 캘린더 메인페이지 스타일 시트 적용-->
+    <link rel="stylesheet" href="css/calendar/calendar_main.css">
     <script src="js/calendar/calendar_main.js"></script>
 </head>
 
 <body>
+    <!-- 사이드바 -->
+    <nav id="side-bar">
+        <!--로고-->
+        <a href="/main" class="logo">
+            <img src="../images/icons/NP_icon.png" alt="로고 아이콘">
+        </a>
+        <!--구분선-->
+        <div class="separator"></div>
+        <a href="/mainCourse" class="menu-item menu-item-course">
+            <img src="../images/icons/course_icon.png" alt="코스">
+            <span>코스</span>
+        </a>
+        <a href="/calendar" class="menu-item">
+            <img src="../images/icons/calendar_icon.png" alt="일정">
+            <span>일정</span>
+        </a>
+        <a href="/community" class="menu-item">
+            <img src="../images/icons/community_icon.png" alt="커뮤니티">
+            <span>커뮤니티</span>
+        </a>
+        <a href="/randomPin" class="menu-item">
+            <img src="../images/icons/randomPin_icon.png" alt="랜덤핀">
+            <span>랜덤핀</span>
+        </a>
+        <a href="/myPin" class="sidebar-profile">
+            <img src="../images/icons/mypage_icon.png" alt="Profile">
+        </a>
+    </nav>
     <div class="main">
-        <!-- 사이드바 -->
-        <nav id="side-bar">
-            <div class="wrapper">
-                <li id="title">
-                    <!-- 메인화면으로 이동 -->
-                    <a href="/main" class="link">
-                        <img src="../images/icons/NP_icon.png" alt="NP아이콘">
-                    </a>
-                </li>
-                <!-- 메뉴들 -->
-                <div id="icons">
-                    <li class="icon menu">
-                        <!-- 코스로 이동 -->
-                        <a href="/mainCourse" class="link">
-                            <img src="../images/icons/course_icon.png" alt="코스아이콘" id="couse-icon">
-                            <span>코스</span>
-                        </a>
-                    </li>
-                    <li class="icon menu">
-                        <!-- 일정으로 이동 -->
-                        <a href="#" class="link">
-                            <img src="../images/icons/calendar-hover_icon.png" alt="일정아이콘" id="calendar-icon">
-                            <span>일정</span>
-                        </a>
-                    </li>
-                    <li class="icon menu">
-                        <!-- 커뮤니티로 이동 -->
-                        <a href="/community" class="link">
-                            <img src="../images/icons/community_icon.png" alt="커뮤니티아이콘" id="community-icon">
-                            <span id="community-span">커뮤니티</span>
-                        </a>
-                    </li>
-                    <li class="icon menu">
-                        <!-- 랜덤핀으로 이동 -->
-                        <a href="/randomPin" class="link">
-                            <img src="../images/icons/randomPin_icon.png" alt="랜덤아이콘" id="random-icon">
-                            <span>랜덤핀</span>
-                        </a>
-                    </li>
-                </div>
-            </div>
-            <div id="profile">
-                <li class="menu">
-                    <!-- 로그인으로 이동 -->
-                    <a href="/login" class="link">
-                        <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
-                    </a>
-                </li>
-            </div>
-        </nav>
         <!-- 캘린더 -->
         <div class="calendar-main">
             <div class="header">

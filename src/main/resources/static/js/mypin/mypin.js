@@ -21,6 +21,47 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 키워드로 장소를 검색합니다
 // searchPlaces();
 
+
+// 마커를 생성하고 지도에 표시하는 함수입니다
+function addMarker(position, title) {
+    var marker = new kakao.maps.Marker({
+        position: position,
+        map: map
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="padding:5px;z-index:1;">' + title + '</div>'
+        });
+        infowindow.open(map, marker);
+    });
+
+    markers.push(marker);
+    return marker;
+}
+
+// 모든 마커를 제거하는 함수입니다
+function removeMarker() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 클릭된 항목의 위치를 지도에 표시하고 마커를 추가하는 함수입니다
+function displayOnMap(x, y, title) {
+    console.log("displayOnMap 호출됨:", x, y, title);
+    var position = new kakao.maps.LatLng(x, y);
+    map.setCenter(position);
+    removeMarker(); // 기존 마커 제거
+    addMarker(position, title); // 새로운 마커 추가
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 초기화 로직 등 필요 시 추가
+});
+
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
@@ -83,35 +124,31 @@ function printResult(data) {
     console.log("print placeData : " + placeData);
 }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('menu_wrap'),
+function displayPlaces(places, category) {
+    var menuEl = document.getElementsByClassName('side-navbar')[0],
+        listEl = document.querySelector('.mypin-content.content ul'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (listEl.firstChild) {
+        listEl.removeChild(listEl.firstChild);
+    }
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
-
+    for (var i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해 LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
 
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
+        // 마커와 검색결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명을 표시합니다
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
@@ -121,11 +158,11 @@ function displayPlaces(places) {
                 infowindow.close();
             });
 
-            itemEl.onmouseover =  function () {
+            itemEl.onmouseover = function() {
                 displayInfowindow(marker, title);
             };
 
-            itemEl.onmouseout =  function () {
+            itemEl.onmouseout = function() {
                 infowindow.close();
             };
         })(marker, places[i].place_name);
@@ -139,6 +176,73 @@ function displayPlaces(places) {
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+    var el = document.createElement('li'),
+        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+            '<div class="info">' +
+            '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+            '   <span class="jibun gray">' + places.address_name + '</span>';
+    } else {
+        itemStr += '    <span>' + places.address_name + '</span>';
+    }
+
+    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+        '</div>';
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 지도에 마커를 추가하는 함수입니다
+function addMarker(position, idx, category) {
+    let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
+    if (category === 'food') {
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if (category === 'cafe') {
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if (category === 'tour') {
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if (category === 'hotel') {
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
+
+    var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        new kakao.maps.Size(36, 37),
+        { offset: new kakao.maps.Point(13, 37) }
+    );
+
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: markerImage
+    });
+
+    marker.setMap(map);
+    markers.push(marker);
+    return marker;
+}
+
+// 지도에서 마커를 제거하는 함수입니다
+function removeMarker() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {
+    while (el.hasChildNodes()) {
+        el.removeChild(el.lastChild);
+    }
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
@@ -174,30 +278,36 @@ function getListItem(index, places) {
     return el;
 }
 
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-        marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage
-        });
+function addMarker(position, idx, category) {
+    let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
+    if (category === 'food') {
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if (category === 'cafe') {
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if (category === 'tour') {
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if (category === 'hotel') {
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
 
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+    var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        new kakao.maps.Size(36, 37),
+        {offset: new kakao.maps.Point(13, 37)}
+    );
 
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: markerImage
+    });
+
+    marker.setMap(map);
+    markers.push(marker);
     return marker;
 }
 
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
+    for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
@@ -292,8 +402,23 @@ document.getElementById('inputPlace1').addEventListener('input', filterItems);
 
 
 
-
-
+//visitDate 형식 변환하는 코드
+document.addEventListener("DOMContentLoaded", function() {
+    var dateElements = document.querySelectorAll('.course-day');
+    dateElements.forEach(function(element) {
+        var dateStr = element.textContent;
+        var dateParts = dateStr.split(' ');
+        var monthMap = {
+            "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04", "May": "05", "Jun": "06",
+            "Jul": "07", "Aug": "08", "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
+        };
+        var year = dateParts[5];
+        var month = monthMap[dateParts[1]];
+        var day = dateParts[2];
+        var formattedDate = year + '/' + month + '/' + day;
+        element.textContent = formattedDate;
+    });
+});
 
 
 
@@ -421,18 +546,18 @@ window.onload = function(){
 const colors=['#FFC061','#D4ADFB','#97E285','#fd7f7f','#1A70D6','#7BD0FF','#C8C8C8','#BADCE3','#AFA18E','#ECCCCF'];
 
 // 2. 모든 .card 클래스 요소 선택하기(일차별 색상)
-const cards = document.querySelectorAll('.card');
-// 2-1. 모든 .container 클래스 요소 선택(코스별 색상)
-const containers = document.querySelectorAll('.container');
-
-// 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
-cards.forEach(card => {
-    const uls = card.querySelectorAll('ul');
-    // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
-    uls.forEach(ul => {
-        ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    });
-});
+// const cards = document.querySelectorAll('.card');
+// // 2-1. 모든 .container 클래스 요소 선택(코스별 색상)
+// const containers = document.querySelectorAll('.container');
+//
+// // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
+// cards.forEach(card => {
+//     const uls = card.querySelectorAll('ul');
+//     // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
+//     uls.forEach(ul => {
+//         ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+//     });
+// });
 
 // 3-1. 각 .container 요소 내부의 모든 ul 태그 선택하기
 
@@ -486,7 +611,7 @@ function profileEditDescription() {
             }
         });
     }
-    
+
 }
 
 
@@ -792,38 +917,135 @@ function editDescription(icon) {
 
 
 
-//각 코스 삭제하는 기능
-function deleteCourse(icon){
-    // icon 요소의 부모 요소(container)를 가져옵니다.
-    let containerElement = icon.closest('.container');
-    let inputElement = containerElement.querySelector('input');
-    let courseName = inputElement.value;
+
+//(미트볼 4번째) 코스 삭제하는 기능
+function deleteCourse(element) {
+
+    let innerContainerElement = element.closest('.inner-container');
+    let containerElement = element.closest('.container');
     let courseId = containerElement.getAttribute('data-course-id');
-    let courseDetailId = containerElement.getAttribute('data-course-detail-id');
 
+    openDeleteCourseModal(innerContainerElement, containerElement, courseId);
+}
 
-    let sendData = {
-        "userId" : 'ksy',
-        "course_detail_id" : courseDetailId
+function openDeleteCourseModal(innerContainerElement, containerElement, courseId) {
+    // 모달 창 요소를 가져옵니다.
+    let modal = document.getElementById('deleteCourseConfirmationModal');
+    modal.style.display = 'block';
+
+    // "예" 버튼 클릭 이벤트 설정
+    document.getElementById('CourseConfirmDeleteButton').onclick = function() {
+
+        // 삭제 요청을 보냅니다.
+
+        let sendData = {
+            "userId" : 'ksy',
+            "courseId" : courseId
+        };
+
+        $.ajax({
+            method : "POST",
+            headers : {
+                'content-type':'application/json'
+            },
+            url : "/deleteCourse",
+            async : true,
+            dataType: "json",
+            data : JSON.stringify(sendData),
+            success : function(result){
+                console.log("ajax : result : " + result);
+
+                // 삭제된 요소를 DOM에서 제거
+                if (result.status === 'success') {
+                    $(innerContainerElement).remove();
+                } else {
+                    alert('삭제하는 동안 오류가 발생했습니다: ' + result.message);
+                }
+                modal.style.display = 'none';
+            },
+            error : function(request, status, error){
+                console.log('삭제 중 오류 발생:', error);
+                alert('삭제하는 동안 오류가 발생했습니다.');
+                modal.style.display = 'none';
+            }
+        });
+
     };
 
-    $.ajax({
-        method : "POST",
-        headers : {
-            'content-type':'application/json'
-        },
-        url : "/deleteCourseDetail",
-        async : true,
-        dataType: "json",
-        data : JSON.stringify(sendData),
-        success : function(result){
-            console.log("ajax : result : " + result);
-        },
-        error : function(request, status, error){
-            console.log(error);
-        }
-    });
+    // "아니오" 버튼 클릭 이벤트 설정
+    document.getElementById('CourseCancelDeleteButton').onclick = function() {
+        modal.style.display = 'none';
+    };
 }
+
+
+
+
+
+
+
+//각 코스 세부장소 삭제하는 기능
+function deleteCourseDetail(icon){
+
+    // 모달 창을 열기 전에 삭제할 요소와 courseDetailId를 저장
+    let liElement = icon.closest('li');
+    let courseDetailId = liElement.getAttribute('data-course-detail-id');
+
+    console.log(liElement);
+    console.log(courseDetailId);
+
+    // 모달 창을 열기
+    openDeleteCourseDetailModal(courseDetailId, liElement);
+}
+
+function openDeleteCourseDetailModal(courseDetailId, liElement) {
+    // 모달 창 요소를 가져옵니다.
+    let modal = document.getElementById('deleteCourseDetailConfirmationModal');
+    modal.style.display = 'block';
+
+    // "예" 버튼 클릭 이벤트 설정
+    document.getElementById('CourseDetailConfirmDeleteButton').onclick = function() {
+        // 삭제 요청을 보냅니다.
+        let sendData = {
+            "userId": 'ksy',
+            "course_detail_id": courseDetailId
+        };
+
+        $.ajax({
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            url: "/deleteCourseDetail2",
+            async: true,
+            dataType: "json",
+            data: JSON.stringify(sendData),
+            success: function(result) {
+                console.log("ajax : result : " + result);
+
+                // 삭제된 요소를 DOM에서 제거
+                if (result.status === 'success') {
+                    $(liElement).remove();
+                } else {
+                    alert('삭제하는 동안 오류가 발생했습니다: ' + result.message);
+                }
+                modal.style.display = 'none';
+            },
+            error: function(request, status, error) {
+                console.log('삭제 중 오류 발생:', error);
+                alert('삭제하는 동안 오류가 발생했습니다.');
+                modal.style.display = 'none';
+            }
+        });
+    };
+
+    // "아니오" 버튼 클릭 이벤트 설정
+    document.getElementById('CourseDetailCancelDeleteButton').onclick = function() {
+        modal.style.display = 'none';
+    };
+}
+
+
 
 
 
@@ -842,31 +1064,52 @@ function toggleSaveState(element) {
     // element 요소의 부모 요소(container)를 가져옵니다.
     let containerElement = element.closest('.container');
     let inputElement = containerElement.querySelector('input');
-    let courseName = inputElement.value;
-    let courseId = containerElement.getAttribute('data-course-id');
+
+    courseName = inputElement.value;
+    courseId = containerElement.getAttribute('data-course-id');
 
     // background-color 값을 가져오기
     let computedStyle = window.getComputedStyle(containerElement);
-    let color = computedStyle.backgroundColor;
+    color = computedStyle.backgroundColor;
 
 
     if (!isSaved) {
         // 캘린더 표시
         $('#calendar-container').fadeIn();
 
-        // 날짜 선택기 값 가져오기
-        let calendarElement = document.getElementById('calendar');
-        let regDate = calendarElement.value;
+    } else {
+        // 이미지 변경 및 저장 상태 업데이트
+        element.src = 'images/icons/save-before-icon.png';
+        isSaved = false;
 
-        console.log(regDate);
+        // 모달 표시
+        showModal('저장이 취소되었습니다');
+    }
+}
 
+$('#save-date-button').click(function() {
+    // 날짜 선택기 값 가져오기
+    let calendarElement = document.getElementById('calendar');
+    let visitDate = calendarElement.value;
+
+    // course_detail 데이터를 수집
+    let courseDetailId = currentElement.getAttribute('data-course-detail-id');
+    let location = currentElement.getAttribute('data-location');
+
+
+    // 이미지 변경 및 저장 상태 업데이트
+    if (currentElement && !isSaved) {
+        currentElement.src = 'images/icons/save-after-icon.png';
+        isSaved = true;
+        showModal('캘린더에 저장되었습니다');
 
         let sendData = {
             "userId" : 'ksy',
             "courseId" : courseId,
+            "course_detail_id" : courseDetailId,
             "courseName": courseName,
             "color": color,
-            "regDate": regDate
+            "visitDate": visitDate
         };
 
         console.log(sendData);
@@ -887,23 +1130,6 @@ function toggleSaveState(element) {
                 console.log(error);
             }
         });
-
-    } else {
-        // 이미지 변경 및 저장 상태 업데이트
-        element.src = 'images/icons/save-before-icon.png';
-        isSaved = false;
-
-        // 모달 표시
-        showModal('저장이 취소되었습니다');
-    }
-}
-
-$('#save-date-button').click(function() {
-    // 이미지 변경 및 저장 상태 업데이트
-    if (currentElement && !isSaved) {
-        currentElement.src = 'images/icons/save-after-icon.png';
-        isSaved = true;
-        showModal('캘린더에 저장되었습니다');
     } else if (currentElement && isSaved) {
         currentElement.src = 'images/icons/save-before-icon.png';
         isSaved = false;
@@ -928,7 +1154,6 @@ $('#close-modal-button, #modal-overlay').click(function() {
     $('#calendar-modal').fadeOut();
     $('#modal-overlay').fadeOut();
 });
-
 
 
 
@@ -968,6 +1193,82 @@ window.onclick = function(event) {
         });
     }
 };
+
+
+// CourseDetail의 장소를 지도에 마커 형태로 띄우기
+function showCourseDetail(index, obj, list) {
+    if (index == obj.id) {
+        console.log(list);
+
+        // 기존 마커 제거
+        removeMarker();
+
+        // LatLngBounds 객체 생성
+        var bounds = new kakao.maps.LatLngBounds();
+
+        // list로 마커 띄우기
+        list.forEach(function(detail) {
+            // list에서 x와 y 값을 추출
+            let x = detail.x;
+            let y = detail.y;
+            let title = detail.location || 'No Title';  // 장소명
+
+            // 마커 이미지 설정
+            let imageSrc = '../images/icons/course_icon.png';
+            let imageSize = new kakao.maps.Size(25, 32);  // 마커 이미지의 크기
+            let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+            // 마커의 위치 설정
+            let position = new kakao.maps.LatLng(y, x); // LatLng(y, x)
+
+            // 마커 추가
+            var marker = new kakao.maps.Marker({
+                position: position,
+                image: markerImage
+            });
+
+            // 마커를 지도에 표시
+            marker.setMap(map);
+            markers.push(marker);  // 배열에 생성된 마커를 추가
+
+            // 인포윈도우를 마커에 추가
+            let infowindow = new kakao.maps.InfoWindow({
+                content: `<div style="padding:5px;z-index:1;">${title}</div>`
+            });
+
+            // 마커와 검색결과 항목에 mouseover 했을때 인포윈도우에 장소명을 표시
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                infowindow.open(map, marker);
+            });
+
+            // mouseout 했을 때 인포윈도우를 닫음
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            // LatLngBounds 객체에 좌표 추가
+            bounds.extend(position);
+        });
+
+        // 지도의 범위를 LatLngBounds로 설정하여 모든 마커가 보이도록 함
+        map.setBounds(bounds);
+
+        // 지도 줌 레벨 설정 (현재 레벨에서 한 단계 축소)
+        map.setLevel(map.getLevel() + 1);
+
+        // 지도 오른쪽으로 이동
+        setTimeout(function() {
+            map.panBy(900, 0);
+        }, 400); // 지도의 범위가 설정된 후 이동시키기 위해 약간의 지연 시간을 줍니다
+    }
+}
+
+
+
+
+
+
+
 
 
 

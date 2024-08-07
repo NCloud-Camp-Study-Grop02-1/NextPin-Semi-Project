@@ -13,4 +13,5 @@ public interface MemberMapper {
     int userIdCheck(String userId);
     int userNicknameCheck(String userNickname);
     MemberDto login(MemberDto memberDto);
+    MemberDto logout(MemberDto memberDto);
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,7 +15,10 @@ public class CourseDetailDto {
         private double x;
         private double y;
         private int day; // 추가된 필드
-        private LocalDate visitDate;
+        private Date visitDate;
         private String memo;
-
+        private String userId;
+        private String status;
+        private String message;
+        private Long visitDateCount;
 }

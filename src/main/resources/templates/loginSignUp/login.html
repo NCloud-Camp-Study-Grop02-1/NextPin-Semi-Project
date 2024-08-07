@@ -22,9 +22,9 @@
                 <img src="../images/icons/logo-NextPin-B_icon.png" alt="NextPin Logo">
             </a>
         </div>
-        <form class="login-form">
-            <input type="text" placeholder="아이디" required>
-            <input type="password" placeholder="비밀번호" required>
+        <form class="login-form" action="/login" method="post">
+            <input type="text" name="userId" placeholder="아이디" required>
+            <input type="password" name="pwd" placeholder="비밀번호" required>
             <button type="submit">로그인</button>
         </form>
         <div class="signup-link">

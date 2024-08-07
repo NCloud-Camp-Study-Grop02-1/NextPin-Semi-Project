@@ -1,5 +1,6 @@
 package com.nextpin.app.controller;
 
+import com.nextpin.app.dto.CourseAndDetailDto;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.UserDto;
@@ -13,21 +14,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class MypinController {
 
     private static final Logger logger = LoggerFactory.getLogger(MypinController.class);
-
-    @Autowired
     private MyPinService myPinService;
 
+    @Autowired
+    public MypinController(MyPinService myPinService) {
+        this.myPinService = myPinService;
+    }
+
     @GetMapping("/myPin")
-    public ModelAndView myPin(HttpSession session) {
+    public ModelAndView myPin(HttpSession session,Model model) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("mypin/myPin");
+
 
         // 세션에서 사용자 정보 가져오기
         UserDto user = (UserDto) session.getAttribute("user");
@@ -43,41 +52,84 @@ public class MypinController {
             userId = user.getUserId();
         }
 
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        List<Map<String, Object>> mapList2 = new ArrayList<>();
+
+
         // 사용자 프로필 정보 가져오기
         UserDto userProfile = myPinService.getUserProfile(userId);
         logger.debug("user 값 : " + userProfile.toString());
         mav.addObject("user", userProfile); // 사용자 프로필 정보를 뷰에 추가
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+
         // 사용자 코스(mypin) 정보 가져오기
         List<CourseDto> userCourseList = myPinService.getUserCourse(userId);
-        logger.debug("userCourseList 값 : " + userCourseList.toString());
-        for (CourseDto course : userCourseList) {
-            logger.debug("Course나와..: " + course.toString());
-        }
-        mav.addObject("userCourseList", userCourseList); // 사용자 코스 정보를 뷰에 추가
+
+        userCourseList.forEach(courseDto -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("course", courseDto);
+            List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId, courseDto.getCourseId());
+
+            // Date 형식을 String 형식으로 변환
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            // visitDate 개수를 계산하여 CourseDetailDto에 설정
+            Map<String, Long> visitCounts = userCourseDetailList.stream()
+                    .collect(Collectors.groupingBy(
+                            detail -> sdf.format(detail.getVisitDate()),
+                            Collectors.counting()
+                    ));
+
+            userCourseDetailList.forEach(detail -> {
+                detail.setVisitDateCount(visitCounts.get(sdf.format(detail.getVisitDate())));
+            });
+
+            map.put("courseDetail", userCourseDetailList);
+
+            mapList.add(map);
+        });
+
+        mav.addObject("userCourseList", mapList);
+
+
+        //mav.addObject("userCourseList", userCourseList); // 사용자 코스 정보를 뷰에 추가
+
 
         // 사용자 코스 정보(관심있는코스) 가져오기
         List<CourseDto> userLikeCourseList = myPinService.getUserLikeCourse(userId);
-        logger.debug("userCourseList 값 : " + userLikeCourseList.toString());
-        for (CourseDto course : userLikeCourseList) {
-            logger.debug("Course나와..: " + course.toString());
-        }
-        mav.addObject("userLikeCourseList", userLikeCourseList); // 사용자 코스 정보를 뷰에 추가
+
+        userLikeCourseList.forEach(courseDto -> {
+            Map<String, Object> map2 = new HashMap<>();
+            map2.put("course", courseDto);
+            List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId, courseDto.getCourseId());
+
+            // Date 형식을 String 형식으로 변환
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            // visitDate 개수를 계산하여 CourseDetailDto에 설정
+            Map<String, Long> visitCounts = userCourseDetailList.stream()
+                    .collect(Collectors.groupingBy(
+                            detail -> sdf.format(detail.getVisitDate()),
+                            Collectors.counting()
+                    ));
+
+            userCourseDetailList.forEach(detail -> {
+                detail.setVisitDateCount(visitCounts.get(sdf.format(detail.getVisitDate())));
+            });
+
+            map2.put("courseDetail", userCourseDetailList);
+
+            mapList2.add(map2);
+        });
 
         // 사용자 코스 세부내용 정보 가져오기
-        List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId);
+        mav.addObject("userLikeCourseList", mapList2);
+
+        //mav.addObject("userLikeCourseList", userLikeCourseList); // 사용자 코스 정보를 뷰에 추가
 
 
-        logger.debug("userCourseDetailList 값 : " + userCourseDetailList.toString());
-        for (CourseDetailDto courseDetail : userCourseDetailList) {
-            logger.debug("CourseDetail나와..: " + courseDetail.toString());
-        }
-        mav.addObject("userCourseDetailList", userCourseDetailList); // 사용자 코스 세부내용 정보를 뷰에 추가
-
-        // 리스트의 크기 계산
-        int listSize = userCourseList != null ? userCourseList.size() : 0;
-        mav.addObject("listSize", listSize);
-        logger.debug("myPin페이지 이동");
         return mav;
     }
 
@@ -136,16 +188,47 @@ public class MypinController {
         myPinService.editUserCourse3(courseDto);
     }
 
-    @PostMapping("/editBookMark")
+    @PostMapping("/deleteCourse")
     @ResponseBody
-    public void editUserBookMark(@RequestBody CourseDto courseDto){
-
-        logger.debug("courseDto : " + courseDto.toString());
-
-        myPinService.editUserBookMark(courseDto);
+    public CourseDto deleteUserCourse(@RequestBody CourseDto courseDto){
+        try {
+            logger.debug("courseDto : " + courseDto.toString());
+            myPinService.deleteUserCourse(courseDto);
+            courseDto.setStatus("success");
+            courseDto.setMessage("삭제 성공");
+        } catch (Exception e) {
+            courseDto.setStatus("error");
+            courseDto.setMessage("삭제 실패");
+        }
+        return courseDto;
     }
 
-    @PostMapping("/deleteCourseDetail")
+
+    @PostMapping("/editBookMark")
+    @ResponseBody
+    public void editUserBookMark(@RequestBody CourseAndDetailDto courseAndDetailDto){
+
+        logger.debug("editBookMark의 courseDto : " + courseAndDetailDto.toString());
+
+        myPinService.editUserBookMark(courseAndDetailDto);
+    }
+
+    @PostMapping("/deleteCourseDetail2")
+    @ResponseBody
+    public CourseDetailDto deleteUserCourseDetail(@RequestBody CourseDetailDto courseDetailDto){
+        try {
+            logger.debug("courseDetailDto : " + courseDetailDto.toString());
+            myPinService.deleteUserCourseDetail(courseDetailDto);
+            courseDetailDto.setStatus("success");
+            courseDetailDto.setMessage("삭제 성공");
+        } catch (Exception e) {
+            courseDetailDto.setStatus("error");
+            courseDetailDto.setMessage("삭제 실패");
+        }
+        return courseDetailDto;
+    }
+
+    @PostMapping("/deleteCoursePinDetail")
     @ResponseBody
     public void deleteUserCourse(@RequestBody CourseDetailDto courseDetailDto){
 

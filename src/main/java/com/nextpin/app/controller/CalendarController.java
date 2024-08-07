@@ -11,8 +11,9 @@ public class CalendarController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CalendarController.class);
 
+    // 캘린더 페이지로 이동
     @GetMapping("/calendar")
-    public ModelAndView calendar() {
+    public ModelAndView calendarView() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("calendar/calendar");
 

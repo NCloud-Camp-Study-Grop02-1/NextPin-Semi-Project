@@ -6,6 +6,10 @@
 .main {
     display: flex;
     flex-direction: row;
+    /*션이 추가*/
+    height: 100vh;
+    margin-left: 6.5rem;
+    width: calc(100vw - 6.5rem);
 }
 
 .calendar-main {
@@ -205,33 +209,4 @@
 .weather img {
     width: 60px;
     height: 60px;
-}
-
-/* 반응형 페이지 미디어 쿼리문 */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .main {
-        padding: 10px;
-    }
-
-    .header {
-        flex-wrap: wrap;
-    }
-
-    .header button {
-        flex: 1 1 100%;
-        margin: 5px 0;
-    }
-
-    #current-month-year {
-        flex: 1 1 100%;
-        text-align: center;
-    }
-
-    #calendar {
-        grid-template-columns: repeat(7, 1fr);
-    }
 }

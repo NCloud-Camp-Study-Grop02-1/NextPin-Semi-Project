@@ -1,5 +1,6 @@
 package com.nextpin.app.service;
 
+import com.nextpin.app.dto.CourseAndDetailDto;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.UserDto;
@@ -14,7 +15,7 @@ public interface MyPinService {
     List<CourseDto> getUserCourse(String userId);
     List<CourseDto> getUserLikeCourse(String userId);
 
-    List<CourseDetailDto> getUserCourseDetail(String userId);
+    List<CourseDetailDto> getUserCourseDetail(String userId, int courseId);
 
     void editUserProfile(Map<String, Object> userDto);
 
@@ -22,8 +23,9 @@ public interface MyPinService {
     void editUserCourse2(CourseDto courseDto);
     void editUserCourse3(CourseDto courseDto);
 
-    void editUserBookMark(CourseDto courseDto);
+    void editUserBookMark(CourseAndDetailDto courseAndDetailDto);
 
+    void deleteUserCourse(CourseDto courseDto);
     void deleteUserCourseDetail(CourseDetailDto courseDetailDto);
 
 }

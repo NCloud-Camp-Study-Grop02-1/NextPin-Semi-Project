@@ -2,9 +2,14 @@ package com.nextpin.app.dao;
 
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class CourseHomeReview2Dao {
@@ -17,11 +22,69 @@ public class CourseHomeReview2Dao {
     }
 
     public int insertCourse(CourseDto course) {
-        mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourse", course);
+        mybatis.insert("CourseHomeReview2Dao.insertCourse", course);
         return course.getCourseId();
     }
 
     public void insertCourseDetail(CourseDetailDto courseDetail) {
-        mybatis.insert("com.nextpin.app.dao.CourseHomeReview2Dao.insertCourseDetail", courseDetail);
+        mybatis.insert("CourseHomeReview2Dao.insertCourseDetail", courseDetail);
+    }
+
+    public void saveCourseDetail(List<CourseDetailDto> saveCourseDetailDtoList) {
+        for (int i = 0; i < saveCourseDetailDtoList.size(); i++) {
+            mybatis.insert("CourseHomeReview2Dao.insertCourseDetail", saveCourseDetailDtoList.get(i));
+        }
+
+    }
+
+    public List<String> findCourseIdByUserIdAndCourseName(String userId, String courseName){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userId", userId);
+        params.put("courseName", courseName);
+        return mybatis.selectList("CourseHomeReview2Dao.findCourseIdByUserIdAndCourseName", params);
+    }
+
+    public void updateCourseColorAndModifyDate(@Param("courseId") int courseId, @Param("color") String color){
+        Map<String, Object> params = new HashMap<>();
+        params.put("courseId", courseId);
+        params.put("color", color);
+        mybatis.update("CourseHomeReview2Dao.updateCourseColorAndModifyDate", params);
+    }
+
+
+    public List<CourseDetailDto> getCourseDetails(@Param("courseId") int courseId){
+        return mybatis.selectList("CourseHomeReview2Dao.getCourseDetails", courseId);
+    }
+
+    public List<Map<String, Double>> getCoordinatesByLocation(String location){
+        return mybatis.selectList("CourseHomeReview2Dao.getCoordinatesByLocation", location);
+    }
+
+    public boolean isDuplicateCourseDetail(@Param("courseId") int courseId, @Param("location") String location){
+        Map<String, Object> params = new HashMap<>();
+        params.put("courseId", courseId);
+        params.put("location", location);
+        return mybatis.selectOne("CourseHomeReview2Dao.isDuplicateCourseDetail", params);
+    }
+
+    public List<CourseDetailDto> getCourseDetailsByNameAndUser(@Param("courseName") String courseName, @Param("userId") String userId){
+        Map<String, String> params = new HashMap<>();
+        params.put("courseName", courseName);
+        params.put("userId", userId);
+        return mybatis.selectList("CourseHomeReview2Dao.getCourseDetailsByNameAndUser", params);
+    }
+
+    public boolean isLocationExist(@Param("courseId") Integer courseId, @Param("location") String location){
+        Map<String, Object> params = new HashMap<>();
+        params.put("courseId", courseId);
+        params.put("location", location);
+        return mybatis.selectOne("CourseHomeReview2Dao.isLocationExist", params);
+    }
+
+    public int deleteCourseDetail(@Param("courseId") Integer courseId, @Param("location") String location){
+        Map<String, Object> params = new HashMap<>();
+        params.put("courseId", courseId);
+        params.put("location", location);
+        return mybatis.delete("CourseHomeReview2Dao.deleteCourseDetail", params);
     }
 }

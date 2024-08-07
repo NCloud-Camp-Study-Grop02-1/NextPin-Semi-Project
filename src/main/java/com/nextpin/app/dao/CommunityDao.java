@@ -25,4 +25,8 @@ public class CommunityDao {
     public List<CourseDetailDto> getCourseDetailsByCourseId(int courseId) {
         return mybatis.selectList("com.nextpin.app.dao.CommunityMapper.getCourseDetailsByCourseId", courseId);
     }
+
+    public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds){
+        return mybatis.selectList("com.nextpin.app.dao.CommunityMapper.getCourseDetailByCourses", courseIds);
+    }
 }

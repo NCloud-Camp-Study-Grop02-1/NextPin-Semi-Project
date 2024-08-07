@@ -17,6 +17,8 @@
                    alias="courseDto"/>
         <typeAlias type="com.nextpin.app.dto.CourseDetailDto"
                    alias="courseDetailDto"/>
+        <typeAlias type="com.nextpin.app.dto.CourseAndDetailDto"
+                   alias="courseAndDetailDto"/>
     </typeAliases>
 
 </configuration>

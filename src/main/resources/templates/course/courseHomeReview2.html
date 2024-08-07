@@ -82,8 +82,9 @@
                                     <div id="homeTitle">
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>
                                         <span class="food_type" id="foodType" style="margin-top: 5.5px;" th:text="${rtnKaMapDto.categoryName}"></span>
-                                        <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin" onclick="toggleImage(this);">
-                                            <img class="icon_pin" src="../images/icons/locationPin-before_icon.png" alt="위치 찍기">
+                                        <button type="button" role="button" aria-haspopup="true" aria-controls="makeCourse" aria-expanded="false" class="chosenPin" id="chosenPin">
+                                            <img class="icon_pin" src="../images/icons/locationPin-after_icon.png" alt="위치 찍기">
+                                            <p>저장</p>
                                         </button>
                                     </div>
                                     <div id="reviewStatics">
@@ -236,6 +237,14 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- 확인 창 및 배경 추가 -->
+<div id="overlay" style="display: none;"></div>
+<div id="deleteConfirmationDialog" style="display: none;">
+    <p>저장된 코스를 삭제하시겠습니까?</p>
+    <button id="confirmDeleteButton">삭제</button>
+    <button id="cancelDeleteButton">취소</button>
 </div>
 
 <!-- 카카오맵-->
