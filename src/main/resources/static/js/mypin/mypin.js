@@ -536,13 +536,13 @@ const cards = document.querySelectorAll('.card');
 const containers = document.querySelectorAll('.container');
 
 // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
-cards.forEach(card => {
-    const uls = card.querySelectorAll('ul');
-    // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
-    uls.forEach(ul => {
-        ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    });
-});
+// cards.forEach(card => {
+//     const uls = card.querySelectorAll('ul');
+//     // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
+//     uls.forEach(ul => {
+//         ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+//     });
+// });
 
 // 3-1. 각 .container 요소 내부의 모든 ul 태그 선택하기
 
@@ -1079,5 +1079,10 @@ window.onclick = function(event) {
     }
 };
 
+function showCourseDetail(index, obj, list) {
+    if(index == obj.id) {
+        //list로 마커 띄우기
+    }
+}
 
 
