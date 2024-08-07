@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,8 @@ public class MypinController {
             userId = user.getUserId();
         }
 
+        List<Map<String, Object>> mapList = new ArrayList<>();
+
         // 사용자 프로필 정보 가져오기
         UserDto userProfile = myPinService.getUserProfile(userId);
         logger.debug("user 값 : " + userProfile.toString());
@@ -57,7 +61,20 @@ public class MypinController {
         for (CourseDto course : userCourseList) {
             logger.debug("Course나와..: " + course.toString());
         }
-        mav.addObject("userCourseList", userCourseList); // 사용자 코스 정보를 뷰에 추가
+
+
+        userCourseList.forEach(courseDto -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("course", courseDto);
+            List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId, courseDto.getCourseId());
+            map.put("courseDetail", userCourseDetailList);
+
+            mapList.add(map);
+        });
+
+        mav.addObject("userCourseList", mapList);
+
+//        mav.addObject("userCourseList", userCourseList); // 사용자 코스 정보를 뷰에 추가
 
         // 사용자 코스 정보(관심있는코스) 가져오기
         List<CourseDto> userLikeCourseList = myPinService.getUserLikeCourse(userId);
@@ -68,14 +85,14 @@ public class MypinController {
         mav.addObject("userLikeCourseList", userLikeCourseList); // 사용자 코스 정보를 뷰에 추가
 
         // 사용자 코스 세부내용 정보 가져오기
-        List<CourseDetailDto> userCourseDetailList = myPinService.getUserCourseDetail(userId);
 
 
-        logger.debug("userCourseDetailList 값 : " + userCourseDetailList.toString());
-        for (CourseDetailDto courseDetail : userCourseDetailList) {
-            logger.debug("CourseDetail나와..: " + courseDetail.toString());
-        }
-        mav.addObject("userCourseDetailList", userCourseDetailList); // 사용자 코스 세부내용 정보를 뷰에 추가
+
+//        logger.debug("userCourseDetailList 값 : " + userCourseDetailList.toString());
+//        for (CourseDetailDto courseDetail : userCourseDetailList) {
+//            logger.debug("CourseDetail나와..: " + courseDetail.toString());
+//        }
+//        mav.addObject("userCourseDetailList", userCourseDetailList); // 사용자 코스 세부내용 정보를 뷰에 추가
 
         // 리스트의 크기 계산
         int listSize = userCourseList != null ? userCourseList.size() : 0;

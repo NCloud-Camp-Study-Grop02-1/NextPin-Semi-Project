@@ -38,8 +38,8 @@ public class MyPinServiceImpl implements MyPinService {
         return myPinDao.getUserLikeCourse(userId);
     }
 
-    public List<CourseDetailDto> getUserCourseDetail(String userId) {
-        return myPinDao.getUserCourseDetail(userId);
+    public List<CourseDetailDto> getUserCourseDetail(String userId, int courseId) {
+        return myPinDao.getUserCourseDetail(userId, courseId);
     }
 
     public void editUserProfile(Map<String, Object> userDto){

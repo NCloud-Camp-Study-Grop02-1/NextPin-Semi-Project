@@ -107,7 +107,7 @@ public class LoginSignupController {
             response.put("isLoggedIn", false);
         } else {
             response.put("isLoggedIn", true);
-            response.put("userId", loginMember.getUserId());
+            response.put("userId", loginMember.getUserId()); // userId 추가
             response.put("nickname", loginMember.getNickname());
         }
         return ResponseEntity.ok(response);
