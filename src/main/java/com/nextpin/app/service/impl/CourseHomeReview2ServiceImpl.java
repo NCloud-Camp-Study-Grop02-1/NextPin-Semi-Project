@@ -103,5 +103,4 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     public List<String> getCoursesByUserId(String userId) {
         return courseHomeReview2Dao.getCoursesByUserId(userId);
     }
-
 }
