@@ -1,5 +1,7 @@
 package com.nextpin.app.service.impl;
 
+import ch.qos.logback.classic.Logger;
+import com.nextpin.app.dao.CourseDao;
 import com.nextpin.app.dao.CourseHomeReview2Dao;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
@@ -7,7 +9,6 @@ import com.nextpin.app.service.CourseHomeReview2Service;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.mybatis.spring.MyBatisSystemException;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ import java.util.Map;
 @Service
 public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
 
-    private final Logger logger = LoggerFactory.getLogger(CourseHomeReview2ServiceImpl.class);
-    private final CourseHomeReview2Dao courseHomeReview2Dao;
+    private Logger logger = (Logger) LoggerFactory.getLogger(CourseHomeReview2ServiceImpl.class);
+    private CourseHomeReview2Dao courseHomeReview2Dao;
 
     @Autowired
     public CourseHomeReview2ServiceImpl(CourseHomeReview2Dao courseHomeReview2Dao) {
@@ -38,7 +39,7 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
         }
         return courseIds.get(0);
     }
-
+    
     @Override
     public void updateCourseColorAndModifyDate(int courseId, String color) {
         courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);

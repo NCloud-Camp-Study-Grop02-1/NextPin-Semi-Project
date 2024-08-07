@@ -1,22 +1,30 @@
 package com.nextpin.app.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dto.*;
 import com.nextpin.app.service.CourseHomeReview2Service;
+import com.nextpin.app.dto.Criteria;
+import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.dto.KakaoMapReviewDto;
 import com.nextpin.app.service.CourseService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
+=======
+>>>>>>> 0fcd1d0b8a7791798a707a5f1461dccc197d0d15
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.*;
+import java.util.List;
 
 @RestController
 @SessionAttributes("user")
@@ -58,7 +66,8 @@ public class CourseController {
         logger.debug("mainCourse페이지 이동");
         return mav;
     }
-
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.POST)
+//    @RequestMapping(value = "/searchPlaces", method = RequestMethod.GET)
     @PostMapping("/searchPlaces")
     @ResponseBody
     public String searchPlaces(@RequestBody HashMap<String, String> searchKeywords, Criteria cri) {
@@ -174,4 +183,26 @@ public class CourseController {
         return courseHomeReview2Service.getCoursesByUserId(userId);
     }
 
+<<<<<<< HEAD
+=======
+    @PostMapping("/insertCourse")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> insertCourse(@RequestBody Map<String, Object> requestData) {
+        // JSON 데이터에서 courseData와 courseDetailData 추출
+        ObjectMapper mapper = new ObjectMapper();
+        CourseDto courseDto = mapper.convertValue(requestData.get("courseData"), CourseDto.class);
+        List<CourseDetailDto> courseDetailDtoList = mapper.convertValue(requestData.get("courseDetailData"), new TypeReference<List<CourseDetailDto>>() {});
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Course data inserted successfully");
+        response.put("data", courseDto);
+        logger.debug("courseDto : " + courseDto.toString());
+        logger.debug("courseDetailDtoList : " + courseDetailDtoList.toString());
+
+        courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
+        return ResponseEntity.ok(response);
+    }
+>>>>>>> 0fcd1d0b8a7791798a707a5f1461dccc197d0d15
 }
+
+

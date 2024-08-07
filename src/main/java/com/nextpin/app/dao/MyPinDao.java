@@ -35,8 +35,12 @@ public class MyPinDao {
         return mybatis.selectList("MyPinDao.getUserLikeCourse",userId);
     }
 
-    public List<CourseDetailDto> getUserCourseDetail(String userId){
-        return mybatis.selectList("MyPinDao.getUserCourseDetail",userId);
+    public List<CourseDetailDto> getUserCourseDetail(String userId, int courseId){
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userId", userId);
+        paramMap.put("courseId", courseId);
+
+        return mybatis.selectList("MyPinDao.getUserCourseDetail",paramMap);
     }
 
     public void editUserProfile(Map<String, Object> userDto){

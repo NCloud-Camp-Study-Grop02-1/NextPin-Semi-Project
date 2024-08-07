@@ -199,54 +199,54 @@ body {
 }
 
 
-.day {
-    margin-bottom: 15px; /* 각 일차 사이의 여백 */
-    padding: 10px; /* 내부 여백 */
-    border-radius: 20px; /* 내부 박스의 모서리 둥글기 */
-    color: #ffffff;
-    cursor: pointer;
-}
+/*.day {*/
+/*    margin-bottom: 15px; !* 각 일차 사이의 여백 *!*/
+/*    padding: 10px; !* 내부 여백 *!*/
+/*    border-radius: 20px; !* 내부 박스의 모서리 둥글기 *!*/
+/*    color: #ffffff;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.user1day1 {
-    background-color: #ffc061;
-}
+/*.user1day1 {*/
+/*    background-color: #ffc061;*/
+/*}*/
 
-.user1day2 {
-    background-color: #7bd0ff;
-}
+/*.user1day2 {*/
+/*    background-color: #7bd0ff;*/
+/*}*/
 
-.day h2 {
-    margin: 0;
-    font-size: 18px;
-}
+/*.day h2 {*/
+/*    margin: 0;*/
+/*    font-size: 18px;*/
+/*}*/
 
-/*유저가 클릭한 일차 글자 색상 변경*/
-.day.active h2 {
-    color: black; /* 클릭 후 변경할 글자색 */
-    transition: color 0.3s; /* 색상 변경 시 애니메이션 */
-}
+/*!*유저가 클릭한 일차 글자 색상 변경*!*/
+/*.day.active h2 {*/
+/*    color: black; !* 클릭 후 변경할 글자색 *!*/
+/*    transition: color 0.3s; !* 색상 변경 시 애니메이션 *!*/
+/*}*/
 
-.day ul {
-    padding-left: 15px;
-    margin-top: 15px;
-    padding-right: 15px;
-}
-.day li {
-    text-align: left;
-    position: relative;
-    margin-bottom: 15px; /* 각 li 요소 사이의 간격 */
-    padding-bottom: 5px; /* 선분이 li 요소 바로 아래에 위치하도록 하기 위해 padding 추가 */
-}
-.day ul li::after {
-    content: "";
-    display: block;
-    width: 100%; /* 원하는 선의 길이 */
-    height: 1px; /* 선의 두께 */
-    background-color: white; /* 선의 색깔 */
-    position: absolute;
-    bottom: -5px; /* li 요소 아래에 위치 */
-    left: 0; /* 선의 시작 위치 */
-}
+/*.day ul {*/
+/*    padding-left: 15px;*/
+/*    margin-top: 15px;*/
+/*    padding-right: 15px;*/
+/*}*/
+/*.day li {*/
+/*    text-align: left;*/
+/*    position: relative;*/
+/*    margin-bottom: 15px; !* 각 li 요소 사이의 간격 *!*/
+/*    padding-bottom: 5px; !* 선분이 li 요소 바로 아래에 위치하도록 하기 위해 padding 추가 *!*/
+/*}*/
+/*.day ul li::after {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 100%; !* 원하는 선의 길이 *!*/
+/*    height: 1px; !* 선의 두께 *!*/
+/*    background-color: white; !* 선의 색깔 *!*/
+/*    position: absolute;*/
+/*    bottom: -5px; !* li 요소 아래에 위치 *!*/
+/*    left: 0; !* 선의 시작 위치 *!*/
+/*}*/
 
 .ranking {
     display: flex;
@@ -294,6 +294,60 @@ body {
     margin-right: 10px;
     color: #3498db;
 }
+/********************* 서연님 스타일 추가 *******************/
+/*각 일차별 내용이 담긴 card에 대한 속성*/
+.card ul{
+    /*background-color: #FFC061; !*카드 색상 지정*!*/
+    border-radius: 1rem; /*카드 모서리 둥글게*/
+    color: white;
+    padding: 1.5rem;
+    margin: 1rem 0; /*각 카드의 위아래 여백 주기*/
+}
+.card ul li{
+    border-bottom: 1px solid white; /* 하단에 경계선 추가 */
+    padding: 0.8rem 1rem 0.4rem; /* 위아래 여백 추가, 텍스트의 왼쪽 여백 추가 */
+}
+/* 마지막 li 태그에는 경계선 제거 */
+.card ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+/*card(코스)를 펼쳤을 때, 아래에 있는 코스 목록과 card 사이에 여백주기*/
+.card-body{
+    margin-bottom: 3rem;
+}
+.course-day-box{
+    margin-bottom: 1rem;
+    overflow: hidden; /* float 요소가 부모의 높이를 확장시키지 않도록 */
+}
+.course-day{
+    margin-left: 0.7rem;
+}
+.course-day-label{
+    border: white 1.5px solid;
+    border-radius: 10px;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    width: 3.5rem;
+    text-align: center;
+}
+.course-day-link{
+    color: white;
+    font-size: 0.8rem;
+    float: right;
+}
+/*콜랩스 요소(my pin과 관심있는코스의 세부내용)에 대한 속성*/
+.collapse {
+    width: 100%; /* collapse div가 li 태그의 전체 너비를 차지 */
+    margin-top: 1rem; /* 위쪽에 여백을 추가 */
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+}
+.collapsing{
+    height: 0;
+    transition: height 0.3s ease-in-out;
+}
+/****************************************/
 
 .profilePicture {
     display: flex;

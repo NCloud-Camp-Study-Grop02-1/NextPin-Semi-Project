@@ -14,7 +14,7 @@ public interface MyPinService {
     List<CourseDto> getUserCourse(String userId);
     List<CourseDto> getUserLikeCourse(String userId);
 
-    List<CourseDetailDto> getUserCourseDetail(String userId);
+    List<CourseDetailDto> getUserCourseDetail(String userId, int courseId);
 
     void editUserProfile(Map<String, Object> userDto);
 
