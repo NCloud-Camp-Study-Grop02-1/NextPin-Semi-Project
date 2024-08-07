@@ -352,10 +352,7 @@ p{
     margin-left: 0.5rem;
     font-size: 1.2rem;
 }
-/*mypin 코스 목록 속성*/
-.mypin-content ul li .container{
-    background-color: #eccccf;
-}
+
 /*mypin 코스 이름 편집 시, 나타나는 텍스트 박스 속성*/
 .mypin-content textarea{
     background-color: transparent;
@@ -404,7 +401,13 @@ p{
     width: 1rem;
     margin-left: 1rem;
 }
-
+.delete-icon{
+    width: 1rem;
+    margin-left: 1rem;
+}
+.delete-icon:hover{
+    cursor: pointer;
+}
 
 
 /*mypin 코스 목록에 대한 미트볼 버튼 속성*/
@@ -759,3 +762,4 @@ button, .modal-buttons button {
     background-color: #ffc107;
     color: white;
 }
+

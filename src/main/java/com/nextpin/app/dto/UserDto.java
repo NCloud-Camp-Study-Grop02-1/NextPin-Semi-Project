@@ -1,6 +1,12 @@
 package com.nextpin.app.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class UserDto {
     private String userId;
     private String nickname;
@@ -15,32 +21,5 @@ public class UserDto {
         this.message = message;
         this.profileURL = profileURL;
     }
-
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "userId='" + userId + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", message='" + message + '\'' +
-                ", profileURL='" + profileURL + '\'' +
-                '}';
-    }
-
-    // Getters and Setters
-
-    public String getUserId() {return userId;}
-
-    public void setUserId(String userId) {this.userId = userId;}
-
-    public String getNickname() {return nickname;}
-
-    public void setNickname(String nickname) {this.nickname = nickname;}
-
-    public String getMessage() {return message;}
-
-    public void setMessage(String message) {this.message = message;}
-
-    public String getProfileURL() {return profileURL;}
-
-    public void setProfileURL(String profileURL) {this.profileURL = profileURL;}
 }
+

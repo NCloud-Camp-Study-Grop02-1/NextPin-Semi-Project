@@ -31,6 +31,10 @@ public class MyPinDao {
         return mybatis.selectList("MyPinDao.getUserCourse",userId);
     }
 
+    public List<CourseDto> getUserLikeCourse(String userId){
+        return mybatis.selectList("MyPinDao.getUserLikeCourse",userId);
+    }
+
     public List<CourseDetailDto> getUserCourseDetail(String userId){
         return mybatis.selectList("MyPinDao.getUserCourseDetail",userId);
     }
@@ -39,7 +43,22 @@ public class MyPinDao {
         mybatis.update("MyPinDao.editUserProfile",userDto);
     }
 
-    public void editUserCourse(Map<String, Object> courseDto) {
+    public void editUserCourse1(CourseDto courseDto) {
         mybatis.update("MyPinDao.editUserCourse",courseDto);
     }
+    public void editUserCourse2(CourseDto courseDto) {
+        mybatis.update("MyPinDao.editUserCourse",courseDto);
+    }
+    public void editUserCourse3(CourseDto courseDto) {
+        mybatis.update("MyPinDao.editUserCourse",courseDto);
+    }
+
+    public void editUserBookMark(CourseDto courseDto) {
+        mybatis.update("MyPinDao.editBookMark",courseDto);
+    }
+
+    public void deleteUserCourseDetail(CourseDetailDto courseDetailDto) {
+        mybatis.delete("MyPinDao.deleteCourseDetail",courseDetailDto);
+    }
 }
+

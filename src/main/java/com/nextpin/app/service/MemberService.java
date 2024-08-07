@@ -1,6 +1,7 @@
 package com.nextpin.app.service;
 
 import com.nextpin.app.dto.MemberDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface MemberService {
     String userNicknameCheck(String nickname);
 
     MemberDto login(MemberDto memberDto);
+
+    void logout(HttpSession session);
 }

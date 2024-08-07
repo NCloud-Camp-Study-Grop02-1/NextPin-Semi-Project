@@ -103,8 +103,8 @@ function displayPlaces(places) {
 
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            marker = addMarker(placePosition, i);
+            // itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -157,17 +157,17 @@ function getListItem(index, places) {
     var el = document.createElement('li'),
         itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
             '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
+            '   <h5>' + places.location + '</h5>';
 
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-            '   <span class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>';
-    }
-
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-        '</div>';
+    // if (places.road_address_name) {
+    //     itemStr += '    <span>' + places.road_address_name + '</span>' +
+    //         '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    // } else {
+    //     itemStr += '    <span>' +  places.address_name  + '</span>';
+    // }
+    //
+    // itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+    //     '</div>';
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -296,15 +296,15 @@ function toggleHeart(button) {
     }
 }
 
-// 초기 로드 시 실행
-document.addEventListener('DOMContentLoaded', function() {
-    const courseDetails = document.querySelector('.course-details');
-    // courseDetails.style.display = 'none'; // 초기에 숨김 처리
-});
+// // 초기 로드 시 실행
+// document.addEventListener('DOMContentLoaded', function() {
+//     const courseDetails = document.querySelector('.course-details');
+//     courseDetails.style.display = 'none'; // 초기에 숨김 처리
+// });
 
 // 코스 버튼 클릭 시 course-details 토글
 function toggleCourseDetails(button) {
-    const rankingItem = button.closest('.ranking-item');
+    const rankingItem = button.closest('.collapse');
     const courseDetails = rankingItem.nextElementSibling;
     if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
         courseDetails.style.display = 'block';
@@ -324,6 +324,82 @@ function toggleSave(button) {
     } else {
         saveImage.src = 'images/icons/save-after-icon.png';
     }
+}
+
+var paths = [];
+// 코스명 선택 시 핀 꽂는 기능
+function drawPinCourse(courseData){
+    // console.log(courseData);
+    let courseId = '',
+        bounds = new kakao.maps.LatLngBounds();
+    if(undefined !== courseData){
+        courseId = courseData[0].courseId;
+    }
+
+    // for(let i =0; i < courseData.length; i++){
+    //     console.log(i + " : " + JSON.stringify(courseData[i]));
+    // }
+    removeMarker();
+
+    for(let i = 0; i < courseData.length; i++){
+
+        var placePosition = new kakao.maps.LatLng(courseData[i].y, courseData[i].x),
+            marker = addMarker(placePosition, i),
+            itemEl = getListItem(i, courseData[i]);
+
+        paths.push(placePosition);
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, courseData[i].location);
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+    }
+
+}
+
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+function addMarker(position, idx){
+    let imageSrc ='../images/icons/course_icon.png';
+
+    let imageSize = new kakao.maps.Size(32, 32), // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+        marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
 }
 
 window.onload = function(){
@@ -366,91 +442,19 @@ window.onload = function(){
             }
         });
     });
+    //각 목록에 지정한 10가지 색상 중 랜덤한 값이 들어가게 만들기.
+    // 1. 10가지 색상 배열 만들기
+    const colors=['#FFC061','#D4ADFB','#97E285','#fd7f7f','#1A70D6','#7BD0FF','#C8C8C8','#BADCE3','#AFA18E','#ECCCCF'];
 
-    var detailData = JSON.parse($('#hiddenValue').val());
-    // console.log(detailData);
+    // 2. 모든 .card 클래스 요소 선택하기(일차별 색상)
+    const cards = document.querySelectorAll('.card');
+    // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
+    cards.forEach(card => {
+        const uls = card.querySelectorAll('ul');
+        // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
+        uls.forEach(ul => {
+            ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    });
 
-    for(let i = 0; i <detailData.length; i++){
-        let visitD = new Date(detailData[i].visitDate);
-        let visitDa = visitD.getFullYear() + "-" + (visitD.getMonth() + 1) + "-" + visitD.getDate();
-        detailData[i].visitDate = visitDa;
-        // console.log(detailData[i]);
-
-        let divElement = $('.course-details #' + detailData[i].courseId);
-        let dayDivElement = document.createElement('div');
-        dayDivElement.classList.add('day');
-        dayDivElement.classList.add('user1day1');
-
-        let createLocationUlElement = document.createElement('ul');
-        let createDateLiElement = document.createElement('li');
-        createDateLiElement.textContent = detailData[i].visitDate;
-
-
-
-    }
 };
-
-
-// function fetchCourses() {
-//     fetch('/courses')
-//         .then(response => response.json())
-//         .then(courses => {
-//             const rankingContainer = document.querySelector('.ranking');
-//             rankingContainer.innerHTML = '';
-//             courses.forEach((course, index) => {
-//                 const courseItem = document.createElement('div');
-//                 courseItem.classList.add('ranking-item');
-//
-//                 const rankingNumber = document.createElement('div');
-//                 rankingNumber.classList.add('ranking-number');
-//                 rankingNumber.textContent = index + 1;
-//
-//                 const profilePicture = document.createElement('button');
-//                 profilePicture.classList.add('profilePicture');
-//                 profilePicture.innerHTML = `<img src="../images/icons/default-profile_icon.svg" alt="${course.nickname}">
-//                                             <span>${course.nickname}</span>`;
-//
-//                 const courseButton = document.createElement('button');
-//                 courseButton.classList.add('course-button');
-//                 courseButton.textContent = course.courseName;
-//                 courseButton.style.backgroundColor = course.color || '#D4ADFB';
-//                 courseButton.onclick = () => toggleCourseDetails(course.courseId, courseItem);
-//
-//                 courseItem.appendChild(rankingNumber);
-//                 courseItem.appendChild(profilePicture);
-//                 courseItem.appendChild(courseButton);
-//
-//                 rankingContainer.appendChild(courseItem);
-//             });
-//         });
-// }
-
-// function toggleCourseDetails(courseId, courseItem) {
-//     let i = 1;
-//     fetch(`/courses/${courseId}/details`)
-//         .then(response => response.json())
-//         .then(details => {
-//             let detailsContainer = courseItem.querySelector('.course-details');
-//             if (!detailsContainer) {
-//                 detailsContainer = document.createElement('div');
-//                 detailsContainer.classList.add('course-details');
-//                 courseItem.appendChild(detailsContainer);
-//             }
-//             detailsContainer.innerHTML = ''; // 기존 내용을 지움
-//             console.log("details : " + JSON.stringify(details));
-//             details.forEach(detail => {
-//                 const dayContainer = document.createElement('div');
-//                 dayContainer.classList.add('day');
-//                 dayContainer.innerHTML = `<h2>Day ${i}</h2>`;
-//
-//                 const locationList = document.createElement('ul');
-//                 const locationItem = document.createElement('li');
-//                 locationItem.textContent = detail.location;
-//                 locationList.appendChild(locationItem);
-//
-//                 dayContainer.appendChild(locationList);
-//                 detailsContainer.appendChild(dayContainer);
-//                 i++;
-//             });
-//         });
-// }

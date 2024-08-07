@@ -21,6 +21,7 @@ public class CourseDto {
     private int heartCnt;
     private int openClose;
     private String color;
-
+    private boolean myPinBoolaen;
+    private boolean likeBoolean;
 
 }
