@@ -4,68 +4,68 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CourseHomeReview2Dao">
 
-    <select id="findCourseIdByUserIdAndCourseName" parameterType="map" resultType="string">
-        SELECT courseId FROM course WHERE userId = #{userId} AND courseName = #{courseName} LIMIT 1
+    <!-- 코스 ID 가져오기 -->
+    <select id="findCourseIdByUserIdAndCourseName" resultType="java.lang.Integer" parameterType="map">
+        SELECT courseId
+        FROM course
+        WHERE userId = #{userId} AND courseName = #{courseName}
     </select>
 
-    <insert id="insertCourse" parameterType="courseDto">
-        INSERT INTO course (userId, nickname, courseName, color, regDate, modifyDate)
-        VALUES (#{userId}, #{nickname}, #{courseName}, #{color}, #{regDate}, #{modifyDate})
+    <!-- 코스 삽입 -->
+    <insert id="insertCourse" parameterType="com.nextpin.app.dto.CourseDto" useGeneratedKeys="true" keyProperty="courseId">
+        INSERT INTO course (userId, nickname, courseName, regDate, color, myPinBoolean, likeBoolean)
+        VALUES (#{userId}, #{nickname}, #{courseName}, NOW(), #{color}, true, false)
     </insert>
 
+    <!-- 코스 상세 정보 삽입 -->
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
         INSERT INTO course_detail (courseId, location, x, y, visitDate, memo, userId)
-        VALUES (
-                   #{courseId},
-                   #{location},
-                   #{x},
-                   #{y},
-                   #{visitDate},
-                   #{memo},
-                   #{userId}
-               )
+        VALUES (#{courseId}, #{location}, #{x}, #{y}, #{visitDate}, #{memo}, #{userId})
     </insert>
 
+    <!-- 코스 색상 및 수정 날짜 업데이트 -->
     <update id="updateCourseColorAndModifyDate" parameterType="map">
         UPDATE course
-        SET color = #{color}, modifyDate = now()
+        SET color = #{color}, modifyDate = NOW()
         WHERE courseId = #{courseId}
     </update>
 
-    <select id="getCourseDetails" parameterType="int" resultType="courseDetailDto">
+    <!-- 코스 상세 정보 가져오기 -->
+    <select id="getCourseDetails" resultType="com.nextpin.app.dto.CourseDetailDto" parameterType="int">
         SELECT *
         FROM course_detail
         WHERE courseId = #{courseId}
     </select>
 
-    <select id="getCoordinatesByLocation" parameterType="string" resultType="map">
-        SELECT x, y
-        FROM course_detail
-        WHERE location = #{location}
-    </select>
-
-    <select id="isDuplicateCourseDetail" parameterType="map" resultType="boolean">
+    <!-- 중복 코스 상세 정보 확인 -->
+    <select id="isDuplicateCourseDetail" resultType="boolean" parameterType="map">
         SELECT COUNT(*) > 0
         FROM course_detail
         WHERE courseId = #{courseId} AND location = #{location}
     </select>
 
-    <select id="getCourseDetailsByNameAndUser" parameterType="map" resultType="courseDetailDto">
+    <!-- 사용자와 코스 이름에 따른 코스 상세 정보 조회 -->
+    <select id="getCourseDetailsByNameAndUser" resultType="com.nextpin.app.dto.CourseDetailDto" parameterType="map">
         SELECT cd.*
         FROM course_detail cd
                  JOIN course c ON cd.courseId = c.courseId
-        WHERE c.courseName = #{courseName} AND c.userId = #{userId}
+        WHERE c.userId = #{userId} AND c.courseName = #{courseName}
     </select>
 
-    <select id="isLocationExist" resultType="boolean">
-        SELECT COUNT(*) > 0
-        FROM course_detail
-        WHERE courseId = #{courseId} AND location = #{location}
+    <!-- 위치 존재 여부 확인 -->
+    <select id="isLocationExist" resultType="java.lang.Boolean" parameterType="map">
+        SELECT EXISTS(
+            SELECT 1
+            FROM course_detail
+            WHERE courseId = #{courseId} AND location = #{location}
+        )
     </select>
 
-    <delete id="deleteCourseDetail">
-        DELETE FROM course_detail
-        WHERE courseId = #{courseId} AND location = #{location}
-    </delete>
+    <!--로그인 시, 아이디의 생성 코스 리스트 불러오기-->
+    <select id="getCoursesByUserId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT courseName
+        FROM course
+        WHERE userId = #{userId}
+    </select>
 
 </mapper>

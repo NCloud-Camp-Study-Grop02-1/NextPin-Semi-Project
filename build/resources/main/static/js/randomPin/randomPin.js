@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const makeCourse = document.getElementById('makeCourse');
     const buttons = document.querySelectorAll('.color-button');
 
+
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             if (button.classList.contains('selected')) {
@@ -497,8 +498,8 @@ window.onload = function () {
     });
 }
 // 데이터 매핑 로직
-var userId = 'sampleUserId';
-var nickname = 'sampleNickname';
+var userId;
+var nickname;
 
 var bookMark = 0;
 var heartCnt = 0;

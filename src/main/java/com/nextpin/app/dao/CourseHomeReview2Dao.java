@@ -31,60 +31,51 @@ public class CourseHomeReview2Dao {
     }
 
     public void saveCourseDetail(List<CourseDetailDto> saveCourseDetailDtoList) {
-        for (int i = 0; i < saveCourseDetailDtoList.size(); i++) {
-            mybatis.insert("CourseHomeReview2Dao.insertCourseDetail", saveCourseDetailDtoList.get(i));
+        for (CourseDetailDto detail : saveCourseDetailDtoList) {
+            mybatis.insert("CourseHomeReview2Dao.insertCourseDetail", detail);
         }
-
     }
 
-    public List<String> findCourseIdByUserIdAndCourseName(String userId, String courseName){
-        Map<String, String> params = new HashMap<String, String>();
+    public List<Integer> findCourseIdByUserIdAndCourseName(String userId, String courseName) {
+        Map<String, String> params = new HashMap<>();
         params.put("userId", userId);
         params.put("courseName", courseName);
         return mybatis.selectList("CourseHomeReview2Dao.findCourseIdByUserIdAndCourseName", params);
     }
 
-    public void updateCourseColorAndModifyDate(@Param("courseId") int courseId, @Param("color") String color){
+    public void updateCourseColorAndModifyDate(@Param("courseId") int courseId, @Param("color") String color) {
         Map<String, Object> params = new HashMap<>();
         params.put("courseId", courseId);
         params.put("color", color);
         mybatis.update("CourseHomeReview2Dao.updateCourseColorAndModifyDate", params);
     }
 
-
-    public List<CourseDetailDto> getCourseDetails(@Param("courseId") int courseId){
+    public List<CourseDetailDto> getCourseDetails(@Param("courseId") int courseId) {
         return mybatis.selectList("CourseHomeReview2Dao.getCourseDetails", courseId);
     }
 
-    public List<Map<String, Double>> getCoordinatesByLocation(String location){
-        return mybatis.selectList("CourseHomeReview2Dao.getCoordinatesByLocation", location);
-    }
-
-    public boolean isDuplicateCourseDetail(@Param("courseId") int courseId, @Param("location") String location){
+    public boolean isDuplicateCourseDetail(@Param("courseId") int courseId, @Param("location") String location) {
         Map<String, Object> params = new HashMap<>();
         params.put("courseId", courseId);
         params.put("location", location);
         return mybatis.selectOne("CourseHomeReview2Dao.isDuplicateCourseDetail", params);
     }
 
-    public List<CourseDetailDto> getCourseDetailsByNameAndUser(@Param("courseName") String courseName, @Param("userId") String userId){
+    public List<CourseDetailDto> getCourseDetailsByNameAndUser(@Param("courseName") String courseName, @Param("userId") String userId) {
         Map<String, String> params = new HashMap<>();
         params.put("courseName", courseName);
         params.put("userId", userId);
         return mybatis.selectList("CourseHomeReview2Dao.getCourseDetailsByNameAndUser", params);
     }
 
-    public boolean isLocationExist(@Param("courseId") Integer courseId, @Param("location") String location){
+    public boolean isLocationExist(@Param("courseId") Integer courseId, @Param("location") String location) {
         Map<String, Object> params = new HashMap<>();
         params.put("courseId", courseId);
         params.put("location", location);
         return mybatis.selectOne("CourseHomeReview2Dao.isLocationExist", params);
     }
 
-    public int deleteCourseDetail(@Param("courseId") Integer courseId, @Param("location") String location){
-        Map<String, Object> params = new HashMap<>();
-        params.put("courseId", courseId);
-        params.put("location", location);
-        return mybatis.delete("CourseHomeReview2Dao.deleteCourseDetail", params);
+    public List<String> getCoursesByUserId(String userId) {
+        return mybatis.selectList("CourseHomeReview2Dao.getCoursesByUserId", userId);
     }
 }
