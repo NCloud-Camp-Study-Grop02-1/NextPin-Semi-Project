@@ -87,7 +87,7 @@
                                         <div class="ranking-item" th:data-course-id="${entry.key.courseId}">
                                             <div class="ranking-number">[(${stat.index + 1})]</div>
                                             <button class="profilePicture" onclick="goToProfile(this)">
-                                                <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">
+                                                <img th:src="'../images/img/profile/profile' + ${entry.key.courseId % 10} + '.png'" alt="프로필">
                                                 <span>[(${entry.key.nickname})]</span>
                                             </button>
                                             <input type="button" class="course-button" data-bs-toggle="collapse"
