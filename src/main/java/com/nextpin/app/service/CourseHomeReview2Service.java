@@ -35,4 +35,5 @@ public interface CourseHomeReview2Service {
     public int saveCourse(CourseDto saveCourseDto);
 
     public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList);
+
 }

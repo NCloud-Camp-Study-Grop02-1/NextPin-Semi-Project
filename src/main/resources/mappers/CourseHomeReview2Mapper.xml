@@ -8,7 +8,7 @@
         SELECT courseId FROM course WHERE userId = #{userId} AND courseName = #{courseName} LIMIT 1
     </select>
 
-    <insert id="insertCourse" parameterType="courseDto">
+    <insert id="insertCourse" parameterType="courseDto" useGeneratedKeys="true" keyProperty="courseId">
         INSERT INTO course (userId, nickname, courseName, color, regDate, modifyDate)
         VALUES (#{userId}, #{nickname}, #{courseName}, #{color}, #{regDate}, #{modifyDate})
     </insert>

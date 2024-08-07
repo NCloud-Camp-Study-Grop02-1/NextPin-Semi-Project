@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chosenpinBtn = document.getElementById('course-btn');
     const makeCourse = document.getElementById('makeCourse');
     const buttons = document.querySelectorAll('.color-button');
+    fetchUserInfo();
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -497,10 +498,33 @@ window.onload = function () {
     });
 }
 // 데이터 매핑 로직
-var userId = 'sampleUserId';
-var nickname = 'sampleNickname';
+var userId;
+var nickname;
 
-var bookMark = 0;
+// 사용자 정보 가져오기 함수
+function fetchUserInfo() {
+    $.ajax({
+        url: '/info',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.isLoggedIn) {
+                userId = response.userId; // 필요에 따라 userId를 세션에서 추가로 가져오도록 백엔드 수정 필요
+                nickname = response.nickname;
+                console.log("User ID: ", userId);
+                console.log("Nickname: ", nickname);
+            } else {
+                alert("로그인이 필요합니다.");
+            }
+        },
+        error: function(error) {
+            console.log("Error fetching user info: ", error);
+        }
+    });
+}
+
+
+var bookMark = 1;
 var heartCnt = 0;
 var openClose = 1;
 var color = "";
@@ -527,8 +551,6 @@ function saveData(data){
 
 // finish-button 클릭 이벤트 핸들러
 document.querySelector("#finish-button").addEventListener("click", function (event) {
-
-
 
     const selectedDate = $('#testDatepicker').val();
     const memoActive = $('#memo-active').is(':checked');
