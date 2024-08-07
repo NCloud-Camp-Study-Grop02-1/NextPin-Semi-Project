@@ -119,7 +119,7 @@ body {
 /*사이드바 제외 전체화면*/
 #app_layout {
     flex: 1 1 auto;
-    /*padding-left: 6.5rem;*/
+    padding-left: 7.5rem;
 }
 
 /*가게 정보와 코스 만들기 창*/
@@ -129,10 +129,10 @@ body {
     bottom: 0px;
     z-index: 200;
     height: 100%;
-    min-width: 390px;
+    min-width: 450px;
+    max-width: 450px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.1) 10px 0px 15px 0px;
-    padding-left: 6.5rem;
 }
 
 /*가게 정보와 코스 만들기 창 w/ outline*/
@@ -162,7 +162,7 @@ body {
     left: 0px;
     display: block;
     z-index: 100;
-    width: 390px;
+    width: 450px;
     padding: 15px 25px;
 }
 
@@ -208,7 +208,7 @@ body {
 /*검색장소 Detail*/
 .storeDetail_wrap {
     position: relative;
-    width: 390px;
+    width: 450px;
     height: 100%;
     display: flex;
     flex: 0 0 auto;
@@ -231,13 +231,17 @@ body {
 }
 
 .storeDetail {
-    width: 390px;
+    width: 450px;
     height: 100%;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.storeInfo {
+    width: 450px;
 }
 
 /*니뽕내뽕 데이터*/
@@ -250,7 +254,7 @@ body {
     text-align: justify;
     justify-content: space-between;
     position: relative;
-    padding-right: 40px;
+    padding-right: 50px;
 }
 
 #homeTitle h1{
@@ -436,6 +440,7 @@ a[aria-selected='false'] {
     box-sizing: content-box;
     border-left: 1px solid #e0e0e0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .courseMaker {
@@ -488,6 +493,20 @@ a[aria-selected='false'] {
 .memo-input:disabled {
     background: #ffffff;
     border: 1px solid #c3c3c3;
+}
+
+/*생성할 코스 선택*/
+.myCourse {
+    padding: 20px;
+}
+
+.myCourse h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.myCourse form {
+    padding-top: 10px;
 }
 
 /*캘린더 날짜 선택*/

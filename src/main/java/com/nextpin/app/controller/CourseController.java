@@ -8,16 +8,10 @@ import com.nextpin.app.service.CourseHomeReview2Service;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.dto.KakaoMapReviewDto;
-import com.nextpin.app.dto.SearchRequestDto;
-import com.nextpin.app.service.CourseService;
-import com.nextpin.app.service.PlaceService;
-import com.nextpin.app.dto.Criteria;
-import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.service.CourseService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,12 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -188,6 +177,24 @@ public class CourseController {
             return Collections.emptyList();
         }
         return courseHomeReview2Service.getCoursesByUserId(userId);
+    }
+
+    @PostMapping("/insertCourse")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> insertCourse(@RequestBody Map<String, Object> requestData) {
+        // JSON 데이터에서 courseData와 courseDetailData 추출
+        ObjectMapper mapper = new ObjectMapper();
+        CourseDto courseDto = mapper.convertValue(requestData.get("courseData"), CourseDto.class);
+        List<CourseDetailDto> courseDetailDtoList = mapper.convertValue(requestData.get("courseDetailData"), new TypeReference<List<CourseDetailDto>>() {});
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Course data inserted successfully");
+        response.put("data", courseDto);
+        logger.debug("courseDto : " + courseDto.toString());
+        logger.debug("courseDetailDtoList : " + courseDetailDtoList.toString());
+
+        courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
+        return ResponseEntity.ok(response);
     }
 }
 

@@ -97,38 +97,59 @@
         <!--mypin내용-->
         <div class="mypin-content content">
             <ul>
-                <li th:each="userCourse : ${userCourseList}">
+                <li th:each="userCourse, userCourseStat : ${userCourseList}">
                     <!-- 요소들을 한 줄에 배치하기 위한 inner-container -->
                     <div class="inner-container">
                         <!-- 자물쇠 아이콘 -->
                         <img class="rock-icon" src="images/icons/rock_icon.png" alt="자물쇠 아이콘"
-                             th:classappend="${userCourse.openClose == 1} ? 'hidden' : ''">
+                             th:classappend="${userCourse.course.openClose == 1} ? 'hidden' : ''">
 
-                            <!--각 목록-->
-                            <div class="container" th:data-course-id="${userCourse.courseId}"
-                                 th:style="'background-color:' + ${userCourse.color}">
-                                <input type="button" class="pin-description" data-bs-toggle="collapse"
-                                       th:data-bs-target="'#collapseExample' + ${userCourse.courseId}"
-                                       th:aria-controls="'collapseExample' + ${userCourse.courseId}"
-                                       th:value="${userCourse.courseName}">
-                                <textarea class="pin-textarea" rows="2" style="display: none"></textarea>
-                                <!--미트볼 버튼-->
-                                <div class="mypin-edit-icon meatball-btn">
-                                    <div class="dot"></div>
-                                    <div class="dot"></div>
-                                    <div class="dot"></div>
-                                </div>
-                                <!-- 미트볼버튼 팝오버창 -->
-                                <div class="popover-content" style="display: none; flex-direction: column;">
-                                    <button class="popover-item" onclick="toggleVisibility(this)">공개여부</button>
-                                    <button class="popover-item" onclick="editColor(this)">컬러편집</button>
-                                    <button class="popover-item popover-item-nameEdit" onclick="editDescription(this)">이름편집</button>
-                                </div>
+                        <!--각 목록-->
+                        <div class="container" th:data-course-id="${userCourse.course.courseId}"
+                             th:style="'background-color:' + ${userCourse.course.color}">
+                            <input type="button" class="pin-description user-course" data-bs-toggle="collapse"
+                                   th:data-bs-target="'#collapseExample' + ${userCourse.course.courseId}"
+                                   th:aria-controls="'collapseExample' + ${userCourse.course.courseId}"
+                                   th:value="${userCourse.course.courseName}" th:id="${userCourseStat.index}"
+                                   th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]])">
+                            <textarea class="pin-textarea" rows="2" style="display: none"></textarea>
+                            <!--미트볼 버튼-->
+                            <div class="mypin-edit-icon meatball-btn">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
                             </div>
-                            <!--하트 이모지와 하트 개수-->
-                            <div class="pin-heart-box">
-                                <p><img class="pin-heart" src="images/icons/heart-after_icon.png" alt=""></p>
-                                <span class="pin-heart-cnt" th:text="${userCourse.heartCnt}"></span>
+                            <!-- 미트볼버튼 팝오버창 -->
+                            <div class="popover-content" style="display: none; flex-direction: column;">
+                                <button class="popover-item" onclick="toggleVisibility(this)">공개여부</button>
+                                <button class="popover-item" onclick="editColor(this)">컬러편집</button>
+                                <button class="popover-item popover-item-nameEdit" onclick="editDescription(this)">이름편집</button>
+                            </div>
+                        </div>
+                        <!--하트 이모지와 하트 개수-->
+                        <div class="pin-heart-box">
+                            <p><img class="pin-heart" src="images/icons/heart-after_icon.png" alt=""></p>
+                            <span class="pin-heart-cnt" th:text="${userCourse.course.heartCnt}">14</span>
+                        </div>
+                    </div>
+                    <!--각 목록의 세부(콜랩스) 내용-->
+                    <div class="collapse" th:id="'collapseExample' + ${userCourse.course.courseId}">
+                        <div class="card card-body" th:style="'background-color:' + ${userCourse.course.color}">
+                            <div th:each="detail, iterStat : ${userCourse.courseDetail}">
+                                <div th:if="${iterStat.index == 0 || userCourse.courseDetail[iterStat.index - 1].day != detail.day}">
+                                    <div class="course-day-box">
+                                        <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
+                                        <p class="course-day" th:text="${detail.visitDate}"></p>
+                                        <a class="course-day-link" href="/calendar">상세보기</a>
+                                    </div>
+                                </div>
+                                <!-- 추가된 ul 요소에 th:style 속성 적용 -->
+                                <ul th:style="'background-color:' + ${userCourse.course.color}">
+                                    <li class="course-detail-item" th:style="'background-color:' + ${userCourse.course.color}">
+                                        <span th:text="${detail.location}"></span>
+                                        <img class="delete-icon" src="images/icons/delete_icon1.png" alt="삭제아이콘">
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <!--각 목록의 세부(콜랩스) 내용-->

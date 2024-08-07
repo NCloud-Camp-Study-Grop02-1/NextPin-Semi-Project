@@ -45,11 +45,8 @@ public class LoginSignupController {
 
         // 로그인 성공 시 세션에 사용자 정보 저장
         session.setAttribute("loginMember", loginMember);
-<<<<<<< HEAD
         session.setAttribute("userId", loginMember.getUserId());
         session.setAttribute("nickname", loginMember.getNickname());
-=======
->>>>>>> origin/backend/jangho
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/main");

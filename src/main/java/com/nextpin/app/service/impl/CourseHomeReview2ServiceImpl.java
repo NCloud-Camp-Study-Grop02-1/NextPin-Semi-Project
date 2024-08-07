@@ -29,14 +29,8 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
     }
 
     @Override
-<<<<<<< HEAD
     public Integer findCourseIdByUserIdAndCourseName(String userId, String courseName) {
         List<Integer> courseIds = courseHomeReview2Dao.findCourseIdByUserIdAndCourseName(userId, courseName);
-=======
-    public String findCourseIdByUserIdAndCourseName(String userId, String courseName) {
-        List<String> courseIds = null;
-//        List<String> courseIds = courseHomeReview2Dao.findCourseIdByUserIdAndCourseName(userId, courseName);
->>>>>>> origin/backend/jangho
         if (courseIds == null || courseIds.isEmpty()) {
             return null; // 또는 적절한 예외 처리
         }
@@ -45,11 +39,7 @@ public class CourseHomeReview2ServiceImpl implements CourseHomeReview2Service {
         }
         return courseIds.get(0);
     }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/backend/jangho
+    
     @Override
     public void updateCourseColorAndModifyDate(int courseId, String color) {
         courseHomeReview2Dao.updateCourseColorAndModifyDate(courseId, color);
