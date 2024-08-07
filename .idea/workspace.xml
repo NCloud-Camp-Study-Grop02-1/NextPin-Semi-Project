@@ -5,40 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31e58372-ca0e-47ad-8da3-4e447c481067" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.8/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CalendarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CalendarController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CommunityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CommunityController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/ExcelManageRestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/ExcelManageRestController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/LoginSignupController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/LoginSignupController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MainController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/dao/CourseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/dao/CourseDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/CourseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/CourseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/ExcelManageRestService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/ExcelManageRestService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/KakaoMapDataRestore.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/KakaoMapDataRestore.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/CourseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/CourseServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/ExcelManageRestServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/ExcelManageRestServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/KakaoMapDataRestoreImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/service/impl/KakaoMapDataRestoreImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/conf/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/conf/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/mappers/DataMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/mappers/DataMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/common/sidebar_myPin.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/common/sidebar_myPin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/community/community.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/community/community.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/course/courseHomeReview2.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/course/courseHomeReview2.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/course/mainCourse.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/course/mainCourse.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/loginSignUp/signUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/loginSignUp/signUp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/mainPageStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/mainPageStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/mypin/mypin.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/mypin/mypin.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/randompin/randomPinModal.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/randompin/randomPinModal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/icons/cafe_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/images/icons/cafe_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/icons/food_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/images/icons/food_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/icons/hotel_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/images/icons/hotel_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/icons/tour_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/images/icons/tour_map_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/course/courseHomeReview2.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/course/courseHomeReview2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/course/mainCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/course/mainCourse.js" afterDir="false" />
@@ -47,56 +40,61 @@
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/course/courseHomeReview2.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/course/courseHomeReview2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/course/mainCourse.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/course/mainCourse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/loginSignUp/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/loginSignUp/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/loginSignUp/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/loginSignUp/signUp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/randomPin/randomPin.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/randomPin/randomPin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/ApiTest_logback.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ApiTest_logback.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CalendarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CalendarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/ExcelManageRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/ExcelManageRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/LoginSignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/LoginSignupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/MypinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/MypinController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CourseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CourseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CourseHomeReview2Dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CourseHomeReview2Dao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/MyPinDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/MyPinDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDetailDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/KakaoMapReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/KakaoMapReviewDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/MemberDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/MemberDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/mapper/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/mapper/MemberMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CourseHomeReview2Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CourseHomeReview2Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CourseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/ExcelManageRestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/ExcelManageRestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/KakaoMapDataRestore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/KakaoMapDataRestore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/MyPinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/MyPinService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CommunityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CommunityServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseHomeReview2ServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseHomeReview2ServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/ExcelManageRestServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/ExcelManageRestServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/KakaoMapDataRestoreImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/KakaoMapDataRestoreImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/conf/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/conf/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/MyPinServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/MyPinServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/PlaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/PlaceServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/CourseHomeReview2Mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/CourseHomeReview2Mapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/DataMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/DataMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/MainCourseMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/MainCourseMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/common/sidebar_myPin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/common/sidebar_myPin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/community/community.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/community/community.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/MypinMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/MypinMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/member-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/member-mapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/course/courseHomeReview2.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/course/courseHomeReview2.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/course/mainCourse.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/course/mainCourse.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/loginSignUp/signUp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/loginSignUp/signUp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/mainPageStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/mainPageStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/mypin/mypin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/mypin/mypin.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/randompin/randomPinModal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/randompin/randomPinModal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/icons/cafe_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/icons/cafe_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/icons/food_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/icons/food_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/icons/hotel_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/icons/hotel_map_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/images/icons/tour_map_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/icons/tour_map_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/course/courseHomeReview2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/course/courseHomeReview2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/course/mainCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/course/mainCourse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/loginSignUp/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/loginSignUp/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/loginSignUp/signUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/loginSignUp/signUp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/mypin/mypin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/mypin/mypin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/randomPin/randomPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/randomPin/randomPin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/course/courseHomeReview2.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/course/courseHomeReview2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/course/mainCourse.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/course/mainCourse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/loginSignUp/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/loginSignUp/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/loginSignUp/signUp.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/loginSignUp/signUp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mypin/mypin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mypin/mypin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/randomPin/randomPin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/randomPin/randomPin.html" afterDir="false" />
     </list>
@@ -160,7 +158,7 @@
     "Spring Boot.NextPinApplication.executor": "Run",
     "git-widget-placeholder": "backend/mingyo",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/pc/Desktop/NextPin GIT",
+    "last_opened_file_path": "C:/03_Github_Files/NextPin_Team_Project/Main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -177,33 +175,19 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\03_Github_Files\NextPin_Team_Project\Main\src\main\java\com\nextpin\app\service" />
-      <recent name="C:\03_Github_Files\NextPin_Team_Project\Main\src\main\java\com\nextpin\app\service\impl" />
-      <recent name="C:\03_Github_Files\NextPin_Team_Project\Main\src\main\java\com\nextpin\app\dao" />
       <recent name="C:\Users\pc\Desktop\NextPin GIT\src\main\java\com\nextpin\app" />
       <recent name="C:\Users\pc\Desktop\NextPin GIT\src\main\resources" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="NextPinApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="NextPinApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="NextPin_Project.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nextpin.app.NextPinApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.nextpin.app.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Spring Boot.NextPinApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -224,14 +208,22 @@
       <workItem from="1722238201652" duration="351000" />
       <workItem from="1722238572863" duration="163000" />
       <workItem from="1722417017081" duration="1226000" />
-      <workItem from="1722473549678" duration="24937000" />
-      <workItem from="1722566298349" duration="2769000" />
-      <workItem from="1722575104462" duration="1283000" />
-      <workItem from="1722819397923" duration="27586000" />
+      <workItem from="1722473549678" duration="25263000" />
+      <workItem from="1722915393842" duration="3285000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

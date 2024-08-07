@@ -111,8 +111,12 @@
                                         </span>
                                         <span class="location_url">
                                             <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">
-                                            <span id="placeUrl" th:text="${rtnKaMapDto.placeUrl}"></span>
+                                            <a id="placeUrl" th:href="${rtnKaMapDto.placeUrl}" th:text="${rtnKaMapDto.placeUrl}" target="_blank"></a>
+
                                         </span>
+                                        <span id="coordinateX" style="display: none" th:text="${rtnKaMapDto.x}"></span>
+                                        <span id="coordinateY" style="display: none" th:text="${rtnKaMapDto.y}"></span>
+                                        <span id="category" style="display: none" th:text="${rtnKaMapDto.categoryGroupCode}"></span>
                                     </div>
                                     <div id="reviewContents" style="display:none;">
                                         <span class="review_counts">
@@ -164,7 +168,6 @@
                                     <option value="myCourse2">압구정 로데오 핫플</option>
                                     <option value="myCourse3">성수 카페 투어</option>
                                 </select>
-                                <!--                                <input type="submit" value="Submit" />-->
                             </form>
                         </div>
                         <!--캘린더 날짜 선택-->
@@ -227,14 +230,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- 확인 창 및 배경 추가 -->
-<div id="overlay" style="display: none;"></div>
-<div id="deleteConfirmationDialog" style="display: none;">
-    <p>저장된 코스를 삭제하시겠습니까?</p>
-    <button id="confirmDeleteButton">삭제</button>
-    <button id="cancelDeleteButton">취소</button>
 </div>
 
 <!-- 카카오맵-->

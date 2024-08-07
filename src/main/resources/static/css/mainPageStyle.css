@@ -10,7 +10,6 @@ body {
     font-family: 'pretendard-semibold';
     margin: 0;
     padding: 0;
-
 }
 
 header {
@@ -19,7 +18,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-top: 10px;
 }
 
 .logo {
@@ -59,6 +58,22 @@ header {
     color: #fff;
 }
 
+.actions .logout {
+    color: #F4B400;
+    border-color: #F4B400;
+    background-color: #fff;
+}
+.actions .logout:hover {
+    background-color: #F4B400;
+    color: #fff;
+}
+
+#nickname {
+    color: #4285F4;
+    margin-top: 8px;
+    margin-right: 3px;
+}
+
 main {
     padding: 20px;
     text-align: center;
@@ -73,7 +88,6 @@ main {
 
 .feature-container img {
     max-width: 1100px;
-
     height: auto;
 }
 
@@ -139,7 +153,6 @@ main {
 
 .calendar-link:hover {
     content: url('../images/icons/home_calendar-hover_icon.png');
-
 }
 
 .randomPin-link {
@@ -153,7 +166,6 @@ main {
 
 .randomPin-link:hover {
     content: url('../images/icons/home_randomPin-hover_icon.png');
-
 }
 
 .community-link {
@@ -166,7 +178,6 @@ main {
 }
 
 .community-link:hover {
-
     content: url('../images/icons/home_community-hover_icon.png');
 }
 
@@ -181,7 +192,6 @@ main {
 
 .userPage-link:hover {
     content: url('../images/icons/home_myPage-hover_icon.png') ;
-
 }
 
 
@@ -192,7 +202,6 @@ footer {
     text-align: center;
     font-size: 14px;
     color: #666;
-
 }
 footer .social-icons {
     margin-top: 10px;

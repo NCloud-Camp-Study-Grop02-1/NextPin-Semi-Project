@@ -326,8 +326,26 @@ function toggleSave(button) {
     }
 }
 
-// 유저가 클릭한 일차 글자 색상 변경
-document.addEventListener('DOMContentLoaded', function() {
+window.onload = function(){
+    const sidebar = $('.community_section');
+    const sidebarToggle = $('.sidebar-toggle');
+    let isExpand = false;
+
+    sidebarToggle.on('click', () => {
+        isExpand = !isExpand;
+        sidebar.toggle('open');
+
+        if(isExpand) {
+            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            return;
+        }
+
+        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        // sidebarContainer.classList.toggle('open');
+        // sidebarArrowContainer.classList.toggle('open');
+    });
+
+    // 유저가 클릭한 일차 글자 색상 변경
     // 모든 'day' 클래스를 가진 요소들을 선택
     const dayElements = document.querySelectorAll('.day');
 
@@ -348,91 +366,91 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
 
-window.onload = function(){
-    const sidebar = $('.community_section');
-    const sidebarToggle = $('.sidebar-toggle');
-    let isExpand = false;
+    var detailData = JSON.parse($('#hiddenValue').val());
+    // console.log(detailData);
 
-    sidebarToggle.on('click', () => {
-        isExpand = !isExpand;
-        sidebar.toggle('open');
+    for(let i = 0; i <detailData.length; i++){
+        let visitD = new Date(detailData[i].visitDate);
+        let visitDa = visitD.getFullYear() + "-" + (visitD.getMonth() + 1) + "-" + visitD.getDate();
+        detailData[i].visitDate = visitDa;
+        // console.log(detailData[i]);
 
-        if(isExpand) {
-            $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
-            return;
-        }
+        let divElement = $('.course-details #' + detailData[i].courseId);
+        let dayDivElement = document.createElement('div');
+        dayDivElement.classList.add('day');
+        dayDivElement.classList.add('user1day1');
 
-        $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
-        // sidebarContainer.classList.toggle('open');
-        // sidebarArrowContainer.classList.toggle('open');
-    });
+        let createLocationUlElement = document.createElement('ul');
+        let createDateLiElement = document.createElement('li');
+        createDateLiElement.textContent = detailData[i].visitDate;
+
+
+
+    }
 };
 
-// 커뮤니티에 코스 나열하기 (보류)
-document.addEventListener('DOMContentLoaded', function() {
-    fetchCourses();
-});
 
-function fetchCourses() {
-    fetch('/courses')
-        .then(response => response.json())
-        .then(courses => {
-            const rankingContainer = document.querySelector('.ranking');
-            rankingContainer.innerHTML = '';
-            courses.forEach((course, index) => {
-                const courseItem = document.createElement('div');
-                courseItem.classList.add('ranking-item');
+// function fetchCourses() {
+//     fetch('/courses')
+//         .then(response => response.json())
+//         .then(courses => {
+//             const rankingContainer = document.querySelector('.ranking');
+//             rankingContainer.innerHTML = '';
+//             courses.forEach((course, index) => {
+//                 const courseItem = document.createElement('div');
+//                 courseItem.classList.add('ranking-item');
+//
+//                 const rankingNumber = document.createElement('div');
+//                 rankingNumber.classList.add('ranking-number');
+//                 rankingNumber.textContent = index + 1;
+//
+//                 const profilePicture = document.createElement('button');
+//                 profilePicture.classList.add('profilePicture');
+//                 profilePicture.innerHTML = `<img src="../images/icons/default-profile_icon.svg" alt="${course.nickname}">
+//                                             <span>${course.nickname}</span>`;
+//
+//                 const courseButton = document.createElement('button');
+//                 courseButton.classList.add('course-button');
+//                 courseButton.textContent = course.courseName;
+//                 courseButton.style.backgroundColor = course.color || '#D4ADFB';
+//                 courseButton.onclick = () => toggleCourseDetails(course.courseId, courseItem);
+//
+//                 courseItem.appendChild(rankingNumber);
+//                 courseItem.appendChild(profilePicture);
+//                 courseItem.appendChild(courseButton);
+//
+//                 rankingContainer.appendChild(courseItem);
+//             });
+//         });
+// }
 
-                const rankingNumber = document.createElement('div');
-                rankingNumber.classList.add('ranking-number');
-                rankingNumber.textContent = index + 1;
-
-                const profilePicture = document.createElement('button');
-                profilePicture.classList.add('profilePicture');
-                profilePicture.innerHTML = `<img src="../images/icons/default-profile_icon.svg" alt="${course.nickname}">
-                                            <span>${course.nickname}</span>`;
-
-                const courseButton = document.createElement('button');
-                courseButton.classList.add('course-button');
-                courseButton.textContent = course.courseName;
-                courseButton.style.backgroundColor = course.color || '#D4ADFB';
-                courseButton.onclick = () => toggleCourseDetails(course.courseId, courseItem);
-
-                courseItem.appendChild(rankingNumber);
-                courseItem.appendChild(profilePicture);
-                courseItem.appendChild(courseButton);
-
-                rankingContainer.appendChild(courseItem);
-            });
-        });
-}
-
-function toggleCourseDetails(courseId, courseItem) {
-    fetch(`/courses/${courseId}/details`)
-        .then(response => response.json())
-        .then(details => {
-            let detailsContainer = courseItem.querySelector('.course-details');
-            if (!detailsContainer) {
-                detailsContainer = document.createElement('div');
-                detailsContainer.classList.add('course-details');
-                courseItem.appendChild(detailsContainer);
-            }
-            detailsContainer.innerHTML = ''; // 기존 내용을 지움
-
-            details.forEach(detail => {
-                const dayContainer = document.createElement('div');
-                dayContainer.classList.add('day');
-                dayContainer.innerHTML = `<h2>Day ${detail.day}</h2>`;
-
-                const locationList = document.createElement('ul');
-                const locationItem = document.createElement('li');
-                locationItem.textContent = detail.location;
-                locationList.appendChild(locationItem);
-
-                dayContainer.appendChild(locationList);
-                detailsContainer.appendChild(dayContainer);
-            });
-        });
-}
+// function toggleCourseDetails(courseId, courseItem) {
+//     let i = 1;
+//     fetch(`/courses/${courseId}/details`)
+//         .then(response => response.json())
+//         .then(details => {
+//             let detailsContainer = courseItem.querySelector('.course-details');
+//             if (!detailsContainer) {
+//                 detailsContainer = document.createElement('div');
+//                 detailsContainer.classList.add('course-details');
+//                 courseItem.appendChild(detailsContainer);
+//             }
+//             detailsContainer.innerHTML = ''; // 기존 내용을 지움
+//             console.log("details : " + JSON.stringify(details));
+//             details.forEach(detail => {
+//                 const dayContainer = document.createElement('div');
+//                 dayContainer.classList.add('day');
+//                 dayContainer.innerHTML = `<h2>Day ${i}</h2>`;
+//
+//                 const locationList = document.createElement('ul');
+//                 const locationItem = document.createElement('li');
+//                 locationItem.textContent = detail.location;
+//                 locationList.appendChild(locationItem);
+//
+//                 dayContainer.appendChild(locationList);
+//                 detailsContainer.appendChild(dayContainer);
+//                 i++;
+//             });
+//         });
+// }

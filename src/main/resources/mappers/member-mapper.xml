@@ -8,10 +8,12 @@
               userId
             , nickname
             , userPwd
+            , joinDate
         ) values (
               #{userId}
             , #{nickname}
-            , #{password}
+            , #{pwd}
+            , now()
         )
     </insert>
 
@@ -48,6 +50,6 @@
             , nickname
             from user
             where userId = #{userId}
-              and userPwd = #{password}
+              and userPwd = #{pwd}
     </select>
 </mapper>

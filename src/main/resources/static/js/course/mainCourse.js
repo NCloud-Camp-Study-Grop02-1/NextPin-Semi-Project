@@ -110,6 +110,8 @@ function printResult(data) {
     // console.log("print placeData : " + placeData);
 }
 
+var positionLine;
+var paths = [];
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places, category) {
 
@@ -131,6 +133,7 @@ function displayPlaces(places, category) {
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
+
     for ( var i=0; i < places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
@@ -138,6 +141,7 @@ function displayPlaces(places, category) {
             marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
+        paths.push(placePosition);
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
@@ -165,7 +169,20 @@ function displayPlaces(places, category) {
 
         fragment.appendChild(itemEl);
     }
+    // 생성된 마커목록들의 좌표를 선으로 나타날 객체 Polyline 생성
+    // positionLine = new kakao.maps.Polyline({
+    //     map: map,       // 선을 표시할 지도입니다
+    //     path: paths,    // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+    //     strokeWeight: 3, // 선의 두께입니다
+    //     strokeColor: '#db4040', // 선의 색깔입니다
+    //     strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+    //     strokeStyle: 'solid' // 선의 스타일입니다
+    // });
 
+
+    // for(let j = 0; j < paths.length; j++){
+    //     displayCircleDot(paths[j], 0);
+    // }
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
     listEl.appendChild(fragment);
     menuEl.scrollTop = 0;
@@ -294,6 +311,13 @@ function removeMarker() {
     }
     markers = [];
 }
+
+// 마커 지점에 대한 지점
+function displayCircleDot(position, distance){
+
+
+}
+
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pageParams, searchKeywords) {

@@ -39,10 +39,15 @@ public class PlaceServiceImpl implements PlaceService {
         paramMap.put("cnt", 1);
         List<KakaoMapDto> tourList = placeDAO.getPlacesByKeyword(paramMap);
 
+        paramMap.put("category", "hotel");
+        paramMap.put("cnt", 1);
+        List<KakaoMapDto> hotelList = placeDAO.getPlacesByKeyword(paramMap);
+
         List<KakaoMapDto> rtnList = new ArrayList<>();
         rtnList.addAll(foodList);
         rtnList.addAll(cafeList);
         rtnList.addAll(tourList);
+        rtnList.addAll(hotelList);
 
         return rtnList;
     }
