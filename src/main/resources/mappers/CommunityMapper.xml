@@ -16,6 +16,8 @@
         SELECT *
           FROM COURSE_DETAIL
          WHERE 1=1
+           AND X IS NOT NULL
+           AND Y IS NOT NULL
            AND COURSEID IN
         <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item}
