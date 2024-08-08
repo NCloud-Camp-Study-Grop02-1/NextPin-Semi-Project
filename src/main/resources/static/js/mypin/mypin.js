@@ -766,15 +766,14 @@ function editColor(element) {
 
                 openColorModal(); // 모달 열기
 
-                console.log("Selected Color (inline style):", color);
-
                 let sendData = {
-                    "userId" : 'ksy',
                     "courseId" : courseId,
                     "openClose": updateOpenClose,
                     "courseName": courseName,
                     "color": color
                 };
+
+                console.log('sendData : ' + JSON.stringify(sendData));
                 $.ajax({
                     method : "POST",
                     headers : {
@@ -939,7 +938,6 @@ function openDeleteCourseModal(innerContainerElement, containerElement, courseId
         // 삭제 요청을 보냅니다.
 
         let sendData = {
-            "userId" : 'ksy',
             "courseId" : courseId
         };
 
@@ -948,7 +946,7 @@ function openDeleteCourseModal(innerContainerElement, containerElement, courseId
             headers : {
                 'content-type':'application/json'
             },
-            url : "/deleteCourse",
+            url : "/deleteCourse2",
             async : true,
             dataType: "json",
             data : JSON.stringify(sendData),
@@ -1007,7 +1005,6 @@ function openDeleteCourseDetailModal(courseDetailId, liElement) {
     document.getElementById('CourseDetailConfirmDeleteButton').onclick = function() {
         // 삭제 요청을 보냅니다.
         let sendData = {
-            "userId": 'ksy',
             "course_detail_id": courseDetailId
         };
 
@@ -1090,7 +1087,7 @@ function toggleSaveState(element) {
 $('#save-date-button').click(function() {
     // 날짜 선택기 값 가져오기
     let calendarElement = document.getElementById('calendar');
-    let visitDate = calendarElement.value;
+    let modifyDate = calendarElement.value;
 
     // course_detail 데이터를 수집
     let courseDetailId = currentElement.getAttribute('data-course-detail-id');
@@ -1104,12 +1101,10 @@ $('#save-date-button').click(function() {
         showModal('캘린더에 저장되었습니다');
 
         let sendData = {
-            "userId" : 'ksy',
             "courseId" : courseId,
-            "course_detail_id" : courseDetailId,
             "courseName": courseName,
             "color": color,
-            "visitDate": visitDate
+            "modifyDate": modifyDate
         };
 
         console.log(sendData);
