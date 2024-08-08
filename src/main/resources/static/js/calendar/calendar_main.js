@@ -70,6 +70,48 @@ document.addEventListener("DOMContentLoaded", function () {
                         dateElement.classList.add('sunday');
                     }
 
+                    dateElement.addEventListener("mouseover", () => {
+                        dateElement.style.border = "1px solid #007bff";
+                    });
+
+                    dateElement.addEventListener("mouseout", () => {
+                        if (!(day === todayDate && month === todayMonth && year === todayYear) && dateElement !== selectedDateElement) {
+                            dateElement.style.border = "1px solid #ddd";
+                        }
+                    });
+
+                    dateElement.addEventListener("click", () => {
+                        if (selectedDateElement && selectedDateElement !== dateElement) {
+                            if (selectedDateElement === todayDateElement) {
+                                todayDateElement.style.border = "1px solid #007bff";
+                            } else {
+                                selectedDateElement.style.border = "1px solid #ddd";
+                            }
+                        }
+                        if (dateElement === todayDateElement) {
+                            todayDateElement.style.border = "1px solid #FFC061";
+                        } else {
+                            dateElement.style.border = "1px solid #FFC061";
+                        }
+                        selectedDateElement = dateElement;
+                        // courseTitle.forEach(course => {
+                        //     const visitDate = new Date(course.visitDate);
+                        //     const courseDay = visitDate.getDate();
+                        //     const courseMonth = visitDate.getMonth();
+                        //     const courseYear = visitDate.getFullYear();
+                        //
+                        //     if (courseDay === day && courseMonth === month && courseYear === year) {
+                        //         const clickedDate = new Date(year, month, day);
+                        //         displayContent(clickedDate);
+                        //     }
+                        //     else {
+                        //         calendarPanel.style.display = 'none';
+                        //     }
+                        // });
+                        const clickedDate = new Date(year, month, day);
+                        // displayContent(clickedDate);
+                    });
+
                     // 코스 데이터를 날짜에 맞게 표시
                     courseTitle && courseTitle.forEach(course => {
                         const visitDate = new Date(course.visitDate);
@@ -94,48 +136,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             dateElement.style.border = "1px solid #007bff";
                             todayDateElement = dateElement;
                         }
-
-                        dateElement.addEventListener("mouseover", () => {
-                            dateElement.style.border = "1px solid #007bff";
-                        });
-
-                        dateElement.addEventListener("mouseout", () => {
-                            if (!(day === todayDate && month === todayMonth && year === todayYear) && dateElement !== selectedDateElement) {
-                                dateElement.style.border = "1px solid #ddd";
-                            }
-                        });
-
-                        dateElement.addEventListener("click", () => {
-                            if (selectedDateElement && selectedDateElement !== dateElement) {
-                                if (selectedDateElement === todayDateElement) {
-                                    todayDateElement.style.border = "1px solid #007bff";
-                                } else {
-                                    selectedDateElement.style.border = "1px solid #ddd";
-                                }
-                            }
-                            if (dateElement === todayDateElement) {
-                                todayDateElement.style.border = "1px solid #FFC061";
-                            } else {
-                                dateElement.style.border = "1px solid #FFC061";
-                            }
-                            selectedDateElement = dateElement;
-                            // courseTitle.forEach(course => {
-                            //     const visitDate = new Date(course.visitDate);
-                            //     const courseDay = visitDate.getDate();
-                            //     const courseMonth = visitDate.getMonth();
-                            //     const courseYear = visitDate.getFullYear();
-                            //
-                            //     if (courseDay === day && courseMonth === month && courseYear === year) {
-                            //         const clickedDate = new Date(year, month, day);
-                            //         displayContent(clickedDate);
-                            //     }
-                            //     else {
-                            //         calendarPanel.style.display = 'none';
-                            //     }
-                            // });
-                                    const clickedDate = new Date(year, month, day);
-                                    displayContent(clickedDate);
-                        });
                     })
                 }
 
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const ul = document.createElement('ul');
                 data.forEach(course => {
                     const visitDate = new Date(course.visitDate).toISOString().split('T')[0];
-                    console.log('Visit Date: ', visitDate);
+                    // console.log('Visit Date: ', visitDate);
 
                     if(visitDate === formattedDate) {
                         console.log('Matching Course:', course);
@@ -209,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     //     ul.appendChild(li);
                     // }
                 });
+                console.log(ul);
                 cardBody.appendChild(ul);
                 panelContent.style.display = 'block';
             })
