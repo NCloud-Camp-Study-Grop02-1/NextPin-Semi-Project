@@ -42,106 +42,6 @@ function searchPlaces() {
     // );
 }
 
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-// function placesSearchCB(data, status, pagination) {
-//     // console.log("placesSearchCB data : " + JSON.stringify(data));
-//     if (status === kakao.maps.services.Status.OK) {
-//         // console.log(data);
-//         if(undefined !== data) {
-//             if (data.length > 0) {
-//                 for (let idx in data) {
-//                     placeData.push(data[idx]);
-//                 }
-//             }
-//         }
-//
-//         // console.log(placeData);
-//         // 정상적으로 검색이 완료됐으면
-//         // 검색 목록과 마커를 표출합니다
-//         displayPlaces(data);
-//         printResult(placeData);
-//
-//         // 페이지 번호를 표출합니다
-//         displayPagination(pagination);
-//
-//     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-//
-//         alert('검색 결과가 존재하지 않습니다.');
-//         return;
-//
-//     } else if (status === kakao.maps.services.Status.ERROR) {
-//
-//         alert('검색 결과 중 오류가 발생했습니다.');
-//         return;
-//
-//     }
-// }
-// let i = 0;
-// function printResult(data) {
-
-    // console.log(++i + "번째 실행");
-    // console.log(data);
-    // console.log("print placeData : " + placeData);
-// }
-
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-// function displayPlaces(places) {
-//
-//     var listEl = document.getElementById('placesList'),
-//         menuEl = document.getElementById('menu_wrap'),
-//         fragment = document.createDocumentFragment(),
-//         bounds = new kakao.maps.LatLngBounds(),
-//         listStr = '';
-//
-//     // 검색 결과 목록에 추가된 항목들을 제거합니다
-//     removeAllChildNods(listEl);
-//
-//     // 지도에 표시되고 있는 마커를 제거합니다
-//     removeMarker();
-//
-//     for ( var i=0; i<places.length; i++ ) {
-//
-//         // 마커를 생성하고 지도에 표시합니다
-//         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-//             marker = addMarker(placePosition, i);
-//             // itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-//
-//         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-//         // LatLngBounds 객체에 좌표를 추가합니다
-//         bounds.extend(placePosition);
-//
-//         // 마커와 검색결과 항목에 mouseover 했을때
-//         // 해당 장소에 인포윈도우에 장소명을 표시합니다
-//         // mouseout 했을 때는 인포윈도우를 닫습니다
-//         (function(marker, title) {
-//             kakao.maps.event.addListener(marker, 'mouseover', function() {
-//                 displayInfowindow(marker, title);
-//             });
-//
-//             kakao.maps.event.addListener(marker, 'mouseout', function() {
-//                 infowindow.close();
-//             });
-//
-//             itemEl.onmouseover =  function () {
-//                 displayInfowindow(marker, title);
-//             };
-//
-//             itemEl.onmouseout =  function () {
-//                 infowindow.close();
-//             };
-//         })(marker, places[i].place_name);
-//
-//         fragment.appendChild(itemEl);
-//     }
-//
-//     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-//     listEl.appendChild(fragment);
-//     menuEl.scrollTop = 0;
-//
-//     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-//     map.setBounds(bounds);
-// }
-
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
 
@@ -277,19 +177,80 @@ function filterItems() {
 //     alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
 // }
 
-// 유저들의 코스 하트 누르기
+// 페이지가 로드될 때, 유저가 '좋아요'한 코스 불러오기
+$(document).ready(function() {
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+        $.ajax({
+            url: '/community/getUserLikes',
+            type: 'GET',
+            data: { userId: userId },
+            success: function(likedCourses) {
+                likedCourses.forEach(courseId => {
+                    const heartButton = document.querySelector(`.ranking-item[data-course-id="${courseId}"] .heart-button img`);
+                    if (heartButton) {
+                        heartButton.src = '../images/icons/heart-after_icon.png';
+                    }
+                });
+                addToggleHeartListeners(); // 좋아요 정보를 가져온 후 이벤트 리스너 추가
+            },
+            error: function(error) {
+                console.error('Error fetching liked courses:', error);
+            }
+        });
+    } else {
+        addToggleHeartListeners(); // 유저가 로그인되지 않은 경우에도 리스너 추가
+    }
+});
+
+function addToggleHeartListeners() {
+    $('.heart-button').off('click').on('click', function() {
+        toggleHeart(this);
+    });
+}
+
 function toggleHeart(button) {
     const heartImage = button.querySelector('img');
     const heartCount = button.querySelector('span');
+    const courseId = button.closest('.ranking-item').getAttribute('data-course-id');
+    const userId = sessionStorage.getItem('userId');
     const isLiked = heartImage.src.includes('after');
+
+    console.log('Before toggle: ', heartImage.src, 'isLiked:', isLiked);
 
     if (isLiked) {
         heartImage.src = '../images/icons/heart-before_icon.png';
         heartCount.textContent = parseInt(heartCount.textContent) - 1;
+        updateLikeStatus(courseId, userId, false, -1);
     } else {
         heartImage.src = '../images/icons/heart-after_icon.png';
         heartCount.textContent = parseInt(heartCount.textContent) + 1;
+        updateLikeStatus(courseId, userId, true, 1);
     }
+
+    console.log('After toggle: ', heartImage.src);
+}
+
+function updateLikeStatus(courseId, userId, isLiked, increment) {
+    $.ajax({
+        url: '/community/updateLikeStatus',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            courseId: courseId,
+            userId: userId,
+            isLiked: isLiked,
+            increment: increment
+        }),
+        success: function(response) {
+            if (!response.success) {
+                console.error('Failed to update like status');
+            }
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
 }
 
 // // 초기 로드 시 실행

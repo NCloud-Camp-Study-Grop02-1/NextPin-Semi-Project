@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CommunityDao;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.CourseDetailDto;
+import com.nextpin.app.dto.likeCourseDto;
 import com.nextpin.app.service.CommunityService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,25 @@ public class CommunityServiceImpl implements CommunityService {
         // courseMap.put("courseDetailList", jsonCourseDetailList);
 
         return courseDataList;
+    }
+
+    @Override
+    public boolean addLike(int courseId, String userId) {
+        return communityDao.insertLike(courseId, userId);
+    }
+
+    @Override
+    public boolean removeLike(int courseId, String userId) {
+        return communityDao.deleteLike(courseId, userId);
+    }
+
+    @Override
+    public List<Integer> getUserLikedCourses(String userId) {
+        return communityDao.selectUserLikedCourses(userId);
+    }
+
+    @Override
+    public void updateHeartCount(int courseId, int increment) {
+        communityDao.updateHeartCount(courseId, increment);
     }
 }

@@ -31,4 +31,5 @@ public interface CourseHomeReview2Service {
     public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList);
 
     List<String> getCoursesByUserId(String userId);
+
 }
