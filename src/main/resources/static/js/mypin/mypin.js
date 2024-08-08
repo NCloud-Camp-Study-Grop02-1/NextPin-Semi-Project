@@ -1196,7 +1196,7 @@ window.onclick = function(event) {
 
 
 // CourseDetail의 장소를 지도에 마커 형태로 띄우기
-function showCourseDetail(index, obj, list) {
+function showCourseDetail(index, obj, list, visitOrder) {
     if (index == obj.id) {
         console.log(list);
 
@@ -1208,46 +1208,48 @@ function showCourseDetail(index, obj, list) {
 
         // list로 마커 띄우기
         list.forEach(function(detail) {
-            // list에서 x와 y 값을 추출
-            let x = detail.x;
-            let y = detail.y;
-            let title = detail.location || 'No Title';  // 장소명
+            if(detail.visitOrder == visitOrder) {
+                // list에서 x와 y 값을 추출
+                let x = detail.x;
+                let y = detail.y;
+                let title = detail.location || 'No Title';  // 장소명
 
-            // 마커 이미지 설정
-            let imageSrc = '../images/icons/course_icon.png';
-            let imageSize = new kakao.maps.Size(25, 32);  // 마커 이미지의 크기
-            let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                // 마커 이미지 설정
+                let imageSrc = '../images/icons/course_icon.png';
+                let imageSize = new kakao.maps.Size(25, 32);  // 마커 이미지의 크기
+                let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-            // 마커의 위치 설정
-            let position = new kakao.maps.LatLng(y, x); // LatLng(y, x)
+                // 마커의 위치 설정
+                let position = new kakao.maps.LatLng(y, x); // LatLng(y, x)
 
-            // 마커 추가
-            var marker = new kakao.maps.Marker({
-                position: position,
-                image: markerImage
-            });
+                // 마커 추가
+                var marker = new kakao.maps.Marker({
+                    position: position,
+                    image: markerImage
+                });
 
-            // 마커를 지도에 표시
-            marker.setMap(map);
-            markers.push(marker);  // 배열에 생성된 마커를 추가
+                // 마커를 지도에 표시
+                marker.setMap(map);
+                markers.push(marker);  // 배열에 생성된 마커를 추가
 
-            // 인포윈도우를 마커에 추가
-            let infowindow = new kakao.maps.InfoWindow({
-                content: `<div style="padding:5px;z-index:1;">${title}</div>`
-            });
+                // 인포윈도우를 마커에 추가
+                let infowindow = new kakao.maps.InfoWindow({
+                    content: `<div style="padding:5px;z-index:1;">${title}</div>`
+                });
 
-            // 마커와 검색결과 항목에 mouseover 했을때 인포윈도우에 장소명을 표시
-            kakao.maps.event.addListener(marker, 'mouseover', function() {
-                infowindow.open(map, marker);
-            });
+                // 마커와 검색결과 항목에 mouseover 했을때 인포윈도우에 장소명을 표시
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    infowindow.open(map, marker);
+                });
 
-            // mouseout 했을 때 인포윈도우를 닫음
-            kakao.maps.event.addListener(marker, 'mouseout', function() {
-                infowindow.close();
-            });
+                // mouseout 했을 때 인포윈도우를 닫음
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    infowindow.close();
+                });
 
-            // LatLngBounds 객체에 좌표 추가
-            bounds.extend(position);
+                // LatLngBounds 객체에 좌표 추가
+                bounds.extend(position);
+            }
         });
 
         // 지도의 범위를 LatLngBounds로 설정하여 모든 마커가 보이도록 함

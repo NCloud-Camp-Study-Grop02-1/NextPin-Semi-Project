@@ -157,8 +157,8 @@
                                 </script>
                                 <div class="course-day-box"
                                      th:id="${userCourseStat.index}"
-                                     th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]])">
-                                    <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
+                                     th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]], [[${detail.visitOrder}]])">
+                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
                                     <p class="course-day" th:text="${detail.visitDate}"></p>
                                     <a class="course-day-link" href="/calendar">상세보기</a>
                                 </div>
@@ -226,7 +226,7 @@
                                     console.log('visitDateCount:', visitDateCount);
                                 </script>
                                 <div class="course-day-box" title="지도에서 코스보기">
-                                    <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
+                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
                                     <p class="course-day" th:text="${detail.visitDate}"></p>
                                     <a class="course-day-link" href="/calendar">상세보기</a>
                                 </div>

@@ -21,4 +21,5 @@ public class CourseDetailDto {
         private String status;
         private String message;
         private Long visitDateCount;
+        private int visitOrder;
 }

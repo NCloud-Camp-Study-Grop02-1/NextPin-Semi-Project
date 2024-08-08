@@ -36,16 +36,20 @@
 
     <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
     <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
-        SELECT courseId,
-               userId,
-               courseName,
-               BOOKMARK,
-               heartCnt,
-               openClose,
-               color
-        FROM COURSE
-        WHERE userId = #{userId}
-          AND likeBoolean = 1
+        SELECT LC.courseId,
+               LC.userId,
+               C.courseName,
+               C.BOOKMARK,
+               C.heartCnt,
+               C.openClose,
+               C.color
+        FROM LIKECOURSE LC
+        JOIN COURSE C
+          ON LC.courseId = C.courseId
+        JOIN COURSE_DETAIL CD
+          ON LC.courseId = CD.courseId
+        WHERE LC.userId = C.userId
+          AND LC.userId = #{userId}
     </select>
 
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->

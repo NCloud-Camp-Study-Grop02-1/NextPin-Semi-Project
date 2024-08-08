@@ -1,9 +1,6 @@
 package com.nextpin.app.controller;
 
-import com.nextpin.app.dto.CourseAndDetailDto;
-import com.nextpin.app.dto.CourseDetailDto;
-import com.nextpin.app.dto.CourseDto;
-import com.nextpin.app.dto.UserDto;
+import com.nextpin.app.dto.*;
 import com.nextpin.app.service.MyPinService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -15,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,18 +33,21 @@ public class MypinController {
 
 
         // 세션에서 사용자 정보 가져오기
-        UserDto user = (UserDto) session.getAttribute("user");
-
-        // 세션에 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+        Object userObj = session.getAttribute("loginMember");
         String userId;
-        if (user == null) {
-            userId = "ksy"; // 임의의 사용자 ID 설정
-            logger.debug("controller 실행둥.. userId 값 : " + userId);
-            //mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
-            //return mav;
-        } else {
+
+        if (userObj instanceof MemberDto) {
+            MemberDto user = (MemberDto) userObj;
             userId = user.getUserId();
+        } else if (userObj instanceof UserDto) {
+            UserDto user = (UserDto) userObj;
+            userId = user.getUserId();
+        } else {
+            // 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+            mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
+            return mav;
         }
+
 
         List<Map<String, Object>> mapList = new ArrayList<>();
         List<Map<String, Object>> mapList2 = new ArrayList<>();
@@ -85,6 +82,30 @@ public class MypinController {
             userCourseDetailList.forEach(detail -> {
                 detail.setVisitDateCount(visitCounts.get(sdf.format(detail.getVisitDate())));
             });
+
+            // userId, courseId와 visitDate로 정렬 후 visitOrder 설정
+            userCourseDetailList.sort(Comparator
+                    .comparing((CourseDetailDto detail) -> Optional.ofNullable(detail.getUserId()).orElse(""))
+                    .thenComparing(detail -> Optional.ofNullable(detail.getCourseId()).orElse(0))
+                    .thenComparing(detail -> Optional.ofNullable(detail.getVisitDate()).orElse(new Date(0))));
+
+            Map<String, Integer> visitOrderMap = new HashMap<>();
+            Date previousVisitDate = null;
+            int currentOrder = 0;
+
+            for (CourseDetailDto detail : userCourseDetailList) {
+                String key = detail.getUserId() + "-" + detail.getCourseId();
+                if (!detail.getVisitDate().equals(previousVisitDate)) {
+                    currentOrder++;
+                    previousVisitDate = detail.getVisitDate();
+                }
+                detail.setVisitOrder(currentOrder);
+                visitOrderMap.put(key, currentOrder);
+                logger.debug("Visit Order 설정됨 - userId: " + detail.getUserId() + ", courseId: " + detail.getCourseId() + ", visitOrder: " + detail.getVisitOrder());
+            }
+
+
+
 
             map.put("courseDetail", userCourseDetailList);
 
