@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e58372-ca0e-47ad-8da3-4e447c481067" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/calendar/calendar_main.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/calendar/calendar_main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/calendar/calendar_main.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/calendar/calendar_main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/calendar/calendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/calendar/calendar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ApiTest_logback.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ApiTest_logback.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mypin/mypin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mypin/mypin.html" afterDir="false" />
-    </list>
+    <list default="true" id="31e58372-ca0e-47ad-8da3-4e447c481067" name="변경" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,7 +119,7 @@
       <workItem from="1722915393842" duration="3285000" />
       <workItem from="1723035471265" duration="22339000" />
       <workItem from="1723035471265" duration="23160000" />
-      <workItem from="1723117648495" duration="633000" />
+      <workItem from="1723117648495" duration="994000" />
     </task>
     <servers />
   </component>
