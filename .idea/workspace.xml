@@ -15,28 +15,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" afterDir="false" />
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/calendar/calendar_main.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/calendar/calendar_main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/course/courseHomeReview2.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/course/courseHomeReview2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/course/mainCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/course/mainCourse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" afterDir="false" />
->>>>>>> origin/backend/mingyo
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/ApiTest_logback.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ApiTest_logback.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" afterDir="false" />
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/calendar/calendar_main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/calendar/calendar_main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/course/courseHomeReview2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/course/courseHomeReview2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/course/mainCourse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/course/mainCourse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/mypin/mypin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/mypin/mypin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/randomPin/randomPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/randomPin/randomPin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/calendar/calendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/calendar/calendar.html" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" afterDir="false" />
@@ -45,7 +33,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" afterDir="false" />
->>>>>>> origin/backend/mingyo
+      <change beforePath="$PROJECT_DIR$/logs/ApiTest_logback.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ApiTest_logback.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,11 +93,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.ApiApplication.executor": "Run",
     "Spring Boot.NextPinApplication.executor": "Run",
-<<<<<<< HEAD
-    "git-widget-placeholder": "main 병합 중",
-=======
     "git-widget-placeholder": "backend/mingyo",
->>>>>>> origin/backend/mingyo
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/03_Github_Files/NextPin_Team_Project/Main",
     "node.js.detected.package.eslint": "true",
@@ -163,11 +147,9 @@
       <workItem from="1722417017081" duration="1226000" />
       <workItem from="1722473549678" duration="25263000" />
       <workItem from="1722915393842" duration="3285000" />
-<<<<<<< HEAD
-      <workItem from="1723096639902" duration="9904000" />
-=======
+
       <workItem from="1723035471265" duration="22339000" />
->>>>>>> origin/backend/mingyo
+      <workItem from="1723035471265" duration="23160000" />
     </task>
     <servers />
   </component>
