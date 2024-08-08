@@ -15,6 +15,7 @@ public class CourseDto {
     private String userId;
     private String nickname;
     private String courseName;
+    private String visitDate;
     private LocalDateTime regDate;
     private Date modifyDate;
     private int bookMark;
@@ -24,5 +25,6 @@ public class CourseDto {
     private boolean myPinBoolean;
     private boolean likeBoolean;
     private int courseRank;
-
+    private String status;
+    private String message;
 }

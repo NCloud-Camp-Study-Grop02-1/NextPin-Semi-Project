@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
     fetchUserInfo();
 
-
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             if (button.classList.contains('selected')) {
@@ -515,6 +514,7 @@ function fetchUserInfo() {
                 console.log("User ID: ", userId);
                 console.log("Nickname: ", nickname);
             } else {
+                location.href = '/login';
                 alert("로그인이 필요합니다.");
             }
         },

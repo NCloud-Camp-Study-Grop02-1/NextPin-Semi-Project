@@ -1,6 +1,7 @@
 package com.nextpin.app.service.impl;
 
 import com.nextpin.app.dao.MyPinDao;
+import com.nextpin.app.dto.CourseAndDetailDto;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.UserDto;
@@ -34,6 +35,7 @@ public class MyPinServiceImpl implements MyPinService {
         return myPinDao.getUserCourse(userId);
     }
 
+    @Override
     public List<CourseDto> getUserLikeCourse(String userId) {
         return myPinDao.getUserLikeCourse(userId);
     }
@@ -41,6 +43,7 @@ public class MyPinServiceImpl implements MyPinService {
     public List<CourseDetailDto> getUserCourseDetail(String userId, int courseId) {
         return myPinDao.getUserCourseDetail(userId, courseId);
     }
+
 
     public void editUserProfile(Map<String, Object> userDto){
         myPinDao.editUserProfile(userDto);
@@ -53,8 +56,12 @@ public class MyPinServiceImpl implements MyPinService {
 
     public void editUserCourse3(CourseDto courseDto) {myPinDao.editUserCourse3(courseDto);}
 
-    public void editUserBookMark(CourseDto courseDto){
-        myPinDao.editUserBookMark(courseDto);
+    public void editUserBookMark(Map<String, Object> map){
+        myPinDao.editUserBookMark(map);
+    }
+
+    public void deleteUserCourse(CourseDto courseDto){
+        myPinDao.deleteUserCourse(courseDto);
     }
 
     public void deleteUserCourseDetail(CourseDetailDto courseDetailDto){

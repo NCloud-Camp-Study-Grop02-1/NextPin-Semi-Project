@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("User ID: ", userId);
                     console.log("Nickname: ", nickname);
                 } else {
+                    location.href = '/login';
                     alert("로그인이 필요합니다.");
                 }
             },
@@ -459,7 +460,7 @@ function addMarker(position, idx, title, category) {
         imageSrc = '../images/icons/hotel_map_icon.png';
     }
 
-    let imageSize = new kakao.maps.Size(50, 50);  // 마커 이미지의 크기
+    let imageSize = new kakao.maps.Size(32, 40);  // 마커 이미지의 크기
     let imageOption = {offset: new kakao.maps.Point(16, 16)}; // 사용되지 않았던 변수
     let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption); // <- imageOption을 추가
     let marker = new kakao.maps.Marker({

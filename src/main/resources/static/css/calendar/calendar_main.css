@@ -97,11 +97,6 @@
     cursor: pointer; /* 클릭 가능한 아이템임을 표시 */
 }
 
-.userSchedule {
-    position: relative; /* 내부 요소의 position: absolute; 사용을 위해 설정 */
-}
-
-
 #calendar-panel {
     width: 400px;
     padding: 20px;
@@ -163,8 +158,10 @@
 
 /* memo 클래스 스타일 속성 */
 .memo {
-    margin-left: 15px;
+    margin-top: 7px;
+    margin-bottom: 3px;
     font-size: 0.8rem;
+    display: block;
 }
 
 .edit {

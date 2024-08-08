@@ -31,7 +31,6 @@
                color
             FROM COURSE
             WHERE userId = #{userId}
-              AND myPinBoolean = 1
     </select>
 
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->
@@ -50,16 +49,17 @@
 
     <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
     <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
-        SELECT courseId,
-               userId,
-               courseName,
-               BOOKMARK,
-               heartCnt,
-               openClose,
-               color
-        FROM COURSE
-        WHERE userId = #{userId}
-          AND likeBoolean = 1
+        SELECT LC.courseId,
+               LC.userId,
+               C.courseName,
+               C.BOOKMARK,
+               C.heartCnt,
+               C.openClose,
+               C.color
+        FROM LIKECOURSE LC
+        JOIN COURSE C
+          ON LC.courseId = C.courseId
+        WHERE LC.userId = #{userId}
     </select>
 
     <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
@@ -81,6 +81,11 @@
     </update>
 
     <!--COURSE 테이블의 코스 삭제 기능-->
+    <delete id="deleteCourse" parameterType="courseDto">
+        DELETE FROM COURSE
+        WHERE userId = #{userId}
+          AND courseId = #{courseId}
+    </delete>
 
     <!--COURSE_DETAIL 테이블의 코스 상세 장소 삭제 기능-->
     <delete id="deleteCourseDetail" parameterType="courseDetailDto">
@@ -89,17 +94,18 @@
           AND course_detail_id = #{course_detail_id}
     </delete>
 
+
     <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
-    <update id="editBookMark" parameterType="courseDto">
+    <update id="editBookMark" parameterType="CourseDto">
         UPDATE COURSE
-        SET courseNAME = #{courseName},
-            color = #{color},
-            openClose = 0,
-            bookMark = 1,
-            myPinBoolean = 1,
-            likeBoolean = 0,
-            regDate = #{regDate}
-        WHERE userId = #{userId}
-          AND courseId = #{courseId}
+            SET courseNAME = #{courseName},
+                color = #{color},
+                openClose = 0,
+                bookMark = 1,
+                myPinBoolean = 1,
+                likeBoolean = 0,
+                modifyDate = #{modifyDate}
+            WHERE userId = #{userId}
+              AND courseId = #{courseId};
     </update>
 </mapper>

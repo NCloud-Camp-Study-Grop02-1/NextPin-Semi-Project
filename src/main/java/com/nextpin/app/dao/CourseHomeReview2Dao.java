@@ -78,4 +78,5 @@ public class CourseHomeReview2Dao {
     public List<String> getCoursesByUserId(String userId) {
         return mybatis.selectList("CourseHomeReview2Dao.getCoursesByUserId", userId);
     }
+
 }

@@ -7,8 +7,8 @@
     <select id="getAllCourses" resultType="courseDto">
         SELECT ROW_NUMBER() OVER(ORDER BY c.heartCnt desc) as courseRank
              , c.*
-          FROM course c
-         ORDER BY c.heartCnt DESC
+        FROM course c
+        ORDER BY c.heartCnt DESC
     </select>
 
     <select id="getCourseDetailsByCourseId" parameterType="int" resultType="courseDetailDto">
@@ -17,13 +17,36 @@
 
     <select id="getCourseDetailByCourses" parameterType="list" resultType="courseDetailDto">
         SELECT *
-          FROM COURSE_DETAIL
-         WHERE 1=1
-           AND X IS NOT NULL
-           AND Y IS NOT NULL
-           AND COURSEID IN
+        FROM COURSE_DETAIL
+        WHERE 1=1
+        AND X IS NOT NULL
+        AND Y IS NOT NULL
+        AND COURSEID IN
         <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
     </select>
+
+    <insert id="insertLike">
+        INSERT INTO likeCourse (userId, courseId, bookMarkBoolean)
+        VALUES (#{userId}, #{courseId}, #{bookMarkBoolean})
+    </insert>
+
+    <delete id="deleteLike">
+        DELETE FROM likeCourse
+        WHERE userId = #{userId} AND courseId = #{courseId}
+    </delete>
+
+    <select id="selectUserLikedCourses" parameterType="string" resultType="int">
+        SELECT courseId
+        FROM likeCourse
+        WHERE userId = #{userId}
+    </select>
+
+    <update id="updateHeartCount">
+        UPDATE course
+        SET heartCnt = heartCnt + #{increment}
+        WHERE courseId = #{courseId}
+    </update>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.nextpin.app.dao;
 
+import com.nextpin.app.dto.CourseAndDetailDto;
 import com.nextpin.app.dto.CourseDetailDto;
 import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.UserDto;
@@ -31,9 +32,7 @@ public class MyPinDao {
         return mybatis.selectList("MyPinDao.getUserCourse",userId);
     }
 
-    public List<CourseDto> getUserLikeCourse(String userId){
-        return mybatis.selectList("MyPinDao.getUserLikeCourse",userId);
-    }
+    public List<CourseDto> getUserLikeCourse(String userId){return mybatis.selectList("MyPinDao.getUserLikeCourse",userId);}
 
     public List<CourseDetailDto> getUserCourseDetail(String userId, int courseId){
         Map<String, Object> paramMap = new HashMap<>();
@@ -57,8 +56,12 @@ public class MyPinDao {
         mybatis.update("MyPinDao.editUserCourse",courseDto);
     }
 
-    public void editUserBookMark(CourseDto courseDto) {
-        mybatis.update("MyPinDao.editBookMark",courseDto);
+    public void editUserBookMark(Map<String, Object> map) {
+        mybatis.update("MyPinDao.editBookMark",map);
+    }
+
+    public void deleteUserCourse(CourseDto courseDto) {
+        mybatis.delete("MyPinDao.deleteCourse",courseDto);
     }
 
     public void deleteUserCourseDetail(CourseDetailDto courseDetailDto) {
