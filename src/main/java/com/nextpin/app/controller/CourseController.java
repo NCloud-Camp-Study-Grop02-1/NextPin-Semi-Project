@@ -9,6 +9,7 @@ import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.dto.KakaoMapReviewDto;
 import com.nextpin.app.service.CourseService;
+import com.nextpin.app.service.MyPinService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,17 @@ public class CourseController {
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseController.class);
     private final CourseService courseService;
     private final CourseHomeReview2Service courseHomeReview2Service;
+    private final MyPinService myPinService;
 
     @Autowired
-    public CourseController(CourseService courseService, CourseHomeReview2Service courseHomeReview2Service) {
+    public CourseController(CourseService courseService, CourseHomeReview2Service courseHomeReview2Service, MyPinService myPinService) {
         this.courseService = courseService;
         this.courseHomeReview2Service = courseHomeReview2Service;
+        this.myPinService = myPinService;
     }
 
     @GetMapping("/courseHomeReview2")
-    public ModelAndView courseHomeReview2(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
+    public ModelAndView courseHomeReview2(HttpSession session, @RequestParam(value = "id", required = false, defaultValue = "1") int id) {
         KakaoMapDto rtnKaMapDto = courseService.searchPinDetail(id);
 
         List<KakaoMapReviewDto> rtnKaMapReviewList = courseService.searchPinDetailReview(id);
@@ -50,6 +53,25 @@ public class CourseController {
         logger.debug("리뷰 리스트 : " + rtnKaMapReviewList);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("course/courseHomeReview2");
+        // 세션에서 사용자 정보 가져오기
+        Object userObj = session.getAttribute("loginMember");
+        String userId;
+
+        if (userObj instanceof MemberDto) {
+            MemberDto user = (MemberDto) userObj;
+            userId = user.getUserId();
+        } else if (userObj instanceof UserDto) {
+            UserDto user = (UserDto) userObj;
+            userId = user.getUserId();
+        } else {
+            // 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+            mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
+            return mav;
+        }
+
+        // 사용자 프로필 정보 가져오기
+        UserDto userProfile = myPinService.getUserProfile(userId);
+        mav.addObject("user", userProfile);
         mav.addObject("rtnKaMapDto", rtnKaMapDto);
         mav.addObject("rtnKaMapReviewList", rtnKaMapReviewList);
         mav.addObject("rtnKaMapReviewListCnt", rtnKaMapReviewListSize);
@@ -59,9 +81,29 @@ public class CourseController {
     }
 
     @GetMapping("/mainCourse")
-    public ModelAndView mainCourse() {
+    public ModelAndView mainCourse(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("course/mainCourse");
+
+        // 세션에서 사용자 정보 가져오기
+        Object userObj = session.getAttribute("loginMember");
+        String userId;
+
+        if (userObj instanceof MemberDto) {
+            MemberDto user = (MemberDto) userObj;
+            userId = user.getUserId();
+        } else if (userObj instanceof UserDto) {
+            UserDto user = (UserDto) userObj;
+            userId = user.getUserId();
+        } else {
+            // 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+            mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
+            return mav;
+        }
+
+        // 사용자 프로필 정보 가져오기
+        UserDto userProfile = myPinService.getUserProfile(userId);
+        mav.addObject("user", userProfile);
 
         logger.debug("mainCourse페이지 이동");
         return mav;
