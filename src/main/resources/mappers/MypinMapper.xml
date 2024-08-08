@@ -33,21 +33,6 @@
             WHERE userId = #{userId}
     </select>
 
-    <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
-    <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
-        SELECT LC.courseId,
-               LC.userId,
-               C.courseName,
-               C.BOOKMARK,
-               C.heartCnt,
-               C.openClose,
-               C.color
-        FROM LIKECOURSE LC
-        JOIN COURSE C
-          ON LC.courseId = C.courseId
-        WHERE LC.userId = #{userId}
-    </select>
-
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->
     <select id="getUserCourseDetail" parameterType="map" resultType="CourseDetailDto">
         SELECT COURSEID,
@@ -62,6 +47,20 @@
           AND courseId = #{courseId}
     </select>
 
+    <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
+    <select id="getUserLikeCourse" parameterType="String" resultType="CourseDto">
+        SELECT LC.courseId,
+               LC.userId,
+               C.courseName,
+               C.BOOKMARK,
+               C.heartCnt,
+               C.openClose,
+               C.color
+        FROM LIKECOURSE LC
+        JOIN COURSE C
+          ON LC.courseId = C.courseId
+        WHERE LC.userId = #{userId}
+    </select>
 
     <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
     <update id="editUserProfile" parameterType="userDto">

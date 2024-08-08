@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="css/loginSignUp/login.css"/>
     <!-- 파비콘 설정 -->
     <link rel="icon" href="images/icons/NP_pavicon.png">
+    <script src="/js/jquery-3.7.1.min.js"></script>
     <title>NextPin 로그인</title>
 </head>
 <body>
@@ -23,6 +25,7 @@
             </a>
         </div>
         <form class="login-form" action="/login" method="post">
+            <input type="hidden" name="loginFailMsg" id="loginFailMsg" th:value="${loginFailMsg}">
             <input type="text" name="userId" placeholder="아이디" required>
             <input type="password" name="pwd" placeholder="비밀번호" required>
             <button type="submit">로그인</button>

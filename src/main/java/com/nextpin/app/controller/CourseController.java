@@ -8,12 +8,9 @@ import com.nextpin.app.service.CourseHomeReview2Service;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
 import com.nextpin.app.dto.KakaoMapReviewDto;
-import com.nextpin.app.dto.SearchRequestDto;
 import com.nextpin.app.service.CourseService;
-import com.nextpin.app.service.PlaceService;
-import com.nextpin.app.dto.Criteria;
-import com.nextpin.app.dto.KakaoMapDto;
-import com.nextpin.app.service.CourseService;
+import com.nextpin.app.service.MyPinService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,29 +18,33 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.awt.*;
 import java.util.List;
 
 @RestController
+@SessionAttributes("user")
 public class CourseController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseController.class);
-    private CourseService courseService;
-    private CourseHomeReview2Service courseHomeReview2Service;
+    private final CourseService courseService;
+    private final CourseHomeReview2Service courseHomeReview2Service;
+    private final MyPinService myPinService;
 
     @Autowired
-    public CourseController(CourseService courseService, CourseHomeReview2Service courseHomeReview2Service) {
+    public CourseController(CourseService courseService, CourseHomeReview2Service courseHomeReview2Service, MyPinService myPinService) {
         this.courseService = courseService;
         this.courseHomeReview2Service = courseHomeReview2Service;
+        this.myPinService = myPinService;
     }
 
     @GetMapping("/courseHomeReview2")
-    public ModelAndView courseHomeReview2(@RequestParam(value = "id", required = false, defaultValue = "1") int id) {
+    public ModelAndView courseHomeReview2(HttpSession session, @RequestParam(value = "id", required = false, defaultValue = "1") int id) {
         KakaoMapDto rtnKaMapDto = courseService.searchPinDetail(id);
 
         List<KakaoMapReviewDto> rtnKaMapReviewList = courseService.searchPinDetailReview(id);
@@ -52,6 +53,25 @@ public class CourseController {
         logger.debug("리뷰 리스트 : " + rtnKaMapReviewList);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("course/courseHomeReview2");
+        // 세션에서 사용자 정보 가져오기
+        Object userObj = session.getAttribute("loginMember");
+        String userId;
+
+        if (userObj instanceof MemberDto) {
+            MemberDto user = (MemberDto) userObj;
+            userId = user.getUserId();
+        } else if (userObj instanceof UserDto) {
+            UserDto user = (UserDto) userObj;
+            userId = user.getUserId();
+        } else {
+            // 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+            mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
+            return mav;
+        }
+
+        // 사용자 프로필 정보 가져오기
+        UserDto userProfile = myPinService.getUserProfile(userId);
+        mav.addObject("user", userProfile);
         mav.addObject("rtnKaMapDto", rtnKaMapDto);
         mav.addObject("rtnKaMapReviewList", rtnKaMapReviewList);
         mav.addObject("rtnKaMapReviewListCnt", rtnKaMapReviewListSize);
@@ -61,9 +81,29 @@ public class CourseController {
     }
 
     @GetMapping("/mainCourse")
-    public ModelAndView mainCourse() {
+    public ModelAndView mainCourse(HttpSession session) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("course/mainCourse");
+
+        // 세션에서 사용자 정보 가져오기
+        Object userObj = session.getAttribute("loginMember");
+        String userId;
+
+        if (userObj instanceof MemberDto) {
+            MemberDto user = (MemberDto) userObj;
+            userId = user.getUserId();
+        } else if (userObj instanceof UserDto) {
+            UserDto user = (UserDto) userObj;
+            userId = user.getUserId();
+        } else {
+            // 사용자 정보가 없는 경우 처리 (로그인하지 않았거나 세션이 만료된 경우)
+            mav.setViewName("redirect:/login"); // 로그인 페이지로 리디렉션
+            return mav;
+        }
+
+        // 사용자 프로필 정보 가져오기
+        UserDto userProfile = myPinService.getUserProfile(userId);
+        mav.addObject("user", userProfile);
 
         logger.debug("mainCourse페이지 이동");
         return mav;
@@ -76,51 +116,6 @@ public class CourseController {
         return courseService.searchPinDatas(searchKeywords, cri);
     }
 
-    @PostMapping("/createCourse")
-    public String createCourse(@RequestBody HashMap<String, Object> requestData) {
-        System.out.println("1111111111111111111111");
-        try {
-            // CourseDto와 CourseDetailDto를 생성하여 requestData에서 데이터를 설정합니다.
-            CourseDto course = new CourseDto();
-            course.setUserId((String) requestData.get("userId"));
-            course.setNickname((String) requestData.get("nickname"));
-            course.setCourseName((String) requestData.get("courseName"));
-            course.setColor((String) requestData.get("color"));
-
-            HashMap<String, Object> courseDetailMap = (HashMap<String, Object>) requestData.get("courseDetail");
-            CourseDetailDto courseDetail = new CourseDetailDto();
-            courseDetail.setLocation((String) courseDetailMap.get("location"));
-            courseDetail.setX(((Number) courseDetailMap.get("x")).doubleValue());
-            courseDetail.setY(((Number) courseDetailMap.get("y")).doubleValue());
-            // visitDate가 문자열로 전달된 경우
-            String visitDateString = (String) courseDetailMap.get("visitDate");
-            if (visitDateString != null && !visitDateString.isEmpty()) {
-                try {
-                    // "yyyy/MM/dd" 형식을 처리할 수 있도록 DateTimeFormatter를 정의합니다.
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                    LocalDate localDate = LocalDate.parse(visitDateString, formatter);
-
-                    Date date = Date.valueOf(localDate);
-                    courseDetail.setVisitDate(date);
-                } catch (DateTimeParseException e) {
-                    // 올바르지 않은 날짜 형식 처리 (예: 기본값 설정 또는 예외 던지기)
-                    throw new IllegalArgumentException("잘못된 날짜 형식: " + visitDateString, e);
-                }
-            } else {
-                // visitDate가 null이거나 비어 있는 경우 처리 (예: 기본값 설정 또는 예외 던지기)
-                throw new IllegalArgumentException("visitDate 값이 null이거나 비어 있습니다.");
-            }
-            courseDetail.setMemo((String) courseDetailMap.get("memo"));
-
-            // 서비스 레이어를 통해 코스를 생성합니다.
-            courseHomeReview2Service.createCourse(course, courseDetail);
-
-            return "코스가 성공적으로 생성되었습니다.";
-        } catch (Exception e) {
-            logger.error("코스 생성 중 오류 발생", e);
-            return "코스 생성에 실패하였습니다.";
-        }
-    }
     @PostMapping("/createOrUpdateCourse")
     public String createOrUpdateCourse(@RequestBody HashMap<String, Object> requestData) {
         try {
@@ -129,21 +124,23 @@ public class CourseController {
             course.setNickname((String) requestData.get("nickname"));
             course.setCourseName((String) requestData.get("courseName"));
             course.setColor((String) requestData.get("color"));
+            course.setMyPinBoolean(true);
+            course.setLikeBoolean(false);
 
             HashMap<String, Object> courseDetailMap = (HashMap<String, Object>) requestData.get("courseDetail");
             CourseDetailDto courseDetail = new CourseDetailDto();
             courseDetail.setUserId((String) requestData.get("userId"));
             courseDetail.setLocation((String) courseDetailMap.get("location"));
+            courseDetail.setX((Double) courseDetailMap.get("x"));
+            courseDetail.setY((Double) courseDetailMap.get("y"));
 
             String visitDateString = (String) courseDetailMap.get("visitDate");
             if (visitDateString != null && !visitDateString.isEmpty()) {
                 try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                    LocalDate localDate = LocalDate.parse(visitDateString, formatter);
-//                    courseDetail.setVisitDate(localDate);
-                    Date date = Date.valueOf(localDate);
-                    courseDetail.setVisitDate(date);
-                } catch (DateTimeParseException e) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                    Date visitDate = formatter.parse(visitDateString);
+                    courseDetail.setVisitDate(visitDate);
+                } catch (ParseException e) {
                     throw new IllegalArgumentException("잘못된 날짜 형식: " + visitDateString, e);
                 }
             } else {
@@ -151,29 +148,27 @@ public class CourseController {
             }
             courseDetail.setMemo((String) courseDetailMap.get("memo"));
 
-            Integer existingCourseId = Integer.valueOf(courseHomeReview2Service.findCourseIdByUserIdAndCourseName(course.getUserId(), course.getCourseName()));
-            if (existingCourseId != null) {
+            Integer existingCourseId = courseHomeReview2Service.findCourseIdByUserIdAndCourseName(course.getUserId(), course.getCourseName());
+            if (existingCourseId == null) {
+                // 코스가 없으면 새로 삽입
+                courseHomeReview2Service.insertCourse(course);
+                existingCourseId = courseHomeReview2Service.findCourseIdByUserIdAndCourseName(course.getUserId(), course.getCourseName());
+                if (existingCourseId == null) {
+                    throw new IllegalStateException("새로 삽입된 코스의 ID를 찾을 수 없습니다.");
+                }
+            } else {
+                // 코스가 있으면 색상과 수정일을 업데이트
                 course.setCourseId(existingCourseId);
                 courseHomeReview2Service.updateCourseColorAndModifyDate(existingCourseId, course.getColor());
-            } else {
-                courseHomeReview2Service.insertCourse(course);
-                existingCourseId = Integer.valueOf(courseHomeReview2Service.findCourseIdByUserIdAndCourseName(course.getUserId(), course.getCourseName()));
             }
 
-            // Check for duplicate location
             if (courseHomeReview2Service.isLocationExist(existingCourseId, courseDetail.getLocation())) {
                 return "{\"status\":\"error\", \"message\":\"중복된 코스가 있습니다.\"}";
             }
 
-            // Get coordinates from map table
-            Map<String, Double> coordinates = courseHomeReview2Service.getCoordinatesByLocation(courseDetail.getLocation());
-            courseDetail.setX(coordinates.get("x"));
-            courseDetail.setY(coordinates.get("y"));
             courseDetail.setCourseId(existingCourseId);
-
             courseHomeReview2Service.insertCourseDetail(courseDetail);
 
-            // Return success response with existing flag
             return "{\"status\":\"success\", \"existing\": true}";
         } catch (Exception e) {
             logger.error("코스 생성 중 오류 발생", e);
@@ -181,13 +176,37 @@ public class CourseController {
         }
     }
 
+    @PostMapping("/insertCourseDetail")
+    public HashMap<String, String> insertCourseDetail(@RequestBody CourseDetailDto courseDetail) {
+        courseHomeReview2Service.insertCourseDetail(courseDetail);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("status", "success");
+        return response;
+    }
+
     @GetMapping("/getCourseDetails")
-    public Map<String, Object> getCourseDetails(@RequestParam String courseName, @RequestParam String userId) {
+    public Map<String, Object> getCourseDetails(@RequestParam String courseName, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
+        String userId = (String) session.getAttribute("userId");
+
+        if (userId == null) {
+            response.put("status", "error");
+            response.put("message", "로그인이 필요합니다.22222222");
+            return response;
+        }
+
         try {
-            List<CourseDetailDto> courseDetails = courseHomeReview2Service.getCourseDetails(courseName, userId);
+            Integer courseId = courseHomeReview2Service.findCourseIdByUserIdAndCourseName(userId, courseName);
+            if (courseId == null) {
+                response.put("status", "error");
+                response.put("message", "코스를 찾을 수 없습니다.");
+                return response;
+            }
+
+            List<CourseDetailDto> courseDetails = courseHomeReview2Service.getCourseDetails(courseId);
             response.put("status", "success");
             response.put("courseList", courseDetails);
+            logger.debug("Course details fetched: " + courseDetails); // 디버깅 로그 추가
         } catch (Exception e) {
             logger.error("코스 세부 정보 가져오기 중 오류 발생", e);
             response.put("status", "error");
@@ -196,26 +215,14 @@ public class CourseController {
         return response;
     }
 
-    @PostMapping("/deleteCourseDetail")
-    public ResponseEntity<?> deleteCourseDetail(@RequestBody Map<String, String> request) {
-        try {
-            String userId = request.get("userId");
-            String courseName = request.get("courseName");
-            String location = request.get("location");
-            int courseId = Integer.parseInt(courseHomeReview2Service.findCourseIdByUserIdAndCourseName(userId, courseName));
-
-            System.out.println("Deleting location: " + location + " from courseId: " + courseId);
-
-            int deleteCount = courseHomeReview2Service.deleteCourseDetail(courseId, location);
-            if (deleteCount > 0) {
-                return ResponseEntity.ok().body(Collections.singletonMap("status", "success"));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("message", "장소 삭제에 실패하였습니다. 다시 시도해주세요."));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("message", "장소 삭제에 실패하였습니다. 다시 시도해주세요."));
+    @GetMapping("/getCoursesByUserId")
+    @ResponseBody
+    public List<String> getCoursesByUserId(HttpSession session) {
+        String userId = (String) session.getAttribute("userId");
+        if (userId == null) {
+            return Collections.emptyList();
         }
+        return courseHomeReview2Service.getCoursesByUserId(userId);
     }
 
     @PostMapping("/insertCourse")
@@ -235,6 +242,58 @@ public class CourseController {
         courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/userCourseTitle")
+    public ResponseEntity<List<CourseDto>> getUserCourses(HttpSession session) {
+        try {
+            MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+            if (loginMember == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            List<CourseDto> userCourses = courseService.getUserCourses(loginMember.getUserId());
+            logger.debug("userCourses : " + userCourses.toString());
+
+            return ResponseEntity.ok(userCourses);
+        } catch (Exception e) {
+            e.printStackTrace(); // 에러 로그 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/courseDetail")
+    public ResponseEntity<List<Map<String, Object>>> getCourseDetail(HttpSession session) {
+        try {
+            MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+            if (loginMember == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            List<Map<String, Object>> courseDetail = courseService.findCourseDetail(loginMember.getUserId());
+            return ResponseEntity.ok(courseDetail);
+        } catch (Exception e) {
+            e.printStackTrace(); // 에러 로그 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+    }
+
+    @PostMapping("/updateMemo")
+    public ResponseEntity<String> updateMemo(@RequestBody CourseDetailDto courseDetailDto) {
+        try{
+            System.out.println("---------------------------------------------");
+            System.out.println(courseDetailDto);
+            courseService.updateMemo(courseDetailDto);
+            return ResponseEntity.ok("메모가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메모 업데이트 중 오류가 발생했습니다.");
+        }
+    }
+
+
 }
 
 

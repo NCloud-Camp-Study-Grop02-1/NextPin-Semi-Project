@@ -772,3 +772,32 @@ button, .modal-buttons button {
     color: white;
 }
 
+
+
+
+.unified-background {
+    padding: 15px;
+    border-radius: 10px;
+    margin: 1rem 0; /* 위아래 여백 추가 */
+}
+
+.course-detail-item {
+    /*background-color: transparent; !* 각 항목별로 다른 배경색을 적용하지 않음 *!*/
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* 항목 사이에 경계선 추가 */
+}
+
+.course-detail-item:last-child {
+    border-bottom: none; /* 마지막 항목에는 경계선 제거 */
+}
+
+.course-day-box {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px; /* 항목과의 간격 추가 */
+}
+
+
+.course-day-link {
+    text-decoration: underline; /* 링크에 밑줄 추가 */
+}

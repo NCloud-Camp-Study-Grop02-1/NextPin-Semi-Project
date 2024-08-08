@@ -40,15 +40,29 @@ public class LoginSignupController {
 
     // 로그인 기능 처리
     @PostMapping("/login")
-    public void login(MemberDto memberDto, HttpServletResponse response, HttpSession session) throws IOException {
-        MemberDto loginMember = memberService.login(memberDto);
-
-        // 로그인 성공 시 세션에 사용자 정보 저장
-        session.setAttribute("loginMember", loginMember);
-
+    public ModelAndView login(MemberDto memberDto, Model model, HttpServletResponse response, HttpSession session) throws IOException {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("/main");
-        response.sendRedirect("/main");
+        try {
+            MemberDto loginMember = memberService.login(memberDto);
+            
+
+            // 로그인 성공 시 세션에 사용자 정보 저장
+            session.setAttribute("loginMember", loginMember);
+            session.setAttribute("userId", loginMember.getUserId());
+            session.setAttribute("nickname", loginMember.getNickname());
+
+            mav.setViewName("/main");
+            response.sendRedirect("/main");
+            return mav;
+        } catch (RuntimeException re) {
+            System.out.println(re.getMessage());
+            mav.setViewName("loginSignUp/login");
+            mav.addObject("loginFailMsg", re.getMessage());
+//            model.addAttribute("loginFailMsg", re.getMessage());
+//            response.sendRedirect("/login");
+            System.out.println("로그인 실패");
+            return mav;
+        }
 //        System.out.println("로그인 성공");
     }
 

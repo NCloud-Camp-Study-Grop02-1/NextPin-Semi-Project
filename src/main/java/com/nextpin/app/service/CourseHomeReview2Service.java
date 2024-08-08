@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface CourseHomeReview2Service {
 
-    String findCourseIdByUserIdAndCourseName(String userId, String courseName);
+    Integer findCourseIdByUserIdAndCourseName(String userId, String courseName);
 
     void updateCourseColorAndModifyDate(int courseId, String color);
 
@@ -18,22 +18,18 @@ public interface CourseHomeReview2Service {
 
     List<CourseDetailDto> getCourseDetails(int courseId);
 
-    Map<String, Double> getCoordinatesByLocation(String location);
-
     boolean isDuplicateCourseDetail(int courseId, String location);
 
     List<CourseDetailDto> getCourseDetails(String courseName, String userId);
 
     boolean isLocationExist(Integer courseId, String location);
 
-    boolean deleteCourseDetail(Integer courseId, String location);
-
-    int deleteCourseDetail(int courseId, String location);
-
     public void createCourse(CourseDto course, CourseDetailDto courseDetail);
 
     public int saveCourse(CourseDto saveCourseDto);
 
     public void saveCourseDetail(CourseDto saveCourseDto, List<CourseDetailDto> saveCourseDetailDtoList);
+
+    List<String> getCoursesByUserId(String userId);
 
 }

@@ -42,70 +42,269 @@ function searchPlaces() {
     // );
 }
 
-// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    // console.log("placesSearchCB data : " + JSON.stringify(data));
-    if (status === kakao.maps.services.Status.OK) {
-        // console.log(data);
-        if(undefined !== data) {
-            if (data.length > 0) {
-                for (let idx in data) {
-                    placeData.push(data[idx]);
-                }
-            }
-        }
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
 
-        // console.log(placeData);
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data);
-        printResult(placeData);
+    // for(key in places){
+    //     let rowData = {};
+    //     rowData.key = key;
+    //     rowData.value = places[key]
+    //     console.log("지도 데이터1 : " + JSON.stringify(placeData));
+    //     console.log("지도 데이터 개수: " + placeData.length);
+    //     placeData.push(rowData);
+    // }
+    // console.log("지도 데이터 : " + JSON.stringify(placeData));
+    var el = document.createElement('li'),
+        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+            '<div class="info">' +
+            '   <h5>' + places.location + '</h5>';
 
-        // 페이지 번호를 표출합니다
-        displayPagination(pagination);
+    // if (places.road_address_name) {
+    //     itemStr += '    <span>' + places.road_address_name + '</span>' +
+    //         '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    // } else {
+    //     itemStr += '    <span>' +  places.address_name  + '</span>';
+    // }
+    //
+    // itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+    //     '</div>';
 
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+    el.innerHTML = itemStr;
+    el.className = 'item';
 
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
+    return el;
+}
 
-    } else if (status === kakao.maps.services.Status.ERROR) {
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position) {
+    var imageSrc = '../images/icons/course_icon.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    let imageSize = new kakao.maps.Size(32, 40),  // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
+        marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage
+        });
 
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
     }
-}
-let i = 0;
-function printResult(data) {
-
-    console.log(++i + "번째 실행");
-    console.log(data);
-    console.log("print placeData : " + placeData);
+    markers = [];
 }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+// function displayPagination(pagination) {
+//     var paginationEl = document.getElementById('pagination'),
+//         fragment = document.createDocumentFragment(),
+//         i;
+//
+//     // 기존에 추가된 페이지번호를 삭제합니다
+//     while (paginationEl.hasChildNodes()) {
+//         paginationEl.removeChild (paginationEl.lastChild);
+//     }
+//
+//     for (i=1; i<=pagination.last; i++) {
+//         var el = document.createElement('a');
+//         el.href = "#";
+//         el.innerHTML = i;
+//
+//         if (i===pagination.current) {
+//             el.className = 'on';
+//         } else {
+//             el.onclick = (function(i) {
+//                 return function() {
+//                     pagination.gotoPage(i);
+//                 }
+//             })(i);
+//         }
+//
+//         fragment.appendChild(el);
+//     }
+//     paginationEl.appendChild(fragment);
+// }
 
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('menu_wrap'),
-        fragment = document.createDocumentFragment(),
-        bounds = new kakao.maps.LatLngBounds(),
-        listStr = '';
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
 
-    // 지도에 표시되고 있는 마커를 제거합니다
+// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+// function removeAllChildNods(el) {
+//     while (el.hasChildNodes()) {
+//         el.removeChild (el.lastChild);
+//     }
+// }
+
+document.getElementById('searchInput').addEventListener('input', filterItems);
+window.onload = function(){
+    searchPlaces();
+    // printResult();
+};
+
+function filterItems() {
+    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+
+    // .mypin-content 내의 항목을 필터링
+    const courseItems = document.querySelectorAll('.ranking li');
+    courseItems.forEach(item => {
+        let value = '';
+        if(item.querySelector('input') !== undefined && item.querySelector('input') !== null) {
+            value = item.querySelector('input').value.toLowerCase();
+        }
+        if (value.includes(searchValue)) {
+            item.style.display = 'block'; // 부모 li 요소를 표시
+        } else {
+            item.style.display = 'none'; // 부모 li 요소를 숨김
+        }
+    });
+
+}
+
+// 프로필 사진을 클릭하면 해당 유저의 페이지로 이동 (추후 수정 예정)
+// function goToProfile(button) {
+//     let profileName = button.querySelector('span').textContent; // 프로필 버튼 내 span 요소의 텍스트 가져오기
+//     alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
+// }
+
+// 페이지가 로드될 때, 유저가 '좋아요'한 코스 불러오기
+$(document).ready(function() {
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+        $.ajax({
+            url: '/community/getUserLikes',
+            type: 'GET',
+            data: { userId: userId },
+            success: function(likedCourses) {
+                likedCourses.forEach(courseId => {
+                    const heartButton = document.querySelector(`.ranking-item[data-course-id="${courseId}"] .heart-button img`);
+                    if (heartButton) {
+                        heartButton.src = '../images/icons/heart-after_icon.png';
+                    }
+                });
+                addToggleHeartListeners(); // 좋아요 정보를 가져온 후 이벤트 리스너 추가
+            },
+            error: function(error) {
+                console.error('Error fetching liked courses:', error);
+            }
+        });
+    } else {
+        addToggleHeartListeners(); // 유저가 로그인되지 않은 경우에도 리스너 추가
+    }
+});
+
+function addToggleHeartListeners() {
+    $('.heart-button').off('click').on('click', function() {
+        toggleHeart(this);
+    });
+}
+
+function toggleHeart(button) {
+    const heartImage = button.querySelector('img');
+    const heartCount = button.querySelector('span');
+    const courseId = button.closest('.ranking-item').getAttribute('data-course-id');
+    const userId = sessionStorage.getItem('userId');
+    const isLiked = heartImage.src.includes('after');
+
+    console.log('Before toggle: ', heartImage.src, 'isLiked:', isLiked);
+
+    if (isLiked) {
+        heartImage.src = '../images/icons/heart-before_icon.png';
+        heartCount.textContent = parseInt(heartCount.textContent) - 1;
+        updateLikeStatus(courseId, userId, false, -1);
+    } else {
+        heartImage.src = '../images/icons/heart-after_icon.png';
+        heartCount.textContent = parseInt(heartCount.textContent) + 1;
+        updateLikeStatus(courseId, userId, true, 1);
+    }
+
+    console.log('After toggle: ', heartImage.src);
+}
+
+function updateLikeStatus(courseId, userId, isLiked, increment) {
+    $.ajax({
+        url: '/community/updateLikeStatus',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            courseId: courseId,
+            userId: userId,
+            isLiked: isLiked,
+            increment: increment
+        }),
+        success: function(response) {
+            if (!response.success) {
+                console.error('Failed to update like status');
+            }
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+// // 초기 로드 시 실행
+// document.addEventListener('DOMContentLoaded', function() {
+//     const courseDetails = document.querySelector('.course-details');
+//     courseDetails.style.display = 'none'; // 초기에 숨김 처리
+// });
+
+// 코스 버튼 클릭 시 course-details 토글
+// function toggleCourseDetails(button) {
+//     const rankingItem = button.closest('.collapse');
+//     const courseDetails = rankingItem.nextElementSibling;
+//     if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
+//         courseDetails.style.display = 'block';
+//     } else {
+//         courseDetails.style.display = 'none';
+//     }
+// }
+
+
+// 저장버튼 누르면 아이콘 색 채워지기
+// function toggleSave(button) {
+//     const saveImage = button.querySelector('img');
+//     const isSaved = saveImage.src.includes('after');
+//
+//     if (isSaved) {
+//         saveImage.src = 'images/icons/save-before-icon.png';
+//     } else {
+//         saveImage.src = 'images/icons/save-after-icon.png';
+//     }
+// }
+
+var paths = [];
+// 코스명 선택 시 핀 꽂는 기능
+function drawPinCourse(courseData){
+    // console.log(courseData);
+    let courseId = '',
+        bounds = new kakao.maps.LatLngBounds();
+    if(undefined !== courseData){
+        courseId = courseData[0].courseId;
+    }
+
+    // for(let i =0; i < courseData.length; i++){
+    //     console.log(i + " : " + JSON.stringify(courseData[i]));
+    // }
     removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
+    for(let i = 0; i < courseData.length; i++){
 
-        // 마커를 생성하고 지도에 표시합니다
-        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+        var placePosition = new kakao.maps.LatLng(courseData[i].y, courseData[i].x),
             marker = addMarker(placePosition, i),
-            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            itemEl = getListItem(i, courseData[i]);
 
+        paths.push(placePosition);
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
@@ -129,204 +328,35 @@ function displayPlaces(places) {
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
-        })(marker, places[i].place_name);
+        })(marker, courseData[i].location);
 
-        fragment.appendChild(itemEl);
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
     }
 
-    // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-    listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
 }
-
-// 검색결과 항목을 Element로 반환하는 함수입니다
-function getListItem(index, places) {
-
-    // for(key in places){
-    //     let rowData = {};
-    //     rowData.key = key;
-    //     rowData.value = places[key]
-    //     console.log("지도 데이터1 : " + JSON.stringify(placeData));
-    //     console.log("지도 데이터 개수: " + placeData.length);
-    //     placeData.push(rowData);
-    // }
-    // console.log("지도 데이터 : " + JSON.stringify(placeData));
-    var el = document.createElement('li'),
-        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-            '<div class="info">' +
-            '   <h5>' + places.place_name + '</h5>';
-
-    if (places.road_address_name) {
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
-            '   <span class="jibun gray">' +  places.address_name  + '</span>';
-    } else {
-        itemStr += '    <span>' +  places.address_name  + '</span>';
-    }
-
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-        '</div>';
-
-    el.innerHTML = itemStr;
-    el.className = 'item';
-
-    return el;
-}
-
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-        marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage
-        });
-
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
-
-    return marker;
-}
-
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
-        markers[i].setMap(null);
-    }
-    markers = [];
-}
-
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i;
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=pagination.last; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i===pagination.current) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    pagination.gotoPage(i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
-
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
-}
-
-// 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
-
 window.onload = function(){
-    searchPlaces();
-    // printResult();
-    $("#dataChk").on("click", function(){
-        $.ajax({
-            method : "POST",
-            headers : {
-                'content-type':'application/json'
-            },
-            url : "/kakaoData",
-            async : true,
-            dataType: "json",
-            data : JSON.stringify(placeData),
-            success : function(result){
-                console.log("ajax : result : " + result);
-            },
-            error : function(request, status, error){
-                console.log(error);
+    $.ajax({
+        url: '/info',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.isLoggedIn) {
+                sessionStorage.setItem("userId", response.userId);
+                sessionStorage.setItem("nickname", response.nickname);
+                userId = response.userId; // 필요에 따라 userId를 세션에서 추가로 가져오도록 백엔드 수정 필요
+                nickname = response.nickname;
+                console.log("User ID: ", userId);
+                console.log("Nickname: ", nickname);
+            } else {
+                location.href = '/login';
+                alert("로그인이 필요합니다.");
             }
-        });
+        },
+        error: function (error) {
+            console.log("Error fetching user info: ", error);
+        }
     });
-
-};
-
-// 프로필 사진을 클릭하면 해당 유저의 페이지로 이동 (추후 수정 예정)
-// function goToProfile(button) {
-//     let profileName = button.querySelector('span').textContent; // 프로필 버튼 내 span 요소의 텍스트 가져오기
-//     alert(profileName + '의 페이지로 이동'); // alert 창에 메시지 표시
-// }
-
-// 유저들의 코스 하트 누르기
-function toggleHeart(button) {
-    const heartImage = button.querySelector('img');
-    const heartCount = button.querySelector('span');
-    const isLiked = heartImage.src.includes('after');
-
-    if (isLiked) {
-        heartImage.src = '../images/icons/heart-before_icon.png';
-        heartCount.textContent = parseInt(heartCount.textContent) - 1;
-    } else {
-        heartImage.src = '../images/icons/heart-after_icon.png';
-        heartCount.textContent = parseInt(heartCount.textContent) + 1;
-    }
-}
-
-// // 초기 로드 시 실행
-// document.addEventListener('DOMContentLoaded', function() {
-//     const courseDetails = document.querySelector('.course-details');
-//     courseDetails.style.display = 'none'; // 초기에 숨김 처리
-// });
-
-// 코스 버튼 클릭 시 course-details 토글
-function toggleCourseDetails(button) {
-    const rankingItem = button.closest('.ranking-item');
-    const courseDetails = rankingItem.nextElementSibling;
-    if (courseDetails.style.display === 'none' || courseDetails.style.display === '') {
-        courseDetails.style.display = 'block';
-    } else {
-        courseDetails.style.display = 'none';
-    }
-}
-
-
-// 저장버튼 누르면 아이콘 색 채워지기
-function toggleSave(button) {
-    const saveImage = button.querySelector('img');
-    const isSaved = saveImage.src.includes('after');
-
-    if (isSaved) {
-        saveImage.src = 'images/icons/save-before-icon.png';
-    } else {
-        saveImage.src = 'images/icons/save-after-icon.png';
-    }
-}
-
-window.onload = function(){
     const sidebar = $('.community_section');
     const sidebarToggle = $('.sidebar-toggle');
     let isExpand = false;
@@ -337,10 +367,12 @@ window.onload = function(){
 
         if(isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            sidebarToggle.css({'margin-left': '1rem'});
             return;
         }
 
         $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        sidebarToggle.css({'margin-left': '0'});
         // sidebarContainer.classList.toggle('open');
         // sidebarArrowContainer.classList.toggle('open');
     });
@@ -366,91 +398,19 @@ window.onload = function(){
             }
         });
     });
+    //각 목록에 지정한 10가지 색상 중 랜덤한 값이 들어가게 만들기.
+    // 1. 10가지 색상 배열 만들기
+    const colors=['#FFC061','#D4ADFB','#97E285','#fd7f7f','#1A70D6','#7BD0FF','#C8C8C8','#BADCE3','#AFA18E','#ECCCCF'];
 
-    var detailData = JSON.parse($('#hiddenValue').val());
-    // console.log(detailData);
+    // 2. 모든 .card 클래스 요소 선택하기(일차별 색상)
+    const cards = document.querySelectorAll('.card');
+    // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
+    cards.forEach(card => {
+        const uls = card.querySelectorAll('ul');
+        // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
+        uls.forEach(ul => {
+            ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        });
+    });
 
-    for(let i = 0; i <detailData.length; i++){
-        let visitD = new Date(detailData[i].visitDate);
-        let visitDa = visitD.getFullYear() + "-" + (visitD.getMonth() + 1) + "-" + visitD.getDate();
-        detailData[i].visitDate = visitDa;
-        // console.log(detailData[i]);
-
-        let divElement = $('.course-details #' + detailData[i].courseId);
-        let dayDivElement = document.createElement('div');
-        dayDivElement.classList.add('day');
-        dayDivElement.classList.add('user1day1');
-
-        let createLocationUlElement = document.createElement('ul');
-        let createDateLiElement = document.createElement('li');
-        createDateLiElement.textContent = detailData[i].visitDate;
-
-
-
-    }
 };
-
-
-// function fetchCourses() {
-//     fetch('/courses')
-//         .then(response => response.json())
-//         .then(courses => {
-//             const rankingContainer = document.querySelector('.ranking');
-//             rankingContainer.innerHTML = '';
-//             courses.forEach((course, index) => {
-//                 const courseItem = document.createElement('div');
-//                 courseItem.classList.add('ranking-item');
-//
-//                 const rankingNumber = document.createElement('div');
-//                 rankingNumber.classList.add('ranking-number');
-//                 rankingNumber.textContent = index + 1;
-//
-//                 const profilePicture = document.createElement('button');
-//                 profilePicture.classList.add('profilePicture');
-//                 profilePicture.innerHTML = `<img src="../images/icons/default-profile_icon.svg" alt="${course.nickname}">
-//                                             <span>${course.nickname}</span>`;
-//
-//                 const courseButton = document.createElement('button');
-//                 courseButton.classList.add('course-button');
-//                 courseButton.textContent = course.courseName;
-//                 courseButton.style.backgroundColor = course.color || '#D4ADFB';
-//                 courseButton.onclick = () => toggleCourseDetails(course.courseId, courseItem);
-//
-//                 courseItem.appendChild(rankingNumber);
-//                 courseItem.appendChild(profilePicture);
-//                 courseItem.appendChild(courseButton);
-//
-//                 rankingContainer.appendChild(courseItem);
-//             });
-//         });
-// }
-
-// function toggleCourseDetails(courseId, courseItem) {
-//     let i = 1;
-//     fetch(`/courses/${courseId}/details`)
-//         .then(response => response.json())
-//         .then(details => {
-//             let detailsContainer = courseItem.querySelector('.course-details');
-//             if (!detailsContainer) {
-//                 detailsContainer = document.createElement('div');
-//                 detailsContainer.classList.add('course-details');
-//                 courseItem.appendChild(detailsContainer);
-//             }
-//             detailsContainer.innerHTML = ''; // 기존 내용을 지움
-//             console.log("details : " + JSON.stringify(details));
-//             details.forEach(detail => {
-//                 const dayContainer = document.createElement('div');
-//                 dayContainer.classList.add('day');
-//                 dayContainer.innerHTML = `<h2>Day ${i}</h2>`;
-//
-//                 const locationList = document.createElement('ul');
-//                 const locationItem = document.createElement('li');
-//                 locationItem.textContent = detail.location;
-//                 locationList.appendChild(locationItem);
-//
-//                 dayContainer.appendChild(locationList);
-//                 detailsContainer.appendChild(dayContainer);
-//                 i++;
-//             });
-//         });
-// }

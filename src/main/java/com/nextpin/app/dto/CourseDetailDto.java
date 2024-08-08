@@ -11,7 +11,7 @@ import java.util.Date;
 @ToString
 public class CourseDetailDto {
         private int courseId;
-        private int course_detail_id;
+        private int courseDetailId;
         private String location;
         private double x;
         private double y;
@@ -23,4 +23,5 @@ public class CourseDetailDto {
         private String message;
         private Long visitDateCount;
         private int visitOrder;
+        private String color;
 }

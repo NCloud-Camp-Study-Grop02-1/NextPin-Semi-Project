@@ -3,22 +3,50 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.nextpin.app.dao.CommunityMapper">
-    <select id="getAllCourses" resultType="com.nextpin.app.dto.CourseDto">
-        SELECT * FROM course
+<mapper namespace="CommunityMapper">
+    <select id="getAllCourses" resultType="courseDto">
+        SELECT ROW_NUMBER() OVER(ORDER BY c.heartCnt desc) as courseRank
+             , c.*
+        FROM course c
+        ORDER BY c.heartCnt DESC
     </select>
 
-    <select id="getCourseDetailsByCourseId" parameterType="int" resultType="com.nextpin.app.dto.CourseDetailDto">
+    <select id="getCourseDetailsByCourseId" parameterType="int" resultType="courseDetailDto">
         SELECT * FROM course_detail WHERE courseId = #{courseId} ORDER BY visitDate
     </select>
 
-    <select id="getCourseDetailByCourses" parameterType="list" resultType="CourseDetailDto">
+    <select id="getCourseDetailByCourses" parameterType="list" resultType="courseDetailDto">
         SELECT *
-          FROM COURSE_DETAIL
-         WHERE 1=1
-           AND COURSEID IN
+        FROM COURSE_DETAIL
+        WHERE 1=1
+        AND X IS NOT NULL
+        AND Y IS NOT NULL
+        AND COURSEID IN
         <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
     </select>
+
+    <insert id="insertLike">
+        INSERT INTO likeCourse (userId, courseId, bookMarkBoolean)
+        VALUES (#{userId}, #{courseId}, #{bookMarkBoolean})
+    </insert>
+
+    <delete id="deleteLike">
+        DELETE FROM likeCourse
+        WHERE userId = #{userId} AND courseId = #{courseId}
+    </delete>
+
+    <select id="selectUserLikedCourses" parameterType="string" resultType="int">
+        SELECT courseId
+        FROM likeCourse
+        WHERE userId = #{userId}
+    </select>
+
+    <update id="updateHeartCount">
+        UPDATE course
+        SET heartCnt = heartCnt + #{increment}
+        WHERE courseId = #{courseId}
+    </update>
+
 </mapper>

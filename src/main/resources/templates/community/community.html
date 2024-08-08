@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/kakaoMap.css"/>
     <link rel="stylesheet" href="css/course/maincourse.css"/>
-
+    <!-- 사이드바 스타일 시트 적용 -->
+    <link rel="stylesheet" href="css/common/sidebar_myPin.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!--커뮤니티 메인페이지 스타일 시트 적용-->
     <link rel="stylesheet" href="css/community/community.css"/>
 
-    <!-- 파비콘 설정 -->
-    <link rel="icon" type="image/png" href="../images/icons/NP_pavicon.png">
+    <!-- jQuery -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!--카카오맵 불러오기-->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b65896833a405b71281c94d1dd53a4de&libraries=services"></script>
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <!-- 사이드바 스타일 시트 적용 -->
-    <link rel="stylesheet" href="css/common/sidebar_myPin.css"/>
+
+    <!-- 파비콘 설정 -->
+    <link rel="icon" type="image/png" href="../images/icons/NP_pavicon.png">
 </head>
 <body>
 <!-- 사이드바 -->
@@ -46,7 +54,7 @@
         <span>랜덤핀</span>
     </a>
     <a href="/myPin" class="sidebar-profile">
-        <img src="../images/icons/mypage_icon.png" alt="Profile">
+        <img th:src="${user.profileURL}" alt="Profile">
     </a>
 </nav>
 <div class="root">
@@ -60,7 +68,7 @@
                     <h1>코스별 랭킹 순위</h1>
                     <div class="search-bar">
                         <div class="search-container">
-                            <input type="text" placeholder="검색어를 입력하세요" class="search-input">
+                            <input type="text" placeholder="검색어를 입력하세요" class="search-input" id="searchInput">
                             <!--검색 버튼: 돋보기.svg-->
                             <button class="search-button">
                                 <img src="../images/icons/Search-blue_icon.png" alt="검색">
@@ -72,29 +80,53 @@
                 <!--유저들의 코스 랭킹-->
                 <div class="ranking">
                     <ul>
-                        <li th:each="course, stat : ${courseList}">
-                            <div class="ranking-item">
-                                <div class="ranking-number">[(${stat.index + 1})]</div>
+                        <li th:each="map, stat : ${courseListMap}"
+                            th:if="${map != null}">
+                            <th:block th:each="entry : ${map.entrySet()}"
+                                      th:if="${entry != null}">
+                            <div class="ranking-item" th:data-course-id="${entry.key.courseId}">
+                                <div class="ranking-number">[(${entry.key.courseRank})]</div>
                                 <button class="profilePicture" onclick="goToProfile(this)">
-                                    <img src="../images/icons/푸린-profile_icon.svg" alt="푸린">
-                                    <span>[(${course.nickname})]</span>
+                                    <img th:src="'../images/img/profile/profile' + ${entry.key.courseId % 10} + '.png'" alt="프로필">
+                                    <span>[(${entry.key.nickname})]</span>
                                 </button>
-                                <button class="course-button" th:style="${'background-color:' + course.color}" onclick="toggleCourseDetails(this)">[(${course.courseName})]</button>
-                                <button class="heart-button" onclick="toggleHeart(this)">
+                                <input type="button" class="course-button" data-bs-toggle="collapse"
+                                    th:onclick="drawPinCourse([[${entry.value}]])"
+                                    th:data-bs-target="'#collapseExample' + ${entry.key.courseId}"
+                                    th:aria-controls="'collapseExample' + ${entry.key.courseId}"
+                                    th:style="${'background-color:' + entry.key.color}"
+                                    th:value="${entry.key.courseName}">
+                                <button class="heart-button">
                                     <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                                    <span>[(${course.heartCnt})]</span>
+                                    <span>[(${entry.key.heartCnt})]</span>
                                 </button>
                             </div>
-                            <input type="hidden" id="hiddenCourseId" th:value="${course.courseId}">
-                            <div class="course-details" th:id="${course.courseId}">
-
+                            <div class="collapse" th:id="'collapseExample' + ${entry.key.courseId}">
+                                <div class="card card-body">
+                                    <th:block th:each="detail, detailIdx: ${entry.value}"
+                                              th:if="${detailIdx.index == 0 or (detailIdx.index > 0 and detail.visitDate != entry.value[detailIdx.index - 1].visitDate)}">
+                                    <ul>
+                                        <div class="course-day-box">
+                                            <p class="course-day-label" th:text="${(detail.day == null or detail.day == 'null' or detail.day == 0) ? (detailIdx.index + 1) + '일차' : detail.day + '일차'}"></p>
+                                            <p class="course-day" th:text="${#dates.format(detail.visitDate, 'yyyy-MM-dd')}"></p>
+                                            <a class="course-day-link" href="/calendar">상세보기</a>
+                                        </div>
+                                        <li th:each="inDetail, inDetailIdx: ${entry.value}"
+                                            th:if="${detail.visitDate == inDetail.visitDate}">
+                                            <div>
+                                                <span th:text="${inDetail.location}"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    </th:block>
+                                 </div>
                             </div>
+                            </th:block>
                         </li>
                     </ul>
-
                 </div>
             </div>
-            <input type="hidden" id="hiddenValue" th:value="${courseDetailList}">
+
             <div class="sidebar-arrow-container">
                 <div class="sidebar-toggle">
                     <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">

@@ -69,43 +69,43 @@ function searchPlaces(category) {
 }
 
 // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-function placesSearchCB(data, status, pagination) {
-    // console.log("placesSearchCB data : " + JSON.stringify(data));
-    if (status === kakao.maps.services.Status.OK) {
-        // console.log(data);
-        if(undefined !== data) {
-            if (data.length > 0) {
-                for (let idx in data) {
-                    placeData.push(data[idx]);
-                }
-            }
-        }
-
-        // console.log(placeData);
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(data, category);
-        printResult(placeData);
-
-        // 페이지 번호를 표출합니다
-        // displayPagination(pagination);
-
-    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-
-    } else if (status === kakao.maps.services.Status.ERROR) {
-
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-
-    }
-}
+// function placesSearchCB(data, status, pagination) {
+//     // console.log("placesSearchCB data : " + JSON.stringify(data));
+//     if (status === kakao.maps.services.Status.OK) {
+//         // console.log(data);
+//         if(undefined !== data) {
+//             if (data.length > 0) {
+//                 for (let idx in data) {
+//                     placeData.push(data[idx]);
+//                 }
+//             }
+//         }
+//
+//         // console.log(placeData);
+//         // 정상적으로 검색이 완료됐으면
+//         // 검색 목록과 마커를 표출합니다
+//         displayPlaces(data, category);
+//         printResult(placeData);
+//
+//         // 페이지 번호를 표출합니다
+//         // displayPagination(pagination);
+//
+//     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+//
+//         alert('검색 결과가 존재하지 않습니다.');
+//         return;
+//
+//     } else if (status === kakao.maps.services.Status.ERROR) {
+//
+//         alert('검색 결과 중 오류가 발생했습니다.');
+//         return;
+//
+//     }
+// }
 let i = 0;
 function printResult(data) {
 
-    console.log(++i + "번째 실행");
+    // console.log(++i + "번째 실행");
     // console.log(data);
     // console.log("print placeData : " + placeData);
 }
@@ -291,7 +291,7 @@ function addMarker(position, idx, category) {
     }
 
 
-    let imageSize = new kakao.maps.Size(32, 32),  // 마커 이미지의 크기
+    let imageSize = new kakao.maps.Size(40, 40),  // 마커 이미지의 크기
         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
         marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
@@ -485,14 +485,35 @@ function displayInfowindow(marker, title) {
 }
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-function removeAllChildNods(el) {
-    while (el.hasChildNodes()) {
-        el.removeChild (el.lastChild);
-    }
-}
+// function removeAllChildNods(el) {
+//     while (el.hasChildNodes()) {
+//         el.removeChild (el.lastChild);
+//     }
+// }
 
 window.onload = function(){
     searchPlaces();
+    $.ajax({
+        url: '/info',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.isLoggedIn) {
+                sessionStorage.setItem("userId", response.userId);
+                sessionStorage.setItem("nickname", response.nickname);
+                userId = response.userId; // 필요에 따라 userId를 세션에서 추가로 가져오도록 백엔드 수정 필요
+                nickname = response.nickname;
+                console.log("User ID: ", userId);
+                console.log("Nickname: ", nickname);
+            } else {
+                location.href = '/login';
+                alert("로그인이 필요합니다.");
+            }
+        },
+        error: function (error) {
+            console.log("Error fetching user info: ", error);
+        }
+    });
     // printResult();
     var category = 'food';
 

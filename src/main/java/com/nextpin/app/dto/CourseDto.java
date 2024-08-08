@@ -15,14 +15,16 @@ public class CourseDto {
     private String userId;
     private String nickname;
     private String courseName;
+    private String visitDate;
     private LocalDateTime regDate;
     private Date modifyDate;
     private int bookMark;
     private int heartCnt;
     private int openClose;
     private String color;
-    private boolean myPinBoolaen;
+    private boolean myPinBoolean;
     private boolean likeBoolean;
+    private int courseRank;
     private String status;
     private String message;
 }

@@ -52,7 +52,7 @@
         <span>랜덤핀</span>
     </a>
     <a href="/myPin" class="sidebar-profile">
-        <img src="../images/icons/mypage_icon.png" alt="Profile">
+        <img th:src="${user.profileURL}" alt="Profile">
     </a>
 </nav>
 
@@ -60,7 +60,7 @@
 <div class="side-navbar">
     <!--프로필-->
     <div class="profile">
-        <img id="profile-img" src="[(${user.profileURL})]" alt="Profile Picture">
+        <img id="profile-img" th:src="${user.profileURL}" alt="Profile Picture">
         <div class="profile-container">
             <p class="profile-name">[(${user.nickname})]</p>
             <p class="profile-content">
@@ -151,7 +151,7 @@
                                     </div>
                                     <li th:each="detailDay : ${userCourse.courseDetail}"
                                         th:if="${detailDay.visitOrder == detail2.visitOrder} and ${detailDay.courseId == userCourse.course.courseId}"
-                                        th:data-course-detail-id="${detailDay.course_detail_id}">
+                                        th:data-course-detail-id="${detailDay.courseDetailId}">
                                         <div>
                                             <span th:text="${detailDay.location}"></span>
                                             <img class="delete-icon" src="images/icons/delete_icon1.png"
