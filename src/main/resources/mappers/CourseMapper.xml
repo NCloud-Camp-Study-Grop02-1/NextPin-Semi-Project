@@ -6,6 +6,7 @@
     <select id="findCourseByUserId" parameterType="string" resultType="com.nextpin.app.dto.CourseDto">
         SELECT distinct c.courseName
              , d.visitDate
+             , c.color
             FROM course c
             JOIN course_detail d ON c.courseId = d.courseId
             WHERE c.userId = #{userId}
@@ -13,7 +14,9 @@
 
     <select id="findCourseDetail" parameterType="string" resultType="map">
         SELECT c.courseId
+             , c.color
              , d.location
+             , d.course_detail_id
              , d.visitDate
              , d.memo
              , d.day
@@ -26,6 +29,6 @@
     <update id="updateMemo" parameterType="com.nextpin.app.dto.CourseDetailDto">
         UPDATE course_detail
             SET memo = #{memo}
-            WHERE course_detail_id = #{courseDatailId}
+            WHERE course_detail_id = #{courseDetailId}
     </update>
 </mapper>
