@@ -56,8 +56,8 @@ public class MyPinDao {
         mybatis.update("MyPinDao.editUserCourse",courseDto);
     }
 
-    public void editUserBookMark(CourseAndDetailDto courseAndDetailDto) {
-        mybatis.update("MyPinDao.editBookMark",courseAndDetailDto);
+    public void editUserBookMark(Map<String, Object> map) {
+        mybatis.update("MyPinDao.editBookMark",map);
     }
 
     public void deleteUserCourse(CourseDto courseDto) {
