@@ -211,6 +211,8 @@ public class CourseController {
             }
 
             List<CourseDto> userCourses = courseService.getUserCourses(loginMember.getUserId());
+            logger.debug("userCourses : " + userCourses.toString());
+
             return ResponseEntity.ok(userCourses);
         } catch (Exception e) {
             System.out.println("================================================");

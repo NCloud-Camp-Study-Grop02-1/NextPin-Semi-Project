@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("User ID: ", userId);
                     console.log("Nickname: ", nickname);
                 } else {
+                    location.href = '/login';
                     alert("로그인이 필요합니다.");
                 }
             },

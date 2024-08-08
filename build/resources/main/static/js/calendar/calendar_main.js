@@ -1,4 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: '/info',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.isLoggedIn) {
+                sessionStorage.setItem("userId", response.userId);
+                sessionStorage.setItem("nickname", response.nickname);
+                userId = response.userId; // 필요에 따라 userId를 세션에서 추가로 가져오도록 백엔드 수정 필요
+                nickname = response.nickname;
+                console.log("User ID: ", userId);
+                console.log("Nickname: ", nickname);
+            } else {
+                location.href = '/login';
+                alert("로그인이 필요합니다.");
+            }
+        },
+        error: function (error) {
+            console.log("Error fetching user info: ", error);
+        }
+    });
     const calendar = document.getElementById('calendar');
     const currentMonthYear = document.getElementById('current-month-year');
     const prevButton = document.getElementById('prev');
@@ -166,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-
+                console.log('data : ' + JSON.stringify(data));
                 // 일차 표기
                 if (data.length > 0) {
                     panelTitle.textContent = `${data[0].day}일차`;
