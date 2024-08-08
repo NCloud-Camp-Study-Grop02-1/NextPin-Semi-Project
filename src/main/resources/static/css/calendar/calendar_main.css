@@ -158,8 +158,10 @@
 
 /* memo 클래스 스타일 속성 */
 .memo {
-    margin-left: 15px;
+    margin-top: 7px;
+    margin-bottom: 3px;
     font-size: 0.8rem;
+    display: block;
 }
 
 .edit {

@@ -215,14 +215,12 @@ public class CourseController {
 
             return ResponseEntity.ok(userCourses);
         } catch (Exception e) {
-            System.out.println("================================================");
-            System.out.println(e.getMessage());
             e.printStackTrace(); // 에러 로그 출력
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    @GetMapping("courseDetail")
+    @GetMapping("/courseDetail")
     public ResponseEntity<List<Map<String, Object>>> getCourseDetail(HttpSession session) {
         try {
             MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
@@ -243,9 +241,12 @@ public class CourseController {
     @PostMapping("/updateMemo")
     public ResponseEntity<String> updateMemo(@RequestBody CourseDetailDto courseDetailDto) {
         try{
+            System.out.println("---------------------------------------------");
+            System.out.println(courseDetailDto);
             courseService.updateMemo(courseDetailDto);
             return ResponseEntity.ok("메모가 성공적으로 업데이트되었습니다.");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메모 업데이트 중 오류가 발생했습니다.");
         }
     }
