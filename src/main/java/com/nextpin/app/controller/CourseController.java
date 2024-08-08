@@ -12,10 +12,6 @@ import com.nextpin.app.service.CourseService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.http.HttpStatus;
-=======
->>>>>>> 0fcd1d0b8a7791798a707a5f1461dccc197d0d15
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -183,8 +179,6 @@ public class CourseController {
         return courseHomeReview2Service.getCoursesByUserId(userId);
     }
 
-<<<<<<< HEAD
-=======
     @PostMapping("/insertCourse")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> insertCourse(@RequestBody Map<String, Object> requestData) {
@@ -202,7 +196,6 @@ public class CourseController {
         courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
         return ResponseEntity.ok(response);
     }
->>>>>>> 0fcd1d0b8a7791798a707a5f1461dccc197d0d15
 }
 
 

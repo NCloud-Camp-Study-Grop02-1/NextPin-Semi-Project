@@ -11,27 +11,24 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.8/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CommunityController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CommunityController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/CourseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/nextpin/app/controller/MypinController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/community/community.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/community/community.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/course/courseHomeReview2.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/course/courseHomeReview2.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/mypin/mypin.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/mypin/mypin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/randompin/randomPinModal.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/randompin/randomPinModal.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/community/community.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/mypin/mypin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/js/randomPin/randomPin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/community/community.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/course/courseHomeReview2.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/course/courseHomeReview2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/mypin/mypin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/ApiTest_logback.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ApiTest_logback.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/LoginSignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/controller/LoginSignupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseHomeReview2ServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CourseHomeReview2ServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/MypinMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/MypinMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dao/CommunityDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/dto/CourseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/CommunityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CommunityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nextpin/app/service/impl/CommunityServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/conf/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/conf/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/CommunityMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/community/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/community/community.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +88,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.ApiApplication.executor": "Run",
     "Spring Boot.NextPinApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "backend/mingyo",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/03_Github_Files/NextPin_Team_Project/Main",
     "node.js.detected.package.eslint": "true",
@@ -145,6 +142,7 @@
       <workItem from="1722417017081" duration="1226000" />
       <workItem from="1722473549678" duration="25263000" />
       <workItem from="1722915393842" duration="3285000" />
+      <workItem from="1723035471265" duration="22339000" />
     </task>
     <servers />
   </component>

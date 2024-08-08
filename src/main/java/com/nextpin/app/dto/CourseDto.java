@@ -23,5 +23,6 @@ public class CourseDto {
     private String color;
     private boolean myPinBoolean;
     private boolean likeBoolean;
+    private int courseRank;
 
 }
