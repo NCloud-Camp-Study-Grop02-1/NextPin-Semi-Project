@@ -459,6 +459,11 @@ a[aria-selected='false'] {
     color: #4098FF;
 }
 
+/*새 코스 이름 input창*/
+.newCourseName {
+    margin-top: 30px;
+}
+
 /*메모*/
 .memo-container {
     background: #fff;
@@ -575,7 +580,7 @@ a[aria-selected='false'] {
     border: none;
     background-color: #ffffff;
     cursor: pointer;
-    margin-left: 230px;
+    margin-right: 10px;
     margin-bottom: 15px;
 }
 
@@ -704,50 +709,4 @@ a[aria-selected='false'] {
     width: 200px;
 }
 
-/*코스 삭제 확인 창*/
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-#deleteConfirmationDialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-#deleteConfirmationDialog button {
-    margin: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4098FF;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#deleteConfirmationDialog button#cancelDeleteButton {
-    background-color: #ccc;
-    border-radius: 5px;
-}
-
-#deleteConfirmationDialog p {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
 

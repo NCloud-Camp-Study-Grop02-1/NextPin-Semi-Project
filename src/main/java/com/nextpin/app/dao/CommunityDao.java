@@ -19,14 +19,14 @@ public class CommunityDao {
     }
 
     public List<CourseDto> getAllCourses() {
-        return mybatis.selectList("com.nextpin.app.dao.CommunityMapper.getAllCourses");
+        return mybatis.selectList("CommunityMapper.getAllCourses");
     }
 
     public List<CourseDetailDto> getCourseDetailsByCourseId(int courseId) {
-        return mybatis.selectList("com.nextpin.app.dao.CommunityMapper.getCourseDetailsByCourseId", courseId);
+        return mybatis.selectList("CommunityMapper.getCourseDetailsByCourseId", courseId);
     }
 
     public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds){
-        return mybatis.selectList("com.nextpin.app.dao.CommunityMapper.getCourseDetailByCourses", courseIds);
+        return mybatis.selectList("CommunityMapper.getCourseDetailByCourses", courseIds);
     }
 }

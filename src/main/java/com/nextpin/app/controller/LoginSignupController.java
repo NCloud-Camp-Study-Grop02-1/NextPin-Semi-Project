@@ -45,6 +45,8 @@ public class LoginSignupController {
 
         // 로그인 성공 시 세션에 사용자 정보 저장
         session.setAttribute("loginMember", loginMember);
+        session.setAttribute("userId", loginMember.getUserId());
+        session.setAttribute("nickname", loginMember.getNickname());
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/main");
@@ -105,6 +107,7 @@ public class LoginSignupController {
             response.put("isLoggedIn", false);
         } else {
             response.put("isLoggedIn", true);
+            response.put("userId", loginMember.getUserId()); // userId 추가
             response.put("nickname", loginMember.getNickname());
         }
         return ResponseEntity.ok(response);

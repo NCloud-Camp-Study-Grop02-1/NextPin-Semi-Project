@@ -21,6 +21,47 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 키워드로 장소를 검색합니다
 // searchPlaces();
 
+
+// 마커를 생성하고 지도에 표시하는 함수입니다
+function addMarker(position, title) {
+    var marker = new kakao.maps.Marker({
+        position: position,
+        map: map
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="padding:5px;z-index:1;">' + title + '</div>'
+        });
+        infowindow.open(map, marker);
+    });
+
+    markers.push(marker);
+    return marker;
+}
+
+// 모든 마커를 제거하는 함수입니다
+function removeMarker() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 클릭된 항목의 위치를 지도에 표시하고 마커를 추가하는 함수입니다
+function displayOnMap(x, y, title) {
+    console.log("displayOnMap 호출됨:", x, y, title);
+    var position = new kakao.maps.LatLng(x, y);
+    map.setCenter(position);
+    removeMarker(); // 기존 마커 제거
+    addMarker(position, title); // 새로운 마커 추가
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 초기화 로직 등 필요 시 추가
+});
+
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
@@ -83,35 +124,31 @@ function printResult(data) {
     console.log("print placeData : " + placeData);
 }
 
-// 검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places) {
-
-    var listEl = document.getElementById('placesList'),
-        menuEl = document.getElementById('menu_wrap'),
+function displayPlaces(places, category) {
+    var menuEl = document.getElementsByClassName('side-navbar')[0],
+        listEl = document.querySelector('.mypin-content.content ul'),
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = '';
 
-    // 검색 결과 목록에 추가된 항목들을 제거합니다
-    removeAllChildNods(listEl);
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (listEl.firstChild) {
+        listEl.removeChild(listEl.firstChild);
+    }
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
 
-    for ( var i=0; i<places.length; i++ ) {
-
+    for (var i = 0; i < places.length; i++) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-            marker = addMarker(placePosition, i),
+            marker = addMarker(placePosition, i, category),
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해 LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
 
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
+        // 마커와 검색결과 항목에 mouseover 했을때 해당 장소에 인포윈도우에 장소명을 표시합니다
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
@@ -121,11 +158,11 @@ function displayPlaces(places) {
                 infowindow.close();
             });
 
-            itemEl.onmouseover =  function () {
+            itemEl.onmouseover = function() {
                 displayInfowindow(marker, title);
             };
 
-            itemEl.onmouseout =  function () {
+            itemEl.onmouseout = function() {
                 infowindow.close();
             };
         })(marker, places[i].place_name);
@@ -139,6 +176,73 @@ function displayPlaces(places) {
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+    var el = document.createElement('li'),
+        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+            '<div class="info">' +
+            '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+            '   <span class="jibun gray">' + places.address_name + '</span>';
+    } else {
+        itemStr += '    <span>' + places.address_name + '</span>';
+    }
+
+    itemStr += '  <span class="tel">' + places.phone + '</span>' +
+        '</div>';
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 지도에 마커를 추가하는 함수입니다
+function addMarker(position, idx, category) {
+    let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
+    if (category === 'food') {
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if (category === 'cafe') {
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if (category === 'tour') {
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if (category === 'hotel') {
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
+
+    var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        new kakao.maps.Size(36, 37),
+        { offset: new kakao.maps.Point(13, 37) }
+    );
+
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: markerImage
+    });
+
+    marker.setMap(map);
+    markers.push(marker);
+    return marker;
+}
+
+// 지도에서 마커를 제거하는 함수입니다
+function removeMarker() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {
+    while (el.hasChildNodes()) {
+        el.removeChild(el.lastChild);
+    }
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
@@ -174,30 +278,36 @@ function getListItem(index, places) {
     return el;
 }
 
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-        marker = new kakao.maps.Marker({
-            position: position, // 마커의 위치
-            image: markerImage
-        });
+function addMarker(position, idx, category) {
+    let imageSrc = '../images/icons/food_map_icon.png'; // 기본 마커 이미지 url
+    if (category === 'food') {
+        imageSrc = '../images/icons/food_map_icon.png';
+    } else if (category === 'cafe') {
+        imageSrc = '../images/icons/cafe_map_icon.png';
+    } else if (category === 'tour') {
+        imageSrc = '../images/icons/tour_map_icon.png';
+    } else if (category === 'hotel') {
+        imageSrc = '../images/icons/hotel_map_icon.png';
+    }
 
-    marker.setMap(map); // 지도 위에 마커를 표출합니다
-    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+    var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        new kakao.maps.Size(36, 37),
+        {offset: new kakao.maps.Point(13, 37)}
+    );
 
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: markerImage
+    });
+
+    marker.setMap(map);
+    markers.push(marker);
     return marker;
 }
 
-// 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
-    for ( var i = 0; i < markers.length; i++ ) {
+    for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
     markers = [];
@@ -426,13 +536,13 @@ const cards = document.querySelectorAll('.card');
 const containers = document.querySelectorAll('.container');
 
 // 3. 각 .card 요소 내부의 모든 ul 태그 선택하기
-cards.forEach(card => {
-    const uls = card.querySelectorAll('ul');
-    // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
-    uls.forEach(ul => {
-        ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    });
-});
+// cards.forEach(card => {
+//     const uls = card.querySelectorAll('ul');
+//     // 4. 각 ul 태그에 랜덤으로 선택된 색상 적용하기
+//     uls.forEach(ul => {
+//         ul.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+//     });
+// });
 
 // 3-1. 각 .container 요소 내부의 모든 ul 태그 선택하기
 
@@ -968,6 +1078,12 @@ window.onclick = function(event) {
         });
     }
 };
+
+function showCourseDetail(index, obj, list) {
+    if(index == obj.id) {
+        //list로 마커 띄우기
+    }
+}
 
 
 

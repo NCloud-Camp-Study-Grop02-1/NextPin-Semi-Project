@@ -77,7 +77,18 @@
                         <!--                        <span id="hiddenValue" th:text="${rtnKaMapDto}" hidden></span>-->
                         <div class="panel_content" id="section_content">
                             <div class="storeDetail">
-                                <img class="search_result_image" src="../images/img/sample-home_img.png" alt="검색장소 이미지"  style="width: 90%;">
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'food'}">
+                                    <img class="search_result_image" th:src="'../images/img/food_big/food_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'cafe'}">
+                                    <img class="search_result_image" th:src="'../images/img/cafe_big/cafe_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'tour'}">
+                                    <img class="search_result_image" th:src="'../images/img/tour_big/tour_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'hotel'}">
+                                    <img class="search_result_image" th:src="'../images/img/hotel_big/hotel_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
                                 <div class="storeInfo">
                                     <div id="homeTitle">
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>
@@ -103,22 +114,20 @@
                                         <span class="street_number" id="streetNumber" th:text="${rtnKaMapDto.roadAddressName}"></span>
                                         <span class="location_time">
                                             <img class="icon_location" src="../images/icons/clock_icon.png" alt="시간">
-                                            <li id="businessHour" th:text="${rtnKaMapDto.businessHour}"></li>
-                                            <li id="breakTime"></li>
-                                        </span>
-                                        <span class="location_url">
-<!--                                            <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">-->
-                                            <!--                                            <a href="#" id="locationUrl"> www.nipongnaepong.co.kr</a>-->
+                                            <span id="businessHour" th:text="${rtnKaMapDto.businessHour}"></span>
                                         </span>
                                         <span class="location_phone" id="locationPhone">
                                             <img class="icon_location" src="../images/icons/phone_icon.png" alt="전화번호">
                                             <span th:text="${rtnKaMapDto.phone}"></span>
                                         </span>
-                                        <span class="location_tag">
-                                            <img class="icon_location" src="../images/icons/tag_icon.png" alt="태그">
-                                            <a href="#"> # 데이트코스</a>
-                                            <a href="#"> # 혼밥</a>
+                                        <span class="location_url">
+                                            <img class="icon_location" src="../images/icons/url_icon.png" alt="url주소">
+                                            <a id="placeUrl" th:href="${rtnKaMapDto.placeUrl}" th:text="${rtnKaMapDto.placeUrl}" target="_blank"></a>
+
                                         </span>
+                                        <span id="coordinateX" style="display: none" th:text="${rtnKaMapDto.x}"></span>
+                                        <span id="coordinateY" style="display: none" th:text="${rtnKaMapDto.y}"></span>
+                                        <span id="category" style="display: none" th:text="${rtnKaMapDto.categoryGroupCode}"></span>
                                     </div>
                                     <div id="reviewContents" style="display:none;">
                                         <span class="review_counts">
@@ -150,10 +159,6 @@
                                                             [(${eachReview.comment})]
                                                         </p>
                                                     </div>
-                                                    <div style="display: flex">
-                                                        <img class="review-image" src="../images/img/sample-review1_img.png" alt="리뷰이미지">
-                                                        <img class="review-image" src="../images/img/sample-review2_img.png" alt="리뷰이미지">
-                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -174,7 +179,6 @@
                                     <option value="myCourse2">압구정 로데오 핫플</option>
                                     <option value="myCourse3">성수 카페 투어</option>
                                 </select>
-                                <!--                                <input type="submit" value="Submit" />-->
                             </form>
                         </div>
                         <!--캘린더 날짜 선택-->
