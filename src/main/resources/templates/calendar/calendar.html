@@ -65,9 +65,9 @@
         </div>
         <div id="profile">
             <li class="menu">
-                <!-- 로그인으로 이동 -->
-                <a href="/login" class="link">
-                    <img src="../images/icons/profile_img.png" alt="기본 프로필 이미지">
+                <!-- 마이페이지로 이동 -->
+                <a href="/myPin" class="link">
+                    <img th:src="${user.profileURL}" alt="기본 프로필 이미지">
                 </a>
             </li>
         </div>

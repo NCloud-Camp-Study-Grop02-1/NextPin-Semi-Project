@@ -31,7 +31,6 @@
                color
             FROM COURSE
             WHERE userId = #{userId}
-              AND myPinBoolean = 1
     </select>
 
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->
@@ -60,10 +59,7 @@
         FROM LIKECOURSE LC
         JOIN COURSE C
           ON LC.courseId = C.courseId
-        JOIN COURSE_DETAIL CD
-          ON LC.courseId = CD.courseId
-        WHERE LC.userId = C.userId
-          AND LC.userId = #{userId}
+        WHERE LC.userId = #{userId}
     </select>
 
     <!--USER 테이블의 프로필 상태메시지, 프로필 사진 수정 기능-->
@@ -98,9 +94,9 @@
           AND course_detail_id = #{course_detail_id}
     </delete>
 
+
     <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
-    <!--BOOKMARK기능(북마크하면 관심있는 코스에서 빠지고 MYPIN에 들어가게끔-->
-    <update id="editBookMark" parameterType="courseAndDetailDto">
+    <update id="editBookMark" parameterType="CourseDto">
         UPDATE COURSE
             SET courseNAME = #{courseName},
                 color = #{color},
@@ -108,17 +104,8 @@
                 bookMark = 1,
                 myPinBoolean = 1,
                 likeBoolean = 0,
-                visitDate = #{visitDate}
+                modifyDate = #{modifyDate}
             WHERE userId = #{userId}
               AND courseId = #{courseId};
-
-        UPDATE COURSE_DETAIL
-            SET location = location,
-                x = x,
-                y = y,
-                day = day
-            WHERE userId = #{userId}
-              AND courseId = #{courseId}
-              AND course_detail_id = #{course_detail_id};
     </update>
 </mapper>

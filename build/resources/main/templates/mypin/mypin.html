@@ -52,7 +52,7 @@
         <span>랜덤핀</span>
     </a>
     <a href="/myPin" class="sidebar-profile">
-        <img src="../images/icons/mypage_icon.png" alt="Profile">
+        <img th:src="${user.profileURL}" alt="Profile">
     </a>
 </nav>
 
@@ -60,7 +60,7 @@
 <div class="side-navbar">
     <!--프로필-->
     <div class="profile">
-        <img id="profile-img" src="[(${user.profileURL})]" alt="Profile Picture">
+        <img id="profile-img" th:src="${user.profileURL}" alt="Profile Picture">
         <div class="profile-container">
             <p class="profile-name">[(${user.nickname})]</p>
             <p class="profile-content">
@@ -138,39 +138,28 @@
                         <div class="card card-body">
                             <!--여기에서 기존의 userCourseStat.index값은 courseId값이 같은것의 개수를 가져옴-->
                             <!--userCourseStat.index값이 courseId값이 같은것 + visitDate값이 같은 것의 개수를 가져와야됨-->
-                            <ul th:each="detail, userCourseStat : ${userCourse.courseDetail}"
-                                th:if= "(${userCourseStat.index}+1) % ${detail.visitDateCount} == 0"
-                                th:style="'background-color:' + ${userCourse.course.color}">
-                                <script>
-                                    // Assign the values to JavaScript variables
-                                    var userCourseStatIndex = /*[[${userCourseStat.index}]]*/ 'undefined';
-                                    var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
-
-                                    // 아래와 같이 ul태그의 th:if문이 실행될때마다 ${userCourseStat.index}값을 0으로 초기화하는 조건이 필요함
-                                    // if ((userCourseStatIndex + 1) % visitDateCount == 0) {
-                                    //     userCourseStatIndex = 0; // Reset the index to 0
-                                    // }
-
-                                    // Print to console
-                                    console.log('userCourseStat.index:', userCourseStatIndex);
-                                    console.log('visitDateCount:', visitDateCount);
-                                </script>
-                                <div class="course-day-box"
-                                     th:id="${userCourseStat.index}"
-                                     th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]], [[${detail.visitOrder}]])">
-                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
-                                    <p class="course-day" th:text="${detail.visitDate}"></p>
-                                    <a class="course-day-link" href="/calendar">상세보기</a>
-                                </div>
-                                <li th:each="detailDay : ${userCourse.courseDetail}"
-                                    th:if="${detailDay.day == detail.day} and ${detailDay.courseId == userCourse.course.courseId}">
-                                    <div>
-                                        <span th:text="${detailDay.location}"></span>
-                                        <img class="delete-icon" src="images/icons/delete_icon1.png"
-                                             onclick="deleteCourseDetail(this)" alt="삭제아이콘">
+                            <th:block th:each="detail2, userCourseStat : ${userCourse.courseDetail}">
+                                <ul th:if="${userCourseStat.index == 0 || (userCourseStat.index != 0 && detail2.visitOrder != userCourse.courseDetail[userCourseStat.index - 1].visitOrder)}"
+                                    th:style="'background-color:' + ${userCourse.course.color}">
+    <!--                                th:if= "(${userCourseStat.index}+1) % ${detail.visitDateCount} == 0"-->
+                                    <div class="course-day-box"
+                                         th:id="${userCourseStat.index}"
+                                         th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]], [[${detail2.visitOrder}]])">
+                                        <p class="course-day-label" th:text="${detail2.visitOrder + '일차'}"></p>
+                                        <p class="course-day" th:text="${detail2.visitDate}"></p>
+                                        <a class="course-day-link" href="/calendar">상세보기</a>
                                     </div>
-                                </li>
-                            </ul>
+                                    <li th:each="detailDay : ${userCourse.courseDetail}"
+                                        th:if="${detailDay.visitOrder == detail2.visitOrder} and ${detailDay.courseId == userCourse.course.courseId}"
+                                        th:data-course-detail-id="${detailDay.courseDetailId}">
+                                        <div>
+                                            <span th:text="${detailDay.location}"></span>
+                                            <img class="delete-icon" src="images/icons/delete_icon1.png"
+                                                 onclick="deleteCourseDetail(this)" alt="삭제아이콘">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </th:block>
                         </div>
                     </div>
                 </li>
@@ -196,7 +185,7 @@
                                th:data-bs-target="'#collapseExample' + ${likedCourse.course.courseId}"
                                th:aria-controls="'#collapseExample' + ${likedCourse.course.courseId}"
                                th:value="${likedCourse.course.courseName}">
-                        <img src="images/icons/save-before-icon.png" alt="Edit Icon" class="mypin-edit-icon" style="width: 20px; height: 20px" onclick='toggleSaveState(this)'>
+<!--                        <img src="images/icons/save-before-icon.png" alt="Edit Icon" class="mypin-edit-icon" style="width: 20px; height: 20px" onclick='toggleSaveState(this)'>-->
                     </div>
                     <!-- 캘린더 팝업 -->
                     <div class="calendar-container" id="calendar-container">
@@ -213,30 +202,31 @@
                     </div>
                     <div class="collapse" th:id="'collapseExample' + ${likedCourse.course.courseId}">
                         <div class="card card-body">
-                            <ul th:each="detail, likedCourseStat: ${likedCourse.courseDetail}"
-                                th:if= "(${likedCourseStat.index} + 1) / ${detail.visitDateCount} == 1"
-                                th:style="'background-color:' + ${likedCourse.course.color}">
-                                <script>
-                                    // Assign the values to JavaScript variables
-                                    var likedCourseStat = /*[[${likedCourseStat.index}]]*/ 'undefined';
-                                    var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
+                            <th:block th:each="detail, likedCourseStat : ${likedCourse.courseDetail}">
+                                <ul th:if="${likedCourseStat.index == 0 || (likedCourseStat.index != 0 && detail.day != likedCourse.courseDetail[likedCourseStat.index - 1].day)}"
+                                    th:style="'background-color:' + ${likedCourse.course.color}">
+                                    <script>
+                                        // Assign the values to JavaScript variables
+                                        var likedCourseStat = /*[[${likedCourseStat.index}]]*/ 'undefined';
+                                        var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
 
-                                    // Print to console
-                                    console.log('userCourseStat.index:', userCourseStat);
-                                    console.log('visitDateCount:', visitDateCount);
-                                </script>
-                                <div class="course-day-box" title="지도에서 코스보기">
-                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
-                                    <p class="course-day" th:text="${detail.visitDate}"></p>
-                                    <a class="course-day-link" href="/calendar">상세보기</a>
-                                </div>
-                                <li th:each="detailDay : ${likedCourse.courseDetail}"
-                                    th:if="${detailDay.day == detail.day} and ${detailDay.courseId == likedCourse.course.courseId}">
-                                    <div>
-                                        <span th:text="${detailDay.location}"></span>
+                                        // Print to console
+                                        console.log('userCourseStat.index:', userCourseStat);
+                                        console.log('visitDateCount:', visitDateCount);
+                                    </script>
+                                    <div class="course-day-box" title="지도에서 코스보기">
+                                        <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
+                                        <p class="course-day" th:text="${detail.visitDate}"></p>
+                                        <a class="course-day-link" href="/calendar">상세보기</a>
                                     </div>
-                                </li>
-                            </ul>
+                                    <li th:each="detailDay : ${likedCourse.courseDetail}"
+                                        th:if="${detailDay.day == detail.day} and ${detailDay.courseId == likedCourse.course.courseId}">
+                                        <div>
+                                            <span th:text="${detailDay.location}"></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </th:block>
                         </div>
                     </div>
                 </li>

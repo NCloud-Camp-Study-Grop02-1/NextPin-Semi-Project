@@ -23,4 +23,5 @@ public class CourseDetailDto {
         private String message;
         private Long visitDateCount;
         private int visitOrder;
+        private String color;
 }

@@ -23,7 +23,7 @@ public interface MyPinService {
     void editUserCourse2(CourseDto courseDto);
     void editUserCourse3(CourseDto courseDto);
 
-    void editUserBookMark(CourseAndDetailDto courseAndDetailDto);
+    void editUserBookMark(Map<String, Object> map);
 
     void deleteUserCourse(CourseDto courseDto);
     void deleteUserCourseDetail(CourseDetailDto courseDetailDto);
