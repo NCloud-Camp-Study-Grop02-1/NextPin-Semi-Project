@@ -12,6 +12,7 @@ import com.nextpin.app.service.CourseService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -195,6 +196,53 @@ public class CourseController {
 
         courseHomeReview2Service.saveCourseDetail(courseDto, courseDetailDtoList);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/userCourseTitle")
+    public ResponseEntity<List<CourseDto>> getUserCourses(HttpSession session) {
+        try {
+            MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+            if (loginMember == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            List<CourseDto> userCourses = courseService.getUserCourses(loginMember.getUserId());
+            return ResponseEntity.ok(userCourses);
+        } catch (Exception e) {
+            System.out.println("================================================");
+            System.out.println(e.getMessage());
+            e.printStackTrace(); // 에러 로그 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("courseDetail")
+    public ResponseEntity<List<Map<String, Object>>> getCourseDetail(HttpSession session) {
+        try {
+            MemberDto loginMember = (MemberDto) session.getAttribute("loginMember");
+
+            if (loginMember == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+
+            List<Map<String, Object>> courseDetail = courseService.findCourseDetail(loginMember.getUserId());
+            return ResponseEntity.ok(courseDetail);
+        } catch (Exception e) {
+            e.printStackTrace(); // 에러 로그 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+    }
+
+    @PostMapping("/updateMemo")
+    public ResponseEntity<String> updateMemo(@RequestBody CourseDetailDto courseDetailDto) {
+        try{
+            courseService.updateMemo(courseDetailDto);
+            return ResponseEntity.ok("메모가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메모 업데이트 중 오류가 발생했습니다.");
+        }
     }
 }
 

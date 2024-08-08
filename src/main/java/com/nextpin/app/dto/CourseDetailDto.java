@@ -11,6 +11,7 @@ import java.util.Date;
 @ToString
 public class CourseDetailDto {
         private int courseId;
+        private int courseDetailId;
         private String location;
         private double x;
         private double y;
