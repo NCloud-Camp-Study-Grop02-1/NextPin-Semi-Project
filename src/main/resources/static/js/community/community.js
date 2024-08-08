@@ -76,15 +76,10 @@ function getListItem(index, places) {
 }
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-        imgOptions =  {
-            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+function addMarker(position) {
+    var imageSrc = '../images/icons/course_icon.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    let imageSize = new kakao.maps.Size(32, 40),  // 마커 이미지의 크기
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize),
         marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage
@@ -288,6 +283,58 @@ function updateLikeStatus(courseId, userId, isLiked, increment) {
 //     }
 // }
 
+var paths = [];
+// 코스명 선택 시 핀 꽂는 기능
+function drawPinCourse(courseData){
+    // console.log(courseData);
+    let courseId = '',
+        bounds = new kakao.maps.LatLngBounds();
+    if(undefined !== courseData){
+        courseId = courseData[0].courseId;
+    }
+
+    // for(let i =0; i < courseData.length; i++){
+    //     console.log(i + " : " + JSON.stringify(courseData[i]));
+    // }
+    removeMarker();
+
+    for(let i = 0; i < courseData.length; i++){
+
+        var placePosition = new kakao.maps.LatLng(courseData[i].y, courseData[i].x),
+            marker = addMarker(placePosition, i),
+            itemEl = getListItem(i, courseData[i]);
+
+        paths.push(placePosition);
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, courseData[i].location);
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+    }
+
+}
 window.onload = function(){
     $.ajax({
         url: '/info',
@@ -302,6 +349,7 @@ window.onload = function(){
                 console.log("User ID: ", userId);
                 console.log("Nickname: ", nickname);
             } else {
+                location.href = '/login';
                 alert("로그인이 필요합니다.");
             }
         },
@@ -319,10 +367,12 @@ window.onload = function(){
 
         if(isExpand) {
             $('.sidebar-toggle img').css({'transform': 'rotate(180deg)'});
+            sidebarToggle.css({'margin-left': '1rem'});
             return;
         }
 
         $('.sidebar-toggle img').css({'transform': 'rotate(0deg)'});
+        sidebarToggle.css({'margin-left': '0'});
         // sidebarContainer.classList.toggle('open');
         // sidebarArrowContainer.classList.toggle('open');
     });
