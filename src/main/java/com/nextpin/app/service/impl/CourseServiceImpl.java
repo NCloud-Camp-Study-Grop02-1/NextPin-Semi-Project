@@ -4,8 +4,11 @@ import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextpin.app.dao.CourseDao;
+import com.nextpin.app.dto.CourseDetailDto;
+import com.nextpin.app.dto.CourseDto;
 import com.nextpin.app.dto.Criteria;
 import com.nextpin.app.dto.KakaoMapDto;
+import com.nextpin.app.mapper.CourseMapper;
 import com.nextpin.app.service.CourseService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,14 @@ import java.util.Map;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    private final CourseMapper courseMapper;
     private Logger logger = (Logger) LoggerFactory.getLogger(CourseServiceImpl.class);
     private CourseDao courseDao;
 
     @Autowired
-    public CourseServiceImpl(CourseDao courseDao) {
+    public CourseServiceImpl(CourseDao courseDao, CourseMapper courseMapper) {
         this.courseDao = courseDao;
+        this.courseMapper = courseMapper;
     }
 
     @Override
@@ -96,5 +101,20 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int getPinDatasCnt(HashMap<String, String> searchKeywords) {
         return courseDao.getPinDatasCnt(searchKeywords);
+    }
+
+    @Override
+    public List<CourseDto> getUserCourses(String userId) {
+        return courseMapper.findCourseByUserId(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> findCourseDetail(String userId) {
+        return courseMapper.findCourseDetail(userId);
+    }
+
+    @Override
+    public void updateMemo(CourseDetailDto courseDetailDto) {
+        courseMapper.updateMemo(courseDetailDto);
     }
 }
