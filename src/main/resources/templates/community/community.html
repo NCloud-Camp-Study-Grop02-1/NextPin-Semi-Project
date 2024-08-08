@@ -68,7 +68,7 @@
                     <h1>코스별 랭킹 순위</h1>
                     <div class="search-bar">
                         <div class="search-container">
-                            <input type="text" placeholder="검색어를 입력하세요" class="search-input">
+                            <input type="text" placeholder="검색어를 입력하세요" class="search-input" id="searchInput">
                             <!--검색 버튼: 돋보기.svg-->
                             <button class="search-button">
                                 <img src="../images/icons/Search-blue_icon.png" alt="검색">
@@ -80,50 +80,48 @@
                 <!--유저들의 코스 랭킹-->
                 <div class="ranking">
                     <ul>
-                        <li th:each="map, stat : ${courseListMap}">
-                            <div th:if="${map != null}">
-                                <div th:each="entry : ${map.entrySet()}">
-                                    <div th:if="${entry != null}">
-                                        <div class="ranking-item" th:data-course-id="${entry.key.courseId}">
-                                            <div class="ranking-number">[(${stat.index + 1})]</div>
-                                            <button class="profilePicture" onclick="goToProfile(this)">
-                                                <img th:src="'../images/img/profile/profile' + ${entry.key.courseId % 10} + '.png'" alt="프로필">
-                                                <span>[(${entry.key.nickname})]</span>
-                                            </button>
-                                            <input type="button" class="course-button" data-bs-toggle="collapse"
-                                                   th:onclick="drawPinCourse([[${entry.value}]])"
-                                                   th:data-bs-target="'#collapseExample' + ${entry.key.courseId}"
-                                                   th:aria-controls="'collapseExample' + ${entry.key.courseId}"
-                                                   th:style="${'background-color:' + entry.key.color}"
-                                                   th:value="${entry.key.courseName}">
-                                            <button class="heart-button" onclick="toggleHeart(this)">
-                                                <img src="../images/icons/heart-before_icon.png" alt="Heart">
-                                                <span>[(${entry.key.heartCnt})]</span>
-                                            </button>
-                                        </div>
-                                        <div class="collapse" th:id="'collapseExample' + ${entry.key.courseId}">
-                                            <div class="card card-body">
-                                                    <th:block th:each="detail, detailIdx: ${entry.value}"
-                                                              th:if="${detailIdx.index == 0 or (detailIdx.index > 0 and detail.visitDate != entry.value[detailIdx.index - 1].visitDate)}">
-                                                    <ul>
-                                                        <div class="course-day-box">
-                                                            <p class="course-day-label" th:text="${(detail.day == null or detail.day == 'null' or detail.day == 0) ? (detailIdx.index + 1) + '일차' : detail.day + '일차'}"></p>
-                                                            <p class="course-day" th:text="${#dates.format(detail.visitDate, 'yyyy-MM-dd')}"></p>
-                                                            <a class="course-day-link" href="/calendar">상세보기</a>
-                                                        </div>
-                                                        <li th:each="inDetail, inDetailIdx: ${entry.value}"
-                                                            th:if="${detail.visitDate == inDetail.visitDate}">
-                                                            <div>
-                                                                <span th:text="${inDetail.location}"></span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                    </th:block>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <li th:each="map, stat : ${courseListMap}"
+                            th:if="${map != null}">
+                            <th:block th:each="entry : ${map.entrySet()}"
+                                      th:if="${entry != null}">
+                            <div class="ranking-item" th:data-course-id="${entry.key.courseId}">
+                                <div class="ranking-number">[(${entry.key.courseRank})]</div>
+                                <button class="profilePicture" onclick="goToProfile(this)">
+                                    <img th:src="'../images/img/profile/profile' + ${entry.key.courseId % 10} + '.png'" alt="프로필">
+                                    <span>[(${entry.key.nickname})]</span>
+                                </button>
+                                <input type="button" class="course-button" data-bs-toggle="collapse"
+                                    th:onclick="drawPinCourse([[${entry.value}]])"
+                                    th:data-bs-target="'#collapseExample' + ${entry.key.courseId}"
+                                    th:aria-controls="'collapseExample' + ${entry.key.courseId}"
+                                    th:style="${'background-color:' + entry.key.color}"
+                                    th:value="${entry.key.courseName}">
+                                <button class="heart-button" onclick="toggleHeart(this)">
+                                    <img src="../images/icons/heart-before_icon.png" alt="Heart">
+                                    <span>[(${entry.key.heartCnt})]</span>
+                                </button>
                             </div>
+                            <div class="collapse" th:id="'collapseExample' + ${entry.key.courseId}">
+                                <div class="card card-body">
+                                    <th:block th:each="detail, detailIdx: ${entry.value}"
+                                              th:if="${detailIdx.index == 0 or (detailIdx.index > 0 and detail.visitDate != entry.value[detailIdx.index - 1].visitDate)}">
+                                    <ul>
+                                        <div class="course-day-box">
+                                            <p class="course-day-label" th:text="${(detail.day == null or detail.day == 'null' or detail.day == 0) ? (detailIdx.index + 1) + '일차' : detail.day + '일차'}"></p>
+                                            <p class="course-day" th:text="${#dates.format(detail.visitDate, 'yyyy-MM-dd')}"></p>
+                                            <a class="course-day-link" href="/calendar">상세보기</a>
+                                        </div>
+                                        <li th:each="inDetail, inDetailIdx: ${entry.value}"
+                                            th:if="${detail.visitDate == inDetail.visitDate}">
+                                            <div>
+                                                <span th:text="${inDetail.location}"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    </th:block>
+                                 </div>
+                            </div>
+                            </th:block>
                         </li>
                     </ul>
                 </div>
