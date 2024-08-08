@@ -31,16 +31,11 @@ public class CommunityServiceImpl implements CommunityService {
         return communityDao.getAllCourses();
     }
 
-    @Override
-    public List<CourseDetailDto> getCourseDetailsByCourseId(int courseId) {
-        return communityDao.getCourseDetailsByCourseId(courseId);
-    }
-
     public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds) {
         return communityDao.getCourseDetailByCourses(courseIds);
     }
 
-    public List<Map<CourseDto, List<CourseDetailDto>>> getCourseListMap(){
+    public List<Map<CourseDto, List<CourseDetailDto>>> getCourseListMapData(){
         /*
          * -- 변경 전
          * [ {cousrId1, cousrId2, cousrId3, ...}, {detailCourse1, detailCourse2, detailCourse3, ...}]
@@ -80,7 +75,21 @@ public class CommunityServiceImpl implements CommunityService {
             }
             courseDataList.add(tempMap);
         }
+        //        logger.debug("courseDetailList : " + courseDetailList.toString());
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // String jsonCourseDetailList = "";
 
+        // try {
+        //     jsonCourseDetailList = objectMapper.writerWithDefaultPrettyPrinter()
+        //             .writeValueAsString(courseDetailList);
+        // } catch (JsonProcessingException je) {
+        //     System.out.println(je.getMessage());
+        // }
+
+        // logger.debug("jsonCourseDetailList : " + jsonCourseDetailList);
+        // Map<String, Object> courseMap = new HashMap<>();
+        // courseMap.put("courseList", courseList);
+        // courseMap.put("courseDetailList", jsonCourseDetailList);
 
         return courseDataList;
     }

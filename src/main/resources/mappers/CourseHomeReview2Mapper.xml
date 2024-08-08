@@ -20,25 +20,36 @@
     <!-- 코스 상세 정보 삽입 -->
     <insert id="insertCourseDetail" parameterType="com.nextpin.app.dto.CourseDetailDto">
         INSERT INTO course_detail (courseId, location, x, y, visitDate, memo, userId)
-        VALUES (#{courseId}, #{location}, #{x}, #{y}, #{visitDate}, #{memo}, #{userId})
+        VALUES (
+                   #{courseId},
+                   #{location},
+                   #{x},
+                   #{y},
+                   #{visitDate},
+                   #{memo},
+                   #{userId}
+               )
     </insert>
 
-    <!-- 코스 색상 및 수정 날짜 업데이트 -->
     <update id="updateCourseColorAndModifyDate" parameterType="map">
         UPDATE course
-        SET color = #{color}, modifyDate = NOW()
+        SET color = #{color}, modifyDate = now()
         WHERE courseId = #{courseId}
     </update>
 
-    <!-- 코스 상세 정보 가져오기 -->
-    <select id="getCourseDetails" resultType="com.nextpin.app.dto.CourseDetailDto" parameterType="int">
+    <select id="getCourseDetails" parameterType="int" resultType="courseDetailDto">
         SELECT *
         FROM course_detail
         WHERE courseId = #{courseId}
     </select>
 
-    <!-- 중복 코스 상세 정보 확인 -->
-    <select id="isDuplicateCourseDetail" resultType="boolean" parameterType="map">
+    <select id="getCoordinatesByLocation" parameterType="string" resultType="map">
+        SELECT x, y
+        FROM course_detail
+        WHERE location = #{location}
+    </select>
+
+    <select id="isDuplicateCourseDetail" parameterType="map" resultType="boolean">
         SELECT COUNT(*) > 0
         FROM course_detail
         WHERE courseId = #{courseId} AND location = #{location}

@@ -97,7 +97,7 @@
         <!--mypin내용-->
         <div class="mypin-content content">
             <ul>
-                <li th:each="userCourse, userCourseStat : ${userCourseList}">
+                <li th:each="userCourse : ${userCourseList}">
                     <!-- 요소들을 한 줄에 배치하기 위한 inner-container -->
                     <div class="inner-container">
                         <!-- 자물쇠 아이콘 -->
@@ -110,8 +110,7 @@
                             <input type="button" class="pin-description user-course" data-bs-toggle="collapse"
                                    th:data-bs-target="'#collapseExample' + ${userCourse.course.courseId}"
                                    th:aria-controls="'collapseExample' + ${userCourse.course.courseId}"
-                                   th:value="${userCourse.course.courseName}" th:id="${userCourseStat.index}"
-                                   th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]])">
+                                   th:value="${userCourse.course.courseName}">
                             <textarea class="pin-textarea" rows="2" style="display: none"></textarea>
                             <!--미트볼 버튼-->
                             <div class="mypin-edit-icon meatball-btn">
@@ -124,6 +123,7 @@
                                 <button class="popover-item" onclick="toggleVisibility(this)">공개여부</button>
                                 <button class="popover-item" onclick="editColor(this)">컬러편집</button>
                                 <button class="popover-item popover-item-nameEdit" onclick="editDescription(this)">이름편집</button>
+                                <button class="popover-item" onclick="deleteCourse(this)">코스삭제</button>
                             </div>
                         </div>
                         <!--하트 이모지와 하트 개수-->
@@ -134,148 +134,47 @@
                     </div>
                     <!--각 목록의 세부(콜랩스) 내용-->
                     <div class="collapse" th:id="'collapseExample' + ${userCourse.course.courseId}">
-                        <div class="card card-body" th:style="'background-color:' + ${userCourse.course.color}">
-                            <div th:each="detail, iterStat : ${userCourse.courseDetail}">
-                                <div th:if="${iterStat.index == 0 || userCourse.courseDetail[iterStat.index - 1].day != detail.day}">
-                                    <div class="course-day-box">
-                                        <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
-                                        <p class="course-day" th:text="${detail.visitDate}"></p>
-                                        <a class="course-day-link" href="/calendar">상세보기</a>
-                                    </div>
+                        <!--card,card-body: 부트스트랩에서 미리 정의된 스타일. 카드의 레이아웃, 배경색, 테두리 등이 미리 정의되어 있음.-->
+                        <div class="card card-body">
+                            <!--여기에서 기존의 userCourseStat.index값은 courseId값이 같은것의 개수를 가져옴-->
+                            <!--userCourseStat.index값이 courseId값이 같은것 + visitDate값이 같은 것의 개수를 가져와야됨-->
+                            <ul th:each="detail, userCourseStat : ${userCourse.courseDetail}"
+                                th:if= "(${userCourseStat.index}+1) % ${detail.visitDateCount} == 0"
+                                th:style="'background-color:' + ${userCourse.course.color}">
+                                <script>
+                                    // Assign the values to JavaScript variables
+                                    var userCourseStatIndex = /*[[${userCourseStat.index}]]*/ 'undefined';
+                                    var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
+
+                                    // 아래와 같이 ul태그의 th:if문이 실행될때마다 ${userCourseStat.index}값을 0으로 초기화하는 조건이 필요함
+                                    // if ((userCourseStatIndex + 1) % visitDateCount == 0) {
+                                    //     userCourseStatIndex = 0; // Reset the index to 0
+                                    // }
+
+                                    // Print to console
+                                    console.log('userCourseStat.index:', userCourseStatIndex);
+                                    console.log('visitDateCount:', visitDateCount);
+                                </script>
+                                <div class="course-day-box"
+                                     th:id="${userCourseStat.index}"
+                                     th:onclick="showCourseDetail([[${userCourseStat.index}]], this, [[${userCourse.courseDetail}]], [[${detail.visitOrder}]])">
+                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
+                                    <p class="course-day" th:text="${detail.visitDate}"></p>
+                                    <a class="course-day-link" href="/calendar">상세보기</a>
                                 </div>
-                                <!-- 추가된 ul 요소에 th:style 속성 적용 -->
-                                <ul th:style="'background-color:' + ${userCourse.course.color}">
-                                    <li class="course-detail-item" th:style="'background-color:' + ${userCourse.course.color}">
-                                        <span th:text="${detail.location}"></span>
-                                        <img class="delete-icon" src="images/icons/delete_icon1.png" alt="삭제아이콘">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!--각 목록의 세부(콜랩스) 내용-->
-                        <div class="collapse" th:id="'collapseExample' + ${userCourse.courseId}">
-                            <!--card,card-body: 부트스트랩에서 미리 정의된 스타일. 카드의 레이아웃, 배경색, 테두리 등이 미리 정의되어 있음.-->
-                            <div class="card card-body">
-                                <ul th:each="detail, iterStat : ${userCourseDetailList}"
-                                    th:if="${detail.courseId == userCourse.courseId} and (${(iterStat.index + 1) % (userCourseList.size())} == 0)">
-                                    <!--여기에서 userCourseList.size()가 계속 처음 courseId에 대한 것만 계산함-->
-                                    <!--and (${(iterStat.index + 1) % (userCourseList.size())} == 0)"-->
-                                    <script>
-                                        // Assign the values to JavaScript variables
-                                        var iterIndex = /*[[${iterStat.index}]]*/ 'undefined';
-                                        var listSize = /*[[${userCourseList.size()}]]*/ 'undefined';
-
-                                        // Print to console
-                                        console.log('iterStat.index:', iterIndex);
-                                        console.log('userCourseDetailList.size:', listSize);
-                                    </script>
-                                    <div class="course-day-box">
-                                        <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
-                                        <p class="course-day" th:text="${detail.visitDate}"></p>
-                                        <a class="course-day-link" href="/calendar">상세보기</a>
+                                <li th:each="detailDay : ${userCourse.courseDetail}"
+                                    th:if="${detailDay.day == detail.day} and ${detailDay.courseId == userCourse.course.courseId}">
+                                    <div>
+                                        <span th:text="${detailDay.location}"></span>
+                                        <img class="delete-icon" src="images/icons/delete_icon1.png"
+                                             onclick="deleteCourseDetail(this)" alt="삭제아이콘">
                                     </div>
-                                    <li th:each="detailDay : ${userCourseDetailList}"
-                                        th:if="${detailDay.visitDate == detail.visitDate} and ${detailDay.courseId == userCourse.courseId}">
-                                        <div>
-                                            <span th:text="${detailDay.location}"></span>
-<!--                                            <img class="pin-icon" src="images/icons/course_icon.png" alt="핀아이콘">-->
-                                            <img class="delete-icon" src="images/icons/delete_icon1.png"
-                                                 onclick="deleteCourse(this)" alt="삭제아이콘">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                                </li>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!--구분선-->
-        <div class="division-line"></div>
-
-        <!--관심있는 코스-->
-        <div class="nav-like box">
-            <img class="content-title-icon" src="images/icons/heart-after_icon.png" alt="하트 아이콘">
-            <p class="content-title">관심있는 코스</p>
-            <p class="mypin-num" th:text="${userLikeCourseList.size()}">1</p>
-            <!--관심있는 코스 내용-->
-            <div class="like-content content">
-                <ul>
-                    <li th:each="likedCourse : ${userLikeCourseList}">
-                        <div class="container" th:data-course-id="${likedCourse.courseId}">
-                            <input type="button" class="edit-name" data-bs-toggle="collapse"
-                                   th:data-bs-target="'#collapseExample' + ${likedCourse.courseId}"
-                                   th:aria-controls="'#collapseExample' + ${likedCourse.courseId}"
-                                   th:value="${likedCourse.courseName}">
-                            <img src="images/icons/save-before-icon.png" alt="Edit Icon" class="mypin-edit-icon" style="width: 20px; height: 20px" onclick='toggleSaveState(this)'>
-                        </div>
-                        <!-- 캘린더 팝업 -->
-                        <div class="calendar-container" id="calendar-container">
-                            <p class="cal-message">캘린더에 저장할 시작 날짜를 선택해주세요.</p>
-                            <input type="date" id="calendar">
-                            <button id="save-date-button">저장</button>
-                        </div>
-
-                        <!-- 모달 -->
-                        <div class="modal-overlay" id="modal-overlay"></div>
-                        <div class="modal" id="calendar-modal">
-                            <p id="modal-message">캘린더에 저장되었습니다</p>
-                            <button id="close-modal-button">닫기</button>
-                        </div>
-                        <div class="collapse" th:id="'collapseExample' + ${likedCourse.courseId}">
-                            <div class="card card-body">
-                                <ul th:each="detail : ${userCourseDetailList}"
-                                    th:if="${detail.courseId == likedCourse.courseId}">
-                                    <div class="course-day-box">
-                                        <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
-                                        <p class="course-day" th:text="${detail.visitDate}"></p>
-                                        <a class="course-day-link" href="/calendar">상세보기</a>
-                                    </div>
-                                    <li th:each="detailDay : ${userCourseDetailList}"
-                                        th:if="${detailDay.day == detail.day} and ${detailDay.courseId == likedCourse.courseId}">
-                                        <div>
-                                            <span th:text="${detailDay.location}"></span>
-<!--                                            <img class="pin-icon" src="images/icons/course_icon.png" alt="pin아이콘">-->
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!--구분선-->
-        <div class="division-line"></div>
-
-        <!--설정-->
-        <div class="settings">
-            <a href="#" id="openModalLink">회원 탈퇴</a>
-        </div>
-    </div>
-    <!--사이드 네브바 열고 닫는 기능-->
-    <div class="sidebar-arrow-container">
-        <div class="sidebar-toggle">
-            <img class="arrow-icon" src="../images/icons/backButton-B_icon.png" alt="toggle icon">
-        </div>
-    </div>
-    <!--지도-->
-    <div class="map_wrap">
-        <div id="map" style="width:300%; height:100vh; position:relative; overflow: hidden"></div>
-    </div>
-    <script src="js/mypin/mypin.js"></script>
-
-
-    <!-- 공개 여부 모달 -->
-    <div id="visibilityModalContainer" class="modal">
-        <div class="modal-content">
-            <span class="close-visibility-modal-btn">&times;</span>
-            <p class="modal-title">공개 여부 변경</p>
-            <p class="modal-subtitle">해당 코스가 비공개 처리 되었습니다.</p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -292,11 +191,11 @@
         <div class="like-content content">
             <ul>
                 <li th:each="likedCourse : ${userLikeCourseList}">
-                    <div class="container" th:data-course-id="${likedCourse.courseId}">
+                    <div class="container" th:data-course-id="${likedCourse.course.courseId}">
                         <input type="button" class="edit-name" data-bs-toggle="collapse"
-                               th:data-bs-target="'#collapseExample' + ${likedCourse.courseId}"
-                               th:aria-controls="'#collapseExample' + ${likedCourse.courseId}"
-                               th:value="${likedCourse.courseName}">
+                               th:data-bs-target="'#collapseExample' + ${likedCourse.course.courseId}"
+                               th:aria-controls="'#collapseExample' + ${likedCourse.course.courseId}"
+                               th:value="${likedCourse.course.courseName}">
                         <img src="images/icons/save-before-icon.png" alt="Edit Icon" class="mypin-edit-icon" style="width: 20px; height: 20px" onclick='toggleSaveState(this)'>
                     </div>
                     <!-- 캘린더 팝업 -->
@@ -312,20 +211,29 @@
                         <p id="modal-message">캘린더에 저장되었습니다</p>
                         <button id="close-modal-button">닫기</button>
                     </div>
-                    <div class="collapse" th:id="'collapseExample' + ${likedCourse.courseId}">
+                    <div class="collapse" th:id="'collapseExample' + ${likedCourse.course.courseId}">
                         <div class="card card-body">
-                            <ul th:each="detail : ${userCourseDetailList}"
-                                th:if="${detail.courseId == likedCourse.courseId}">
-                                <div class="course-day-box">
-                                    <p class="course-day-label" th:text="${detail.day + '일차'}"></p>
+                            <ul th:each="detail, likedCourseStat: ${likedCourse.courseDetail}"
+                                th:if= "(${likedCourseStat.index} + 1) / ${detail.visitDateCount} == 1"
+                                th:style="'background-color:' + ${likedCourse.course.color}">
+                                <script>
+                                    // Assign the values to JavaScript variables
+                                    var likedCourseStat = /*[[${likedCourseStat.index}]]*/ 'undefined';
+                                    var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
+
+                                    // Print to console
+                                    console.log('userCourseStat.index:', userCourseStat);
+                                    console.log('visitDateCount:', visitDateCount);
+                                </script>
+                                <div class="course-day-box" title="지도에서 코스보기">
+                                    <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
                                     <p class="course-day" th:text="${detail.visitDate}"></p>
                                     <a class="course-day-link" href="/calendar">상세보기</a>
                                 </div>
-                                <li th:each="detailDay : ${userCourseDetailList}"
-                                    th:if="${detailDay.day == detail.day} and ${detailDay.courseId == likedCourse.courseId}">
+                                <li th:each="detailDay : ${likedCourse.courseDetail}"
+                                    th:if="${detailDay.day == detail.day} and ${detailDay.courseId == likedCourse.course.courseId}">
                                     <div>
                                         <span th:text="${detailDay.location}"></span>
-                                        <!--                                            <img class="pin-icon" src="images/icons/course_icon.png" alt="pin아이콘">-->
                                     </div>
                                 </li>
                             </ul>
@@ -336,125 +244,6 @@
         </div>
     </div>
 
-    <!--        <div class="nav-like box">-->
-    <!--            <img class="content-title-icon" src="images/icons/heart-after_icon.png" alt="하트 아이콘">-->
-    <!--            <p class="content-title">관심있는 코스</p>-->
-    <!--            <p class="mypin-num">1</p>-->
-    <!--            &lt;!&ndash;관심있는 코스 내용&ndash;&gt;-->
-    <!--            <div class="like-content content">-->
-    <!--                <ul>-->
-    <!--                    <li>-->
-    <!--                        <div class="container">-->
-    <!--                            <input type="button" class="edit-name" data-bs-toggle="collapse" data-bs-target="#collapseExample4" aria-controls="collapseExample4" value="부산 힐링 여행 코스">-->
-    <!--                            <img src="images/icons/save-before-icon.png" alt="Edit Icon" class="mypin-edit-icon" style="width: 20px; height: 20px" onclick='toggleSaveState(this)'>-->
-    <!--                        </div>-->
-    <!--                        &lt;!&ndash; 캘린더 팝업 &ndash;&gt;-->
-    <!--                        <div class="calendar-container" id="calendar-container">-->
-    <!--                            <p class="cal-message">어느 날짜로 저장하시겠습니까?</p>-->
-    <!--                            <input type="date" id="calendar">-->
-    <!--                            <button id="save-date-button">저장</button>-->
-    <!--                        </div>-->
-
-    <!--                        &lt;!&ndash; 모달 &ndash;&gt;-->
-    <!--                        <div class="modal-overlay" id="modal-overlay"></div>-->
-    <!--                        <div class="modal" id="calendar-modal">-->
-    <!--                            <p id="modal-message">캘린더에 저장되었습니다</p>-->
-    <!--                            <button id="close-modal-button">닫기</button>-->
-    <!--                        </div>-->
-    <!--                    </li>-->
-    <!--                    <div class="collapse" id="collapseExample4">-->
-    <!--                        <div class="card card-body">-->
-    <!--                            <ul>-->
-    <!--                                <div class="course-day-box">-->
-    <!--                                    <p class="course-day-label">1일차</p>-->
-    <!--                                    <p class="course-day">10/12</p>-->
-    <!--                                    <a class="course-day-link" href="/calendar">상세보기</a>-->
-    <!--                                </div>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        H Avenue 호텔 광안리점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        나사리식당 광안점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        룩앳더바리스타 광안점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        밀락더마켓-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        수변최고돼지국밥 민락본점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        치플레 부산-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                            </ul>-->
-    <!--                            <ul>-->
-    <!--                                <div class="course-day-box">-->
-    <!--                                    <p class="course-day-label">1일차</p>-->
-    <!--                                    <p class="course-day">10/13</p>-->
-    <!--                                    <a class="course-day-link" href="/calendar">상세보기</a>-->
-    <!--                                </div>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        해운대 블루라인파크-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        디아트 카페-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        우봉 샤브 청사포점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        부산샌드 청사포점-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        오션브리즈-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                                <li>-->
-    <!--                                    <div>-->
-    <!--                                        도희네 조개구이-->
-    <!--                                        <img class="pin-icon" src="images/icons/heart-after_icon.png" alt="pin아이콘">-->
-    <!--                                    </div>-->
-    <!--                                </li>-->
-    <!--                            </ul>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                </ul>-->
-    <!--            </div>-->
-    <!--        </div>-->
 
     <!--구분선-->
     <div class="division-line"></div>
@@ -507,6 +296,34 @@
     <button class="color-button" style="background-color: #BADCE3;"></button>
     <button class="color-button" style="background-color: #AFA18E;"></button>
     <button class="color-button" style="background-color: #ECCCCF;"></button>
+</div>
+
+<!--코스 삭제 확인 모달-->
+<div id="deleteCourseConfirmationModal" class="modal">
+    <div id="settingModalContainer3" class="modal" style="display: block;">
+        <div class="modal-content">
+            <p class="setting-modal-title">코스 삭제</p>
+            <p>정말로 해당 코스를 삭제하시겠습니까?</p>
+            <div class="setting-modal-buttons">
+                <button id="CourseConfirmDeleteButton" class="setting-yes-btn">예</button>
+                <button id="CourseCancelDeleteButton" class="setting-no-btn">아니요</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- course-detail 삭제 확인 모달 -->
+<div id="deleteCourseDetailConfirmationModal" class="modal">
+    <div id="settingModalContainer2" class="modal" style="display: block;">
+        <div class="modal-content">
+            <p class="setting-modal-title">장소 삭제</p>
+            <p>정말로 해당 장소를 삭제하시겠습니까?</p>
+            <div class="setting-modal-buttons">
+                <button id="CourseDetailConfirmDeleteButton" class="setting-yes-btn">예</button>
+                <button id="CourseDetailCancelDeleteButton" class="setting-no-btn">아니요</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- 회원탈퇴 모달 -->

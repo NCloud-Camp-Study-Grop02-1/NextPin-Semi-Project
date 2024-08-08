@@ -77,7 +77,18 @@
                         <!--                        <span id="hiddenValue" th:text="${rtnKaMapDto}" hidden></span>-->
                         <div class="panel_content" id="section_content">
                             <div class="storeDetail">
-                                <img class="search_result_image" src="../images/img/sample-home_img.png" alt="검색장소 이미지"  style="width: 90%;">
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'food'}">
+                                    <img class="search_result_image" th:src="'../images/img/food_big/food_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'cafe'}">
+                                    <img class="search_result_image" th:src="'../images/img/cafe_big/cafe_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'tour'}">
+                                    <img class="search_result_image" th:src="'../images/img/tour_big/tour_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
+                                <th:block th:if="${rtnKaMapDto.categoryGroupCode == 'hotel'}">
+                                    <img class="search_result_image" th:src="'../images/img/hotel_big/hotel_big' + ${rtnKaMapDto.id % 10} + '.jpg'" alt="검색장소 이미지"  style="width: 90%;">
+                                </th:block>
                                 <div class="storeInfo">
                                     <div id="homeTitle">
                                         <h1 class="location_title" id="locationTitle" th:text="${rtnKaMapDto.placeName}"></h1>

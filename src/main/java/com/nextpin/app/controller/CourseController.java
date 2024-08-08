@@ -12,6 +12,7 @@ import com.nextpin.app.service.CourseService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.List;
 
@@ -243,6 +247,8 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메모 업데이트 중 오류가 발생했습니다.");
         }
     }
+
+
 }
 
 

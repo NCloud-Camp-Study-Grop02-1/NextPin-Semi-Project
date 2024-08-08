@@ -11,10 +11,6 @@
          ORDER BY c.heartCnt DESC
     </select>
 
-    <select id="getCourseDetailsByCourseId" parameterType="int" resultType="courseDetailDto">
-        SELECT * FROM course_detail WHERE courseId = #{courseId} ORDER BY visitDate
-    </select>
-
     <select id="getCourseDetailByCourses" parameterType="list" resultType="courseDetailDto">
         SELECT *
           FROM COURSE_DETAIL

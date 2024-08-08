@@ -9,11 +9,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const panelTitle = document.getElementById('panel-title');
     const panelContent = document.getElementById('panel-content');
     const cardBody = document.querySelector('.card.card-body');
+    let courseTitle;
 
     let date = new Date();
     date.setDate(1);
     let selectedDateElement = null;
     let todayDateElement = null;
+
+    // 데이터 로드
+    fetch('/userCourseTitle')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            courseTitle = data;  // 데이터 저장
+            renderCalendar();  // 캘린더 렌더링 호출
+        })
+        .catch(error => console.error('사용자 코스 데이터를 가져오는 중 오류 발생:', error));
 
     function renderCalendar() {
         const dayElements = calendar.querySelectorAll('.day, .prev-month, .next-month, .userSchedule');
@@ -54,23 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 dateElement.classList.add('sunday');
             }
 
-            if ((day === 27 && month === 6 && year === 2024) || (day === 28 && month === 6 && year === 2024)) {
-                const userSchedule = document.createElement('div');
-                userSchedule.textContent = "1박 2일 강릉여행";
-                userSchedule.classList.add('user-schedule'); // CSS 클래스 추가
-                dateElement.classList.add('userSchedule'); // 부모 요소에 클래스 추가
-                dateElement.appendChild(userSchedule);
-
-                userSchedule.addEventListener("click", () => {
-                    calendarPanel.style.display = 'block';
-                });
-            }
-
-            if (day === todayDate && month === todayMonth && year === todayYear) {
-                dateElement.style.border = "1px solid #007bff";
-                todayDateElement = dateElement;
-            }
-
             dateElement.addEventListener("mouseover", () => {
                 dateElement.style.border = "1px solid #007bff";
             });
@@ -91,22 +90,53 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 if (dateElement === todayDateElement) {
                     todayDateElement.style.border = "1px solid #FFC061";
-                }
-                else {
+                } else {
                     dateElement.style.border = "1px solid #FFC061";
                 }
                 selectedDateElement = dateElement;
-
-                if (day === 27 && month === 6 && year === 2024) {
-                    displayContent1();
-                }
-                else if (day === 28 && month === 6 && year === 2024) {
-                    displayContent2();
-                }
-                else {
-                    calendarPanel.style.display = 'none';
-                }
+                // courseTitle.forEach(course => {
+                //     const visitDate = new Date(course.visitDate);
+                //     const courseDay = visitDate.getDate();
+                //     const courseMonth = visitDate.getMonth();
+                //     const courseYear = visitDate.getFullYear();
+                //
+                //     if (courseDay === day && courseMonth === month && courseYear === year) {
+                //         const clickedDate = new Date(year, month, day);
+                //         displayContent(clickedDate);
+                //     }
+                //     else {
+                //         calendarPanel.style.display = 'none';
+                //     }
+                // });
+                const clickedDate = new Date(year, month, day);
+                // displayContent(clickedDate);
             });
+
+            // 코스 데이터를 날짜에 맞게 표시
+            courseTitle && courseTitle.forEach(course => {
+                const visitDate = new Date(course.visitDate);
+                const courseDay = visitDate.getDate();
+                const courseMonth = visitDate.getMonth();
+                const courseYear = visitDate.getFullYear();
+
+                if (courseDay === day && courseMonth === month && courseYear === year) {
+                    // console.log(course.courseName);
+                    const userSchedule = document.createElement('div');
+                    userSchedule.textContent = course.courseName;
+                    userSchedule.classList.add('user-schedule');
+                    dateElement.appendChild(userSchedule);
+
+                    userSchedule.addEventListener("click", () => {
+                        calendarPanel.style.display = 'block';
+                        displayContent(new Date(course.visitDate));
+                    });
+                }
+
+                if (day === todayDate && month === todayMonth && year === todayYear) {
+                    dateElement.style.border = "1px solid #007bff";
+                    todayDateElement = dateElement;
+                }
+            })
         }
 
         const totalCells = firstDay + lastDate;
@@ -124,60 +154,69 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function displayContent1() {
-        panelTitle.textContent = `1일차`;
-        cardBody.innerHTML = '';
+    function displayContent(clickedDate) {
+        const formattedDate = clickedDate.toISOString().split('T')[0];
+        console.log('Formatted Date: ', formattedDate);
 
-        const ul1 = document.createElement('ul');
-        const items1 = ['당신의 안목 펜션', '송정해수욕장', '번패티번 강릉', '엔드 투 앤드 카페', '순두부젤라또 1호점', '차현희순두부청국장'];
+        fetch('/courseDetail')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
 
-        items1.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item;
+                // 일차 표기
+                if (data.length > 0) {
+                    panelTitle.textContent = `${data[0].day}일차`;
+                } else {
+                    panelTitle.textContent = 'No data available';
+                }
+                cardBody.innerHTML = '';
 
-            // 특정 li에만 memo를 추가함
-            if (item === '당신의 안목 펜션') {
-                // memo 함수 호출
-                // '12시 체크인'은 임시 메모임.
-                memo(li, '12시 체크인', '1일차', item);
-            }
-            if (item === '차현희순두부청국장') {
-                memo(li, '20시 예약, 예약자명 오유빈', '1일차', item);
-            }
+                const ul = document.createElement('ul');
+                data.forEach(course => {
+                    const visitDate = new Date(course.visitDate).toISOString().split('T')[0];
+                    // console.log('Visit Date: ', visitDate);
 
-            ul1.appendChild(li);
-        });
+                    if(visitDate === formattedDate) {
+                        console.log('Matching Course:', course);
+                        const li = document.createElement('li');
+                        const item = course.location;
+                        li.textContent = item;
+                        console.log(item);
+                        if (course.memo) {
+                            const courseDetailId = course.courseId; // courseId 사용
+                            memo(li, course.memo, course.day, item, courseDetailId);
+                        }
 
-        cardBody.appendChild(ul1);
-        panelContent.style.display = 'block';
+                        ul.appendChild(li);
+                    }
+                    // if (visitDate === formattedDate) {
+                    //     console.log('Matching Course:', course);
+                    //
+                    //     const li = document.createElement('li');
+                    //     const item = course.location;
+                    //     li.textContent = item;
+                    //     console.log(item);
+                    //
+                    //     if (course.memo) {
+                    //         const courseDetailId = course.courseId; // courseId 사용
+                    //         memo(li, course.memo, course.day, item, courseDetailId);
+                    //     }
+                    //
+                    //     ul.appendChild(li);
+                    // }
+                });
+                console.log(ul);
+                cardBody.appendChild(ul);
+                panelContent.style.display = 'block';
+            })
+            .catch(error => console.error('사용자 코스 데이터를 가져오는 중 오류 발생:', error));
     }
 
-    function displayContent2() {
-        panelTitle.textContent = `2일차`;
-        cardBody.innerHTML = '';
-
-        const ul2 = document.createElement('ul');
-        const items2 = ['아르떼뮤지엄 강릉', '카페덕덕', '이모네생선찜', '현대장칼국수', '스튜디오 킨조 소품샵'];
-        items2.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item;
-
-            // 특정 li에만 memo를 추가함
-            if (item === '이모네생선찜') {
-                // memo 함수 호출
-                memo(li, '13시 예약', '2일차', item);
-            }
-            if (item === '스튜디오 킨조 소품샵') {
-                memo(li, '18시 방문 예정', '2일차', item);
-            }
-
-            ul2.appendChild(li);
-        });
-        cardBody.appendChild(ul2);
-        panelContent.style.display = 'block';
-    }
-
-    function memo(li, defaultText, day, item) {
+    function memo(li, defaultText, day, item, courseDetailId) {
         const memo = document.createElement('span');
         memo.classList.add('memo');
 
@@ -195,11 +234,11 @@ document.addEventListener("DOMContentLoaded", function () {
         li.appendChild(memo);
 
         edit.addEventListener("click", function () {
-            editMemo(memoText, `${day}-${item}`);
+            editMemo(memoText, `${day}-${item}`, courseDetailId);
         });
     }
 
-    function editMemo(memoText, storageKey) {
+    function editMemo(memoText, storageKey, courseDetailId) {
         const input = document.createElement('input');
         input.type = 'text';
         input.value = memoText.textContent;
@@ -213,14 +252,29 @@ document.addEventListener("DOMContentLoaded", function () {
         memoText.replaceWith(input);
 
         input.focus();
-
         input.select();
-
         input.after(saveButton);
 
         saveButton.addEventListener('click', function () {
-            memoText.textContent = input.value;
-            localStorage.setItem(storageKey, input.value);
+            const newMemo = input.value;
+            memoText.textContent = newMemo;
+            localStorage.setItem(storageKey, newMemo);
+
+            // 서버에 메모 업데이트 요청
+            fetch('/updateMemo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({courseDetailId: courseDetailId, memo: newMemo})
+            })
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(error => {
+                    console.error('메모 업데이트 중 오류 발생:', error);
+                });
 
             input.replaceWith(memoText);
             saveButton.remove();
@@ -298,33 +352,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    prevButton.addEventListener('click', () => {
+    prevButton.addEventListener("click", function () {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
     });
 
-    nextButton.addEventListener('click', () => {
+    nextButton.addEventListener("click", function () {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
     });
 
-    todayButton.addEventListener('click', () => {
+    todayButton.addEventListener("click", function () {
         date = new Date();
         date.setDate(1);
         renderCalendar();
-        if (selectedDateElement) {
-            selectedDateElement.style.border = "1px solid #007bff";
-            selectedDateElement = null;
-        }
-        calendarPanel.style.display = 'none';
-        fetchWeatherData();
-    });
-
-    document.addEventListener("click", (event) => {
-        const withinBoundaries = event.composedPath().includes(calendarPanel) || event.composedPath().includes(calendar);
-        if (!withinBoundaries) {
-            calendarPanel.style.display = 'none';
-        }
     });
 
     renderCalendar();

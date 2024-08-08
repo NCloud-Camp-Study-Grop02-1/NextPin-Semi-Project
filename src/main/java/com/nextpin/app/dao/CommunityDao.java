@@ -29,4 +29,5 @@ public class CommunityDao {
     public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds){
         return mybatis.selectList("CommunityMapper.getCourseDetailByCourses", courseIds);
     }
+
 }

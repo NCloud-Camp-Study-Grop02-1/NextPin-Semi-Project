@@ -312,6 +312,13 @@ function removeMarker() {
     markers = [];
 }
 
+// 마커 지점에 대한 지점
+function displayCircleDot(position, distance){
+
+
+}
+
+
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pageParams, searchKeywords) {
     var paginationEl = document.getElementsByClassName('pagination')[0];

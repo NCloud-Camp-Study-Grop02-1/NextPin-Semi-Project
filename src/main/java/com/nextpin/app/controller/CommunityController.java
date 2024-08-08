@@ -22,6 +22,12 @@ import java.util.Map;
 public class CommunityController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CommunityController.class);
+    private CommunityService communityService;
+
+    @Autowired
+    public CommunityController(CommunityService communityService) {
+        this.communityService = communityService;
+    }
 
     @GetMapping("/community")
     @ResponseBody
@@ -29,20 +35,18 @@ public class CommunityController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("community/community");
 
-        List<Map<CourseDto, List<CourseDetailDto>>> courseListMap = communityService.getCourseListMap();
+        List<Map<CourseDto, List<CourseDetailDto>>> courseListMapData = communityService.getCourseListMapData();
+//        logger.debug("-------------------------------------------");
+//        logger.debug("courseListMap : " + courseListMap.toString());
+//        logger.debug("-------------------------------------------");
 
-        logger.debug("-------------------------------------------");
-        logger.debug("courseListMap : " + courseListMap.toString());
-        logger.debug("-------------------------------------------");
-
-        mav.addObject("courseListMap", courseListMap);
+        mav.addObject("courseListMap", courseListMapData);
 
         logger.debug("community페이지 이동");
         return mav;
     }
 
-    @Autowired
-    private CommunityService communityService;
+
 
 //    @GetMapping("/courses")
 //    public List<CourseDto> getAllCourses() {

@@ -24,5 +24,6 @@ public class CourseDto {
     private boolean myPinBoolean;
     private boolean likeBoolean;
     private int courseRank;
-
+    private String status;
+    private String message;
 }

@@ -8,6 +8,5 @@ import java.util.Map;
 
 public interface CommunityService {
     List<CourseDto> getAllCourses();
-    List<CourseDetailDto> getCourseDetailsByCourseId(int courseId);
-    public List<Map<CourseDto, List<CourseDetailDto>>> getCourseListMap();
+    List<Map<CourseDto, List<CourseDetailDto>>> getCourseListMapData();
 }

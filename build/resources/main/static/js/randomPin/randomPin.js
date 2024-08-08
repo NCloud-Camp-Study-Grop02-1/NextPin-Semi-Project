@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttons = document.querySelectorAll('.color-button');
     fetchUserInfo();
 
-
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             if (button.classList.contains('selected')) {

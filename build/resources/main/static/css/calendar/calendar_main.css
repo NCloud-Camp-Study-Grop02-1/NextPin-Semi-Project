@@ -97,11 +97,6 @@
     cursor: pointer; /* 클릭 가능한 아이템임을 표시 */
 }
 
-.userSchedule {
-    position: relative; /* 내부 요소의 position: absolute; 사용을 위해 설정 */
-}
-
-
 #calendar-panel {
     width: 400px;
     padding: 20px;

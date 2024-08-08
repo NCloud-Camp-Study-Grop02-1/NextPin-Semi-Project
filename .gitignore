@@ -22,6 +22,7 @@ application.properties
 logs/
 src/main/resources/conf/BzyXmlConfig.xml
 .idea
+.idea/workspace.xml
 *.iws
 *.iml
 *.ipr

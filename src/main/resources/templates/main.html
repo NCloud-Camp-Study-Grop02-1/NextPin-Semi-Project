@@ -41,7 +41,8 @@
 
             </div>
             <div class="feature">
-            <a href="/userPage" class="userPage-link"><img src="../images/icons/home_myPage_icon.png" alt="My Page" class="userPage-img"></a>
+            <a href="/myPin" class="userPage-link"><img src="../images/icons/home_myPage_icon.png" alt="My Page" class="userPage-img"></a>
+
             </div>
         </div>
     </main>
@@ -66,7 +67,6 @@
                 .then(response => response.json())
                 .then(data => {
                     const actionsDiv = document.querySelector('.actions');
-                    const featuresDiv = document.querySelector('.features');
                     // 만약 유저가 로그인했을 시 닉네임하고 버튼 표시하기
                     if(data.isLoggedIn) {
                         actionsDiv.innerHTML = `

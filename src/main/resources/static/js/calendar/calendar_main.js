@@ -31,128 +31,128 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error('사용자 코스 데이터를 가져오는 중 오류 발생:', error));
 
-            function renderCalendar() {
-                const dayElements = calendar.querySelectorAll('.day, .prev-month, .next-month, .userSchedule');
-                dayElements.forEach(element => element.remove());
+    function renderCalendar() {
+        const dayElements = calendar.querySelectorAll('.day, .prev-month, .next-month, .userSchedule');
+        dayElements.forEach(element => element.remove());
 
-                const month = date.getMonth();
-                const year = date.getFullYear();
+        const month = date.getMonth();
+        const year = date.getFullYear();
 
-                currentMonthYear.textContent = `${year}.${(month + 1).toString().padStart(2, '0')}`;
+        currentMonthYear.textContent = `${year}.${(month + 1).toString().padStart(2, '0')}`;
 
-                const firstDay = (date.getDay() + 6) % 7;
-                const lastDate = new Date(year, month + 1, 0).getDate();
-                const prevLastDate = new Date(year, month, 0).getDate();
+        const firstDay = (date.getDay() + 6) % 7;
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        const prevLastDate = new Date(year, month, 0).getDate();
 
-                for (let i = 0; i < firstDay; i++) {
-                    const prevDateElement = document.createElement('div');
-                    prevDateElement.classList.add('day', 'prev-month');
-                    prevDateElement.textContent = prevLastDate - firstDay + i + 1;
-                    calendar.appendChild(prevDateElement);
-                }
+        for (let i = 0; i < firstDay; i++) {
+            const prevDateElement = document.createElement('div');
+            prevDateElement.classList.add('day', 'prev-month');
+            prevDateElement.textContent = prevLastDate - firstDay + i + 1;
+            calendar.appendChild(prevDateElement);
+        }
 
-                const today = new Date();
-                const todayDate = today.getDate();
-                const todayMonth = today.getMonth();
-                const todayYear = today.getFullYear();
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
 
-                for (let day = 1; day <= lastDate; day++) {
-                    const dateElement = document.createElement('div');
-                    dateElement.classList.add('day');
-                    dateElement.textContent = day;
-                    calendar.appendChild(dateElement);
+        for (let day = 1; day <= lastDate; day++) {
+            const dateElement = document.createElement('div');
+            dateElement.classList.add('day');
+            dateElement.textContent = day;
+            calendar.appendChild(dateElement);
 
-                    const currentDayOfWeek = (firstDay + day - 1) % 7;
+            const currentDayOfWeek = (firstDay + day - 1) % 7;
 
-                    if (currentDayOfWeek === 5) {
-                        dateElement.classList.add('saturday');
-                    } else if (currentDayOfWeek === 6) {
-                        dateElement.classList.add('sunday');
-                    }
-
-                    // 코스 데이터를 날짜에 맞게 표시
-                    courseTitle && courseTitle.forEach(course => {
-                        const visitDate = new Date(course.visitDate);
-                        const courseDay = visitDate.getDate();
-                        const courseMonth = visitDate.getMonth();
-                        const courseYear = visitDate.getFullYear();
-
-                        if (courseDay === day && courseMonth === month && courseYear === year) {
-                            // console.log(course.courseName);
-                            const userSchedule = document.createElement('div');
-                            userSchedule.textContent = course.courseName;
-                            userSchedule.classList.add('user-schedule');
-                            dateElement.appendChild(userSchedule);
-
-                            userSchedule.addEventListener("click", () => {
-                                calendarPanel.style.display = 'block';
-                                displayContent(new Date(course.visitDate));
-                            });
-                        }
-
-                        if (day === todayDate && month === todayMonth && year === todayYear) {
-                            dateElement.style.border = "1px solid #007bff";
-                            todayDateElement = dateElement;
-                        }
-
-                        dateElement.addEventListener("mouseover", () => {
-                            dateElement.style.border = "1px solid #007bff";
-                        });
-
-                        dateElement.addEventListener("mouseout", () => {
-                            if (!(day === todayDate && month === todayMonth && year === todayYear) && dateElement !== selectedDateElement) {
-                                dateElement.style.border = "1px solid #ddd";
-                            }
-                        });
-
-                        dateElement.addEventListener("click", () => {
-                            if (selectedDateElement && selectedDateElement !== dateElement) {
-                                if (selectedDateElement === todayDateElement) {
-                                    todayDateElement.style.border = "1px solid #007bff";
-                                } else {
-                                    selectedDateElement.style.border = "1px solid #ddd";
-                                }
-                            }
-                            if (dateElement === todayDateElement) {
-                                todayDateElement.style.border = "1px solid #FFC061";
-                            } else {
-                                dateElement.style.border = "1px solid #FFC061";
-                            }
-                            selectedDateElement = dateElement;
-                            // courseTitle.forEach(course => {
-                            //     const visitDate = new Date(course.visitDate);
-                            //     const courseDay = visitDate.getDate();
-                            //     const courseMonth = visitDate.getMonth();
-                            //     const courseYear = visitDate.getFullYear();
-                            //
-                            //     if (courseDay === day && courseMonth === month && courseYear === year) {
-                            //         const clickedDate = new Date(year, month, day);
-                            //         displayContent(clickedDate);
-                            //     }
-                            //     else {
-                            //         calendarPanel.style.display = 'none';
-                            //     }
-                            // });
-                                    const clickedDate = new Date(year, month, day);
-                                    displayContent(clickedDate);
-                        });
-                    })
-                }
-
-                const totalCells = firstDay + lastDate;
-                const nextMonthDays = (7 - (totalCells % 7)) % 7;
-
-                for (let i = 1; i <= nextMonthDays; i++) {
-                    const nextDateElement = document.createElement('div');
-                    nextDateElement.classList.add('day', 'next-month');
-                    nextDateElement.textContent = i;
-                    calendar.appendChild(nextDateElement);
-                }
-
-                if (month === todayMonth && year === todayYear) {
-                    fetchWeatherData();
-                }
+            if (currentDayOfWeek === 5) {
+                dateElement.classList.add('saturday');
+            } else if (currentDayOfWeek === 6) {
+                dateElement.classList.add('sunday');
             }
+
+            dateElement.addEventListener("mouseover", () => {
+                dateElement.style.border = "1px solid #007bff";
+            });
+
+            dateElement.addEventListener("mouseout", () => {
+                if (!(day === todayDate && month === todayMonth && year === todayYear) && dateElement !== selectedDateElement) {
+                    dateElement.style.border = "1px solid #ddd";
+                }
+            });
+
+            dateElement.addEventListener("click", () => {
+                if (selectedDateElement && selectedDateElement !== dateElement) {
+                    if (selectedDateElement === todayDateElement) {
+                        todayDateElement.style.border = "1px solid #007bff";
+                    } else {
+                        selectedDateElement.style.border = "1px solid #ddd";
+                    }
+                }
+                if (dateElement === todayDateElement) {
+                    todayDateElement.style.border = "1px solid #FFC061";
+                } else {
+                    dateElement.style.border = "1px solid #FFC061";
+                }
+                selectedDateElement = dateElement;
+                // courseTitle.forEach(course => {
+                //     const visitDate = new Date(course.visitDate);
+                //     const courseDay = visitDate.getDate();
+                //     const courseMonth = visitDate.getMonth();
+                //     const courseYear = visitDate.getFullYear();
+                //
+                //     if (courseDay === day && courseMonth === month && courseYear === year) {
+                //         const clickedDate = new Date(year, month, day);
+                //         displayContent(clickedDate);
+                //     }
+                //     else {
+                //         calendarPanel.style.display = 'none';
+                //     }
+                // });
+                const clickedDate = new Date(year, month, day);
+                // displayContent(clickedDate);
+            });
+
+            // 코스 데이터를 날짜에 맞게 표시
+            courseTitle && courseTitle.forEach(course => {
+                const visitDate = new Date(course.visitDate);
+                const courseDay = visitDate.getDate();
+                const courseMonth = visitDate.getMonth();
+                const courseYear = visitDate.getFullYear();
+
+                if (courseDay === day && courseMonth === month && courseYear === year) {
+                    // console.log(course.courseName);
+                    const userSchedule = document.createElement('div');
+                    userSchedule.textContent = course.courseName;
+                    userSchedule.classList.add('user-schedule');
+                    dateElement.appendChild(userSchedule);
+
+                    userSchedule.addEventListener("click", () => {
+                        calendarPanel.style.display = 'block';
+                        displayContent(new Date(course.visitDate));
+                    });
+                }
+
+                if (day === todayDate && month === todayMonth && year === todayYear) {
+                    dateElement.style.border = "1px solid #007bff";
+                    todayDateElement = dateElement;
+                }
+            })
+        }
+
+        const totalCells = firstDay + lastDate;
+        const nextMonthDays = (7 - (totalCells % 7)) % 7;
+
+        for (let i = 1; i <= nextMonthDays; i++) {
+            const nextDateElement = document.createElement('div');
+            nextDateElement.classList.add('day', 'next-month');
+            nextDateElement.textContent = i;
+            calendar.appendChild(nextDateElement);
+        }
+
+        if (month === todayMonth && year === todayYear) {
+            fetchWeatherData();
+        }
+    }
 
     function displayContent(clickedDate) {
         const formattedDate = clickedDate.toISOString().split('T')[0];
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const ul = document.createElement('ul');
                 data.forEach(course => {
                     const visitDate = new Date(course.visitDate).toISOString().split('T')[0];
-                    console.log('Visit Date: ', visitDate);
+                    // console.log('Visit Date: ', visitDate);
 
                     if(visitDate === formattedDate) {
                         console.log('Matching Course:', course);
@@ -209,86 +209,87 @@ document.addEventListener("DOMContentLoaded", function () {
                     //     ul.appendChild(li);
                     // }
                 });
+                console.log(ul);
                 cardBody.appendChild(ul);
                 panelContent.style.display = 'block';
             })
             .catch(error => console.error('사용자 코스 데이터를 가져오는 중 오류 발생:', error));
     }
 
-            function memo(li, defaultText, day, item, courseDetailId) {
-                const memo = document.createElement('span');
-                memo.classList.add('memo');
+    function memo(li, defaultText, day, item, courseDetailId) {
+        const memo = document.createElement('span');
+        memo.classList.add('memo');
 
-                const edit = document.createElement('img');
-                edit.classList.add('edit');
-                edit.src = '../../images/icons/edit-white_icon.png';
-                edit.alt = "edit icon";
-                memo.appendChild(edit);
+        const edit = document.createElement('img');
+        edit.classList.add('edit');
+        edit.src = '../../images/icons/edit-white_icon.png';
+        edit.alt = "edit icon";
+        memo.appendChild(edit);
 
-                const memoText = document.createElement('span');
-                const storedText = localStorage.getItem(`${day}-${item}`);
-                memoText.textContent = storedText ? storedText : defaultText;
-                memo.appendChild(memoText);
+        const memoText = document.createElement('span');
+        const storedText = localStorage.getItem(`${day}-${item}`);
+        memoText.textContent = storedText ? storedText : defaultText;
+        memo.appendChild(memoText);
 
-                li.appendChild(memo);
+        li.appendChild(memo);
 
-                edit.addEventListener("click", function () {
-                    editMemo(memoText, `${day}-${item}`, courseDetailId);
+        edit.addEventListener("click", function () {
+            editMemo(memoText, `${day}-${item}`, courseDetailId);
+        });
+    }
+
+    function editMemo(memoText, storageKey, courseDetailId) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = memoText.textContent;
+        input.classList.add('memo-input');
+
+        const saveButton = document.createElement('img');
+        saveButton.src = '../../images/icons/save-icon.png';
+        saveButton.alt = "save icon";
+        saveButton.classList.add('save-button');
+
+        memoText.replaceWith(input);
+
+        input.focus();
+        input.select();
+        input.after(saveButton);
+
+        saveButton.addEventListener('click', function () {
+            const newMemo = input.value;
+            memoText.textContent = newMemo;
+            localStorage.setItem(storageKey, newMemo);
+
+            // 서버에 메모 업데이트 요청
+            fetch('/updateMemo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({courseDetailId: courseDetailId, memo: newMemo})
+            })
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(error => {
+                    console.error('메모 업데이트 중 오류 발생:', error);
                 });
+
+            input.replaceWith(memoText);
+            saveButton.remove();
+        });
+
+        input.addEventListener('keyup', function (event) {
+            if (event.key === 'Enter') {
+                saveButton.click();
             }
+        });
 
-            function editMemo(memoText, storageKey, courseDetailId) {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.value = memoText.textContent;
-                input.classList.add('memo-input');
-
-                const saveButton = document.createElement('img');
-                saveButton.src = '../../images/icons/save-icon.png';
-                saveButton.alt = "save icon";
-                saveButton.classList.add('save-button');
-
-                memoText.replaceWith(input);
-
-                input.focus();
-                input.select();
-                input.after(saveButton);
-
-                saveButton.addEventListener('click', function () {
-                    const newMemo = input.value;
-                    memoText.textContent = newMemo;
-                    localStorage.setItem(storageKey, newMemo);
-
-                    // 서버에 메모 업데이트 요청
-                    fetch('/updateMemo', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({courseDetailId: courseDetailId, memo: newMemo})
-                    })
-                        .then(response => response.text())
-                        .then(result => {
-                            console.log(result)
-                        })
-                        .catch(error => {
-                            console.error('메모 업데이트 중 오류 발생:', error);
-                        });
-
-                    input.replaceWith(memoText);
-                    saveButton.remove();
-                });
-
-                input.addEventListener('keyup', function (event) {
-                    if (event.key === 'Enter') {
-                        saveButton.click();
-                    }
-                });
-
-                input.addEventListener('blur', function () {
-                    saveButton.click();
-                });
-            }
+        input.addEventListener('blur', function () {
+            saveButton.click();
+        });
+    }
 
     function fetchWeatherData() {
         const apiKey = '4872637a8788d0b9b7a84adebed8aea5';
@@ -352,21 +353,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     prevButton.addEventListener("click", function () {
-                date.setMonth(date.getMonth() - 1);
-                renderCalendar();
-            });
-
-            nextButton.addEventListener("click", function () {
-                date.setMonth(date.getMonth() + 1);
-                renderCalendar();
-            });
-
-            todayButton.addEventListener("click", function () {
-                date = new Date();
-                date.setDate(1);
-                renderCalendar();
-            });
-
-            renderCalendar();
+        date.setMonth(date.getMonth() - 1);
+        renderCalendar();
     });
 
+    nextButton.addEventListener("click", function () {
+        date.setMonth(date.getMonth() + 1);
+        renderCalendar();
+    });
+
+    todayButton.addEventListener("click", function () {
+        date = new Date();
+        date.setDate(1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+});
