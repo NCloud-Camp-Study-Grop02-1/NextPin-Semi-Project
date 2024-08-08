@@ -96,7 +96,7 @@
                                     th:aria-controls="'collapseExample' + ${entry.key.courseId}"
                                     th:style="${'background-color:' + entry.key.color}"
                                     th:value="${entry.key.courseName}">
-                                <button class="heart-button" onclick="toggleHeart(this)">
+                                <button class="heart-button">
                                     <img src="../images/icons/heart-before_icon.png" alt="Heart">
                                     <span>[(${entry.key.heartCnt})]</span>
                                 </button>

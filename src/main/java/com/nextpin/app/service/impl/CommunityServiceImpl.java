@@ -32,6 +32,11 @@ public class CommunityServiceImpl implements CommunityService {
         return communityDao.getAllCourses();
     }
 
+    @Override
+    public List<CourseDetailDto> getCourseDetailsByCourseId(int courseId) {
+        return communityDao.getCourseDetailsByCourseId(courseId);
+    }
+
     public List<CourseDetailDto> getCourseDetailByCourses(List<Integer> courseIds) {
         return communityDao.getCourseDetailByCourses(courseIds);
     }
