@@ -674,6 +674,11 @@ function toggleVisibility(element) {
     updateOpenClose = rockIcon.classList.contains('hidden');
     console.log('updateOpenClose : ' + updateOpenClose);
     // rockIcon 스타일이 'visible'로 설정되면 updateOpenClose 값을 0으로, 그렇지 않으면 1로 설정
+    if(updateOpenClose){
+        $('#visibilityModalContainer .modal-subtitle').text('해당 코스가 공개 처리 되었습니다.');
+    } else {
+        $('#visibilityModalContainer .modal-subtitle').text('해당 코스가 비공개 처리 되었습니다.');
+    }
     updateOpenClose = (updateOpenClose === true) ? 1 : 0;
 
     console.log(updateOpenClose);
