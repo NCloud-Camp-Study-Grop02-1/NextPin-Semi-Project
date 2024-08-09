@@ -27,6 +27,6 @@ public interface MyPinService {
 
     void deleteUserCourse(CourseDto courseDto);
     void deleteUserCourseDetail(CourseDetailDto courseDetailDto);
-
+    CourseDetailDto selectBeforeDeleteCheckDetailDto(int courseDetailId);
 }
 

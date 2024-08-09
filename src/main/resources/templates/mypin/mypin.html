@@ -211,8 +211,8 @@
                                         var visitDateCount = /*[[${detail.visitDateCount}]]*/ 'undefined';
 
                                         // Print to console
-                                        console.log('userCourseStat.index:', userCourseStat);
-                                        console.log('visitDateCount:', visitDateCount);
+                                        // console.log('userCourseStat.index:', userCourseStat);
+                                        // console.log('visitDateCount:', visitDateCount);
                                     </script>
                                     <div class="course-day-box" title="지도에서 코스보기">
                                         <p class="course-day-label" th:text="${detail.visitOrder + '일차'}"></p>
@@ -261,6 +261,7 @@
     <div class="modal-content">
         <span class="close-visibility-modal-btn">&times;</span>
         <p class="modal-title">공개 여부 변경</p>
+<!--        여기 부분이 문제인듯-->
         <p class="modal-subtitle">해당 코스가 비공개 처리 되었습니다.</p>
     </div>
 </div>

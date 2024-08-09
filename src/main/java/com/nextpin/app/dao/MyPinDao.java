@@ -67,5 +67,9 @@ public class MyPinDao {
     public void deleteUserCourseDetail(CourseDetailDto courseDetailDto) {
         mybatis.delete("MyPinDao.deleteCourseDetail",courseDetailDto);
     }
+
+    public CourseDetailDto selectBeforeDeleteCheckDetailDto(int courseDetailId){
+        return mybatis.selectOne("MyPinDao.selectBeforeDeleteCheckDetailDto",courseDetailId);
+    }
 }
 

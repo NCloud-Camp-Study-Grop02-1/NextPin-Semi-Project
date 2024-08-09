@@ -99,7 +99,7 @@ input[type='radio'] {
 /* 장소 리스트 */
 #locationList {
     margin-top: 4%;
-    height: 420px;
+    height: 650px;
     overflow-y: auto;
 }
 /* 스크롤바 가로길이 */

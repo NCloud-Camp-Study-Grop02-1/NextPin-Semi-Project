@@ -35,16 +35,16 @@
 
     <!--COURSE_DETAIL 테이블 정보 조회 기능-->
     <select id="getUserCourseDetail" parameterType="map" resultType="CourseDetailDto">
-        SELECT COURSEID,
-               LOCATION,
-               X,
-               Y,
-            DAY,
-            visitDate,
-            MEMO
-        FROM COURSE_DETAIL
-        WHERE userId = #{userId}
-          AND courseId = #{courseId}
+        SELECT COURSEID
+             , LOCATION
+             , X
+             , Y
+             , DAY
+             , visitDate
+             , MEMO
+             , COURSE_DETAIL_ID AS courseDetailId
+          FROM COURSE_DETAIL
+         WHERE courseId = #{courseId}
     </select>
 
     <!--COURSE(관심있는코스) 테이블 정보 조회 기능-->
@@ -86,12 +86,25 @@
         WHERE userId = #{userId}
           AND courseId = #{courseId}
     </delete>
+    <!--COURSE_DETAIL 상세 장소 삭제하기 전 정보 조회-->
+    <select id="selectBeforeDeleteCheckDetailDto" parameterType="courseDetailDto" resultType="courseDetailDto">
+        SELECT COURSEID
+             , LOCATION
+             , X
+             , Y
+             , DAY
+             , VISITDATE
+             , MEMO
+             , USERID
+          FROM COURSE_DETAIL
+         WHERE course_detail_id = #{courseDetailId}
+    </select>
 
     <!--COURSE_DETAIL 테이블의 코스 상세 장소 삭제 기능-->
     <delete id="deleteCourseDetail" parameterType="courseDetailDto">
         DELETE FROM COURSE_DETAIL
         WHERE userId = #{userId}
-          AND course_detail_id = #{course_detail_id}
+          AND course_detail_id = #{courseDetailId}
     </delete>
 
 

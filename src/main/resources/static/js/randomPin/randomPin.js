@@ -352,6 +352,7 @@ function getListItem(place) {
             '   <h5 class="place_name">' + place.placeName + '</h5>' +
             '</div>';
 
+
     if (place.categoryGroupCode === 'food') {
         itemStr += '<label id="course_food_label" style="margin-right: 3%; width: 100px; text-align: center; padding-left: 0; border-radius: 15px; border: 2px solid #FFC061; background-color: #FFC061;  margin-bottom: 10px;">' +
             '           <img src="../images/icons/foodPlace_icon.png" alt="맛집 이미지"/> #맛집' +
@@ -370,7 +371,8 @@ function getListItem(place) {
             '       </label>';
     }
 
-    itemStr += '<span class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</span>'
+    itemStr += '<p class="category clickable" style="padding-left:3%; color:#949494;">' + place.categoryName + '</p>'
+
 
     itemStr += '<div class="review_score">' +
         '<span className="reviewScore" style="color:red;"> ★  ' + place.score + '</span>' +

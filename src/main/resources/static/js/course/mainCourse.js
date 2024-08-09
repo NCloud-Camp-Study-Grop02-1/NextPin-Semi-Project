@@ -523,6 +523,7 @@ window.onload = function(){
     });
 
     $('#removeSearchBtn').on('click', e => {
+        $('#inputPlace2').val('');
         $('#inputPlace2').hide();
         $('#searchBtn2').hide();
     });

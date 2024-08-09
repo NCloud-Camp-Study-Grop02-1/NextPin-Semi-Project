@@ -265,7 +265,6 @@ input[type='radio'] {
     border-radius: 15px;
     cursor: pointer;
     margin: 30px;
-
 }
 
 
@@ -481,4 +480,19 @@ input[type='radio'] {
 
 #placesList .item{
     border: none;
+}
+.item{
+    margin-left: 1.5rem;
+}
+.item label{
+    margin-top: 0.5rem;
+}
+.category clickable{
+    display: inline-block;
+    width: auto;
+    margin-left: 2rem;
+}
+.head_item clickArea{
+    display: inline-block;
+    width: auto;
 }

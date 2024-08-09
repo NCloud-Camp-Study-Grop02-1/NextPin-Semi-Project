@@ -430,9 +430,10 @@ public class MypinController {
             logger.error("컬러 편집 User not logged in");
 
         }
-
+        CourseDetailDto deleteBeforeCheckDetailDto = myPinService.selectBeforeDeleteCheckDetailDto(courseDetailDto.getCourseDetailId());
         // userId를 courseDto에 설정
         courseDetailDto.setUserId(userId);
+        courseDetailDto.setLocation(deleteBeforeCheckDetailDto.getLocation());
 
         try {
             logger.debug("courseDetailDto : " + courseDetailDto.toString());

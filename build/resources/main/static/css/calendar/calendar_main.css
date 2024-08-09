@@ -2,10 +2,26 @@
     margin: 0;
     padding: 0;
 }
-
+/************************/
+/* 사이드바 맞추기 위해 추가 */
+#side-bar .logo {
+    width: 119px;
+}
+.menu-item {
+    padding: 1.5rem 0;
+}
+.sidebar-profile {
+    margin-top: auto;
+    padding: 3rem 0;
+    text-decoration: none;
+}
+/************************/
 .main {
     display: flex;
     flex-direction: row;
+    height: 100vh;
+    margin-left: 6.5rem;
+    width: calc(100vw - 6.5rem);
 }
 
 .calendar-main {

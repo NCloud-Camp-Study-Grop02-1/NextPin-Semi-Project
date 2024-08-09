@@ -1008,7 +1008,7 @@ function openDeleteCourseDetailModal(courseDetailId, liElement) {
     document.getElementById('CourseDetailConfirmDeleteButton').onclick = function() {
         // 삭제 요청을 보냅니다.
         let sendData = {
-            "course_detail_id": courseDetailId
+            "courseDetailId": courseDetailId
         };
 
         $.ajax({
@@ -1021,11 +1021,12 @@ function openDeleteCourseDetailModal(courseDetailId, liElement) {
             dataType: "json",
             data: JSON.stringify(sendData),
             success: function(result) {
-                console.log("ajax : result : " + result);
+                console.log("ajax : result : " + JSON.stringify(result));
 
                 // 삭제된 요소를 DOM에서 제거
                 if (result.status === 'success') {
                     $(liElement).remove();
+                    alert(result.location + '가 삭제되었습니다.');
                 } else {
                     alert('삭제하는 동안 오류가 발생했습니다: ' + result.message);
                 }
@@ -1171,19 +1172,22 @@ document.querySelectorAll('.close-btn').forEach(btn => {
     };
 });
 
-document.querySelector('.yes-btn').onclick = function() {
-    document.getElementById('modal').style.display = 'none';
-    document.getElementById('farewellModal').style.display = 'block';
-};
-
-document.querySelector('.no-btn').onclick = function() {
-    document.getElementById('modal').style.display = 'none';
-};
-
-document.querySelector('.close-farewell-btn').onclick = function() {
-    document.getElementById('farewellModal').style.display = 'none';
-};
-
+if(document.querySelector('.yes-btn') !== undefined && document.querySelector('.yes-btn') !== null){
+    document.querySelector('.yes-btn').onclick = function() {
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('farewellModal').style.display = 'block';
+    };
+}
+if(document.querySelector('.no-btn') !== undefined && document.querySelector('.no-btn') !== null){
+    document.querySelector('.no-btn').onclick = function() {
+        document.getElementById('modal').style.display = 'none';
+    };
+}
+if(document.querySelector('.close-farewell-btn') !== undefined && document.querySelector('.close-farewell-btn') !== null) {
+    document.querySelector('.close-farewell-btn').onclick = function () {
+        document.getElementById('farewellModal').style.display = 'none';
+    };
+}
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
         document.querySelectorAll('.modal').forEach(modal => {

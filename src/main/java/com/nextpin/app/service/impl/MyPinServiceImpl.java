@@ -68,5 +68,10 @@ public class MyPinServiceImpl implements MyPinService {
         myPinDao.deleteUserCourseDetail(courseDetailDto);
     }
 
+    @Override
+    public CourseDetailDto selectBeforeDeleteCheckDetailDto(int courseDetailId) {
+        return myPinDao.selectBeforeDeleteCheckDetailDto(courseDetailId);
+    }
+
 }
 

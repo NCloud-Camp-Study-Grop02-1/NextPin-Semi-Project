@@ -79,7 +79,7 @@
             )
         </if>
         <if test="searchKewords.keyword2 != null and searchKewords.keyword2 != ''">
-            OR (
+            AND (
             PLACENAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
             OR
             ADDRESSNAME LIKE CONCAT('%', #{searchKewords.keyword2}, '%')
@@ -105,7 +105,7 @@
             )
         </if>
         <if test="keyword2 != null and keyword2 != ''">
-            OR (
+            AND (
             PLACENAME LIKE CONCAT('%', #{keyword2}, '%')
             OR
             ADDRESSNAME LIKE CONCAT('%', #{keyword2}, '%')

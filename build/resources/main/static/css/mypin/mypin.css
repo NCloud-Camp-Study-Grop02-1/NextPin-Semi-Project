@@ -797,11 +797,7 @@ button, .modal-buttons button {
     margin-bottom: 10px; /* 항목과의 간격 추가 */
 }
 
-.course-day-box p {
-    margin: 0; /* 기본 여백 제거 */
-}
 
 .course-day-link {
-    color: #007bff; /* 링크 색상 */
     text-decoration: underline; /* 링크에 밑줄 추가 */
 }
