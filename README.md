@@ -1,5 +1,5 @@
 # 🎡 여행&데이트 코스 설계 웹 NextPin
-프로젝트 이미지를 넣을 계획입니다
+![image](https://github.com/user-attachments/assets/c968a9b0-1e93-4d45-896a-c5241bf691cd)
 
 <br>
 
