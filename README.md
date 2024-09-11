@@ -255,11 +255,11 @@
 
 | 일정 |
 |----------|
-| 이미지 업로드 예정 |
+| ![image](https://github.com/user-attachments/assets/5f7d64b8-6623-493c-a034-f34f96c4828f) |
 
 | 일정 - 코스 상세보기 |
 |----------|
-| 이미지 업로드 예정 |
+| ![image](https://github.com/user-attachments/assets/7e8ded05-9050-410d-9e89-128ac6f175b1) |
 
 <br>
 
