@@ -47,6 +47,9 @@
 <br>
 
 ## 2. Stacks
+### Architecture
+![system architecture]([https://github.com/your-repository-link/path-to-image.png](https://github.com/NCloud-Camp-Study-Grop02-1/NextPin-Semi-Project/issues/1#issue-2533936781))
+
 ### Front
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
 
