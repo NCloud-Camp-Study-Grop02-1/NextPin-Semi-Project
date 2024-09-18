@@ -48,7 +48,7 @@
 
 ## 2. Stacks
 ### Architecture
-![system architecture]([https://github.com/your-repository-link/path-to-image.png](https://github.com/NCloud-Camp-Study-Grop02-1/NextPin-Semi-Project/issues/1#issue-2533936781))
+![system architecture](https://private-user-images.githubusercontent.com/167949542/368616234-b237debc-f4c6-429d-bcc2-d7832fa16956.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjY2NzEwMDQsIm5iZiI6MTcyNjY3MDcwNCwicGF0aCI6Ii8xNjc5NDk1NDIvMzY4NjE2MjM0LWIyMzdkZWJjLWY0YzYtNDI5ZC1iY2MyLWQ3ODMyZmExNjk1Ni5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwOTE4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDkxOFQxNDQ1MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT05MGM3YzJiMzUxYTc1MDI3M2QzOThmMWM4NjcyZTcwNWJlZjZhZDlhOWNjYThmMzQyNGQ0YWYzNDMyMTJjMmVhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.S5w9aLPmwjF2HZqZM7tcsyFUTdxtSvzbYmRy2MXOMVo)
 
 ### Front
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
